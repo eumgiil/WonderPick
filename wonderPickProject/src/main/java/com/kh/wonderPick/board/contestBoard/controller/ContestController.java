@@ -17,6 +17,10 @@ public class ContestController {
 		
 		contestService.selectMain();
 		return "board/contestBoard/contestMain";
+		
+		
+		
+		adfadfsdfdf
 	}
 	
 	
