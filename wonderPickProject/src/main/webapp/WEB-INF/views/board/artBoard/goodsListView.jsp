@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,44 +103,44 @@
 
             <br><br><br>
 
-                
-            <c:choose>
-                <c:when test="${not empty goodsList}">
-
-                <div class="list_all"><!-- list  div -->
-
-                    <c:forEach>
-
-                    </c:forEach>
-
-                    <div class="item">
-                        <img class="list_img" src=""><br>
-                        <table id="goodsInfo" width="100%" border="1">
-                            <tr>
-                                <th>작가명</th>
-                                <td class="right" rowspan="2"><img class="artist_img" src=""></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">★★★★☆</td>
-                            </tr>
-                            <tr>
-                                <td >작품명</td>
-                                <td class="right">가격</td>
-                            </tr>
-                        </table>
-                        <br>
-                    </div>
-                    
-                    
-
-                </div> <!-- 전체 div 끝 -->
+            
+            <div class="list_all"><!-- list  div -->
+                <c:choose>
+                    <c:when test="${not empty goodsList}">
 
 
-                </c:when>
-                <c:otherwise>
-                    <h3>등록된 상품이 없습니다.</h3>
-                </c:otherwise>
-            </c:choose>
+                        <c:forEach items="${ list }" var = "b">
+
+                        </c:forEach>
+
+                        <div class="item">
+                            <img class="list_img" src=""><br>
+                            <table id="goodsInfo" width="100%" border="1">
+                                <tr>
+                                    <th>작가명</th>
+                                    <td class="right" rowspan="2"><img class="artist_img" src=""></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">★★★★☆</td>
+                                </tr>
+                                <tr>
+                                    <td >작품명</td>
+                                    <td class="right">가격</td>
+                                </tr>
+                            </table>
+                            <br>
+                        </div>
+                        
+                        
+
+                        
+                        
+                    </c:when>
+                    <c:otherwise>
+                        <h3>등록된 상품이 없습니다.</h3>
+                    </c:otherwise>
+                </c:choose>
+            </div> <!-- 전체 div 끝 -->
 
         </div>
     </div> <!-- all_area 끝 -->
