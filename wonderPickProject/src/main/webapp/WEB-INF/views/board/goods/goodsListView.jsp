@@ -10,6 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>굿즈판매목록페이지</title>
     <style>
+        
         #option{
             width: 110px;
             height: 35px;
@@ -37,18 +38,35 @@
             width: 1300px;
             border: 1px solid black;
         }
+        .main{
+            width: 100%;
+            padding-top: 15%;
+        }
+        .goodsList2>#goodsimg{
+            width: 270px;
+        }
+        .goodsList2{
+            margin: 2%;
+        }
         
-        
+        .topouter{
+            margin-left: 100px;
+        }
 
-
-     
-        
     </style>
  
 </head>
 <body>
-
+      <jsp:include page="board/goods/goodsCategory.jsp" />
+    
+    
 <div class="main">
+
+    <!-- 작가가 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
+    <c:if test="${not empty sessionScope.loginUser.memberGrade.equals("작가")}">
+        <a class="btn btn-secondary" style="float:right;" href="enrollForm.go">글쓰기</a>
+        </c:if>
+    
     <div class="topouter" align="center">
         <h2 align="center" style="color: rgb(255, 131, 153);">굿즈</h2>
         <hr style="width: 600px; border: 1px solid gray;">
@@ -71,15 +89,16 @@
             <option value="latest">최신 등록순</option>
         </select>
 
-        </div>
+    </div>
         <br><br><br>
+
         
-        <div class="goodsList1"  id="goods" style="width: 900px;">
+        <div class="goodsList1"  id="goods" style="width: 900px;" align="center">
           <c:choose>  
             <c:when test="${not empty goodsList}">
                     
                     <div class="goodsList2" style="display:inline-block;">
-                    <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goods"><br>
+                    <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
                     <table id="goodsInfo"  id="goods" width="250">
                     <tr>
                         <td >작가명</td>
@@ -97,7 +116,7 @@
                      </div>
                     
                     <div class="goodsList2" style="display:inline-block;">
-                        <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goods"><br>
+                        <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
                         <table id="goodsInfo"  id="goods" width="250">
                         <tr>
                             <td >작가명</td>
@@ -114,7 +133,7 @@
                         <br>
                         </div>
                         <div class="goodsList2" style="display:inline-block;">
-                            <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goods"><br>
+                            <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
                             <table id="goodsInfo"  id="goods" width="250">
                             <tr>
                                 <td >작가명</td>
@@ -131,7 +150,7 @@
                             <br>
                             </div>
                             <div class="goodsList2" style="display:inline-block;">
-                                <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goods"><br>
+                                <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
                                 <table id="goodsInfo"  id="goods" width="250">
                                 <tr>
                                     <td >작가명</td>
@@ -148,7 +167,7 @@
                                 <br>
                                 </div>
                                 <div class="goodsList2" style="display:inline-block;">
-                                    <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goods"><br>
+                                    <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
                                     <table id="goodsInfo"  id="goods" width="250">
                                     <tr>
                                         <td >작가명</td>
@@ -163,19 +182,12 @@
                                     </tr>
                                     </table>
                                     <br>
-                                     </div>
                                     </div>
             </c:when>
             <c:otherwise>
                 <h3>등록된 상품이 없습니다.</h3>
             </c:otherwise>
         </c:choose>
-    
-    
-
-
-
-
 
     <script>
         function like(){
