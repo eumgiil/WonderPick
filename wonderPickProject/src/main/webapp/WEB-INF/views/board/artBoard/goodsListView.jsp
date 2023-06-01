@@ -57,10 +57,10 @@
             text-align: left;
             margin-left:10px;
         }
-        #goodsInfo th{
+        .goodsInfo th{
             width:150px;
         }
-        #goodsInfo .right{
+        .right{
             text-align: right;
         }
         
@@ -108,28 +108,26 @@
                 <c:choose>
                     <c:when test="${not empty goodsList}">
 
-
+                <!-- 필요한정보 : 글번호, 해당사진, 해당작가 -->
                         <c:forEach items="${ list }" var = "b">
-
+                            <div class="item">
+                                <img class="list_img" src=""><br>
+                                <table class="goodsInfo" width="100%" border="1">
+                                    <tr>
+                                        <th>${ b.nickname }</th>
+                                        <td class="right" rowspan="2"><img class="artist_img" src=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">★★★★☆</td>
+                                    </tr>
+                                    <tr>
+                                        <td>${ b.boardTitle }</td>
+                                        <td class="right">${ b.price }가격</td>
+                                    </tr>
+                                </table>
+                                <br>
+                            </div>
                         </c:forEach>
-
-                        <div class="item">
-                            <img class="list_img" src=""><br>
-                            <table id="goodsInfo" width="100%" border="1">
-                                <tr>
-                                    <th>작가명</th>
-                                    <td class="right" rowspan="2"><img class="artist_img" src=""></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">★★★★☆</td>
-                                </tr>
-                                <tr>
-                                    <td >작품명</td>
-                                    <td class="right">가격</td>
-                                </tr>
-                            </table>
-                            <br>
-                        </div>
                         
                         
 
