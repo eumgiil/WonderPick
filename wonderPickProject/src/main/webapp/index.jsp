@@ -9,7 +9,8 @@
 <body>
 
 	<h1>냥냐얀야야야야야야</h1>
-	<a href="artList.bo">yeachan</a>
+	
+	
 	
 </body>
 </html>
