@@ -15,7 +15,8 @@ public class ContestController {
 	@RequestMapping("contestMain.ct")
 	public String selectMain() {
 		
-		return null;
+		contestService.selectMain();
+		return "board/contestBoard/contestMain";
 	}
 	
 	
