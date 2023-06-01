@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
-	<jsp:forward page="WEB-INF/views/common/main.jsp" />
-	
+	<jsp:include page="header.jsp" />
+	<h1>냥냐얀야야야야야야</h1>
+	<a href="artList.bo">yeachan</a>
 </body>
 </html>
