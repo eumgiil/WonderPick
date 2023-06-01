@@ -1,5 +1,8 @@
 package com.kh.wonderPick.board.model.vo;
 
+import lombok.Data;
+
+@Data
 public class Board {
 
 	private int boardNo; // BOARD_NO	NUMBER
