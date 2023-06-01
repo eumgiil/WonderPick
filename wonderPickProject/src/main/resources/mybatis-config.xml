@@ -25,7 +25,7 @@
 	
 	<mappers>
 		<mapper resource="/mappers/artBoard-mapper.xml" />
-	
+		<mapper resource="/mappers/goods-mapper.xml" />
 	</mappers>	
 	<!-- *** 주의 : 미리 등록을 해두려면 해당 mapper파일이 진짜 존재하고 있어야함 + namesapce속성까지 작성 O -->
 	
