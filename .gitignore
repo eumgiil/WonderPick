@@ -1,3 +1,23 @@
+
+
+
+
+
+
+.metadata
+.class
+Servers
+
+
+.target
+target
+/*target*/
+.target/
+target/
+
+
+
+
 # Compiled class file
 *.class
 
