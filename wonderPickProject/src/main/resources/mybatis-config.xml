@@ -9,8 +9,8 @@
 	</settings>
 	
 	<typeAliases>
-		<typeAlias type="com.kh.wonderPick.board.model.vo.Board" alias="board" />
-		<typeAlias type="com.kh.wonderPick.board.model.vo.Goods" alias="Goods" />
+		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Board" alias="board" />
+		<typeAlias type="com.kh.wonderPick.board.goods.model.vo.Goods" alias="goods" />
 		
 	</typeAliases>
 	<!-- ** 주의 : 미리 등록을 해두기 위해선 해당 클래스가 진짜 존재하고 있어야함 -->
