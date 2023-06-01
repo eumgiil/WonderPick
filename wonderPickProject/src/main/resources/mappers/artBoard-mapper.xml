@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="artBoardMapper">
+
+	<resultMap id="artBoardResultSet" type="artBoard">
+		<result column="" property="" />
+	</resultMap>
+
+	<select id="selectArtList" resultMap="artBoardResultSet">
+		select
+		       nickname
+		      ,board_title
+		      ,price
+		  from
+		       art_board
+		  join
+		       board using(board_no)
+		  join
+		       member using(member_no)
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
+	
+	
+	
+	
