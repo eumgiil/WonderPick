@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,13 +57,16 @@
             text-align: left;
             margin-left:10px;
         }
-        #goodsInfo th{
+        .goodsInfo th{
             width:150px;
         }
-        #goodsInfo .right{
+        .right{
             text-align: right;
         }
-        
+        .line{
+            width: 600px;
+            border: 1px solid gray;
+        }
 
 
      
@@ -77,9 +83,11 @@
         </div>
 
         <div class="topouter" align="center">
-            <h2 class="pink" align="center">굿즈</h2>
-            <hr style="width: 600px; border: 1px solid gray;">
-            <h6>n개의 상품이 있습니다.</h6>
+            <h2 class="pink" align="center">그림</h2>
+            <hr class="line">
+            <div class="">
+                <h6 style="width:500px; display: inline-block;"> ${ list.size }개의 상품이 있습니다.</h6> <button>글쓰기</button>
+            </div>
             <div id="searchGoods">
                 <select name="" id="option">
                     <option value="">전체</option>
@@ -100,44 +108,37 @@
 
             <br><br><br>
 
-                
-            <c:choose>
-                <c:when test="${not empty goodsList}">
+            
+            <div class="list_all"><!-- list  div -->
+                <c:choose>
+                    <c:when test="${ not empty goodsList }">
 
-                <div class="list_all"><!-- list  div -->
-
-                    <c:forEach>
-
-                    </c:forEach>
-
-                    <div class="item">
-                        <img class="list_img" src=""><br>
-                        <table id="goodsInfo" width="100%" border="1">
-                            <tr>
-                                <th>작가명</th>
-                                <td class="right" rowspan="2"><img class="artist_img" src=""></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">★★★★☆</td>
-                            </tr>
-                            <tr>
-                                <td >작품명</td>
-                                <td class="right">가격</td>
-                            </tr>
-                        </table>
-                        <br>
-                    </div>
-                    
-                    
-
-                </div> <!-- 전체 div 끝 -->
-
-
-                </c:when>
-                <c:otherwise>
-                    <h3>등록된 상품이 없습니다.</h3>
-                </c:otherwise>
-            </c:choose>
+                <!-- 필요한정보 : 글번호, 해당사진, 해당작가 -->
+                        <c:forEach items="${ list }" var = "b">
+                            <div class="item" onclick="location.href='artDetail.bo?bno=${ b.boardNo }'">
+                                <img class="list_img" src=""><br>
+                                <table class="goodsInfo" width="100%">
+                                    <tr>
+                                        <th>${ b.nickname }</th>
+                                        <td class="right" rowspan="2"><img class="artist_img" src=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">★★★★☆</td>
+                                    </tr>
+                                    <tr>
+                                        <td>${ b.boardTitle }</td>
+                                        <td class="right">${ b.price }가격</td>
+                                    </tr>
+                                </table>
+                                <br>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <h3>등록된 상품이 없습니다.</h3>
+                    </c:otherwise>
+                </c:choose>
+            </div> <!-- 전체 div 끝 -->
 
         </div>
     </div> <!-- all_area 끝 -->
