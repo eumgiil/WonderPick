@@ -9,9 +9,7 @@
 	</settings>
 	
 	<typeAliases>
-		<typeAlias type="" alias="" />
 		<typeAlias type="com.kh.wonderPick.board.model.vo.Board" alias="board" />
-		<typeAlias type="" alias="" />
 	</typeAliases>
 	<!-- ** 주의 : 미리 등록을 해두기 위해선 해당 클래스가 진짜 존재하고 있어야함 -->
 	
@@ -23,9 +21,6 @@
 	
 	
 	<mappers>
-		<mapper resource="" />
-		<mapper resource="" />
-		<mapper resource="" />
 	</mappers>	
 	<!-- *** 주의 : 미리 등록을 해두려면 해당 mapper파일이 진짜 존재하고 있어야함 + namesapce속성까지 작성 O -->
 	

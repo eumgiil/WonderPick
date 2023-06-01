@@ -5,4 +5,107 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
+		
+		<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 서버가 시작되면 web.xml을 읽음 ->web.xml의 <context-param>에 여기 파일을 젤먼저 요청함
+	 -> 그래서 root-context.xml이 제일 처음 읽히는 xml -->
+	
+	
+	
+	 <!--
+	
+		* root-context.xml
+		서버 구동과 동시에 web.xml파일을 거쳐서 바로 로딩되는 문서 == preloading
+		=> 서버구동과 동시에 바로 셋팅(bean등록)해야하는 내용들을 작성
+		주로 DB접속정보, 트랜잭션처리, 외부모듈연결 등등...
+		
+	  -->
+	 
+	  <!-- ★★★  DB연결을 위한 3단계 -->
+	  <!-- 1단계. DB연결 위한 도구를 설정  (여기가 Connection의 역할을 대신해주는 곳) -->
+	  <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
+		 																		 <!-- Spring 알아서 close해준다  -->
+		 
+		  <!-- 어떤 DB에 접속할건지 정보작성 -->
+		  <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		  <property name="url" value="jdbc:oracle:thin:@192.168.31.14:1521:xe"/>
+		  <property name="username" value="WONDERPICK"/>
+		  <property name="password" value="WONDERPICK"/>
+		 
+	  </bean>
+	 
+	  <!--
+	  	객체가 필요할 때마다 내부적으로 실행되는 코드
+	  	BasicDataSource dataSource = new BasicDataSource();
+	  	dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+	  	dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
+	  	dataSource.setUserName("SPRING");
+	  	dataSouce.setPassword("spring");
+	  	
+	  	property에 적은 값을 setter메소드를 이용해서 대신 넣어준다 =>Spring가 !!!
+	  	이 코드를 내가 선언할 수 있지만 spring이 대신 해준다 (반납도알아서 해줌!!)
+	  	=> 제어의 역전(IoC)!!!!
+	   -->
+	  
+	   <!-- 2단계. MyBatisSpring에서 제공하는 SQL명령을 실행하기 위한 도구 등록  (SQL역할을 대신해주는 곳)-->
+	   <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+	   		
+	   		<!-- MyBatis설정파일의 위치를 설정(src/main/resources)하여 설정값들을 가져와야 함 -->
+	   		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+	   		<!-- 어떤 DB에 연결할건지 연결을 위한 도구 참조 설정 -->
+	   		<property name="dataSource" ref="dataSource"/>
+	   		
+	   </bean>
+	  
+	   <!--
+	   		객체가 필요할 떄마다 내부적으로 이 코드가 실햄 도미
+	   		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+	   		sqlSessionFactory.setConfigLocation("classpath:mybatis-config.xml");
+	   		sqlSessionFactory.setDataSource(dataSource);
+	  
+	    -->
+	   
+	    <!-- 3단계. SQL구문 실행을 위한 템플릿을 제공하는 도구 등록 -->
+	  <bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
+	  	<!-- SQL명령 실행을 위한 도구에 대한 참조 설명 -->
+	  	<constructor-arg ref="sqlSessionFactory"/>
+	  </bean>
+	 
+	  <!--
+	  		객체가 필요할 때마다 내부적으로 이 코드가 실행됨
+	  		SqlSessionTemplate sqlSession = new SqlSessionTemplate(sqlSessionFactory);
+	 
+	   -->
+	<!--
+		property : setter주입
+		constructor - arg : 생성자 주입
+	 -->	 
+		 
+		 
+		<!--  파일 업로드 관련 빈 등록 -->
+		 
+		 <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+		 	<property name="maxUploadSize"   value="100000000"/>
+		 	<property name="maxInMemorySize" value="100000000"/>
+		 </bean>
+	 
+		  <!-- 메일 전송 도구 등록  -->
+	  <!-- 
+		  <bean id="sender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+			  	<property name="host" value="smtp.gmail.com"/>
+			  	<property name="port" value="587"/>
+			  	<property name="username" value="eomxx94@gmail.com"/>
+			  	<property name="password" value="puhgvrbueadsukpi"/>
+			  	<property name="javaMailProperties">
+			  		<props>
+			  			<prop key="mail.smtp.auth">true</prop>
+			  			<prop key="mail.smtp.starttls.enable">true</prop>
+			  		</props>
+			  	</property>
+		  </bean>
+		  
+		  
+		 -->
+		
+		
 </beans>
