@@ -93,7 +93,7 @@ order
          )
     values
          (
-         seq_board_no.nextval,
+         seq_board_no.currval,
          #{boardNo},
          #{memberNo},
          #{boardTitle},
@@ -105,7 +105,19 @@ order
   insert
     into 
         board_image
-    
+        (
+        board_img_no,
+        board_no,
+        origin_name,
+        modify_name
+        )
+   values
+        (
+        seq_boardImg_no.nextval,
+        seq_board_no.currval,
+        #{originName},
+        #{modifyName}
+        )
   
   </insert>
   

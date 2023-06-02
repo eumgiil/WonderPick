@@ -46,8 +46,6 @@ public class GoodsServiceImpl implements GoodsService {
 		 }
 		 
 			  return (result*result2*result3);
-		
-		 
 	}
 
 	@Override
