@@ -79,13 +79,45 @@ order
         #{addModify},
         #{goodsCategory}
         )
-   insert
-    into
-         board
-         
-        
-       
-        
+  </insert>
+  <insert id="insertGoods" parameterType="board">
+  insert 
+    into 
+        board
+         (
+         board_no,
+         member_no,
+         board_title,
+         board_content,
+         board_type
+         )
+    values
+         (
+         seq_board_no.currval,
+         #{boardNo},
+         #{memberNo},
+         #{boardTitle},
+         #{boardContent},
+         'G'
+         )
+  </insert>
+  <insert id="insertGoods" parameterType="boardImage">
+  insert
+    into 
+        board_image
+        (
+        board_img_no,
+        board_no,
+        origin_name,
+        modify_name
+        )
+   values
+        (
+        seq_boardImg_no.nextval,
+        seq_board_no.currval,
+        #{originName},
+        #{modifyName}
+        )
   
   </insert>
   
