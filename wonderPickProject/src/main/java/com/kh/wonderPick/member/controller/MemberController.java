@@ -10,7 +10,6 @@ public class MemberController {
 	
 	@RequestMapping("login.me")
 	public void loginMember(Member m) {
-		System.out.println(m.getMemberId());
-		System.out.println(m.getMemberPwd());
+		
 	}
 }
