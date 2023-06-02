@@ -22,7 +22,7 @@
 			<result column="PRICE_STATUS" property="priceStatus"/>
 			<!-- 투표테이블  -->
 			<result column="VOTE_STATUS" property="voteStatus"/>
-			<result column="VOTE_COUNT" property="VoteCount"/>
+			<result column="VOTE_COUNT" property="voteCount"/>
 		</resultMap>
 		
 		<select id="selectTop10" resultMap="contestBoardResultSet">
