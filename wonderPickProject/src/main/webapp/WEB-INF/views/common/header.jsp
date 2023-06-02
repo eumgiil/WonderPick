@@ -42,6 +42,7 @@
                         <a href="#">공지사항</a>
                             <ul class="detailCategory">
                                 <li><a href="#">공지사항</a></li>
+                                <li><a href="#">공모전</a></li>
                                 <li><a href="#">1대1문의</a></li>
                                 <li><a href="#">광고문의</a></li>
                             </ul>
