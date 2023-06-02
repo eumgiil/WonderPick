@@ -1,4 +1,4 @@
-package com.kh.wonderPick.board.model.vo;
+package com.kh.wonderPick.board.boardCommon.model.vo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -57,6 +57,7 @@ order
   insert
     into
         goods
+        
         (
         board_no,
         price,
@@ -69,7 +70,7 @@ order
         )
     values
         (
-        seq_bno.nextval,
+        seq_board_no.nextval,
         #{price},
         #{draft},
         #{modifyCount},
