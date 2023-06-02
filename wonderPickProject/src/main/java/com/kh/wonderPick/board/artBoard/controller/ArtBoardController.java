@@ -14,10 +14,16 @@ public class ArtBoardController {
 	private ArtBoardService artService;
 	
 	@RequestMapping("artList.bo")
+	public ModelAndView selectArtList(ModelAndView mv /* int currentPage*/ ) {
+		
+		
+		return mv;
+	}
 	public String selectArtList( /* int currentPage*/ ) {
 		
 		return "board/artBoard/detailView";
 		
+
 	} 
 	
 }
