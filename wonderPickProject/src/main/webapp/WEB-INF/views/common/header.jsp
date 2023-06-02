@@ -81,7 +81,7 @@
                         $('#search_list_area').css("display","block");
                         }) */
                 
-                        // 클릭하면 보이게 끔
+                        // 클릭하면 보이게 끔	
                         // 바닐라 자바스크립트
                         document.getElementById('search_input').addEventListener('click', () => {
                             document.getElementById('search_list_area').style.display = 'block';
