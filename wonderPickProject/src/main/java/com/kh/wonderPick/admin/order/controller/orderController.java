@@ -10,18 +10,9 @@ import com.kh.wonderPick.admin.order.model.service.OrderService;
 @Controller
 public class orderController {
 
-	@Autowired
-	private OrderService orderService;
-	
-	
-	
-	@RequestMapping("order.on")
-	public String selectList(Model model) {
+
 		
-		
-		return "order/orderView";
-		
-	}
+	
 	
 	
 }
