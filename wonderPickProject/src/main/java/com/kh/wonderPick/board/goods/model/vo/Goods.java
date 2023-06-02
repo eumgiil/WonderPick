@@ -18,18 +18,6 @@ public class Goods extends Board {
 	private String addInfo; //ADD_INFO	VARCHAR2(1000 BYTE)
 	
 	
-	public static void main(String[] args) {
-		
-		Goods a = new Goods();
-		
-		a.setBoardNo(1);
-		
-		System.out.println(a.getBoardNo());
-		
-		
-		
-		
-	}
 	
 	
 	
