@@ -19,7 +19,7 @@
   	<result column="member_no" property="memberNo" />
   	<result column="board_title" property="boardTitle" />
   	<result column="board_content" property="boardContent" />
-  	<result column="crate_date" property="createDate" />
+  	<result column="create_date" property="createDate" />
   	<result column="board_count" property="boardCount" />
   </resultMap>
   

@@ -25,7 +25,7 @@ public class GoodsDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("goodsMapper.selectGoodsList", null , rowBounds);
 	}
-	
+	/*
 	public int insertGoods(SqlSessionTemplate sqlSession, Goods g) {
 		return sqlSession.insert("goodsMapper.insertGoods",g);
 	}
@@ -35,5 +35,6 @@ public class GoodsDao {
 	public int insertBoardImage(SqlSessionTemplate sqlSession, BoardImage bi) {
 		return sqlSession.insert("goodsMapper.insertBoardImage", bi);
 	}
+	*/
 
 }
