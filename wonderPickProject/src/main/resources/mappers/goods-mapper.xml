@@ -53,73 +53,7 @@ order
 	by
        board_no asc
   </select>
-  <insert id="insertGoods" parameterType="goods">
-  insert
-    into
-        goods
-        
-        (
-        board_no,
-        price,
-        draft,
-        modify_count,
-        workday,
-        add_draft,
-        add_modify,
-        goods_category
-        )
-    values
-        (
-        seq_board_no.nextval,
-        #{price},
-        #{draft},
-        #{modifyCount},
-        #{workday},
-        #{addDraft},
-        #{addModify},
-        #{goodsCategory}
-        )
-  </insert>
-  <insert id="insertGoods" parameterType="board">
-  insert 
-    into 
-        board
-         (
-         board_no,
-         member_no,
-         board_title,
-         board_content,
-         board_type
-         )
-    values
-         (
-         seq_board_no.currval,
-         #{boardNo},
-         #{memberNo},
-         #{boardTitle},
-         #{boardContent},
-         'G'
-         )
-  </insert>
-  <insert id="insertGoods" parameterType="boardImage">
-  insert
-    into 
-        board_image
-        (
-        board_img_no,
-        board_no,
-        origin_name,
-        modify_name
-        )
-   values
-        (
-        seq_boardImg_no.nextval,
-        seq_board_no.currval,
-        #{originName},
-        #{modifyName}
-        )
   
-  </insert>
   
 
 
