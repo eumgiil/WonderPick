@@ -123,7 +123,7 @@
             
             <!-- 로그인 모달 -->
              <div class="modal fade" id="loginModal">
-				<div class="modal-dialog modal-sm">
+				<div class="modal-dialog modal-dialog-centered">
 		            <div class="modal-content" id="loginModal-content">
 		                <!-- Modal Header -->
 		                <div class="modal-header" id="loginModal-header">
@@ -140,6 +140,9 @@
 		                    <!-- Modal footer -->  
 		                    <div class="modal-footer" id="loginModal-footer">
 		                        <button type="submit" class="btn btn-primary">로그인</button>
+                                <div id="loginModal-href">
+                                    <a href="#">아이디·비밀번호 찾기</a> | <a href="#">회원가입</a>
+                                </div>
 		                    </div>
 		                </form>
 		            </div>

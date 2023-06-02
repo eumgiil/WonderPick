@@ -274,12 +274,9 @@
     }
     
     /* 로그인 모달 */
-    #loginModal{
-    	top : 200px;
-    }
     #loginModal-content{
     	width : 500px !important;
-    	height : 800px;
+    	height : 650px;
     }
     #loginModal-header{
     	border-bottom : none;
@@ -311,4 +308,20 @@
     }
     #loginModal-body{
         margin-top: 20px;
+    }
+    #loginModal-footer{
+        border-top : none;
+    }
+    #loginModal-href{
+        margin : auto;
+    }
+    #loginModal-href a{
+        color: #a0a0a0 !important;
+    }
+    #loginModal-footer button{
+        width : 400px;
+        height : 60px;
+        margin : auto;
+        background-color: #FF8399;
+        border : none;
     }
