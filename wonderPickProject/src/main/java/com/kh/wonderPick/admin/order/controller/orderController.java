@@ -18,8 +18,8 @@ public class orderController {
 	@RequestMapping("order.on")
 	public String selectList(Model model) {
 		
-		
-		return "order/orderView";
+		model.addAttribute("list",orderService.seledtList());
+		return "order/orderEnrollForm";
 		
 	}
 	
