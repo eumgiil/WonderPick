@@ -15,13 +15,13 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	@Autowired
 	private ArtBoardDao artDao;
 	
-	@Autowired
+	@Autowired 
 	private SqlSessionTemplate sqlSession;
 	
 	
 	@Override
 	public ArrayList<ArtBoard> selectArtList() {
 		return artDao.selectArtList(sqlSession);
-	}
+	} 
 
 }

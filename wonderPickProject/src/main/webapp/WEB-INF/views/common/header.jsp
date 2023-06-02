@@ -29,7 +29,7 @@
                             </ul>
                     </li>
                     <li class="mainCategory"><a href="#">그림의뢰</a></li>
-                    <li class="mainCategory"><a href="#">굿즈판매</a></li>
+                    <li class="mainCategory"><a href="list.bo?cPage=1">굿즈판매</a></li>
                     <li class="mainCategory">
                         <a href="#">공지사항</a>
                             <ul class="detailCategory">
@@ -81,7 +81,7 @@
                         $('#search_list_area').css("display","block");
                         }) */
                 
-                        // 클릭하면 보이게 끔
+                        // 클릭하면 보이게 끔	
                         // 바닐라 자바스크립트
                         document.getElementById('search_input').addEventListener('click', () => {
                             document.getElementById('search_list_area').style.display = 'block';
