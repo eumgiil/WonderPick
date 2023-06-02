@@ -1,11 +1,11 @@
 package com.kh.wonderPick.board.goods.model.vo;
 
-import com.kh.wonderPick.board.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 
 import lombok.Data;
 
 @Data
-public class Goods extends Board {
+public class Goods extends Board{
 	
 	private int price; //PRICE	NUMBER
 	private int draft; //DRAFT	NUMBER
@@ -21,5 +21,7 @@ public class Goods extends Board {
 	
 	
 	
-
+	
 }
+
+
