@@ -28,12 +28,12 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Override
 	public ArrayList<Goods> selectGoodsList(PageInfo pi) {
-		return null;
+		return goodsDao.selectGoodsList(sqlSession, pi);
 	}
 
 	@Override
 	public int insertGoods(Goods g) {
-		return 0;
+		return goodsDao.insertGoods(sqlSession, g);
 	}
 
 	@Override

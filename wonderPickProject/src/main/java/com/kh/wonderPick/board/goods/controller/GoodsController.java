@@ -1,5 +1,10 @@
 package com.kh.wonderPick.board.goods.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +44,30 @@ public class GoodsController {
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		// 파일명 수정 작업 후 서버에 업로드시키기
 		String originName = upfile.getOriginalFilename();
+		
+		// 년월일시분초
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 5자리 랜덤값
+		int ranNum = (int)(Math.random()* 90000 + 10000);
+		
+		//확장자
+		String ext = originName.substring(originName.lastIndexOf("."));
+				
+		String changeName = currentTime + ranNum + ext;
+		
+		// 업로드 시키고자 하는 폴더에 물리적인 경로 알아내기
+		String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/");
+		
+				
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return changeName;
 	}
 	@RequestMapping("insert.bo")
 	public String insertGoods(Goods g, MultipartFile upfile, HttpSession session, Model model) {
@@ -48,9 +77,14 @@ public class GoodsController {
 			BoardImage bi = new BoardImage();
 			
 			bi.setOriginName(upfile.getOriginalFilename());
-			bi.setModifyName("resources/uploadFiles/" + saveFile(upfile, session));
-			
-			
+			bi.setModifyName("resources/boardUpfiles/" + saveFile(upfile, session));
+		}
+		if(goodsService.insertGoods(g)>0) {
+			session.setAttribute("alertMsg", "상품 등록 성공!");
+			return "redirect:list.go";
+		}else {
+			model.addAttribute("errorMsg","상품등록 실패");
+			return "common/errorPage";
 		}
 	}
 
