@@ -272,3 +272,43 @@
     #top span{
         margin-top: 13px;
     }
+    
+    /* 로그인 모달 */
+    #loginModal{
+    	top : 200px;
+    }
+    #loginModal-content{
+    	width : 500px !important;
+    	height : 800px;
+    }
+    #loginModal-header{
+    	border-bottom : none;
+    }
+    #loginModal-header img{
+        width : 200px;
+        height : 200px;
+        margin : auto;
+        margin-right : 105px;
+        margin-top: 20px;
+    }
+    #loginModal-header .close{
+        padding : 0;
+        margin : 0;
+    }
+    #loginTitle{
+        text-align: center;
+        color : #FF8399;
+        font-family: 'Geologica', sans-serif;
+        font-weight: bold;
+    }
+    #loginModal-body input{
+        margin : 0px 33px 0px 33px;
+        width : 400px;
+        height : 60px;
+    }
+    #loginModal-body .mb-2{
+        margin-bottom: 0 !important;
+    }
+    #loginModal-body{
+        margin-top: 20px;
+    }

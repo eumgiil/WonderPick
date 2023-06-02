@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@900&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/common/header.css">
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -124,26 +124,22 @@
             <!-- 로그인 모달 -->
              <div class="modal fade" id="loginModal">
 				<div class="modal-dialog modal-sm">
-		            <div class="modal-content">
+		            <div class="modal-content" id="loginModal-content">
 		                <!-- Modal Header -->
-		                <div class="modal-header">
-		                    <h4 class="modal-title">Login</h4>
+		                <div class="modal-header" id="loginModal-header">
+		                    <img src="resources/common/palette.png">
 		                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 		                </div>
-		        
+                        <h1 id="loginTitle">WONDER PICK</h1>
 		                <form action="login.me" method="post">
 		                    <!-- Modal body -->
-		                    <div class="modal-body">
-		                        <label for="userId" class="mr-sm-2">ID : </label>
-		                        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter ID" id="userId" name="userId"> <br>
-		                        <label for="userPwd" class="mr-sm-2">Password : </label>
-		                        <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="userPwd" name="userPwd">
+		                    <div class="modal-body" id="loginModal-body">
+		                        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="아이디를 입력해주세요." id="userId" name="userId"> <br>
+		                        <input type="password" class="form-control mb-2 mr-sm-2" placeholder="비밀번호를 입력해주세요." id="userPwd" name="userPwd">
 		                    </div>
-		                           
-		                    <!-- Modal footer -->
-		                    <div class="modal-footer">
+		                    <!-- Modal footer -->  
+		                    <div class="modal-footer" id="loginModal-footer">
 		                        <button type="submit" class="btn btn-primary">로그인</button>
-		                        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 		                    </div>
 		                </form>
 		            </div>
