@@ -52,6 +52,11 @@
         .topouter{
             margin-left: 100px;
         }
+        #enrollGoods{
+         float : right;
+         margin-rigth : 20%;
+        }
+        
 
     </style>
  
@@ -64,7 +69,7 @@
 
     <!-- 작가가 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
     <c:if test="${not empty sessionScope.loginUser.memberGrade.equals("작가")}">
-        <a class="btn btn-secondary" style="float:right;" href="enrollForm.go">글쓰기</a>
+        <a class="btn btn-secondary" id="enrollGoods" href="enrollForm.go">글쓰기</a>
         </c:if>
     
     <div class="topouter" align="center">
