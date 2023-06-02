@@ -135,8 +135,8 @@
 		                <form action="login.me" method="post">
 		                    <!-- Modal body -->
 		                    <div class="modal-body" id="loginModal-body">
-		                        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="아이디를 입력해주세요." id="userId" name="userId"> <br>
-		                        <input type="password" class="form-control mb-2 mr-sm-2" placeholder="비밀번호를 입력해주세요." id="userPwd" name="userPwd">
+		                        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="아이디를 입력해주세요." id="memberId" name="memberId"> <br>
+		                        <input type="password" class="form-control mb-2 mr-sm-2" placeholder="비밀번호를 입력해주세요." id="memberPwd" name="memberPwd">
 		                    </div>
 		                    <!-- Modal footer -->  
 		                    <div class="modal-footer" id="loginModal-footer">
