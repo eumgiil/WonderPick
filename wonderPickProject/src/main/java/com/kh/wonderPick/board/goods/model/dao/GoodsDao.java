@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.wonderPick.board.goods.model.vo.Goods;
+import com.kh.wonderPick.common.model.vo.PageInfo;
 
 @Repository
 public class GoodsDao {

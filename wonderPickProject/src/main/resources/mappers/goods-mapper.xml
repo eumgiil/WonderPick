@@ -16,34 +16,22 @@
 	       board_type = 'G'
   </select>
   <select id="selectGoodsList" resultMap="goodsResultSet">
-  select 
-        
-  
+ select
+       board_no, board_title, member_no, board_count,
+       to_char(create_date, 'YYYY-MM-DD') as "create_date" 
+  from 
+       board b
+ join 
+      member using (member_no)
+ where
+      b.status = 'Y'
+and 
+    board_type ='G'
+order by
+      board_no asc;
   
   </select>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-
-	<select id="selectListCount" resultType="_int">
-		 select
-	            *
-	       from
-	            board
-		  where
-		        status = 'Y'
-		    and
-		        board_type = 'G'
-	</select>
-
 
 
 
