@@ -7,5 +7,4 @@ import com.kh.wonderPick.admin.order.model.vo.Order;
 public interface OrderService {
 
 	
-	ArrayList<Order> seledtList();
 }

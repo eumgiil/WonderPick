@@ -27,7 +27,7 @@
 			<br>		<br>
 
  
-			<div class="orderList"  id="goods" style="width: 600px;" align="center">
+			<div class="orderList"  id="" style="width: 600px;" align="center">
        <br>		<br>
 				<form action="" method="get">
 				<table align="center">
