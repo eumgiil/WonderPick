@@ -28,7 +28,6 @@
 	<mappers>
 		<mapper resource="/mappers/artBoard-mapper.xml"/>
 		<mapper resource="/mappers/contestBoard-mapper.xml"/>
-		<mapper resource="/mappers/artBoard-mapper.xml" />
 		<mapper resource="/mappers/goods-mapper.xml" />
 		<mapper resource="/mappers/order-mapper.xml" />
 	</mappers>	
