@@ -40,10 +40,12 @@ public class GoodsServiceImpl implements GoodsService {
 		
 		 int result = goodsDao.insertGoods(sqlSession, g);
 		 int result2 = goodsDao.insertBoard(sqlSession, b);
-		 int result3 = goodsDao.insertBoardImage(sqlSession, bi);
+		 int result3 = 1;
+		 if(bi != null) {
+			 result3 = goodsDao.insertBoardImage(sqlSession, bi);
+		 }
 		 
-		 return (result*result2*result3);
-		 
+			  return (result*result2*result3);
 	}
 
 	@Override

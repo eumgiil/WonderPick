@@ -78,7 +78,7 @@ public class GoodsController {
 			bi.setOriginName(upfile.getOriginalFilename());
 			bi.setModifyName("resources/boardUpfiles/" + saveFile(upfile, session));
 		}
-		if(goodsService.insertGoods(g)>0) {
+		if(goodsService.insertGoods(g, b, bi)>0) {
 			session.setAttribute("alertMsg", "상품 등록 성공!");
 			return "redirect:list.go";
 		}else {
