@@ -8,11 +8,7 @@
 </head>
 <body>
 
-	<h1>냥냐얀야야야야야야</h1>
-	
-	
-	
-	<jsp:forward page="WEB-INF/views/common/main.jsp" />
-	
+<h1>냥냐얀야야야야야야</h1>
+
 </body>
 </html>
