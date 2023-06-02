@@ -36,11 +36,11 @@
         }
         .main{
             width: 1300px;
-            border: 1px solid black;
+            
         }
         .main{
             width: 100%;
-            padding-top: 15%;
+            padding-top: 5%;
         }
         .goodsList2>#goodsimg{
             width: 270px;
@@ -50,25 +50,37 @@
         }
         
         .topouter{
-            margin-left: 100px;
+            float : left;
+            margin-left :150px;
+            
         }
         #enrollGoods{
          float : right;
          margin-rigth : 20%;
         }
+        #goodsimg{
+        border : 1px solid black;
+        }
+        #searchGoods{
+         float : left;
+         margin-left : 500px;
+        }
+        
+        
         
 
     </style>
  
 </head>
 <body>
-      <jsp:include page="board/goods/goodsCategory.jsp" />
+	<jsp:include page="../../common/header.jsp" />
+      <jsp:include page="goodsCategory.jsp" />
     
     
 <div class="main">
 
     <!-- 작가가 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
-    <c:if test="${not empty sessionScope.loginUser.memberGrade.equals("작가")}">
+    <c:if test="${loginUser.memberGrade.equals('작가')}">
         <a class="btn btn-secondary" id="enrollGoods" href="enrollForm.go">글쓰기</a>
         </c:if>
     
@@ -78,7 +90,7 @@
         <h6>n개의 상품이 있습니다.</h6>
 
         <form action="" method="get">
-        <div id="searchGoods">
+        <div id="searchGoods" >
          <select name="" id="option">
             <option value="whole">전체</option>
             <option value="nickname">작가명</option>
@@ -94,100 +106,34 @@
             <option value="latest">최신 등록순</option>
         </select>
 
-    </div>
+        </div>
         <br><br><br>
 
         
-        <div class="goodsList1"  id="goods" style="width: 900px;" align="center">
+        <div class="goodsList1"  id="goods" style="width: 1300px;" align="center">
           <c:choose>  
-            <c:when test="${not empty goodsList}">
+            <c:when test="${not empty list}">
+            		<c:forEach items="${list}" var="g">
                     
                     <div class="goodsList2" style="display:inline-block;">
                     <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
                     <table id="goodsInfo"  id="goods" width="250">
                     <tr>
-                        <td >작가명</td>
+                        <td >${g.memberNo}</td>
                         <td><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" alt="" width="30" style="float: right;"></td>
                     </tr>
                     <tr>
                         <td colspan="2">★★★★☆</td>
                     </tr>
                     <tr>
-                        <td >작품명</td>
-                        <td style="float: right;">가격</td>
+                        <td >${g.boardTitle }</a></td>
+                        <td style="float: right;">${g.price}</td>
                     </tr>
                     </table>
                     <br>
                      </div>
                     
-                    <div class="goodsList2" style="display:inline-block;">
-                        <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
-                        <table id="goodsInfo"  id="goods" width="250">
-                        <tr>
-                            <td >작가명</td>
-                            <td><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" alt="" width="30" style="float: right;"></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">★★★★☆</td>
-                        </tr>
-                        <tr>
-                            <td >작품명</td>
-                            <td style="float: right;">가격</td>
-                        </tr>
-                        </table>
-                        <br>
-                        </div>
-                        <div class="goodsList2" style="display:inline-block;">
-                            <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
-                            <table id="goodsInfo"  id="goods" width="250">
-                            <tr>
-                                <td >작가명</td>
-                                <td><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" alt="" width="30" style="float: right;"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">★★★★☆</td>
-                            </tr>
-                            <tr>
-                                <td >작품명</td>
-                                <td style="float: right;">가격</td>
-                            </tr>
-                            </table>
-                            <br>
-                            </div>
-                            <div class="goodsList2" style="display:inline-block;">
-                                <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
-                                <table id="goodsInfo"  id="goods" width="250">
-                                <tr>
-                                    <td >작가명</td>
-                                    <td><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" alt="" width="30" style="float: right;"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">★★★★☆</td>
-                                </tr>
-                                <tr>
-                                    <td >작품명</td>
-                                    <td style="float: right;">가격</td>
-                                </tr>
-                                </table>
-                                <br>
-                                </div>
-                                <div class="goodsList2" style="display:inline-block;">
-                                    <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
-                                    <table id="goodsInfo"  id="goods" width="250">
-                                    <tr>
-                                        <td >작가명</td>
-                                        <td><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" alt="" width="30" style="float: right;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">★★★★☆</td>
-                                    </tr>
-                                    <tr>
-                                        <td >작품명</td>
-                                        <td style="float: right;">가격</td>
-                                    </tr>
-                                    </table>
-                                    <br>
-                                    </div>
+                 </c:forEach> 
             </c:when>
             <c:otherwise>
                 <h3>등록된 상품이 없습니다.</h3>

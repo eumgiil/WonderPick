@@ -26,7 +26,7 @@
   
   <select id="selectListCount" resultType="_int">
 	 select
-            *
+            count(*)
      from
             board
 	  where
@@ -35,23 +35,25 @@
 	       board_type = 'G'
   </select>
   <select id="selectGoodsList" resultMap="goodsResultSet">
- select
+select
        board_no, 
        board_title, 
        member_no, 
        board_count,
-       to_char(create_date, 'YYYY-MM-DD') as "create_date" 
+       to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
+       origin_name
   from 
-       	board b
+       board b
  join 
-      	member using (member_no)
+      member using (member_no)
+ join 
+ 	 board_image using (board_no)
  where
-      	b.status = 'Y'
+      b.status = 'Y'
 and 
-       board_type ='G'
-order 
-	by
-       board_no asc
+    board_type ='G'
+order by
+      board_no asc
   </select>
   
   
