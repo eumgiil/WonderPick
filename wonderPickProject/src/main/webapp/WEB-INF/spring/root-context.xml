@@ -7,8 +7,8 @@
 		
 		
 		<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- 서버가 시작되면 web.xml을 읽음 ->web.xml의 <context-param>에 여기 파일을 젤먼저 요청함
-	 -> 그래서 root-context.xml이 제일 처음 읽히는 xml -->
+		<!-- 서버가 시작되면 web.xml을 읽음 ->web.xml의 <context-param>에 여기 파일을 젤먼저 요청함
+		 -> 그래서 root-context.xml이 제일 처음 읽히는 xml -->
 	
 	
 	
