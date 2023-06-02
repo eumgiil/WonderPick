@@ -2,6 +2,8 @@ package com.kh.wonderPick.board.goods.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
@@ -16,7 +18,7 @@ public interface GoodsService {
 	ArrayList<Goods> selectGoodsList(PageInfo pi);
 	
 	// 게시글 작성하기
-	int insertGoods(Goods g);
+	int insertGoods(Goods g, Board b, BoardImage bi);
 	
 	// 게시글 조회수 증가
 	int increaseCount(int boardNo);
