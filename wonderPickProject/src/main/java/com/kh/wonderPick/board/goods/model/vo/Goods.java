@@ -1,11 +1,12 @@
 package com.kh.wonderPick.board.goods.model.vo;
 
+import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+
 import lombok.Data;
 
 @Data
-public class Goods {
+public class Goods extends Board{
 	
-	private int boardNo; //BOARD_NO	NUMBER
 	private int price; //PRICE	NUMBER
 	private int draft; //DRAFT	NUMBER
 	private int modifyCount; //MODIFY_COUNT	NUMBER
@@ -15,5 +16,12 @@ public class Goods {
 	private int amount;//AMOUNT	NUMBER
 	private String goodsCategory; //GOODS_CATEGORY	VARCHAR2(15 BYTE)
 	private String addInfo; //ADD_INFO	VARCHAR2(1000 BYTE)
-
+	
+	
+	
+	
+	
+	
 }
+
+

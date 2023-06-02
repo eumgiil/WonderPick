@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.wonderPick.board.contestBoard.model.dao.ContestDao;
-import com.kh.wonderPick.board.contestBoard.model.vo.Emoticon;
+import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
 
 @Service
 public class ContestServiceImpl implements ContestService {
@@ -19,8 +19,8 @@ public class ContestServiceImpl implements ContestService {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public ArrayList<Emoticon> selectMain() {
-		return contestDao.selectMain(sqlSession);
+	public ArrayList<Contest> selectMain() {
+		return (ArrayList)contestDao.selectMain(sqlSession);
 	}
 
 }

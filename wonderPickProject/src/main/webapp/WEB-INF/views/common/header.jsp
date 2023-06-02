@@ -37,7 +37,7 @@
                             </ul>
                     </li>
                     <li class="mainCategory"><a href="#">그림의뢰</a></li>
-                    <li class="mainCategory"><a href="list.bo?cPage=1">굿즈판매</a></li>
+                    <li class="mainCategory"><a href="list.go?cPage=1">굿즈판매</a></li>
                     <li class="mainCategory">
                         <a href="#">공지사항</a>
                             <ul class="detailCategory">

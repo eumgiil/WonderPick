@@ -1,6 +1,6 @@
 package com.kh.wonderPick.board.artBoard.model.vo;
 
-import com.kh.wonderPick.board.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 
 import lombok.Data;
 

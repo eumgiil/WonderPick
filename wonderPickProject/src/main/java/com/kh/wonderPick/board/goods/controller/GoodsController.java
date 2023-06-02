@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.wonderPick.common.model.vo.PageInfo;
+import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.goods.model.service.GoodsService;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
@@ -33,7 +34,7 @@ public class GoodsController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", goodsService.selectGoodsList(pi));
 		
-		return "goods/goodsListView";
+		return "board/goods/goodsListView";
 	}
 	
 	@RequestMapping("enrollForm.go")
@@ -70,11 +71,9 @@ public class GoodsController {
 		return changeName;
 	}
 	@RequestMapping("insert.bo")
-	public String insertGoods(Goods g, MultipartFile upfile, HttpSession session, Model model) {
+	public String insertGoods(Goods g, Board b, BoardImage bi, MultipartFile upfile, HttpSession session, Model model) {
 		if(!upfile.getOriginalFilename().equals("")) {
 			String changeName = saveFile(upfile, session);
-			
-			BoardImage bi = new BoardImage();
 			
 			bi.setOriginName(upfile.getOriginalFilename());
 			bi.setModifyName("resources/boardUpfiles/" + saveFile(upfile, session));

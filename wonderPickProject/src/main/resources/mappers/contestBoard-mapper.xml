@@ -6,12 +6,10 @@
 	<mapper namespace="contestBoardMapper">
 	
 		<resultMap id="contestBoardResultSet" type="contestBoard">
-			<result column="" property="" />
+			<result column="" property=""/>
 		</resultMap>
 	
-		<select id="selectMain" resultMap="">
 		
-	
-		</select>
+
 		
 	</mapper>
