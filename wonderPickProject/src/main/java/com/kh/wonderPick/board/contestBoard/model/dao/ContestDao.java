@@ -10,8 +10,8 @@ import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
 @Repository
 public class ContestDao {
 
-	public ArrayList<Contest> selectMain(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectMain");
+	public ArrayList<Contest> selectTop10(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectTop10");
 	}
 
 }

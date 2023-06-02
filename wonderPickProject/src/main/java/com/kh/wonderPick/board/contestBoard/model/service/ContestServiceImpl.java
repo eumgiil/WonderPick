@@ -19,8 +19,8 @@ public class ContestServiceImpl implements ContestService {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public ArrayList<Contest> selectMain() {
-		return (ArrayList)contestDao.selectMain(sqlSession);
+	public ArrayList<Contest> selectTop10() {
+		return (ArrayList)contestDao.selectTop10(sqlSession);
 	}
 
 }

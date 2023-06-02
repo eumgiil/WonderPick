@@ -11,7 +11,7 @@ public interface ContestService {
 	// 공모전 메인페이지 리스트 조회 
 	// 이모티콘 사진, 제목, 투표수, 작가사진, 작가이름,
 	// 여기는 역대우승 이모티콘만 불러오면 됨(10개) + 댓글기능
-	ArrayList<Contest> selectMain();
+	ArrayList<Contest> selectTop10();
 	
 	
 	

@@ -12,7 +12,7 @@
 		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Board" alias="board" />
 		<typeAlias type="com.kh.wonderPick.board.artBoard.model.vo.ArtBoard" alias="artBoard" />
 		<typeAlias type="com.kh.wonderPick.board.goods.model.vo.Goods" alias="goods" />
-		<typeAlias type="com.kh.wonderPick.board.contestBoard.model.vo.Emoticon" alias="contestBoard"/>
+		<typeAlias type="com.kh.wonderPick.board.contestBoard.model.vo.Contest" alias="contestBoard"/>
 		<typeAlias type="com.kh.wonderPick.admin.order.model.vo.Order" alias="order" />
 	</typeAliases>
 	

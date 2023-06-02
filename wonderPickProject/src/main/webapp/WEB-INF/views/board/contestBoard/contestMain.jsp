@@ -9,6 +9,8 @@
 </head>
 <body>
 
+	<C;include page="../common/header.jsp" />
+
   <div id="all_area">
         <div id="header_area" align="center">
 

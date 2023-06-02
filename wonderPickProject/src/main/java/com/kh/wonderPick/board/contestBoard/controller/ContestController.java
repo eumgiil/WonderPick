@@ -12,10 +12,10 @@ public class ContestController {
 	@Autowired
 	private ContestService contestService;
 	
-	@RequestMapping("contestMain.ct")
-	public String selectMain() {
+	@RequestMapping("selectTop10.ct")
+	public String selectTop10() {
 		
-		contestService.selectMain();
+		contestService.selectTop10();
 		return "board/contestBoard/contestMain";
 		
 		
