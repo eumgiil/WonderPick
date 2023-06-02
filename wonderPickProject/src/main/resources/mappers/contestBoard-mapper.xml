@@ -3,15 +3,15 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"https://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="contestBoardMapper">
-
-	<resultMap id="contestBoardResultSet" type="contestBoard">
-		<result column="" property="" />
-	</resultMap>
-
-	<select id="selectMain" resultMap="">
+	<mapper namespace="contestBoardMapper">
 	
-
-	</select>
+		<resultMap id="contestBoardResultSet" type="contestBoard">
+			<result column="" property="" />
+		</resultMap>
 	
+		<select id="selectMain" resultMap="">
+		
+	
+		</select>
+		
 	</mapper>
