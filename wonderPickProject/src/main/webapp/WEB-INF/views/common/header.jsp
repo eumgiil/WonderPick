@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/common/header.css">
+<!-- jQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- 부트스트랩에서 제공하고 있는 스타일 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
     <header class="clear">
@@ -108,11 +116,39 @@
                         });
                     </script>
                 <ul id="memberMenu" class="clear">
-                    <li><a href="#">로그인</a></li>
+                    <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
                     <li><a href="#">회원가입</a></li>
                 </ul>
             </div>
             
+            <!-- 로그인 모달 -->
+             <div class="modal fade" id="loginModal">
+				<div class="modal-dialog modal-sm">
+		            <div class="modal-content">
+		                <!-- Modal Header -->
+		                <div class="modal-header">
+		                    <h4 class="modal-title">Login</h4>
+		                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+		                </div>
+		        
+		                <form action="login.me" method="post">
+		                    <!-- Modal body -->
+		                    <div class="modal-body">
+		                        <label for="userId" class="mr-sm-2">ID : </label>
+		                        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter ID" id="userId" name="userId"> <br>
+		                        <label for="userPwd" class="mr-sm-2">Password : </label>
+		                        <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="userPwd" name="userPwd">
+		                    </div>
+		                           
+		                    <!-- Modal footer -->
+		                    <div class="modal-footer">
+		                        <button type="submit" class="btn btn-primary">로그인</button>
+		                        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
         </div>
     </header>
     <div class="headerBlank"></div>
