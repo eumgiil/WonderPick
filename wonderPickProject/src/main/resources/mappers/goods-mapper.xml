@@ -6,5 +6,16 @@
 <mapper namespace="goodsMapper">
 
 
+	<select id="selectListCount" resultType="_int">
+		 select
+	            *
+	       from
+	            board
+		  where
+		        status = 'Y'
+		    and
+		        board_type = 'G'
+	</select>
+
 
 </mapper>
