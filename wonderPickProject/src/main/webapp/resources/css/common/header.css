@@ -25,8 +25,8 @@
     *{
         padding : 0;
         margin : 0;
-        list-style: none;
-        text-decoration : none;
+        list-style: none !important;
+        text-decoration : none !important;
         box-sizing: border-box;
         font-family: 'Noto Sans KR', sans-serif;
     }
@@ -172,7 +172,7 @@
         padding-left: 10px;
     }
     #search_main button{
-        margin : 4px 10px 5px 0px;
+        margin : 3px 10px 5px 0px;
         float : right;
         border: none;
         background-color: #fff;
@@ -198,6 +198,9 @@
     }
     #search_input:focus{
         outline: none;
+    }
+    [type=submit]:not(:disabled), button:not(:disabled){
+    	outline: none !important;
     }
 
     /* 검색리스트 */
