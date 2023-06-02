@@ -5,6 +5,10 @@
 
 	<mapper namespace="contestBoardMapper">
 	
+		<resultMap id="contestBoardResultSet" type="contestBoard">
+			<result column="" property=""/>
+		</resultMap>
+	
 		
 
 		
