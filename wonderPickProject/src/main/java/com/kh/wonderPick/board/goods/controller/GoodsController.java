@@ -33,7 +33,7 @@ public class GoodsController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", goodsService.selectGoodsList(pi));
 		
-		return "goods/goodsListView";
+		return "board/goods/goodsListView";
 	}
 	
 	@RequestMapping("enrollForm.go")
