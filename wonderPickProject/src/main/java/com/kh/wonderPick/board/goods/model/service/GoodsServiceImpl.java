@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.dao.GoodsDao;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
+import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 
 @Service
@@ -32,8 +35,15 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public int insertGoods(Goods g) {
-		return goodsDao.insertGoods(sqlSession, g);
+	@Transactional
+	public int insertGoods(Goods g , Board b, BoardImage bi) {
+		
+		 int result = goodsDao.insertGoods(sqlSession, g);
+		 int result2 = goodsDao.insertBoard(sqlSession, b);
+		 int result3 = goodsDao.insertBoardImage(sqlSession, bi);
+		 
+		 return (result*result2*result3);
+		 
 	}
 
 	@Override

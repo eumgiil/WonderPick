@@ -6,6 +6,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 
@@ -26,6 +28,12 @@ public class GoodsDao {
 	
 	public int insertGoods(SqlSessionTemplate sqlSession, Goods g) {
 		return sqlSession.insert("goodsMapper.insertGoods",g);
+	}
+	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("goodsMapper.insertBoard", b);
+	}
+	public int insertBoardImage(SqlSessionTemplate sqlSession, BoardImage bi) {
+		return sqlSession.insert("goodsMapper.insertBoardImage", bi);
 	}
 
 }
