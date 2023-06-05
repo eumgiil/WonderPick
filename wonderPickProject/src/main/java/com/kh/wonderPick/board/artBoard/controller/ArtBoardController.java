@@ -1,15 +1,18 @@
 package com.kh.wonderPick.board.artBoard.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.wonderPick.board.artBoard.model.service.ArtBoardService;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 @Controller
 public class ArtBoardController {
@@ -34,17 +37,15 @@ public class ArtBoardController {
 	}
 	
 	@RequestMapping("enroll.at")
-	public void enrollArtBoard(HttpServletRequest request, int count) {
+	public void enrollArtBoard(String[] deList, String[] prList, String[] options) {
 		
-		ArrayList list = new ArrayList();
-//		String[] a = request.getParameterValues("a");
+		System.out.println(Arrays.toString(deList));
+		System.out.println(Arrays.toString(prList));
+		System.out.println(Arrays.toString(options));
 		
-		int length;
 		
-		for(int i = 0; i < count; i++) {
-			list.add(request.getParameterValues("detailOp" + i));
-		}
-		System.out.println(list);
+		
+		
 	}
 	
 	
