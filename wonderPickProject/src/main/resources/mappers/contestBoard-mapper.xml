@@ -58,33 +58,6 @@
 			WHERE ROWNUM BETWEEN 1 AND 10
 		</select>
 		
-		<insert id="insertContest" parameterType="board" ,parameterType="boardImage", parameterType="contest">
-		
-			INSERT 
-			INTO 
-					BOARD
-					(
-					 BOARD_NO
-					,MEMBER_NO
-					,BOARD_TITLE
-					,BOARD_CONTENT
-					,CREATE_DATE
-					,STATUS
-					,BOARD_COUNT
-					,BOARD_TYPE
-					)
-			VALUES
-					(
-					SEQ_BOARD_NO.NEXTVAL
-					,3
-					,'리모티콘'
-					,'이쁘게 써주세요~~'
-					,DEFAULT
-					,DEFAULT
-					,0
-					,'C'
-					)
-		</insert>
 	
 		
 

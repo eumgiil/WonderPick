@@ -27,7 +27,17 @@ public class ContestServiceImpl implements ContestService {
 
 	@Override
 	public int insertContest(Board b, BoardImage bi, Contest c) {
-		return contestDao.insertContest(sqlSession, b, bi, c);
+		
+		contestDao.insertMainBoard(sqlSession, b);
+		
+		contestDao.insertBoardImage(sqlSession, bi);
+		
+		contestDao.insertEmoticon(sqlSession, c);
+		
+		
+		
+		return 0;
+		
 	}
 
 
