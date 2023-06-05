@@ -14,7 +14,7 @@
 		<typeAlias type="com.kh.wonderPick.board.goods.model.vo.Goods" alias="goods" />
 		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.BoardImage" alias="boardImage" />
 		<typeAlias type="com.kh.wonderPick.board.contestBoard.model.vo.Contest" alias="contestBoard"/>
-
+		<typeAlias type="com.kh.wonderPick.member.model.vo.Member" alias="member" />
 	</typeAliases>
 	
 	<!-- ** 주의 : 미리 등록을 해두기 위해선 해당 클래스가 진짜 존재하고 있어야함 -->
@@ -30,6 +30,7 @@
 		<mapper resource="/mappers/artBoard-mapper.xml"/>
 		<mapper resource="/mappers/contestBoard-mapper.xml"/>
 		<mapper resource="/mappers/goods-mapper.xml" />
+		<mapper resource="/mappers/member-mapper.xml" />
 	</mappers>	
 	
 	
