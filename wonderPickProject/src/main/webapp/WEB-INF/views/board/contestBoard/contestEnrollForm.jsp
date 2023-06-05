@@ -52,7 +52,7 @@
 </head>
 <body>
 
-    <form action="insertContest.ct" method="post" enctype="multpart/form-data">
+    <form action="insertContest.ct" method="post" enctype="multipart/form-data">
         <div id="all_area" align="center">
         <div id="enroll_title">
             <span><h1>공모전 참가/등록</h1></span>
@@ -68,11 +68,12 @@
             <img src="/resources/no-image.svg" class="noImge">
         </div>
         <div id="input_file">
-            1. <input type="file" required><br>
-            2. <input type="file"><br>
-            3. <input type="file"><br>
-            4. <input type="file"><br>
-            5. <input type="file"><br>
+            1. <input type="file" name="upFile" required><br>
+            2. <input type="file" name="upFile" ><br>
+            3. <input type="file" name="upFile" ><br>
+            4. <input type="file" name="upFile" ><br>
+            5. <input type="file" name="upFile" ><br>
+            
         </div>
         <div>
             * 이모티콘(사진)등록은 최소 1장 필수이며, 최대 5장까지 첨부가능합니다.
@@ -85,6 +86,8 @@
             <span>* 최소 2000원부터 최대 3만원까지 입력가능합니다.</span><br>
             <span>* 등록 후 수정이 불가능 하오니 신중하게 입력해주세요.</span><br>
             <input type="number" name="price" value="" min="2000" max="30000" id="emg_price" required > 원
+            <input type="hidden" name="boardType" value="C">
+            <input type="hidden" name="${ sessionScope.loginUser.memberNo }">
             
         </div>
         <br><hr>
@@ -92,14 +95,14 @@
             <br>
             <span>[ 이모티콘 제목 또는 이름 ]</span><br><br>
             <div>
-                <input type="text" name="boardTitle" placeholder="이모티콘 제목 또는 이름을 입력해주세요" id="emg_title" required>
+                <input type="text" name="boardTitle" placeholder="이모티콘 제목 또는 이름을 입력해주세요." id="emg_title" required>
             </div>
         </div>
         <div>
             <br>
             <span>[ 이모티콘 설명 ]</span><br><br>
             <div>
-                <textarea name="boardContent" name="" id="" cols="80" rows="30" placeholder="내용을 입력해주세요" required></textarea>
+                <textarea name="boardContent" name="" id="" cols="80" rows="30" placeholder="내용을 입력해주세요." required></textarea>
             </div>
         </div>
         <br><br><br><br><br>

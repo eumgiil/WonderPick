@@ -2,6 +2,8 @@ package com.kh.wonderPick.board.contestBoard.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
 
 public interface ContestService {
@@ -12,6 +14,9 @@ public interface ContestService {
 	// 이모티콘 사진, 제목, 투표수, 작가사진, 작가이름,
 	// 여기는 역대우승 이모티콘만 불러오면 됨(10개) + 댓글기능
 	ArrayList<Contest> selectTop10();
+
+	int insertContest(Board b, BoardImage bi, Contest c);
+
 	
 	
 	
