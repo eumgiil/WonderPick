@@ -89,9 +89,9 @@
         <hr style="width: 600px; border: 1px solid gray;">
         <h6>n개의 상품이 있습니다.</h6>
 
-        <form action="" method="get">
+        <form action="searchGoods.go" method="get" align="center">
         <div id="searchGoods" >
-         <select name="" id="option">
+         <select name="option" id="option">
             <option value="whole">전체</option>
             <option value="nickname">작가명</option>
             <option value="boardTitle">제목순</option>
@@ -101,10 +101,40 @@
         </form>
 
         <select name="option" id="option">
-            <option value="popularity">인기순</option>
-            <option value="lowPrice">가격 낮은 순</option>
-            <option value="latest">최신 등록순</option>
+            <option value="popularity" onclick="option(1)">인기순</option>
+            <option value="lowPrice" onclick="option(2)">가격 낮은 순</option>
+            <option value="latest" onclick="option(3)">최신 등록순</option>
         </select>
+        
+        <script>
+        
+        function option(num){
+        	num = $('#option').val();
+        };
+        $.ajax({
+        	url : 'list.go?cPage=1',
+        	data : num ,
+        	dataType :'json'
+        	type :'get',
+        	success : function(result){
+        		for(var i = 0 ; i< result.length; i++){
+        			
+        		}
+        	}
+        		
+        		
+        		
+        	},
+        	error : () => {
+        		console.log('실패');
+        	}
+        		
+        });
+        
+        
+        
+        
+        </script>
 
         </div>
         <br><br><br>
@@ -140,12 +170,35 @@
             </c:otherwise>
         </c:choose>
 
-    <script>
-        function like(){
-            $.ajax
-        }
-    </script>
-
-</div>
+	</div>
+	<br><br>
+	<div class="pagingArea"   align="center" >
+                <ul class="pagination" >
+                <c:choose>
+                  <c:when test="${pi.currentPage eq 1 }">
+                   <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                  </c:when>
+                  <c:otherwise>
+                  <li class="page-item"><a class="page-link" href="list.go?cPage=${pi.currentPage-1 }">Previous</a></li>
+                  </c:otherwise>
+                </c:choose>
+                
+                
+                <c:forEach var="pi" begin="${requestScope.pi.startPage}" end="${requestScope.pi.endPage }">
+                		<c:if test="${ not empty list }">
+                			<li><a href="list.go?cPage=${pi}" class="page-link">${pi}</a></li>
+                		</c:if>
+                </c:forEach>
+                  <c:choose>
+                  <c:when test="${ pi.currentPage eq pi.maxPage }">
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                  </c:when>
+                  <c:otherwise>
+                  <li class="page-item"><a class="page-link" href="list.go?cPage=${pi.currentPage+1 }">Next</a></li>
+                  </c:otherwise>
+                    
+                    </c:choose>
+                </ul>
+      </div>
 </body>
 </html>

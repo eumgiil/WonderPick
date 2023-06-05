@@ -11,7 +11,7 @@ public class Contest extends Board{
 	
 	private int emoticonNo; 	// EMOTICON_NO	NUMBER
 	private int boardNo; 		// BOARD_NO	NUMBER
-	private int img_no; 		// IMG_NO	NUMBER
+	private int imgNo; 		// IMG_NO	NUMBER
 	private int price; 			// PRICE	NUMBER
 	private int priceStatus; 	// PRICE_STATUS	NUMBER
 	
