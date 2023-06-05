@@ -57,4 +57,13 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	/**
+	 * 회원가입 url을 정확하게 알려주지 않기위해서 거쳐서 보내줌
+	 * @return : memberEnrollFrom.jsp로 보내줌
+	 */
+	@RequestMapping("selectGrade.me")
+	public String selectGradeMember() {
+		return "member/selectmemberGrade";
+	}
 }

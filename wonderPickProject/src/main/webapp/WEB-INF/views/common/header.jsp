@@ -126,7 +126,7 @@
                 	<c:choose>
                 		<c:when test="${ empty loginMember }" >
 		                    <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
-		                    <li><a href="#">회원가입</a></li>
+		                    <li><a href="selectGrade.me">회원가입</a></li>
                 		</c:when>
                 		<c:otherwise>
                 			<li><a href="#">마이페이지</a></li>

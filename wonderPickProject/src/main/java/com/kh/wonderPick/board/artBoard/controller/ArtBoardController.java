@@ -2,15 +2,21 @@ package com.kh.wonderPick.board.artBoard.controller;
 
 import java.util.Arrays;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.wonderPick.board.artBoard.model.service.ArtBoardService;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
-import com.kh.wonderPick.board.artBoard.model.vo.Option;
+import com.kh.wonderPick.board.artBoard.model.vo.DetailOp;
+import com.kh.wonderPick.board.artBoard.model.vo.MainOption;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 
 @Controller
 public class ArtBoardController {
@@ -37,16 +43,23 @@ public class ArtBoardController {
 	@RequestMapping("enroll.at")
 	public String enrollArtBoard(Board board,
 			                     ArtBoard artBoard,
-//			                     String[] deList, String[] prList, String[] options
-			                     Option options) {
-		
-//		System.out.println(Arrays.toString(options));
-//		System.out.println(Arrays.toString(deList));
-//		System.out.println(Arrays.toString(prList));
+			                     DetailOp detailOp,
+			                     MainOption mainOption,
+			                     BoardImage boardImg,
+			                     MultipartFile[] upfiles,
+			                     HttpSession session,
+			                     Model model) {
 		
 		System.out.println(board);
 		System.out.println(artBoard);
-		System.out.println(options);
+		System.out.println(detailOp);
+		System.out.println(mainOption);
+		System.out.println(Arrays.toString(upfiles));
+		
+		
+//		artService.enrollArtBoard(board, artBoard, options);
+		
+		
 		
 		return null;
 		
