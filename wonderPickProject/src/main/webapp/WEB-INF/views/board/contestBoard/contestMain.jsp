@@ -91,7 +91,42 @@
         margin: 20px;
         padding-bottom: 30px;
     }
-    
+    .table{
+        display: inline-block;
+        border-radius: 40px;
+        padding: 20px;
+        box-shadow: 1px 1px 10px rgb(200, 200, 200) ;
+    } 
+    .table_title{
+        width: 110px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .table_profile_img{
+        width: 10px;
+    }
+    .table_sysdate{
+        color: gray;
+    }
+    .profile_img{
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+    }
+    .contest_list{
+        /* border: 1px solid black; */
+        width: 800px;
+        height: 300px;
+        overflow: auto;
+        white-space: nowrap;
+        border-radius: 10px;
+    }
+    .contest_list>ul>li{
+        display: inline;
+        padding: 20px
+    }
+  
 </style>
 
 </head>
@@ -153,44 +188,50 @@
               </div>
               <div class="contest_list">
                   <ul class="winner_list">
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
+                    <c:forEach var="list" items="${ list }" >
+                     <li>
+                      	  <table border="1" class="table">
+                                <thead>
+                                    <tr >
+                                        <td colspan="3">
+                                            <div align="center">
+                                                <img src="/resources/kakaoEmogi.gif" alt="">
+                                                ${ list.modifyName}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr >
+                                        <th class="table_title" colspan="2">
+                                            <div class="table_title"> 
+                                                ${ list.boardTitle}
+                                            </div>
+                                        </th>
+                                        <td class="vote_heart">♡</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table_profile_img">
+                                            <div align="center">
+                                                <img src="/resources/개발진스.png" class="profile_img">
+                                                ${ list.memberModifyName }
+                                            </div>
+                                        </td>
+                                        <td>${ list.nickName }</td>
+                                        <td>${ list.voteCount}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <span class="table_sysdate">${ list.uploadDate }</span> 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>	
                       </li>
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
-                      </li>
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
-                      </li>
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
-                      </li>
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
-                      </li>
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
-                      </li>
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
-                      </li>
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
-                      </li>
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
-                      </li>
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
-                      </li>
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
-                      </li>
-                      <li>
-                          <img src="/resources/kakaoEmogi.gif" class="winner_img" >
-                      </li>
-                  
-                  
+                    </c:forEach>
+
+                     
+
                   </ul>
               </div>
           </div>
@@ -284,13 +325,17 @@
 <br><br><br><br><br><br><br><br><br><br>
     <script>
         $('#vote_btn').click(function(){
+
             
             alert('지금은 투표 기간이 아닙니다. 매 달 마지막 주 투표가 시작됩니다.');
         })
 
         $('#enroll_btn').click(function(){
-            alert('이모티콘 공모전은 "작가" 회원만 참여 가능합니다.');
-            alert('지금은 참가기간이 아닙니다. 다음달에 도전 해주세요!');
+          //  alert('이모티콘 공모전은 "작가" 회원만 참여 가능합니다.');
+         // alert('지금은 참가기간이 아닙니다. 다음달에 도전 해주세요!');
+
+         location.href="enrollForm.ct"
+         
         })
 
     </script>
