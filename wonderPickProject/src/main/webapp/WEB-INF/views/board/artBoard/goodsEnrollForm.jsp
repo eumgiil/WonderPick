@@ -51,7 +51,7 @@
         <br>
 
 
-        <form id="form" action="enroll.at" method="post">
+        <form id="form" action="enroll.at" method="get">
 	        <table id="art_table" align="center">
 	            <tbody>
 	                <tr>
@@ -124,7 +124,7 @@
 	                <tr>
 	                    <th colspan="4">
 	                        <h5 class="sub_title">옵션</h5>
-	                        <button onclick="op_plus();">메인옵션추가</button>
+	                        <button type="button" onclick="op_plus();">메인옵션추가</button>
 	                    </th>
 	                </tr>
 	
@@ -207,7 +207,7 @@
         function op_plus(){
             let value = '';
             value = '<th>'
-                        +'<button onclick="detail_op_plus(this);" style="float:left;">+</button>'
+                        +'<button type="button" onclick="detail_op_plus(this);" style="float:left;">+</button>'
                         +'<h5 class="sub_title">옵션카테고리'+ i +'</h5></th>'
                     +'<td>'
                         +'<input type="text" id="option_' + i + '">'
@@ -230,7 +230,7 @@
         
         function detail_op_plus(e){
 
-            let tbody = e.parentElement.parentElement.parentElement;
+        	let tbody = e.parentElement.parentElement.parentElement;
             let id = tbody.id;
             // let str = id.slice(0, id.indexOf('y') + 1);
             let num = parseInt(id.slice(id.indexOf('y')+1));
@@ -249,27 +249,44 @@
             tr.innerHTML += value;
             tbody.append(tr);
             
+            
+            
         }
 
         function start(){
 
             /* tbody개수 파악  */
-            let length = art_table.tBodies.length;
-            /* console.log('length : ' + length);
-            let de;
-            let pr;
+        	let length = art_table.tBodies.length;
 
-            for(let i = 1; i < length + 1; i++){
-                de = document.getElementsByClassName('detailOp' + i);
-                pr = document.getElementsByClassName('price' + i);
-                for(let j = 0; j < de.length; j++){
-                    console.log('de'+ i +' : ' + de[j].value);
-                    console.log('pr'+ i +' : ' + pr[j].value);
+            let deList = [];
+            let prList = [];
+
+            let detailOp = [];
+            let price = [];
+
+            let option;
+            let options = [];
+
+            for(let i = 1; i < length; i++){
+                detailOp = document.getElementsByClassName('detailOp' + i);
+                price = document.getElementsByClassName('price' + i);
+                option = document.getElementById('option_'+ i);
+
+                deList.push('#'+option.value+'#');
+                prList.push('#'+option.value+'#');
+                options.push('#'+option.value+'#');
+
+                for(let j = 0; j < detailOp.length; j++){
+                    deList.push(detailOp[j].value);
+                    prList.push(price[j].value);
                 }
-            } */
+            };
 
             let form = document.getElementById('form');
-            form.innerHTML += '<input type="text" name="count" value="'+ length +'">';
+            form.innerHTML += '<input type="hidden" name="deList" value="'+ deList +'">';
+            form.innerHTML += '<input type="hidden" name="prList" value="'+ prList +'">';
+            form.innerHTML += '<input type="hidden" name="options" value="'+ options +'">';
+            
             form.submit();
 
         }
