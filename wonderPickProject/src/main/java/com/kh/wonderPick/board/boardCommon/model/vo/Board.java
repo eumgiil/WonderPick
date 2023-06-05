@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-public abstract class Board {
+public class Board {
 
 	private int boardNo; // BOARD_NO	NUMBER
 	private int memberNo; // MEMBER_NO	NUMBER
