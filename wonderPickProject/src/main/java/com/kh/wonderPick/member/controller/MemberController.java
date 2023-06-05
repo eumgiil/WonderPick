@@ -37,6 +37,11 @@ public class MemberController {
 			session.setAttribute("alertMsg", "등록되지 않거나, 잘못된 정보입니다.");
 			return "redirect:/";
 		}
-		
+	}
+	
+	@RequestMapping("logout.me")
+	public String logoutMember(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
 	}
 }

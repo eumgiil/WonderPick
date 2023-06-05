@@ -125,32 +125,12 @@
                 <ul id="memberMenu" class="clear">
                 	<c:choose>
                 		<c:when test="${ empty loginMember }" >
-		                    <li class="memberMenuLI"><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
-		                    <li class="memberMenuLI"><a href="#">회원가입</a></li>
+		                    <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
+		                    <li><a href="#">회원가입</a></li>
                 		</c:when>
                 		<c:otherwise>
-                			<li class="memberMenuLI"><a href="#">마이페이지</a></li>
-		                    <li>
-		                    	<a href="#"><img src="resources/common/basicProfile.jpg"/></a>
-		                    	<script>
-		                    	$('#memberMenu img').css('border-radius', '50%');
-		                    	$('#memberMenu img').css('width', '35px');
-		                    	$('#memberMenu img').css('height', '35px');
-		                    	$('#memberMenu img').css('margin-top', '32px');
-		                    	$('#memberMenu img').css('margin-left', '30px');
-		                    	$('#memberMenu img').css('margin-right', '15px');
-		                    	</script>
-		                            <ul class="detailCategory">
-		                                <li><a href="#">캐릭터일러스트</a></li>
-		                                <li><a href="#">일러스트</a> </li>
-		                                <li><a href="#">버츄얼</a></li>
-		                                <li><a href="#">디자인</a></li>
-		                                <li><a href="#">웹툰</a></li>
-		                                <li><a href="#">기타</a></li>
-		                            </ul>
-	                    	</li>
-		                    
-		                    
+                			<li><a href="#">마이페이지</a></li>
+	                    	<li><a href="logout.me">로그아웃</a></li>
                 		</c:otherwise>
                 	</c:choose>
                 </ul>
