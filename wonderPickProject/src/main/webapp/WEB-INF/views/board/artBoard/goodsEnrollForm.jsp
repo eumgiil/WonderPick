@@ -51,7 +51,7 @@
         <br>
 
 
-        <form id="form" action="enroll.at" method="get">
+        <form id="form" action="enroll.at" method="post">
 	        <table id="art_table" align="center">
 	            <tbody>
 	                <tr>
@@ -59,22 +59,22 @@
 	                        <h5 class="sub_title">카테고리</h5>
 	                    </th>
 	                    <td>
-	                        <select name="" id="">
-	                            <option value="">캐릭터 일러스트</option>
-	                            <option value="">일러스트</option>
-	                            <option value="">버츄얼</option>
-	                            <option value="">디자인</option>
-	                            <option value="">웹툰</option>
+	                        <select id="category" name="category">
+	                            <option value="CI">캐릭터 일러스트</option>
+	                            <option value="I">일러스트</option>
+	                            <option value="V">버츄얼</option>
+	                            <option value="D">디자인</option>
+	                            <option value="W">웹툰</option>
 	                        </select>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품명</h5></th>
-	                    <td colspan="3"><input type="text" style="width: 85%;"></td>
+	                    <td colspan="3"><input type="text" name="boardTitle" style="width: 85%;"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품가격</h5></th>
-	                    <td><input type="number" style="width: 70%;">원 </td>
+	                    <td><input type="number" name="price" style="width: 70%;">원 </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품 대표 이미지</h5></th>
@@ -93,29 +93,29 @@
 	                <tr>
 	                    <th><h5 class="sub_title">상품설명</h5></th>
 	                    <td colspan="3">
-	                        <textarea name="" id="" style="width: 100%; height:400px; resize:none;" maxlength="1000"></textarea>
+	                        <textarea name="boardContent" id="boardContent" style="width: 100%; height:400px; resize:none;" maxlength="1000"></textarea>
 	                    </td>
 	                </tr>
 	                
 	                <tr>
 	                    <th><h5 class="sub_title">파일유형</h5></th>
-	                    <td><input type="text"></td>
+	                    <td><input type="text" name="fileType"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">해상도</h5> </th>
-	                    <td><input type="text"></td>
+	                    <td><input type="text" name="dpi"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본사이즈</h5></th>
-	                    <td><input type="text"></td>
+	                    <td><input type="text" name="defaultSize"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본수정횟수</h5></th>
-	                    <td><input type="text"></td>
+	                    <td><input type="number" name="modifyCount"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">작업기간</h5></th>
-	                    <td><input type="text"></td>
+	                    <td><input type="text" name="workday"></td>
 	                </tr>
 	                <tr>
 	                    <th colspan="4"><hr class="line"></th>
@@ -150,23 +150,23 @@
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">패션</h5></th>
-	                <td colspan="3"><input type="text" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">문구</h5></th>
-	                <td colspan="3"><input type="text" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">주방</h5></th>
-	                <td colspan="3"><input type="text" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">인테리어</h5></th>
-	                <td colspan="3"><input type="text" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">주방</h5></th>
-	                <td colspan="3"><input type="text" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
 	            </tr>
 	            <!-- 끝 옵션 -->
 	            <tr>
@@ -210,7 +210,7 @@
                         +'<button type="button" onclick="detail_op_plus(this);" style="float:left;">+</button>'
                         +'<h5 class="sub_title">옵션카테고리'+ i +'</h5></th>'
                     +'<td>'
-                        +'<input type="text" id="option_' + i + '">'
+                        +'<input type="text" name="option_' + i + '" id="option_' + i + '">'
                     +'</td>'
                     +'<th><h5 class="sub_title"></h5></th>'
                     +'<td>'
