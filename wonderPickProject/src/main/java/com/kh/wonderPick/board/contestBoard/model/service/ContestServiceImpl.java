@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.contestBoard.model.dao.ContestDao;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
 
@@ -22,5 +24,11 @@ public class ContestServiceImpl implements ContestService {
 	public ArrayList<Contest> selectTop10() {
 		return (ArrayList)contestDao.selectTop10(sqlSession);
 	}
+
+	@Override
+	public int insertContest(Board b, BoardImage bi, Contest c) {
+		return contestDao.insertContest(sqlSession, b, bi, c);
+	}
+
 
 }
