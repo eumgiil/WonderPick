@@ -9,6 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.wonderPick.board.artBoard.model.service.ArtBoardService;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
+import com.kh.wonderPick.board.artBoard.model.vo.Option;
+import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 
 @Controller
 public class ArtBoardController {
@@ -33,14 +35,20 @@ public class ArtBoardController {
 	}
 	
 	@RequestMapping("enroll.at")
-	public void enrollArtBoard(ArtBoard artBoard, String[] deList, String[] prList, String[] options) {
+	public String enrollArtBoard(Board board,
+			                     ArtBoard artBoard,
+//			                     String[] deList, String[] prList, String[] options
+			                     Option options) {
 		
-		System.out.println(Arrays.toString(options));
-		System.out.println(Arrays.toString(deList));
-		System.out.println(Arrays.toString(prList));
+//		System.out.println(Arrays.toString(options));
+//		System.out.println(Arrays.toString(deList));
+//		System.out.println(Arrays.toString(prList));
 		
+		System.out.println(board);
 		System.out.println(artBoard);
+		System.out.println(options);
 		
+		return null;
 		
 	}
 	

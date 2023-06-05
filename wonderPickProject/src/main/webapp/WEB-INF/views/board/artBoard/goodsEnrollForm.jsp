@@ -51,7 +51,7 @@
         <br>
 
 
-        <form id="form" action="enroll.at" method="post">
+        <form id="form" method="post">
 	        <table id="art_table" align="center">
 	            <tbody>
 	                <tr>
@@ -70,7 +70,7 @@
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품명</h5></th>
-	                    <td colspan="3"><input type="text" name="boardTitle" style="width: 85%;"></td>
+	                    <td colspan="3"><input type="text"  name="boardTitle" style="width: 85%;"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품가격</h5></th>
@@ -177,6 +177,10 @@
 	                background-color:  rgb(255, 131, 153); color: black; border: none;">굿즈 판매 요청하기</div></td>
 	            </tr>
 	        </table>
+	        
+	        <input type="hidden" id="deList" name="deList" value="'+ deList +'">';
+            <input type="hidden" id="prList" name="prList" value="'+ prList +'">';
+            <input type="hidden" id="options" name="options" value="'+ options +'">
 	    </form>
 
     </div>
@@ -242,7 +246,7 @@
                     +'</td>'
                     +'<th><h5>가격</h5></th>'
                     +'<td>'
-                        +'<input type="text" name="price'+ num +'" class="price'+ num +'">'
+                        +'<input type="text" name="opPrice'+ num +'" class="opPrice'+ num +'">'
                     +'</td>';
             
             let tr = document.createElement('tr');
@@ -262,14 +266,14 @@
             let prList = [];
 
             let detailOp = [];
-            let price = [];
+            let opPrice = [];
 
             let option;
             let options = [];
 
             for(let i = 1; i < length; i++){
                 detailOp = document.getElementsByClassName('detailOp' + i);
-                price = document.getElementsByClassName('price' + i);
+                opPrice = document.getElementsByClassName('opPrice' + i);
                 option = document.getElementById('option_'+ i);
 
                 deList.push('#'+option.value+'#');
@@ -278,15 +282,17 @@
 
                 for(let j = 0; j < detailOp.length; j++){
                     deList.push(detailOp[j].value);
-                    prList.push(price[j].value);
+                    prList.push(opPrice[j].value);
                 }
             };
 
             let form = document.getElementById('form');
-            form.innerHTML += '<input type="hidden" name="deList" value="'+ deList +'">';
-            form.innerHTML += '<input type="hidden" name="prList" value="'+ prList +'">';
-            form.innerHTML += '<input type="hidden" name="options" value="'+ options +'">';
             
+            document.getElementById('deList').value = deList;
+            document.getElementById('prList').value = prList;
+            document.getElementById('options').value = options;
+            
+           	form.action = 'enroll.at';
             form.submit();
 
         }
