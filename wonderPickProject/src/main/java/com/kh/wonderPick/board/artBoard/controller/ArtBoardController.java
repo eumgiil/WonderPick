@@ -22,8 +22,12 @@ public class ArtBoardController {
 	public String selectArtList( /* int currentPage*/ ) {
 		
 		return "board/artBoard/detailView";
-		
-
 	} 
+	
+	@RequestMapping("enroll.at")
+	public String enrollArtBoard() {
+		
+		return "";
+	}
 	
 }
