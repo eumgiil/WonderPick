@@ -9,12 +9,6 @@
 </head>
 <body>
 	<jsp:include page="header.jsp" />
-	<c:if test="${ not empty alertMsg }">
-		<script>
-			alert('${alertMsg}');
-			<c:remove var="alertMsg" />
-		</script>
-	</c:if>
 	<h1>냥냐얀야야야야야야</h1>
 	<a href="toGo.at">yeachan</a>
 </body>

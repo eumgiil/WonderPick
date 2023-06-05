@@ -136,7 +136,7 @@
         float: right;
 
     }
-    .memberMenuLI{
+    #memberMenu li{
         margin-left: 16px;
         font-size: 13px;
         border: 1px solid rgb(223,223,223);
@@ -149,14 +149,13 @@
         margin-left: 20px;
         text-align: center;
     }	
-    .memberMenuLI a{
+    #memberMenu li a{
         color: #161616 !important;
-    }
-    .memberMenuLI:hover{
+    }	
+    #memberMenu li:hover{
         border : 1px solid #FF8399;
         background-color: #fff3f3;
     }
-
     /* 검색 */
     .search_area{
     /*   border:1px solid blue; */
