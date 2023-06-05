@@ -49,7 +49,7 @@ select
  join 
  	 board_image using (board_no)
  where
-      b.status = 'Y'
+     b.status = 'Y'
 and 
     board_type ='G'
 order by

@@ -20,10 +20,19 @@ public class ContestController {
 		
 		return "board/contestBoard/contestMain";
 		
-		
-		
 	}
 	
+	@RequestMapping("enrollForm.ct")
+	public String contestEnrollForm() {
+		return "board/contestBoard/contestEnrollForm";
+	}
+	
+	@RequestMapping("insertContest.ct")
+	public String insertContest() {
+		
+		
+		return "board/contestBoard/contestMain";
+	}
 	
 
 }
