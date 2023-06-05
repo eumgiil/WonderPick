@@ -37,16 +37,15 @@ public class ArtBoardController {
 	@RequestMapping("enroll.at")
 	public String enrollArtBoard(Board board,
 			                     ArtBoard artBoard,
-//			                     String[] deList, String[] prList, String[] options
 			                     Option options) {
-		
-//		System.out.println(Arrays.toString(options));
-//		System.out.println(Arrays.toString(deList));
-//		System.out.println(Arrays.toString(prList));
 		
 		System.out.println(board);
 		System.out.println(artBoard);
 		System.out.println(options);
+		
+		artService.enrollArtBoard(board, artBoard, options);
+		
+		
 		
 		return null;
 		
