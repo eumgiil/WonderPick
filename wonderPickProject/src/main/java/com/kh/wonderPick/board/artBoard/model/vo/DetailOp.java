@@ -1,8 +1,12 @@
 package com.kh.wonderPick.board.artBoard.model.vo;
 
+import lombok.Data;
+
+@Data
 public class DetailOp {
 	
-	private String[] detailOp;
-	private String[] price;
-	
+	private int opDetailNo; // OP_DETAIL_NO	NUMBER
+	private String[] deList;
+	private String[] prList;
+		
 }

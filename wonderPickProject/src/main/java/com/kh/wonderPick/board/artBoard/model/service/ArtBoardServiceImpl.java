@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.wonderPick.board.artBoard.model.dao.ArtBoardDao;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
-import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 
 @Service
@@ -28,15 +27,15 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	}
 
 
-	@Override
-	@Transactional
-	public int enrollArtBoard(Board board, ArtBoard artBoard, Option options) {
-		artDao.enrollBoard(sqlSession, board);
-		artDao.enrollArtBoard(sqlSession, artBoard);
-		artDao.enrollOption(options);
-		
-		return 0;
-	}
+//	@Override
+//	@Transactional
+//	public int enrollArtBoard(Board board, ArtBoard artBoard, Option options) {
+//		artDao.insertBoard(sqlSession, board);
+//		artDao.insertArtBoard(sqlSession, artBoard);
+//		artDao.insertOption(options);
+//		
+//		return 0;
+//	}
 	
 	
 
