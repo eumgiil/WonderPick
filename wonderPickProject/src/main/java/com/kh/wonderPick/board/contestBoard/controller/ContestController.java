@@ -78,6 +78,9 @@ public class ContestController {
 		
 	}
 		
+		
+		
+		
 		if(contestService.insertContest(b, bi, c) > 0) {
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
 			return "board/contestBoard/contestMain";

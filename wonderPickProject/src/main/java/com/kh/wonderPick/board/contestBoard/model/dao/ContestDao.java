@@ -16,8 +16,20 @@ public class ContestDao {
 		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectTop10");
 	}
 
-	public int insertContest(SqlSessionTemplate sqlSession, Board b, BoardImage bi, Contest c) {
-		return sqlSession.insert("contestBoardMapper.insertContest");
+	public void insertMainBoard(SqlSessionTemplate sqlSession, Board b) {
+		
+		
 	}
+
+	public void insertBoardImage(SqlSessionTemplate sqlSession, BoardImage bi) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void insertEmoticon(SqlSessionTemplate sqlSession, Contest c) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
