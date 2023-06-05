@@ -9,6 +9,6 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<h1>냥냐얀야야야야야야</h1>
-	<a href="artList.bo">yeachan</a>
+	<a href="toGo.at">yeachan</a>
 </body>
 </html>
