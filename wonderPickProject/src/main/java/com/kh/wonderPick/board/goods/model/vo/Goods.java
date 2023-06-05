@@ -16,6 +16,8 @@ public class Goods extends Board{
 	private int amount;//AMOUNT	NUMBER
 	private String goodsCategory; //GOODS_CATEGORY	VARCHAR2(15 BYTE)
 	private String addInfo; //ADD_INFO	VARCHAR2(1000 BYTE)
+	private String nickName;
+	private String originName;
 	
 	
 	

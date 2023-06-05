@@ -56,7 +56,8 @@
         }
         #enrollGoods{
          float : right;
-         margin-rigth : 20%;
+         margin-right : 30%;
+         color : rgb(255, 131, 153);
         }
         #goodsimg{
         border : 1px solid black;
@@ -80,8 +81,8 @@
 <div class="main">
 
     <!-- 작가가 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
-    <c:if test="${loginUser.memberGrade.equals('작가')}">
-        <a class="btn btn-secondary" id="enrollGoods" href="enrollForm.go">글쓰기</a>
+    <c:if test="${loginMember.memberGrade.equals('작가')}">
+        <a class="btn btn-secondary" id="enrollGoods" href="enrollForm.go" >글쓰기</a>
         </c:if>
     
     <div class="topouter" align="center">
@@ -143,25 +144,24 @@
         <div class="goodsList1"  id="goods" style="width: 1300px;" align="center">
           <c:choose>  
             <c:when test="${not empty list}">
-            		<c:forEach items="${list}" var="g">
-                    
-                    <div class="goodsList2" style="display:inline-block;">
+              <c:forEach items="${list}" var="g">
+                  <div class="goodsList2" style="display:inline-block;">
                     <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
                     <table id="goodsInfo"  id="goods" width="250">
-                    <tr>
-                        <td >${g.memberNo}</td>
-                        <td><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" alt="" width="30" style="float: right;"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">★★★★☆</td>
-                    </tr>
-                    <tr>
-                        <td >${g.boardTitle }</a></td>
-                        <td style="float: right;">${g.price}</td>
-                    </tr>
+	                    <tr>
+	                        <td>${g.nickName}</td>
+	                        <td><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" alt="" width="30" style="float: right;"></td>
+	                    </tr>
+	                    <tr>
+	                        <td colspan="2">★★★★☆</td>
+	                    </tr>
+	                    <tr>
+	                        <td class="boardNo" ><a href="detail.go?boardNo=" + ${g.boardNo}>${g.boardTitle }</a></td>
+	                        <td style="float: right;">${g.price}</td>
+	                    </tr>
                     </table>
                     <br>
-                     </div>
+                    </div>
                     
                  </c:forEach> 
             </c:when>
@@ -171,6 +171,16 @@
         </c:choose>
 
 	</div>
+	
+	<script>
+	$(function(){
+		$('.goodsList2 > table > tr').click(function(){
+			location.href = 'detail.go?boardNo=' + $(this).childen('.boardNo').text();
+		});
+	})
+	</script>
+	
+	
 	<br><br>
 	<div class="pagingArea"   align="center" >
                 <ul class="pagination" >

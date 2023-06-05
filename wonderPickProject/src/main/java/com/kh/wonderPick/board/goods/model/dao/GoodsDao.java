@@ -35,5 +35,10 @@ public class GoodsDao {
 	public int insertBoardImage(SqlSessionTemplate sqlSession, BoardImage bi) {
 		return sqlSession.insert("goodsMapper.insertBoardImage", bi);
 	}
-	
+	public int increaseCount(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("goodMapper.increaseCount", boardNo);
+	}
+	public Goods selectGoods(SqlSessionTemplate sqlSession , int boardNo) {
+		return sqlSession.selectOne("goodsMapper.selectGoods", boardNo);
+	}
 }
