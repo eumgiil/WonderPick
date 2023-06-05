@@ -19,6 +19,14 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	/**
+	 * 메인페이지
+	 * @return : 어디서는 로고이미지누르면 메인으로 돌려보냄
+	 */
+	@RequestMapping("main.re")
+	public String mainRetrun() {
+		return "redirect:/";
+	}
 	
 	/**
 	 * 로그인 서비스
@@ -39,6 +47,11 @@ public class MemberController {
 		}
 	}
 	
+	/**
+	 * 로그아웃 서비스
+	 * @param session : session에 저장되어있던 loginMember를 비워줌
+	 * @return : 메인페이지로 돌려보냄
+	 */
 	@RequestMapping("logout.me")
 	public String logoutMember(HttpSession session) {
 		session.invalidate();

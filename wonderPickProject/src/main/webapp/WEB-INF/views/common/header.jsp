@@ -28,7 +28,7 @@
 	</c:if>
     <header class="clear">
         <div class="wrap clear">
-            <div id="logo"><img src="resources/common/logo.png"/></div>
+            <div id="logo"><a href="main.re"><img src="resources/common/logo.png"/></a></div>
             <div id="mainMenuBar" class="clear">
                 <ul id="mainMenu" class="clear">
                     <li class="mainCategory">
