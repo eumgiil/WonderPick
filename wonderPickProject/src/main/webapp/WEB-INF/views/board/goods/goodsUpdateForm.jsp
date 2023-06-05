@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>굿즈상품입력페이지</title>
+    <title>굿즈정보수정페이지</title>
     <style>
         .wide{
          
@@ -26,16 +26,17 @@
         <hr style="border: 1px solid gray; width: 500px;" >
         <br>
 
-        <form action="insert.go" method="post" enctype="multipart/form-data">
+        <form action="update.go" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="boardNo" value="${g.boardNo }"/>
         <table width="00px" style="text-align: center; " align="center" >
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">판매자</h5></td>
-                <td colspan="3" style="float: left; margin-left : 30%; font-weight:bold; font-size : 20px;">${loginMember.nickName }</td>
+                <td colspan="3" style="float: left; margin-left : 30%; font-weight:bold; font-size : 20px;">${g.nickName }</td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">카테고리</h5></td>
                 <td style="float: left; margin-left: 80px;">
-                    <select name="goodsCategory" id="" required>
+                    <select name="goodsCategory" id="" required value="${g.goodsCategory }">
                         <option value="FASHION">패션</option>
                         <option value="STATIONERY">문구</option>
                         <option value="KITCHEN">주방</option>
@@ -46,35 +47,35 @@
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상품명</h5></td>
-                <td colspan="3"><input type="text" style="width: 85%;" name="boardTitle" required></td>
+                <td colspan="3"><input type="text" style="width: 85%;" name="boardTitle" value="${g.boardTitle }" required></td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상품가격</h5></td>
-                <td ><input type="number" style="width: 50%;" name="price" required>원 </td>
+                <td ><input type="number" style="width: 50%;" name="price" value="${g.price }" required>원 </td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상품 대표 이미지</h5></td>
                 <td align="center" colspan="3">
-                    <img id="titleimg"  src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
+                    <img id="titleimg" name="upfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
                 </td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상세이미지</h5></td>
-                <td><img id="contentImg1"  src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
-                <td><img id="contentImg2" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
-                <td><img id="contentImg3"  src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg1" name="upfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg2" name="upfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg3" name="upfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상품설명</h5></td>
-                <td colspan="3"><textarea name="boardContent" id="" cols="30" rows="10" style="width: 100%;" required></textarea></td>
+                <td colspan="3"><textarea name="boardContent" id="" cols="30" rows="10" style="width: 100%;" value="${g.boardContent }"required></textarea></td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">작업소요일</h5></td>
-                <td style="float: left;"><input type="text" style="width: 45%;" name="workday" required>일</td>
+                <td style="float: left;"><input type="text" style="width: 45%;" name="workday" required value="${g.workday }">일</td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">시안개수</h5></td>
-                <td style="float: left; margin-left: 80px;"><select name="draft" id="">
+                <td style="float: left; margin-left: 80px;"><select name="draft" id="" value="${g.draft }">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -85,15 +86,15 @@
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">추가시안비</h5> </td>
-                <td style="float: left;">갯수별  <input type="text" style="width: 40%;" name="addDraft">원</td>
+                <td style="float: left;">갯수별  <input type="text" style="width: 40%;" name="addDraft" value="${g.addDraft }">원</td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">기본수정횟수</h5></td>
-                <td style="float: left;"><input type="text" style="width: 45%;" name="modifyCount">회</td>
+                <td style="float: left;"><input type="text" style="width: 45%;" name="modifyCount" value="${g.modifyCount }">회</td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">추가수정비</h5></td>
-                <td style="float: left;">횟수별  <input type="text" style="width: 40%;" name="addModify">원</td>
+                <td style="float: left;">횟수별  <input type="text" style="width: 40%;" name="addModify" value="${g.addModify }">원</td>
             </tr>
             <tr>
                 <td colspan="4"><hr style="width: 100%; border: 1px solid gray;" ></td>
@@ -131,10 +132,10 @@
 
     <!--  판매자는 최소 하나는 첨부해야함 -->
     <div id="file-area">
-        <input type="file" id="file1" name="file1" required onchange="loadImg(this, 1);">
-        <input type="file" id="file2" name="file2" onchange="loadImg(this, 2);">
-        <input type="file" id="file3" name="file3" onchange="loadImg(this, 3);">
-        <input type="file" id="file4" name="file4" onchange="loadImg(this, 4);">
+        <input type="file" id="file1" name="upfile" required onchange="loadImg(this, 1);">
+        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);">
+        <input type="file" id="file3" name="upfile" onchange="loadImg(this, 3);">
+        <input type="file" id="file4" name="upfile" onchange="loadImg(this, 4);">
     </div>
 
     <script>

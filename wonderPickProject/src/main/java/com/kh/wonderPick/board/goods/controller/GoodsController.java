@@ -10,9 +10,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.wonderPick.common.model.vo.PageInfo;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
@@ -39,7 +42,7 @@ public class GoodsController {
 	
 	@RequestMapping("enrollForm.go")
 	public String enrollForm() {
-		return "goods/goodsEnrollForm";
+		return "board/goods/goodsEnrollForm";
 	}
 	
 	public String saveFile(MultipartFile upfile, HttpSession session) {
@@ -70,19 +73,117 @@ public class GoodsController {
 		}
 		return changeName;
 	}
-	@RequestMapping("insert.bo")
-	public String insertGoods(Goods g, Board b, BoardImage bi, MultipartFile upfile, HttpSession session, Model model) {
-		if(!upfile.getOriginalFilename().equals("")) {
-			String changeName = saveFile(upfile, session);
+	@ResponseBody
+	@RequestMapping("insert.go")
+	public String insertGoods(Goods g, Board b, BoardImage bi, MultipartFile[] upfile, HttpSession session, Model model) {
+	/*
+		for(int i=1; i<=4; i++) {
+			String key = "file" + i;
+		
 			
-			bi.setOriginName(upfile.getOriginalFilename());
-			bi.setModifyName("resources/boardUpfiles/" + saveFile(upfile, session));
+			if(upfile.getOriginalFilename(key) != null) {
+				
+				
+				bi.setOriginName(upfile.getOriginalFilename(key));
+				bi.setModifyName("resources/boardUpfiles/" + saveFile(upfile, session));
+				
+				if( i == 1) {
+					bi.setFileLevel(1);
+				}else{
+					bi.setFileLevel(2);
+				}
+			}
 		}
+		*/
+		for(MultipartFile multipartFile : upfile) {
+			
+			String originName = multipartFile.getOriginalFilename();
+			
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+			
+			int randomNumber = (int)(Math.random() * 90000 + 10000);
+			
+			String ext = originName.substring(originName.lastIndexOf("."));
+			
+			String changeName = currentTime + randomNumber + ext;
+			
+			
+			String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/");
+			
+			try {
+				multipartFile.transferTo(new File(savePath + changeName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+			bi.setOriginName(multipartFile.getOriginalFilename());
+			bi.setModifyName("/resources/boardUpfiles/");
+			
+			System.out.println(bi.getOriginName());
+			
+		
+	}
 		if(goodsService.insertGoods(g, b, bi)>0) {
 			session.setAttribute("alertMsg", "상품 등록 성공!");
 			return "redirect:list.go";
 		}else {
 			model.addAttribute("errorMsg","상품등록 실패");
+			return "common/errorPage";
+		}
+	}
+	@RequestMapping("detail.go")
+	public ModelAndView selectGoods(ModelAndView mv, int boardNo, HttpSession session) {
+		if(goodsService.increaseCount(boardNo)>0) {
+			mv.addObject("g", goodsService.selectGoods(boardNo));
+			mv.setViewName("board/goods/goodsDetailView");
+		}else {
+			mv.addObject("errorMsg", "조회수 증가 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	@RequestMapping("updateForm.go")
+	public ModelAndView updateForm(int boardNo, ModelAndView mv) {
+		mv.addObject("g", goodsService.selectGoods(boardNo)).setViewName("board/goods/goodsUpdateForm");
+		return mv;
+	}
+	@RequestMapping("update.go")
+	public String updateGoods(@ModelAttribute Goods g, Board b, BoardImage bi,  MultipartFile[] reUpfile, HttpSession session) {
+		
+  for(MultipartFile multipartFile : reUpfile) {
+			
+			String originName = multipartFile.getOriginalFilename();
+			
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+			
+			int randomNumber = (int)(Math.random() * 90000 + 10000);
+			
+			String ext = originName.substring(originName.lastIndexOf("."));
+			
+			String changeName = currentTime + randomNumber + ext;
+			
+			
+			String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/");
+			
+			try {
+				multipartFile.transferTo(new File(savePath + changeName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+			bi.setOriginName(multipartFile.getOriginalFilename());
+			bi.setModifyName("/resources/boardUpfiles/");
+			
+			System.out.println(bi.getOriginName());
+			
+		
+	}
+		if(goodsService.insertGoods(g, b, bi)>0) {
+			session.setAttribute("alertMsg", "상품 수정 성공!");
+			return "redirect:list.go";
+		}else {
+			session.setAttribute("errorMsg","상품 수정 실패");
 			return "common/errorPage";
 		}
 	}
