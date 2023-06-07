@@ -31,8 +31,24 @@
                         <label>비밀번호 재확인</label><br>
                         <input type="password" placeholder="비밀번호를 한번 더 입력해주세요.">
                         <br>
-                        <label>비밀번호</label><br>
-                        <input type="text" placeholder="비밀번호를 입력해주세요.">
+                        <label>이름</label><br>
+                        <input type="text" placeholder="이름을 입력해주세요.">
+                        <br>
+                        <label>닉네임</label><br>
+                        <input type="text" placeholder="닉네임을 입력해주세요.">
+                        <br>
+                        <label>전화번호</label><br>
+                        <input type="text" placeholder="전화번호를 입력해주세요.">
+                        <br>
+                        <label>이메일</label><br>
+                        <input type="email" placeholder="이메일을 입력해주세요.">
+                    </div>
+                    <div id="signUpCheckbox">
+                        <input type="checkbox"> 이용약관 수집에 동의합니다.<br>
+                        <input type="checkbox"> 이메일 수신에 동의합니다.<br>
+                    </div>
+                    <div>
+                        <button type="submit">회원가입</button>
                     </div>
                 </form>
             </div>
