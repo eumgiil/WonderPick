@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatingMapper">
+	<resultMap type="chating" id="chatingResultSet">
+ 		<result column="ROOM_NAME" property="roomName"/>
+ 		<result column="CHATING_FILE" property="chatingFile"/>
+ 		<result column="ARTIST_NICKNAME" property="artistNickName"/>
+ 		<result column="MEMBER_NICKNAME" property="membertNickName"/>
+ 		<result column="CHAT_CHECK" property="chatCheck"/>
+ 	</resultMap>
+ 	
+ 	<resultMap type="beforeReadChatings" id="brcResultSet">
+ 		<result column="FROM_MEMBER" property="fromMember"/>
+ 		<result column="TO_MEMBER" property="toMember"/>
+ 		<result column="CONTENT" property="content"/>
+ 		<result column="ENROLL_DATE" property="enrollDate"/>
+ 		<result column="READ_CHECK" property="ReadCheck"/>
+ 	</resultMap>
+ 	
+	<insert id="createRoom" parameterType="chating">
+		INSERT
+		INTO
+		CHATING
+		(
+		ROOM_NAME,
+		ARTIST_NICKNAME,
+		MEMBER_NICKNAME
+		)
+		 VALUES
+		(
+		#{roomName},
+		#{artistNickName},
+		#{membertNickName}
+		)
+	</insert>
+	
+	<select id="selectRoomName" resultMap="chatingResultSet" parameterType="chating">
+		select
+			ROOM_NAME
+		from
+			chating
+		where 
+			ARTIST_NICKNAME = #{membertNickName}
+		or
+			MEMBER_NICKNAME = #{membertNickName}
+	</select>
+	
+	<select id="checkRoomExisted" resultMap="chatingResultSet" parameterType="chating">
+		
+		select 
+			ROOM_NAME
+		from 
+			chating
+		where
+		    (ARTIST_NICKNAME =  #{membertNickName} and MEMBER_NICKNAME =  #{artistNickName})
+		or
+		    (ARTIST_NICKNAME =  #{artistNickName} and MEMBER_NICKNAME =  #{membertNickName})
+	</select>
+	
+	<insert id="insertreadYetChatings">
+		insert
+		into
+			BEFORE_READ_CHATINGS
+			(
+			CHATTING_NO,
+			ROOM_NAME,
+			FROM_MEMBER,
+			TO_MEMBER,
+			CONTENT,
+			ENROLL_DATE,
+			READ_CHECK
+			)
+		values
+			(
+			SEQ_CHATIN_NO.NEXTVAL,
+			#{roomName},
+			#{fromMember},
+			#{toMember},
+			#{content},
+			#{enrollDate},
+			default
+			)
+	</insert>
+	
+	<select id="selectreadYetChatings" parameterType="chating" resultMap="brcResultSet">
+		select
+			content,
+			READ_CHECK
+		from
+			BEFORE_READ_CHATINGS
+		where
+			ROOM_NAME=#{roomName}
+		
+		order
+		by
+			ENROLL_DATE ASC
+	</select>
+	
+	<update id="countReadYetChatings" parameterType="string">
+		update
+			BEFORE_READ_CHATINGS
+		set
+			READ_CHECK = READ_CHECK-1
+		where
+			ROOM_NAME = #{roomName}
+	</update>
+	
+	<delete id="removeReadChat" parameterType="chating">
+		delete
+		from
+			BEFORE_READ_CHATINGS
+		where
+			ROOM_NAME = #{roomName}
+	</delete>
+</mapper>
