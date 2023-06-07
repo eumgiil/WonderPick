@@ -5,8 +5,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.wonderPick.common.model.vo.PageInfo;
+import com.kh.wonderPick.common.template.Pagination;
 import com.kh.wonderPick.member.model.service.MemberService;
 import com.kh.wonderPick.member.model.vo.Member;
 
@@ -73,4 +77,30 @@ public class MemberController {
 		session.setAttribute("memberGrade", m.getMemberGrade());
 		return "member/signUpForm";
 	}
+	
+	
+	
+	
+	
+	//회원 전체조회
+	@RequestMapping("memberlist.ml")
+	public String selectMemberList(@RequestParam(value="cPage", defaultValue="1") int currentPage,
+			Model model) {
+		
+		PageInfo pi = Pagination.getPageInfo(memberService.selectListCount(), currentPage, 10, 10);
+			model.addAttribute("pi", pi);
+			model.addAttribute("list",memberService.selectMemberList(pi));
+		
+		
+		return "member/memberListView";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
