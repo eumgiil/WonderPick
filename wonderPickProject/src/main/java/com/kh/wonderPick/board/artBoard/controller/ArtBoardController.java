@@ -1,6 +1,7 @@
 package com.kh.wonderPick.board.artBoard.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -46,18 +47,18 @@ public class ArtBoardController {
 			                     DetailOp detailOp,
 			                     MainOption mainOption,
 			                     BoardImage boardImg,
-			                     MultipartFile[] upfiles,
+			                     MultipartFile[] upfile,
 			                     HttpSession session,
 			                     Model model) {
 		
-		System.out.println(board);
-		System.out.println(artBoard);
-		System.out.println(detailOp);
-		System.out.println(mainOption);
-		System.out.println(Arrays.toString(upfiles));
+//		System.out.println(board);
+//		System.out.println(artBoard);
+//		System.out.println(detailOp);
+//		System.out.println(mainOption);
+		System.out.println(Arrays.toString(upfile));
 		
 		
-//		artService.enrollArtBoard(board, artBoard, options);
+		
 		
 		
 		

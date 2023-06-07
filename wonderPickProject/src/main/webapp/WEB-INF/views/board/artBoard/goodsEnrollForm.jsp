@@ -51,7 +51,7 @@
         <br>
 
 
-        <form id="form" method="post">
+        <form id="form" method="post" enctype="multipart/form-data">
 	        <table id="art_table" align="center">
 	            <tbody>
 	                <tr>
@@ -79,7 +79,7 @@
 	                <tr>
 	                    <th><h5 class="sub_title">상품 대표 이미지</h5></th>
 	                    <td align="center" colspan="3">
-	                        <img id="titleimg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+	                        <img id="titleimg" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
 	                    </td>
 	                </tr>
 	                <tr>
@@ -178,20 +178,24 @@
 	            </tr>
 	        </table>
 	        
-	        <input type="hidden" id="deList" name="deList" value="'+ deList +'">';
-            <input type="hidden" id="prList" name="prList" value="'+ prList +'">';
+	        <input type="hidden" id="deList" name="deList" value="'+ deList +'">
+            <input type="hidden" id="prList" name="prList" value="'+ prList +'">
             <input type="hidden" id="options" name="options" value="'+ options +'">
+            
+		    <div id="file-area">
+		        <input type="file" id="file1" name="upfile" required onchange="loadImg(this, 1);">
+		        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);">
+		        <input type="file" id="file3" name="upfile" onchange="loadImg(this, 3);">
+		        <input type="file" id="file4" name="upfile" onchange="loadImg(this, 4);">
+	    	</div>
+	    	
 	    </form>
+	    
 
     </div>
          
 
-    <div id="file-area">
-        <input type="file" id="file1" name="file1" required onchange="loadImg(this, 1);">
-        <input type="file" id="file2" name="file2" onchange="loadImg(this, 2);">
-        <input type="file" id="file3" name="file3" onchange="loadImg(this, 3);">
-        <input type="file" id="file4" name="file4" onchange="loadImg(this, 4);">
-    </div>
+    
 
     <br><br><br><br>
 
