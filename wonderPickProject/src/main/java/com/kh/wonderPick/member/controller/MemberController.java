@@ -5,8 +5,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.wonderPick.common.model.vo.PageInfo;
+import com.kh.wonderPick.common.template.Pagination;
 import com.kh.wonderPick.member.model.service.MemberService;
 import com.kh.wonderPick.member.model.vo.Member;
 
@@ -19,6 +23,14 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	/**
+	 * 메인페이지
+	 * @return : 어디서는 로고이미지누르면 메인으로 돌려보냄
+	 */
+	@RequestMapping("main.re")
+	public String mainRetrun() {
+		return "redirect:/";
+	}
 	
 	/**
 	 * 로그인 서비스
@@ -37,6 +49,58 @@ public class MemberController {
 			session.setAttribute("alertMsg", "등록되지 않거나, 잘못된 정보입니다.");
 			return "redirect:/";
 		}
-		
 	}
+	
+	/**
+	 * 로그아웃 서비스
+	 * @param session : session에 저장되어있던 loginMember를 비워줌
+	 * @return : 메인페이지로 돌려보냄
+	 */
+	@RequestMapping("logout.me")
+	public String logoutMember(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	/**
+	 * 회원가입 url을 정확하게 알려주지 않기위해서 거쳐서 보내줌
+	 * @return : memberEnrollFrom.jsp로 보내줌
+	 */
+	@RequestMapping("selectGrade.me")
+	public String selectGradeMember() {
+		return "member/selectmemberGrade";
+	}
+	
+	@RequestMapping("signUpForm.me")
+	public String signUpMember(Member m,
+							   HttpSession session) {
+		session.setAttribute("memberGrade", m.getMemberGrade());
+		return "member/signUpForm";
+	}
+	
+	
+	
+	
+	
+	//회원 전체조회
+	@RequestMapping("memberlist.ml")
+	public String selectMemberList(@RequestParam(value="cPage", defaultValue="1") int currentPage,
+			Model model) {
+		
+		PageInfo pi = Pagination.getPageInfo(memberService.selectListCount(), currentPage, 10, 10);
+			model.addAttribute("pi", pi);
+			model.addAttribute("list",memberService.selectMemberList(pi));
+		
+		
+		return "member/memberListView";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

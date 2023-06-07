@@ -6,9 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Wonder Pick</title>
+<!-- google icon 스타일시트-->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- google font 스타일시트 -->
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@900&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/common/header.css">
 <!-- jQuery 라이브러리 -->
@@ -28,7 +30,7 @@
 	</c:if>
     <header class="clear">
         <div class="wrap clear">
-            <div id="logo"><img src="resources/common/logo.png"/></div>
+            <div id="logo"><a href="main.re"><img src="resources/common/logo.png"/></a></div>
             <div id="mainMenuBar" class="clear">
                 <ul id="mainMenu" class="clear">
                     <li class="mainCategory">
@@ -125,32 +127,12 @@
                 <ul id="memberMenu" class="clear">
                 	<c:choose>
                 		<c:when test="${ empty loginMember }" >
-		                    <li class="memberMenuLI"><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
-		                    <li class="memberMenuLI"><a href="#">회원가입</a></li>
+		                    <li><a data-toggle="modal" data-target="#loginModal">로그인</a></li>
+		                    <li><a href="selectGrade.me">회원가입</a></li>
                 		</c:when>
                 		<c:otherwise>
-                			<li class="memberMenuLI"><a href="#">마이페이지</a></li>
-		                    <li>
-		                    	<a href="#"><img src="resources/common/basicProfile.jpg"/></a>
-		                    	<script>
-		                    	$('#memberMenu img').css('border-radius', '50%');
-		                    	$('#memberMenu img').css('width', '35px');
-		                    	$('#memberMenu img').css('height', '35px');
-		                    	$('#memberMenu img').css('margin-top', '32px');
-		                    	$('#memberMenu img').css('margin-left', '30px');
-		                    	$('#memberMenu img').css('margin-right', '15px');
-		                    	</script>
-		                            <ul class="detailCategory">
-		                                <li><a href="#">캐릭터일러스트</a></li>
-		                                <li><a href="#">일러스트</a> </li>
-		                                <li><a href="#">버츄얼</a></li>
-		                                <li><a href="#">디자인</a></li>
-		                                <li><a href="#">웹툰</a></li>
-		                                <li><a href="#">기타</a></li>
-		                            </ul>
-	                    	</li>
-		                    
-		                    
+                			<li><a href="#">마이페이지</a></li>
+	                    	<li><a href="logout.me">로그아웃</a></li>
                 		</c:otherwise>
                 	</c:choose>
                 </ul>

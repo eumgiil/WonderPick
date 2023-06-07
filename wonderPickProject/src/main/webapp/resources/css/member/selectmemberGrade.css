@@ -1,0 +1,97 @@
+@charset "UTF-8";
+    /* 스타일 초기화 */
+    body {
+        line-height: 1;
+    }
+    ol, ul {
+        list-style: none;
+    }
+    blockquote, q {
+        quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        
+    }
+    button{
+        cursor: pointer;
+    }
+    *{
+        padding : 0;
+        margin : 0;
+        list-style: none !important;
+        text-decoration : none !important;
+        box-sizing: border-box;
+        font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    /* 공용 클래스 */
+    /* float 부모요소에는 무조건 clear 삽입 */
+    .clear::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+    /* 헤더 빈공간 채워놓는 용 */
+    #blankHeader{
+        height : 80px;
+    }
+
+    #mainWrap{
+        width: 400px;
+        margin: 0 auto;
+        height: 100%;
+        display : block;
+    }
+    /* 로고 크기 */
+    #enrollLogo{
+        margin : auto;
+        width : 200px;
+        height : 200px;
+        overflow: hidden;
+    }
+
+    #enrollLogo img{
+        width : 100%;
+        height : 100%;
+    }
+
+    /* 제목 */
+    #gradeTitle{
+        margin : 15px 0px;
+        line-height: normal;
+    }
+    #gradeSubTitle{
+        margin : 15px 0px; 
+        color : #85727d;
+        line-height: normal;
+        font-size: 14px;
+    }
+
+    /* 등급 선택 영역 */
+    #gradeBtn{
+        margin : 50px 0px;
+        line-height: normal;
+        font-weight: bold;
+    }
+    #gradeBtn button{
+        margin : 20px 0px;
+        height : 50px;
+        width : 400px;
+        text-align : left;
+        padding-left: 20px;
+        font-weight: bold;
+        background-color: white;
+        border : 1px solid #FF8399;
+        border-radius: 5px;
+    }
+    #gradeBtn button:hover{
+        background-color: #ff839a8f;
+    }

@@ -51,7 +51,7 @@
         <br>
 
 
-        <form id="form" action="enroll.at" method="post">
+        <form id="form" method="post" enctype="multipart/form-data">
 	        <table id="art_table" align="center">
 	            <tbody>
 	                <tr>
@@ -59,27 +59,27 @@
 	                        <h5 class="sub_title">카테고리</h5>
 	                    </th>
 	                    <td>
-	                        <select name="" id="">
-	                            <option value="">캐릭터 일러스트</option>
-	                            <option value="">일러스트</option>
-	                            <option value="">버츄얼</option>
-	                            <option value="">디자인</option>
-	                            <option value="">웹툰</option>
+	                        <select id="category" name="category">
+	                            <option value="CI">캐릭터 일러스트</option>
+	                            <option value="I">일러스트</option>
+	                            <option value="V">버츄얼</option>
+	                            <option value="D">디자인</option>
+	                            <option value="W">웹툰</option>
 	                        </select>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품명</h5></th>
-	                    <td colspan="3"><input type="text" style="width: 85%;"></td>
+	                    <td colspan="3"><input type="text"  name="boardTitle" style="width: 85%;"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품가격</h5></th>
-	                    <td><input type="number" style="width: 70%;">원 </td>
+	                    <td><input type="number" name="price" style="width: 70%;">원 </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품 대표 이미지</h5></th>
 	                    <td align="center" colspan="3">
-	                        <img id="titleimg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+	                        <img id="titleimg" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
 	                    </td>
 	                </tr>
 	                <tr>
@@ -93,29 +93,29 @@
 	                <tr>
 	                    <th><h5 class="sub_title">상품설명</h5></th>
 	                    <td colspan="3">
-	                        <textarea name="" id="" style="width: 100%; height:400px; resize:none;" maxlength="1000"></textarea>
+	                        <textarea name="boardContent" id="boardContent" style="width: 100%; height:400px; resize:none;" maxlength="1000"></textarea>
 	                    </td>
 	                </tr>
 	                
 	                <tr>
 	                    <th><h5 class="sub_title">파일유형</h5></th>
-	                    <td><input type="text"></td>
+	                    <td><input type="text" name="fileType"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">해상도</h5> </th>
-	                    <td><input type="text"></td>
+	                    <td><input type="text" name="dpi"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본사이즈</h5></th>
-	                    <td><input type="text"></td>
+	                    <td><input type="text" name="defaultSize"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본수정횟수</h5></th>
-	                    <td><input type="text"></td>
+	                    <td><input type="number" name="modifyCount"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">작업기간</h5></th>
-	                    <td><input type="text"></td>
+	                    <td><input type="text" name="workday"></td>
 	                </tr>
 	                <tr>
 	                    <th colspan="4"><hr class="line"></th>
@@ -124,7 +124,7 @@
 	                <tr>
 	                    <th colspan="4">
 	                        <h5 class="sub_title">옵션</h5>
-	                        <button onclick="op_plus();">메인옵션추가</button>
+	                        <button type="button" onclick="op_plus();">메인옵션추가</button>
 	                    </th>
 	                </tr>
 	
@@ -150,23 +150,23 @@
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">패션</h5></th>
-	                <td colspan="3"><input type="text" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">문구</h5></th>
-	                <td colspan="3"><input type="text" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">주방</h5></th>
-	                <td colspan="3"><input type="text" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">인테리어</h5></th>
-	                <td colspan="3"><input type="text" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">주방</h5></th>
-	                <td colspan="3"><input type="text" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
 	            </tr>
 	            <!-- 끝 옵션 -->
 	            <tr>
@@ -177,17 +177,25 @@
 	                background-color:  rgb(255, 131, 153); color: black; border: none;">굿즈 판매 요청하기</div></td>
 	            </tr>
 	        </table>
+	        
+	        <input type="hidden" id="deList" name="deList" value="'+ deList +'">
+            <input type="hidden" id="prList" name="prList" value="'+ prList +'">
+            <input type="hidden" id="options" name="options" value="'+ options +'">
+            
+		    <div id="file-area">
+		        <input type="file" id="file1" name="upfile" required onchange="loadImg(this, 1);">
+		        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);">
+		        <input type="file" id="file3" name="upfile" onchange="loadImg(this, 3);">
+		        <input type="file" id="file4" name="upfile" onchange="loadImg(this, 4);">
+	    	</div>
+	    	
 	    </form>
+	    
 
     </div>
          
 
-    <div id="file-area">
-        <input type="file" id="file1" name="file1" required onchange="loadImg(this, 1);">
-        <input type="file" id="file2" name="file2" onchange="loadImg(this, 2);">
-        <input type="file" id="file3" name="file3" onchange="loadImg(this, 3);">
-        <input type="file" id="file4" name="file4" onchange="loadImg(this, 4);">
-    </div>
+    
 
     <br><br><br><br>
 
@@ -207,10 +215,10 @@
         function op_plus(){
             let value = '';
             value = '<th>'
-                        +'<button onclick="detail_op_plus(this);" style="float:left;">+</button>'
+                        +'<button type="button" onclick="detail_op_plus(this);" style="float:left;">+</button>'
                         +'<h5 class="sub_title">옵션카테고리'+ i +'</h5></th>'
                     +'<td>'
-                        +'<input type="text" id="option_' + i + '">'
+                        +'<input type="text" name="option_' + i + '" id="option_' + i + '">'
                     +'</td>'
                     +'<th><h5 class="sub_title"></h5></th>'
                     +'<td>'
@@ -230,7 +238,7 @@
         
         function detail_op_plus(e){
 
-            let tbody = e.parentElement.parentElement.parentElement;
+        	let tbody = e.parentElement.parentElement.parentElement;
             let id = tbody.id;
             // let str = id.slice(0, id.indexOf('y') + 1);
             let num = parseInt(id.slice(id.indexOf('y')+1));
@@ -242,34 +250,53 @@
                     +'</td>'
                     +'<th><h5>가격</h5></th>'
                     +'<td>'
-                        +'<input type="text" name="price'+ num +'" class="price'+ num +'">'
+                        +'<input type="text" name="opPrice'+ num +'" class="opPrice'+ num +'">'
                     +'</td>';
             
             let tr = document.createElement('tr');
             tr.innerHTML += value;
             tbody.append(tr);
             
+            
+            
         }
 
         function start(){
 
             /* tbody개수 파악  */
-            let length = art_table.tBodies.length;
-            /* console.log('length : ' + length);
-            let de;
-            let pr;
+        	let length = art_table.tBodies.length;
 
-            for(let i = 1; i < length + 1; i++){
-                de = document.getElementsByClassName('detailOp' + i);
-                pr = document.getElementsByClassName('price' + i);
-                for(let j = 0; j < de.length; j++){
-                    console.log('de'+ i +' : ' + de[j].value);
-                    console.log('pr'+ i +' : ' + pr[j].value);
+            let deList = [];
+            let prList = [];
+
+            let detailOp = [];
+            let opPrice = [];
+
+            let option;
+            let options = [];
+
+            for(let i = 1; i < length; i++){
+                detailOp = document.getElementsByClassName('detailOp' + i);
+                opPrice = document.getElementsByClassName('opPrice' + i);
+                option = document.getElementById('option_'+ i);
+
+                deList.push('#'+option.value+'#');
+                prList.push('#'+option.value+'#');
+                options.push('#'+option.value+'#');
+
+                for(let j = 0; j < detailOp.length; j++){
+                    deList.push(detailOp[j].value);
+                    prList.push(opPrice[j].value);
                 }
-            } */
+            };
 
             let form = document.getElementById('form');
-            form.innerHTML += '<input type="text" name="count" value="'+ length +'">';
+            
+            document.getElementById('deList').value = deList;
+            document.getElementById('prList').value = prList;
+            document.getElementById('options').value = options;
+            
+           	form.action = 'enroll.at';
             form.submit();
 
         }

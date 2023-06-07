@@ -1,15 +1,23 @@
 package com.kh.wonderPick.board.artBoard.controller;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.wonderPick.board.artBoard.model.service.ArtBoardService;
+import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
+import com.kh.wonderPick.board.artBoard.model.vo.DetailOp;
+import com.kh.wonderPick.board.artBoard.model.vo.MainOption;
+import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 
 @Controller
 public class ArtBoardController {
@@ -34,17 +42,28 @@ public class ArtBoardController {
 	}
 	
 	@RequestMapping("enroll.at")
-	public void enrollArtBoard(HttpServletRequest request, int count) {
+	public String enrollArtBoard(Board board,
+			                     ArtBoard artBoard,
+			                     DetailOp detailOp,
+			                     MainOption mainOption,
+			                     BoardImage boardImg,
+			                     MultipartFile[] upfile,
+			                     HttpSession session,
+			                     Model model) {
 		
-		ArrayList list = new ArrayList();
-//		String[] a = request.getParameterValues("a");
+//		System.out.println(board);
+//		System.out.println(artBoard);
+//		System.out.println(detailOp);
+//		System.out.println(mainOption);
+		System.out.println(Arrays.toString(upfile));
 		
-		int length;
 		
-		for(int i = 0; i < count; i++) {
-			list.add(request.getParameterValues("detailOp" + i));
-		}
-		System.out.println(list);
+		
+		
+		
+		
+		return null;
+		
 	}
 	
 	
