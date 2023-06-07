@@ -35,10 +35,10 @@
                 </div>
                 <script>
                 	$('#gradeMember').on('click', () => {
-                        location.href="signUp.me?memberGrade=" + $('#gradeMember').val();
+                        location.href="signUpForm.me?memberGrade=" + $('#gradeMember').val();
                     });
                     $('#gradeAuthor').on('click', () => {
-                        location.href="signUp.me?memberGrade=" + $('#gradeAuthor').val();
+                        location.href="signUpForm.me?memberGrade=" + $('#gradeAuthor').val();
                     });
                 </script>
             </div>
