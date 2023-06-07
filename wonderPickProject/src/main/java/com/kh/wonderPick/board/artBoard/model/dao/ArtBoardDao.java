@@ -17,16 +17,12 @@ public class ArtBoardDao {
 		return (ArrayList)sqlSession.selectList("artBoardMapper.selectArtList");
 	}
 	
-	public int enrollBoard(SqlSessionTemplate sqlSession, Board board) {
-		return sqlSession.insert(statement, parameter);
+	public int insertBoard(SqlSessionTemplate sqlSession, Board board) {
+		return sqlSession.insert("artBoardMapper.insertBoard", board);
 	}
 
-	public int enrollArtBoard(SqlSessionTemplate sqlSession, ArtBoard artBoard) {
-		return sqlSession.insert(statement, parameter);
-	}
-	
-	public int enrollOption(SqlSessionTemplate sqlSession, Option options) {
-		return sqlSession.insert(statement, parameter);;
+	public int insertArtBoard(SqlSessionTemplate sqlSession, ArtBoard artBoard) {
+		return sqlSession.insert("artBoardMapper.insertArtBoard", artBoard);
 	}
 	
 	

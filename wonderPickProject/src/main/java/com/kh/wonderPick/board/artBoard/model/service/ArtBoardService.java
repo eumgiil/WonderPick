@@ -8,5 +8,5 @@ public interface ArtBoardService {
 
 	ArrayList<ArtBoard> selectArtList();
 	
-	int enrollArtBoard();
+//	int enrollArtBoard();
 }

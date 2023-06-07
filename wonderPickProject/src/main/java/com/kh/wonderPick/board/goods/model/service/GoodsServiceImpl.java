@@ -50,12 +50,12 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Override
 	public int increaseCount(int boardNo) {
-		return 0;
+		return goodsDao.increaseCount(sqlSession, boardNo);
 	}
 
 	@Override
 	public Goods selectGoods(int boardNo) {
-		return null;
+		return goodsDao.selectGoods(sqlSession, boardNo);
 	}
 
 	@Override

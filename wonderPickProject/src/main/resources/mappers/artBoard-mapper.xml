@@ -18,8 +18,19 @@
 		       art_board
 	</select>
 
+	<insert id="insertBoard" parameterType="board">
+		insert
+		  into
+		  	   board
+		  	   (
+		  	   
+		  	   )
+	</insert>
 
-
+	<insert id="insertArtBoard" parameterType="artBoard">
+	
+	</insert>
+	
 
 
 
