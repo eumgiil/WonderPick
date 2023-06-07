@@ -66,4 +66,11 @@ public class MemberController {
 	public String selectGradeMember() {
 		return "member/selectmemberGrade";
 	}
+	
+	@RequestMapping("signUp.me")
+	public String signUpMember(Member m,
+							   HttpSession session) {
+		session.setAttribute("memberGrade", m.getMemberGrade());
+		return "member/signUpForm";
+	}
 }

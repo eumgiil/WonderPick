@@ -44,5 +44,9 @@
             </div>
         </div>
     </div>
+	
+	<script>
+		console.log('${sessionScope.memberGrade}');
+	</script>
 </body>
 </html>
