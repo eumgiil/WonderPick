@@ -40,20 +40,14 @@ public class ContestController {
 	
 	@RequestMapping("insertContest.ct")
 	public String insertContest(Board board,
-<<<<<<< HEAD
 //								BoardImage boardImage,
-=======
-								BoardImage boardImage,
 								Contest contest,
->>>>>>> 5250815160f2874be5265705773837986c3974e6
 								MultipartFile thumbnailUpFile,
 								MultipartFile[] upFile,
-								Contest contest,
 								Model model,
 								HttpSession session) {
 		
 		//System.out.println(b);
-<<<<<<< HEAD
 		//System.out.println(upFile[0]);
 		//System.out.println(c);
 		System.out.println("썸네일" + thumbnailUpFile);
@@ -79,42 +73,10 @@ public class ContestController {
 		boardImage.setModifyName(board.getBoardTitle());
 		boardImage.setFileLevel(1);
 		boardImage.setFilePath("/resources/boardUpfiles/emoticonFiles/" + changeName);
-=======
-		//System.out.println(upFile.length);
-		
-		
-		ArrayList list = new ArrayList();
-		
-		String originName2 = thumbnailUpFile.getOriginalFilename();
-		
-		String currentTime2 = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-		
-		int randomNumber2 = (int)(Math.random() * 90000 + 10000);
-		
-		String ext2 = originName2.substring(originName2.lastIndexOf("."));
-		
-		String changeName2 = currentTime2 + randomNumber2 + ext2;
-		
-		
-		String savePath2 = session.getServletContext().getRealPath("/resources/boardUpfiles/emoticonFiles/");
-		
-		try {
-			thumbnailUpFile.transferTo(new File(savePath2 + changeName2));
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-		
-		boardImage.setOriginName(thumbnailUpFile.getOriginalFilename());
-		boardImage.setModifyName("/resources/boardUpfiles/emoticonFiles/");
->>>>>>> 5250815160f2874be5265705773837986c3974e6
 		
 		list.add(boardImage);
 		
 		
-<<<<<<< HEAD
-		
-=======
->>>>>>> 5250815160f2874be5265705773837986c3974e6
 		
 		
 		for(MultipartFile multipartFile : upFile) {
@@ -152,78 +114,9 @@ public class ContestController {
 				list.add(boardImage);
 			}
 			
-<<<<<<< HEAD
 		}
-=======
-			boardImage.setOriginName(multipartFile.getOriginalFilename());
-			boardImage.setModifyName("/resources/boardUpfiles/emoticonFiles/");
-			
-<<<<<<< HEAD
->>>>>>> 5250815160f2874be5265705773837986c3974e6
-=======
-			list.add(boardImage);
-			
->>>>>>> 95b4e21abbf350398f80a362d7cc5906ed9e5a84
-		
-		//System.out.println(list);
-		
-		
-//		for(int i = 0; i < list.size(); i++) {
-//			
-//			String originName = list.get(i)
-//			
-//			String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-//			System.out.println("1");
-//			
-//			String ext = originName.substring(originName.lastIndexOf("."));
-//			
-//			System.out.println("2");
-//			
-//			int randomNumber = (int)(Math.random() * 90000 + 10000);
-//			
-//			String changeName = currentTime + randomNumber + ext;
-//			System.out.println("3");
-//			
-//			String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/emoticonFiles/");
-//			
-//			
-//				//multipartFile.transferTo(new File(savePath + changeName));
-//				
-//			
-//			
-//			boardImage.setOriginName(originName);
-//			boardImage.setModifyName(board.getBoardTitle());
-//			boardImage.setFilePath("/resources/boardUpfiles/emoticonFiles/" + changeName);
-//			
-//			if(i == 0) {
-//				boardImage.setFileLevel(1);
-//			}else {
-//				boardImage.setFileLevel(2);
-//			}
-//			
-//			
-////			list.add(boardImage);
-//		
-//		}
-		
-		
-		
-
-	
-		//System.out.println("number 1 :" +  b);
-		//System.out.println("22222 : " + bi);
-		//System.out.println("33 :" + c);
-		
-<<<<<<< HEAD
-<<<<<<< HEAD
 		
 		if(contestService.insertContest(board, list, contest) > 0) {
-=======
-		if(contestService.insertContest(board, boardImage, contest) > 0) {
->>>>>>> 5250815160f2874be5265705773837986c3974e6
-=======
-		if(contestService.insertContest(board, list, contest) > 0) {
->>>>>>> 95b4e21abbf350398f80a362d7cc5906ed9e5a84
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
 			return "board/contestBoard/contestMain";
 			
@@ -237,7 +130,6 @@ public class ContestController {
 		
 		
 
+
 	}
-
-
 }

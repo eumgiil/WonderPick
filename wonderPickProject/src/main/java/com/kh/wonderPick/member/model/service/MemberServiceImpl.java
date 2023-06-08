@@ -23,16 +23,6 @@ public class MemberServiceImpl implements MemberService {
 	public Member loginMember(Member m) {
 		return memberDao.loginMember(m, sqlSession);
 	}
-	//회원 전체조회
-	@Override
-	public int selectListCount() {
-		return memberDao.selectListCount(sqlSession);
-	}
-	
-	//회원 전체조회
-	@Override
-	public ArrayList<Member> selectMemberList(PageInfo pi) {
-		return memberDao.selectMemberList(sqlSession,pi);
-	}
+
 	
 }
