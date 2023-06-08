@@ -80,8 +80,15 @@ public class MemberController {
 		return "member/signUpForm";
 	}
 	
+	@RequestMapping("idCheck.me")
+	public void idCheckMember(String checkId) {
+		memberService.idCheckMember(checkId);
+	}
+	
 	@RequestMapping("signUp.me")
 	public void signUpMember(Member m) {
 		System.out.println(m);
 	}
+	
+	
 }

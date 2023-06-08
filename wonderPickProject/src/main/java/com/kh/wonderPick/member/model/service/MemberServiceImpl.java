@@ -20,5 +20,11 @@ public class MemberServiceImpl implements MemberService {
 	public Member loginMember(Member m) {
 		return memberDao.loginMember(m, sqlSession);
 	}
+
+	@Override
+	public int idCheckMember(String checkId) {
+		return memberDao.idCheckMember(checkId, sqlSession);
+	}
 	
+
 }

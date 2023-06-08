@@ -100,8 +100,19 @@
 			$idInput.keyup(function(){	
 				console.log($idInput.val());
 				if($idInput.val().length >= 5){
-					$('#checkIdResult').css('color', successColor).text('멋진 아이디내요!');
-					$('#submitBtn').removeAttr('disabled');
+					
+					$.ajax({
+						url : 'idCheck.me',
+						data : { checkId : $idInput.val()},
+						success : function(){
+							$('#checkIdResult').css('color', successColor).text('멋진 아이디내요!');
+							$('#submitBtn').removeAttr('disabled');
+						},
+						error : function(){
+							$('#checkIdResult').css('color', errorColor ).text('중복된 아이디가 존재합니다.');
+							$('#submitBtn').attr('disabled', true);
+						}
+					});
 				} else if($idInput.val() == '') {
 					$('#checkIdResult').css('color', errorColor ).text('필수 입력란입니다');
 					$('#submitBtn').attr('disabled', true);
