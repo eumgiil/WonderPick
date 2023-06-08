@@ -1,4 +1,4 @@
-@charset "UTF-8";
+ @charset "UTF-8";
 	/* 스타일 초기화 */
     body {
         line-height: 1;
@@ -65,16 +65,13 @@
 
     /* 제목 */
     #signUpTitle{
-        margin : 50px 0px;
+        margin : 15px 0px;
         line-height: normal;
     }
 
     /* 메인영역 */
-    #signUpInput{
-        margin-top : 20px;
-    }
     #signUpInput input{
-        margin : 20px 0px;
+        margin-top : 20px;
         height : 50px;
         width : 400px;
         padding-left: 20px;
@@ -82,18 +79,22 @@
         border : 1px solid #85727d;
     }
     #signUpInput label{
+    	display : inline-block;
         font-weight: bold;
+        margin-top : 20px;
     }
+
     #signUpCheckbox{
         border-radius : 5px;
         border : 1px solid #85727d;
         height : 90px;
         margin-bottom: 20px;
+        margin-top : 20px;
     }
     #signUpCheckbox input{
         margin : 20px 0px 5px 20px;
     }
-    #signUpMain button{
+    #submitBtn{
         width : 400px;
         height : 60px;
         margin : auto;
