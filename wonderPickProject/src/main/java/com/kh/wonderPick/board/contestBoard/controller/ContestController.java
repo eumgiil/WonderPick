@@ -129,8 +129,24 @@ public class ContestController {
 			return "board/contestBoard/contestMain";
 		}
 		
-		
-
 
 	}
+	@RequestMapping("selectVotePage.ct")
+	public String selectVotePage() {
+		
+		
+		return "board/contestBoard/contestVote";
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
