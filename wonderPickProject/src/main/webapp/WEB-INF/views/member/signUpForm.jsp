@@ -40,13 +40,15 @@
                         <br>
                         <label>닉네임</label><br>
                         <input type="text" id="nickName" name="nickName" placeholder="닉네임을 입력해주세요.">
-                        <div id=></div>
+                        <div id="checkNickResult"></div>
                         <br>
                         <label>전화번호</label><br>
                         <input type="text" id="phone" name="phone" placeholder="전화번호를 입력해주세요. ( - 없이 숫자만 입력해주세요.)">
+                        <div id="checkPhoneResult"></div>
                         <br>
                         <label>이메일</label><br>
                         <input type="email" id="email" name="email" placeholder="이메일을 입력해주세요.">
+                        
                         <input type="hidden" id="memberGrade" name="memberGrade" value="${ sessionScope.memberGrade }">
                     </div>
                     <div id="signUpCheckbox">
@@ -71,13 +73,21 @@
 		$('#memberPwd').on('click', () =>{
 			$('#checkPwdResult').show();
 		});
-		//비밀번호 재확인
+		// 비밀번호 재확인
 		$('#memberRepwd').on('click', () =>{
 			$('#checkPwdReresult').show();
 		});
-		//이름
-		$('#memberRepwd').on('click', () =>{
-			$('#checkPwdReresult').show();
+		// 이름
+		$('#memberName').on('click', () =>{
+			$('#checkNameResult').show();
+		});
+		// 닉네임
+		$('#nickName').on('click', () =>{
+			$('#checkNickResult').show();
+		});
+		// 전화번호
+		$('#phone').on('click', () =>{
+			$('#checkPhoneResult').show();
 		});
 	</script>
 	<!-- 정규표현식 검사 -->
