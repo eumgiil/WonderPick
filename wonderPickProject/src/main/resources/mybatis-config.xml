@@ -19,8 +19,13 @@
 		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.BoardImage" alias="boardImage" />
 		<typeAlias type="com.kh.wonderPick.board.contestBoard.model.vo.Contest" alias="contestBoard"/>
 		<typeAlias type="com.kh.wonderPick.board.review.model.vo.Review" alias="review" />
-		
-		
+		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Reply" alias="reply" />
+		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply" alias="reReply" />
+	
+
+		<typeAlias type="com.kh.wonderPick.chatting.model.vo.Chating" alias="chating"/>
+      	<typeAlias type="com.kh.wonderPick.chatting.model.vo.BeforeReadChatings" alias="beforeReadChatings"/>
+
 	</typeAliases>
 	
 	<!-- ** 주의 : 미리 등록을 해두기 위해선 해당 클래스가 진짜 존재하고 있어야함 -->
@@ -37,6 +42,7 @@
 		<mapper resource="/mappers/contestBoard-mapper.xml"/>
 		<mapper resource="/mappers/goods-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/chating-mapper.xml" />
 	</mappers>	
 	
 	

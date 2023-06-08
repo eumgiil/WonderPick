@@ -157,11 +157,11 @@
             <div style="padding:10px;">
                 <c:choose>
                     <c:when test="${not empty reviewList}">
-                        <c: set var="reviewList" value="${ reviewList }" scope="request" />
+                        <c:forEach items="${reviewList}" var="r">
                 <table border="1">
                     <!-- 여기 부분 반복 -->
                     <tr>
-                        <td style="height:10px;">아이디</td>
+                        <td style="height:10px;">${r.nickname }</td>
                         <td rowspan="4" width="30%">
                             <img width="100%" height="100%" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">
                         </td>
@@ -169,16 +169,16 @@
                     <tr>
                         <td class="height_10px" id="">
                         <c:choose>
-                            <c:when test="${ 별점 == 1}">
+                            <c:when test="${ r.star == 1}">
                                 <label for="starpoint_1" class="label_star" title="1"><span class="blind">★☆☆☆☆</span></label>
                             </c:when>
-                            <c:when>
+                            <c:when test="${ r.star == 2}">
                                 <label for="starpoint_2" class="label_star" title="2"><span class="blind">★★☆☆☆</span></label>
                             </c:when>
-                            <c:when>
+                            <c:when test="${ r.star == 3}">
                                 <label for="starpoint_3" class="label_star" title="3"><span class="blind">★★★☆☆</span></label>
                             </c:when>
-                            <c:when>
+                            <c:when test="${ r.star == 4}">
                                 <label for="starpoint_4" class="label_star" title="4"><span class="blind">★★★★☆</span></label>
                             </c:when>
                             <c:otherwise>
@@ -188,10 +188,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="height_10px">날짜</td>
+                        <td class="height_10px">${r.createDate }</td>
                     </tr>
                     <tr>
-                        <td class="height_10px">내용</td>
+                        <td class="height_10px">${r.boardContent }</td>
                     </tr>
 
                     <!--  반복시 hr 태그 추가되도록
@@ -200,6 +200,7 @@
                     </tr>
                     -->
                 </table>
+                </c:forEach>
                 </c:when>
                 <c:otherwise>
                     리뷰 내역이 존재하지 않습니다.
@@ -218,7 +219,7 @@
                 <br>
                 <c:choose>
                     <c:when test="${not empty replyList}">
-                        <c: set var="replyList" value="${ replyList }" scope="request" />
+                        <c:forEach items="${replyList}" var="r">
                 <table class="t_align_left" border="1">
                     <tr>
                         <td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">
@@ -240,6 +241,7 @@
                         <td style="padding-left:10px;">댓글 내용 : 것이 따뜻한 봄바람이다 인생에 따뜻한 봄바람을 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의</td>
                     </tr>
                 </table>
+                </c:forEach>
                 </c:when>
                 <c:otherwise>
                     <h6>댓글 내역이 존재하지 않습니다.</h3>
