@@ -34,17 +34,10 @@
                     <button id="gradeAuthor" value="작가">작가 회원 가입</button>
                 </div>
                 <script>
-<<<<<<< HEAD
-                	$('#gradeMember').on('click', () => {
-                        location.href="signUpForm.me?memberGrade=" + $('#gradeMember').val();
-                    });
-                    $('#gradeAuthor').on('click', () => {
-=======
                 	$('#gradeMember').on('click', function(){
                         location.href="signUpForm.me?memberGrade=" + $('#gradeMember').val();
                     });
                     $('#gradeAuthor').on('click', function(){
->>>>>>> 5250815160f2874be5265705773837986c3974e6
                         location.href="signUpForm.me?memberGrade=" + $('#gradeAuthor').val();
                     });
                 </script>
