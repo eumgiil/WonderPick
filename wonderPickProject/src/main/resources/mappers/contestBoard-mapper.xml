@@ -111,20 +111,25 @@
 		</insert>
 		
 		
-		<!-- <insert id="insertEmoticon" parameterType="contestBoard">
+		<insert id="insertPrice" parameterType="_int">
 			INSERT 
 			  INTO 
 			  		EMOTICON
+			  		(
+			  		 EMOTICON_NO
+			  		,BOARD_NO
+			  		,PRICE
+			  		,PRICE_STATUS
+			  		)
 			VALUES
 					(
 					SEQ_EMOTICONIMG_NO.NEXTVAL
-					
-					,18
-					,5000
+					,SEQ_BOARD_NO.CURRVAL
+					,#{ price }
 					,0
 					)
 		
-		</insert> -->
+		</insert> 
 	
 		
 

@@ -41,18 +41,20 @@ public class ContestController {
 	@RequestMapping("insertContest.ct")
 	public String insertContest(Board board,
 //								BoardImage boardImage,
-								Contest contest,
+//								Contest contest,
+								int price,
 								MultipartFile thumbnailUpFile,
 								MultipartFile[] upFile,
 								Model model,
 								HttpSession session) {
 		
+		
+		
 		//System.out.println(b);
 		//System.out.println(upFile[0]);
 		//System.out.println(c);
-		System.out.println("썸네일" + thumbnailUpFile);
 
-		ArrayList list = new ArrayList();
+		ArrayList<BoardImage> list = new ArrayList();
 		
 		String originName = thumbnailUpFile.getOriginalFilename();
 		
@@ -87,8 +89,6 @@ public class ContestController {
 				
 				String originName2 = multipartFile.getOriginalFilename();
 				
-				System.out.println("나머지들 :" + originName2);
-				
 				String currentTime2 = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
 				
 				String ext2 = originName2.substring(originName2.lastIndexOf("."));
@@ -116,7 +116,9 @@ public class ContestController {
 			
 		}
 		
-		if(contestService.insertContest(board, list, contest) > 0) {
+		int result = contestService.insertContest(board, list, price);
+		
+		if(result > 0) {
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
 			return "board/contestBoard/contestMain";
 			
@@ -124,9 +126,6 @@ public class ContestController {
 			model.addAttribute("errorMsg", "게시글 작성에 실패하였습니다.");
 			return "board/contestBoard/contestMain";
 		}
-		
-		
-
 		
 		
 

@@ -28,26 +28,20 @@ public class ContestServiceImpl implements ContestService {
 	
 	@Transactional
 	@Override
-	public int insertContest(Board board, ArrayList<BoardImage> list, Contest contest) {
+	public int insertContest(Board board, ArrayList<BoardImage> list, int price) {
 		
-		
-		System.out.println("서비스 :" + list);
-		
-		System.out.println(board);
 		
 		int result1 = contestDao.insertMainBoard(sqlSession, board);
 		
-		int result2 = 0;
+		int result2 = 1;
 		
 		for(int i = 0; i < list.size(); i++ ) {
 			
-			return contestDao.insertBoardImage(sqlSession, list.get(i));
+			contestDao.insertBoardImage(sqlSession, list.get(i));
 			
 		}
-		//System.out.println(result2);
 		
-		
-		int result3 = contestDao.insertEmoticon(sqlSession, contest);
+	    int result3 = contestDao.insertPrice(sqlSession, price);
 		
 		
 		
