@@ -6,11 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Wonder Pick</title>
-<!-- google icon 스타일시트-->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- google font 스타일시트 -->
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@900&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/common/header.css">
 <!-- jQuery 라이브러리 -->

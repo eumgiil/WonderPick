@@ -83,11 +83,12 @@
 		  	   )
 		values
 			   (
-		       SEQ_OPTION_NO.nextval
+		       seq_option_no.nextval
 		      ,seq_board_no.currval
-		      ,#{options}
+		      ,#{item.options}
 			   )
-	</insert>
+    	</foreach>
+	</update>
 
 
 

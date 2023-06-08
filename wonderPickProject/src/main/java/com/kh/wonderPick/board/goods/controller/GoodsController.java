@@ -20,12 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
-import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
-import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.service.GoodsService;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
 import com.kh.wonderPick.common.template.Pagination;
-import com.google.gson.Gson;
 
 @Controller
 public class GoodsController {
@@ -47,7 +44,7 @@ public class GoodsController {
 	public String enrollForm() {
 		return "board/goods/goodsEnrollForm";
 	}
-	/*
+	
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		// 파일명 수정 작업 후 서버에 업로드시키기
 		String originName = upfile.getOriginalFilename();
@@ -76,10 +73,10 @@ public class GoodsController {
 		}
 		return changeName;
 	}
-	*/
+	@ResponseBody
 	@RequestMapping("insert.go")
 	public String insertGoods(Goods g, Board b, BoardImage bi, MultipartFile[] upfile, HttpSession session, Model model) {
-		/*
+	/*
 		for(int i=1; i<=4; i++) {
 			String key = "file" + i;
 		
@@ -98,25 +95,19 @@ public class GoodsController {
 			}
 		}
 		*/
-		System.out.println(upfile);
 		for(MultipartFile multipartFile : upfile) {
-			// 파일명 수정 작업 후 서버에 업로드시키기("bono.png" => 2023.5.1934235345.png)
-			String originName = multipartFile.getOriginalFilename();
-			//System.out.println(originName);
 			
-			// 년월일시분초
+			String originName = multipartFile.getOriginalFilename();
+			
 			String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
 			
-			// 5자리 랜덤값
 			int randomNumber = (int)(Math.random() * 90000 + 10000);
 			
-			//확장자
-			//System.out.println(originName.lastIndexOf("."));
-			//String ext = originName + originName.substring(originName.lastIndexOf("."));
+			String ext = originName.substring(originName.lastIndexOf("."));
 			
-			String changeName = currentTime + randomNumber ;
+			String changeName = currentTime + randomNumber + ext;
 			
-			// 업로드 시키고자 하는 폴더에 물리적인 경로 알아내기
+			
 			String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/");
 			
 			try {
@@ -134,20 +125,16 @@ public class GoodsController {
 	}
 		if(goodsService.insertGoods(g, b, bi)>0) {
 			session.setAttribute("alertMsg", "상품 등록 성공!");
-			return "board/goods/list.go?cPage=1";
+			return "redirect:list.go";
 		}else {
 			model.addAttribute("errorMsg","상품등록 실패");
-			return "board/goods/list.go?cPage=1";
+			return "common/errorPage";
 		}
-		
 	}
-	
 	@RequestMapping("detail.go")
-	public ModelAndView selectGoods(ModelAndView mv, int boardNo,  HttpSession session) {
-		
+	public ModelAndView selectGoods(ModelAndView mv, int boardNo, HttpSession session) {
 		if(goodsService.increaseCount(boardNo)>0) {
 			mv.addObject("g", goodsService.selectGoods(boardNo));
-			mv.addObject("reviewList", goodsService.selectReviewList(boardNo));
 			mv.setViewName("board/goods/goodsDetailView");
 		}else {
 			mv.addObject("errorMsg", "조회수 증가 실패");
@@ -156,32 +143,6 @@ public class GoodsController {
 		return mv;
 	}
 	
-	// 댓글
-	@ResponseBody
-	@RequestMapping(value="rlist.go", produces="application/json; charset=UTF-8")
-	public String ajaxSelectReplyList(int boardNo) {
-		return new Gson().toJson(goodsService.selectReplyList(boardNo));
-	}
-	@ResponseBody
-	@RequestMapping("rinsert.go")
-	public String ajaxInsertReply(Reply r) {
-		return goodsService.insertReply(r) > 0 ? "success" : "fail";
-	}
-	
-	//대댓글
-	@ResponseBody
-	@RequestMapping(value="relist.go", produces="application/json; charset=UTF-8")
-	public String ajaxSelectReReplyList(int replyNo) {
-		return new Gson().toJson(goodsService.selectReReplyList(replyNo));
-	}
-	@ResponseBody
-	@RequestMapping("reinsert.go")
-	public String ajaxInsertReReply(Re_Reply re) {
-		return goodsService.insertReReply(re) > 0 ? "success" : "fail";
-	}
-	
-	
-
 	@RequestMapping("updateForm.go")
 	public ModelAndView updateForm(int boardNo, ModelAndView mv) {
 		mv.addObject("g", goodsService.selectGoods(boardNo)).setViewName("board/goods/goodsUpdateForm");

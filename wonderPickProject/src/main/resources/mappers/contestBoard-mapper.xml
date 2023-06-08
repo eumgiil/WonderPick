@@ -58,83 +58,8 @@
 			WHERE ROWNUM BETWEEN 1 AND 10
 		</select>
 		
-		<insert id="insertMainBoard" parameterType="board">
-			INSERT
-			  INTO 
-			  		BOARD
-			  		(
-			  		 BOARD_NO
-			  		,MEMBER_NO
-			  		,BOARD_TITLE
-			  		,BOARD_CONTENT
-			  		,CREATE_DATE
-			  		,STATUS
-			  		,BOARD_COUNT
-			  		,BOARD_TYPE
-			  		)
-			VALUES
-					(
-					SEQ_BOARD_NO.NEXTVAL
-					,3
-					,#{ boardTitle }
-					,#{ boardContent }
-					,SYSDATE
-					,'Y'
-					,DEFAULT
-					,'C'
-					)
-		</insert>
-		
-		<insert id="insertBoardImage" parameterType="boardImage">
-			INSERT 
-			INTO 
-					BOARD_IMAGE
-					(
-					 BOARD_IMG_NO
-					,BOARD_NO
-					,ORIGIN_NAME
-					,MODIFY_NAME
-					,UPLOAD_DATE
-					,FILE_LEVEL
-					,FILE_PATH
-					)
-			VALUES
-					(
-					SEQ_BOARDIMG_NO.NEXTVAL
-					,SEQ_BOARD_NO.CURRVAL
-					,#{ originName } 
-					,#{ modifyName }
-					,SYSDATE
-					,#{ fileLevel }
-					,#{ filePath }
-					)
-		</insert>
-		
-		
-		<!-- <insert id="insertEmoticon" parameterType="contestBoard">
-			INSERT 
-			  INTO 
-			  		EMOTICON
-			VALUES
-					(
-					SEQ_EMOTICONIMG_NO.NEXTVAL
-					
-					,18
-					,5000
-					,0
-					)
-		
-		</insert> -->
 	
 		
 
 		
 	</mapper>
-	
-	
-	
-	
-	
-	
-	
-	
