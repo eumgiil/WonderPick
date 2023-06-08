@@ -158,7 +158,12 @@ public class ContestController {
 			boardImage.setOriginName(multipartFile.getOriginalFilename());
 			boardImage.setModifyName("/resources/boardUpfiles/emoticonFiles/");
 			
+<<<<<<< HEAD
 >>>>>>> 5250815160f2874be5265705773837986c3974e6
+=======
+			list.add(boardImage);
+			
+>>>>>>> 95b4e21abbf350398f80a362d7cc5906ed9e5a84
 		
 		//System.out.println(list);
 		
@@ -210,11 +215,15 @@ public class ContestController {
 		//System.out.println("33 :" + c);
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		if(contestService.insertContest(board, list, contest) > 0) {
 =======
 		if(contestService.insertContest(board, boardImage, contest) > 0) {
 >>>>>>> 5250815160f2874be5265705773837986c3974e6
+=======
+		if(contestService.insertContest(board, list, contest) > 0) {
+>>>>>>> 95b4e21abbf350398f80a362d7cc5906ed9e5a84
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
 			return "board/contestBoard/contestMain";
 			
