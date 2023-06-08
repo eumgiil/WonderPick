@@ -15,4 +15,5 @@ public class MemberDao {
 	public int idCheckMember(String CheckId, SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("memberMapper.idCheckMember", CheckId);
 	}
+
 }

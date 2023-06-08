@@ -53,4 +53,5 @@
 		 where
 		 	   member_id = #{checkId}
 	</select>
+
 </mapper>
