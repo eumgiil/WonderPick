@@ -32,12 +32,12 @@ public class ArtBoardDao {
 		return sqlSession.insert("artBoardMapper.insertOptions", options);
 	}
 	
-	public int insertDeList(SqlSessionTemplate sqlSession, ArrayList<DetailOp> list) {
-		return sqlSession.insert("artBoardMapper.insertDeList", list);
+	public int insertDeList(SqlSessionTemplate sqlSession, String deList) {
+		return sqlSession.insert("artBoardMapper.insertDeList", deList);
 	}
 	
-	public int insertPrList(SqlSessionTemplate sqlSession, BoardImage boardImg) {
-		
+	public int insertPrList(SqlSessionTemplate sqlSession, String prList) {
+		return sqlSession.insert("artBoardMapper.insertPrList", prList);
 	}
 	
 	
