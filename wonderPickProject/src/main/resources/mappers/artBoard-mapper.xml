@@ -72,7 +72,7 @@
 			   )
 	</insert>
 	
-	<insert id="insertOptions" parameterType="string">
+	<insert id="insertOptions" parameterType="option">
 		insert
 		  into
 		  	   art_option
@@ -80,29 +80,16 @@
 		  	   OPTION_NO
 		  	  ,BOARD_NO
 		  	  ,MAIN_OPTION
+		  	  ,DETAIL_OPTION
+		  	  ,PRICE
 		  	   )
 		values
 			   (
 		       SEQ_OPTION_NO.nextval
 		      ,seq_board_no.currval
-		      ,#{options}
-			   )
-	</insert>
-	
-	<insert id="insertDeList" parameterType="string">
-		insert
-		  into
-		  	   art_option_detail
-		  	   (
-		  	   
-		  	  ,option_detail
-		  	  ,price
-		  	   )
-		values
-			   (
-		       seq_option_no.nextval
-		      ,seq_board_no.currval
-		      ,#{item.options}
+		      ,#{mainOp}
+		      ,#{detail}
+		      ,#{price}
 			   )
 	</insert>
 

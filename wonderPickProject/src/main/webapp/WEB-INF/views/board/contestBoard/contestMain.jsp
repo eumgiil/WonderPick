@@ -167,7 +167,7 @@
       
               <div id="btn_area">
                   <div id="vote_btn" class="btn">
-                     <img src="/resources/dance_2.gif" class="btn_img">
+                     <img src="" class="btn_img">
                      <span>투표하러가기 ></span> 
                      <hr>
                   </div>
@@ -195,8 +195,7 @@
                                     <tr >
                                         <td colspan="3">
                                             <div align="center">
-                                                <img src="/resources/kakaoEmogi.gif" alt="">
-                                                ${ list.modifyName}
+                                                <img src="${ list.filePath }" alt="">
                                             </div>
                                         </td>
                                     </tr>
@@ -205,7 +204,7 @@
                                     <tr >
                                         <th class="table_title" colspan="2">
                                             <div class="table_title"> 
-                                                ${ list.boardTitle}
+                                                ${ list.boardTitle }
                                             </div>
                                         </th>
                                         <td class="vote_heart">♡</td>
@@ -218,7 +217,7 @@
                                             </div>
                                         </td>
                                         <td>${ list.nickName }</td>
-                                        <td>${ list.voteCount}</td>
+                                        <td>${ list.voteCount }</td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">
@@ -253,7 +252,7 @@
               <div id="reply-area" >
                   <div >
                       <p>
-                          닉네임 : 
+                          닉네임 : ${ list.get(0).nickName }
                       </p>
                   
                   </div>
@@ -326,19 +325,23 @@
     <script>
         $('#vote_btn').click(function(){
 
+            location.href="selectVotePage.ct"
+
             
-            alert('지금은 투표 기간이 아닙니다. 매 달 마지막 주 투표가 시작됩니다.');
+            //alert('지금은 투표 기간이 아닙니다. 매 달 마지막 주 투표가 시작됩니다.');
         })
 
         $('#enroll_btn').click(function(){
-          //  alert('이모티콘 공모전은 "작가" 회원만 참여 가능합니다.');
-         // alert('지금은 참가기간이 아닙니다. 다음달에 도전 해주세요!');
+            //  alert('이모티콘 공모전은 "작가" 회원만 참여 가능합니다.');
+            // alert('지금은 참가기간이 아닙니다. 다음달에 도전 해주세요!');
 
-         location.href="enrollForm.ct"
+            location.href="enrollForm.ct"
          
         })
 
     </script>
+    
+    
 
 
 </body>

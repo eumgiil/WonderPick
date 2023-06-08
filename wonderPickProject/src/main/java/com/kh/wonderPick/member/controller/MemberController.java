@@ -7,7 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.wonderPick.common.model.vo.PageInfo;
 import com.kh.wonderPick.common.template.Pagination;
@@ -84,16 +84,12 @@ public class MemberController {
 		return "member/signUpForm";
 	}
 	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
+	@ResponseBody
+	@RequestMapping("idCheck.me")
+	public String idCheckMember(String checkId) { // 숫자로 바로 보내려고하니까 406오류가뜸
+												  // 그래서 문자열로 보내봄(네이버를참고함)
+		return memberService.idCheckMember(checkId) > 0 ? "NNNNN" : "NNNNY";
+	}
 	
 	@RequestMapping("signUp.me")
 	public void signUpMember(Member m) {

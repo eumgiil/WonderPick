@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.wonderPick.board.artBoard.model.service.ArtBoardService;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
-import com.kh.wonderPick.board.artBoard.model.vo.DetailOp;
+import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 
@@ -50,30 +50,24 @@ public class ArtBoardController {
 			                     HttpSession session,
 			                     Model model) {
 		
-		ArrayList<DetailOp> list = new ArrayList();
+		ArrayList<Option> list = new ArrayList();
 		BoardImage boardImg = new BoardImage();
 		for(int i = 1; i <= options.length; i++) {
 			
-//			list.add(request.getParameterValues("detailOp" + i));
 			
-			DetailOp detailOp = new DetailOp();
+			Option detailOp = new Option();
 			
-			detailOp.setDeList(
+			detailOp.setMainOp(request.getParameter("option_" + i));
+			detailOp.setDetail(
 					Arrays.toString(request.getParameterValues("detailOp" + i)));
-			detailOp.setPrList(
+			detailOp.setPrice(
 					Arrays.toString(request.getParameterValues("opPrice" + i)));
-			detailOp.setOptions(request.getParameter("option_" + i));
 			
 			list.add(detailOp);
 		}
 		
 		
 		int result = artService.insertArtBoard(board, artBoard, /* boardImg,*/ list);
-		System.out.println(result);
-//		artService.insertArtBoard(board, artBoard, detailOp, mainOption, boardImg);
-		
-		
-		
 		
 		
 		
