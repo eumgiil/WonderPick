@@ -23,7 +23,7 @@
             height: 100px;
             margin: auto;
         }
-        #noImge_1{
+        #thumnailImage{
             width: 200px;
             height: 200px;
         }
@@ -59,20 +59,20 @@
             <hr>
         </div>
         <div>
-            <img src="/resources/no-image.svg" class="noImge" id="noImge_1">
+            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage">
         </div>
         <div>
-            <img src="/resources/no-image.svg" class="noImge">
-            <img src="/resources/no-image.svg" class="noImge">
-            <img src="/resources/no-image.svg" class="noImge">
-            <img src="/resources/no-image.svg" class="noImge">
+            <img src="/resources/no-image.svg" class="noImge" id="Image1">
+            <img src="/resources/no-image.svg" class="noImge" id="Image2">
+            <img src="/resources/no-image.svg" class="noImge" id="Image3">
+            <img src="/resources/no-image.svg" class="noImge" id="Image4">
         </div>
         <div id="input_file">
-            1. <input type="file" name="thumbnailUpFile" required><br>
-            2. <input type="file" name="upFile" ><br>
-            3. <input type="file" name="upFile" ><br>
-            4. <input type="file" name="upFile" ><br>
-            5. <input type="file" name="upFile" ><br>
+            1. <input type="file"  name="thumbnailUpFile" required onchange="thumbnailReadURL(this,1)"><br>
+            2. <input type="file"  name="upFile" onchange="thumbnailReadURL2(this,2)"><br>
+            3. <input type="file"  name="upFile" onchange="thumbnailReadURL3(this,3)"><br>
+            4. <input type="file"  name="upFile" onchange="thumbnailReadURL4(this,4)"><br>
+            5. <input type="file"  name="upFile" onchange="thumbnailReadURL5(this,5)"><br>
             
         </div>
         <div>
@@ -117,6 +117,32 @@
     </form>
     
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    
+    
+  <script>
+        function thumbnailReadURL(input){
+            if(input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('thumnailImage').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                document.getElementById('thumnailImage').src = "";
+            }
+        }
+        function detailReadURL(input){
+            if(input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('Image1').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                document.getElementById('Image1').src = "";
+            }
+        }
+    </script>
     
 
 

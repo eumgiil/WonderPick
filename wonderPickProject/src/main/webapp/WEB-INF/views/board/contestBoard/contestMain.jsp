@@ -167,7 +167,7 @@
       
               <div id="btn_area">
                   <div id="vote_btn" class="btn">
-                     <img src="/resources/dance_2.gif" class="btn_img">
+                     <img src="../../../../resources/boardUpfiles/contestFiles/dance_emogi.gif" class="btn_img">
                      <span>투표하러가기 ></span> 
                      <hr>
                   </div>
@@ -253,7 +253,7 @@
               <div id="reply-area" >
                   <div >
                       <p>
-                          닉네임 : 
+                          닉네임 : ${ list.get(0).nickName }
                       </p>
                   
                   </div>
@@ -339,6 +339,8 @@
         })
 
     </script>
+    
+    
 
 
 </body>
