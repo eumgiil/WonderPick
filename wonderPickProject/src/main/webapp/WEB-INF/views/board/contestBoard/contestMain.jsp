@@ -195,8 +195,8 @@
                                     <tr >
                                         <td colspan="3">
                                             <div align="center">
-                                                <img src="/resources/kakaoEmogi.gif" alt="">
-                                                { list.boardImage }
+                                                <img src="${ list.filePath }" alt="">
+                                                
                                             </div>
                                         </td>
                                     </tr>
