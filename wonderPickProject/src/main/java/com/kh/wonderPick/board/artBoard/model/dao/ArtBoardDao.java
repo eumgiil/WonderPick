@@ -28,8 +28,8 @@ public class ArtBoardDao {
 		return sqlSession.insert("artBoardMapper.insertArtBoard", artBoard);
 	}
 	
-	public int insertDeList(SqlSessionTemplate sqlSession, ArrayList<DetailOp> list) {
-		return sqlSession.insert("artBoardMapper.insertDeList", list);
+	public int insertDeList(SqlSessionTemplate sqlSession, String options) {
+		return sqlSession.insert("artBoardMapper.insertDeList", options);
 	}
 	
 //	public int insertDeList(SqlSessionTemplate sqlSession, ArrayList<DetailOp> list) {
