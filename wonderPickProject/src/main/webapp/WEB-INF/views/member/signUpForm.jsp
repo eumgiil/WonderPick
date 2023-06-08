@@ -91,14 +91,15 @@
 	</script>
 	<!-- 정규표현식 검사 -->
 	<script>
-		// 아이디 중복검사
 		$(function(){
 			var errorColor = 'crimson';
 			var successColor = '#FF8399';
 			const $idInput = $('#signUpInput #memberId');
 			const $PwdInput = $('#signUpInput #memberPwd');
 			const $RepwdInput = $('#signUpInput #memberRepwd');
+			const $memberName = $('#signUpInput #memberName');
 			
+			// 아이디 정규표현식 검사, 중복검사
 			$idInput.keyup(function(){	
 				var regExp = /^[a-zA-Z][a-zA-Z0-9]{4,19}$/;
 				if(regExp.test($idInput.val())){
@@ -126,6 +127,7 @@
 				}
 			});
 			
+			// 비밀번호 정규표현식 검사
 			$PwdInput.keyup(function(){
 				// 최소 8자 ~ 최대 20자, 문자, 숫자, 특수문자(!@#$%^)하나 포함
 				var regExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^]).{8,20}$/
@@ -138,8 +140,8 @@
 				}
 			});
 			
+			// 비밀번호 재확인
 			$RepwdInput.keyup(function(){
-				console.log($RepwdInput.val());
 				if($RepwdInput.val() == $PwdInput.val()){
 					$('#checkPwdReresult').text('');
 					$('#submitBtn').removeAttr('disabled');
@@ -147,9 +149,21 @@
 					$('#checkPwdReresult').css('color', errorColor ).text('비밀번호가 동일하지 않습니다.');
 					$('#submitBtn').attr('disabled', true);
 				}
-			})
+			});
+			
+			// 이름 정규표현식 검사
+			$memberName.keyup(function(){
+				console.log($memberName.val());
+				regExp = /^[가-힣]{2,}$/;
+				if(regExp.test($memberName.val())){
+					$('#checkNameResult').text('');
+					$('#submitBtn').removeAttr('disabled');
+				} else {
+					$('#checkNameResult').css('color', errorColor ).text('조건이 올바르지 않습니다.');
+					$('#submitBtn').attr('disabled', true);
+				}
+			});
 		});
-		
 	</script>
 </body>
 </html>
