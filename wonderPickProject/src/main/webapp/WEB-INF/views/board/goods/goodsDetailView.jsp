@@ -157,11 +157,11 @@
             <div style="padding:10px;">
                 <c:choose>
                     <c:when test="${not empty reviewList}">
-                        <c: set var="reviewList" value="${ reviewList }" scope="request" />
+                        <c:forEach items="${reviewList}" var="r">
                 <table border="1">
                     <!-- 여기 부분 반복 -->
                     <tr>
-                        <td style="height:10px;">아이디</td>
+                        <td style="height:10px;">${r.nickname }</td>
                         <td rowspan="4" width="30%">
                             <img width="100%" height="100%" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">
                         </td>
@@ -169,16 +169,16 @@
                     <tr>
                         <td class="height_10px" id="">
                         <c:choose>
-                            <c:when test="${ 별점 == 1}">
+                            <c:when test="${ r.star == 1}">
                                 <label for="starpoint_1" class="label_star" title="1"><span class="blind">★☆☆☆☆</span></label>
                             </c:when>
-                            <c:when>
+                            <c:when test="${ r.star == 2}">
                                 <label for="starpoint_2" class="label_star" title="2"><span class="blind">★★☆☆☆</span></label>
                             </c:when>
-                            <c:when>
+                            <c:when test="${ r.star == 3}">
                                 <label for="starpoint_3" class="label_star" title="3"><span class="blind">★★★☆☆</span></label>
                             </c:when>
-                            <c:when>
+                            <c:when test="${ r.star == 4}">
                                 <label for="starpoint_4" class="label_star" title="4"><span class="blind">★★★★☆</span></label>
                             </c:when>
                             <c:otherwise>
@@ -188,10 +188,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="height_10px">날짜</td>
+                        <td class="height_10px">${r.createDate }</td>
                     </tr>
                     <tr>
-                        <td class="height_10px">내용</td>
+                        <td class="height_10px">${r.boardContent }</td>
                     </tr>
 
                     <!--  반복시 hr 태그 추가되도록
@@ -200,6 +200,7 @@
                     </tr>
                     -->
                 </table>
+                </c:forEach>
                 </c:when>
                 <c:otherwise>
                     리뷰 내역이 존재하지 않습니다.
@@ -216,15 +217,17 @@
                 <h3>[ 문의 댓글 ]</h3>
                 <hr>
                 <br>
-                <c:choose>
+                <table id="replyArea" align="center">
+				<thead>
+				<c:choose>
                     <c:when test="${not empty replyList}">
-                        <c: set var="replyList" value="${ replyList }" scope="request" />
+                        <c:forEach items="${replyList}" var="r">
                 <table class="t_align_left" border="1">
                     <tr>
                         <td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">
                             <img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">
                         </td>
-                        <td width="70%" style="padding-left:10px;">아이디</td>
+                        <td width="70%" style="padding-left:10px;">${ r.nickname }</td>
                         <td width="15%" rowspan="3">
                             <!--
                                 입력한 사람한텐 삭제,
@@ -240,6 +243,7 @@
                         <td style="padding-left:10px;">댓글 내용 : 것이 따뜻한 봄바람이다 인생에 따뜻한 봄바람을 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의</td>
                     </tr>
                 </table>
+                </c:forEach>
                 </c:when>
                 <c:otherwise>
                     <h6>댓글 내역이 존재하지 않습니다.</h3>
@@ -247,28 +251,133 @@
                 </c:choose>
 
                 <br>
-                <form action="" method="post">
-                <textarea class="width" name="content" id="" rows="10" maxlength="500" style="resize:none;"></textarea>
-
-
-                <div class="t_align_right width" >
-                    <button type="submit" class="btn btn-secondary" style="color: rgb(255, 131, 153);">작성하기</button>
+                
+                
+                
+                
+				
+				<table id="replyArea" align="center">
+				<thead>
+				<c:choose>
+                    <c:when test="${not empty replyList}">
+                        <c:forEach items="${replyList}" var="r">
+                   <table class="t_align_left" border="1">
+                    <tr>
+                        <td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">
+                            <img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">
+                        </td>
+                        <td width="70%" style="padding-left:10px;">#{ }</td>
+                        <td width="15%" rowspan="3">
+                            <!--
+                                입력한 사람한텐 삭제,
+                                아닌 사람한텐 신고
+                            -->
+                            <!-- 삭제 -->
+                            <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>
+                            <!-- 신고 -->
+                            <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:10px;">댓글 내용 : 것이 따뜻한 봄바람이다 인생에 따뜻한 봄바람을 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의</td>
+                    </tr>
+                </table>
+                </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <h6>댓글 내역이 존재하지 않습니다.</h3>
+                </c:otherwise>
+                </c:choose>
+				
+				
+				</thead>
+				<tbody>
+				<c:choose>
+				<c:when test="${empty loginMember}" >
+				<tr> 
+					<th colspan="2">
+						<textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>로그인 후 댓글 작성가능합니다.</textarea>
+					</th>
+					<th style="vertical-align:middle"><button class="btn btn-secondary">등록하기</button></th>
+				</tr>
+				</c:when>
+				<c:otherwise>
+				<tr>
+				     <th colspan="2">
+                     <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+                     </th>
+                     <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
+				</tr>
+				</c:otherwise>
+				</c:choose>
+				</tbody>
                 </div>
-                </form>
-            </div>
-
+				</table>
 
             <br><br><br><br><br>
 
-
-
-
-
-
-
         </div>
-        <!-- 왼쪽 끝 -->
-
+        <!-- 왼쪽 끝 -->	
+        <script>
+        	$(function(){
+        		selectReplyList();
+        	});
+        	function insertReply(){
+        		if($('#content').val().trim() != ''){
+        			$.ajax({
+        				
+        				url :'rinsert.go',
+        				data : {
+        					boardNo : ${g.boardNo},
+        					content : $('#content').val(),
+        					nickname : '${loginMember.memberId}'
+        				},
+        				success : function(result){
+        					console.log(result);
+        					
+        					if(result == 'success'){
+        						selectRepltList(){
+        							$('#content').val('');
+        						}
+        					};
+        				},
+        				error : function(){
+        					console.log('실패');
+        				}
+        			});
+        			
+        		}else{
+        			alertify.alert('다시 이용해주세요');
+        		}
+        	};
+        	
+           function selectReplyList(){
+        	   $.ajax({
+        		   url : 'rlist.go',
+        		   data : {
+        			   boardNo: ${g.boardNo}
+        		   },
+        		   success : function(replyList){
+        			   console.log(replyList);
+        			   
+        			   let value="";
+        			   for(let i in replyList){
+        				   value + = '<tr>'
+        				         + '<th>' + reviewList[i].nickname + '<th>'
+        				         + '<th>' + reviewList[i].content + '<th>'
+        				         + '<th>' + reviewList[i].createDate + '<th>'
+        				         + '<th>' +  + '<th>'
+        				         + '</tr>';
+        			   };
+        			   $('#replyArea thead').html(value);
+        		   },
+        		   error : function(){
+        			   console.log('댓글 목록 조회 실패');
+        		   }
+        		   
+        	   });
+           };
+        </script>
 
         
 

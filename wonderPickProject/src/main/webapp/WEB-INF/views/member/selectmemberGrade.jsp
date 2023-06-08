@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- google font 스타일시트 -->
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@900&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/member/selectmemberGrade.css">
 <!-- jQuery 라이브러리 -->
@@ -17,11 +18,11 @@
         <div>
             <div id="gradeTitle">
                 <h1>어떤 서비스를<br>
-                    이용하고 싶으신가요?</h1>
+                   	이용하고 싶으신가요?</h1>
             </div>
             <div id="gradeSubTitle">
                 <p>원하시는 회원가입 유형을 선택하세요.<br>
-                    일반회원으로 가입 후에도 작가 등록이 가능합니다.</p>
+                   일반회원으로 가입 후에도 작가 등록이 가능합니다.</p>
             </div>
             <div id="gradeBtn">
                 <div>
@@ -33,10 +34,17 @@
                     <button id="gradeAuthor" value="작가">작가 회원 가입</button>
                 </div>
                 <script>
+<<<<<<< HEAD
+                	$('#gradeMember').on('click', () => {
+                        location.href="signUpForm.me?memberGrade=" + $('#gradeMember').val();
+                    });
+                    $('#gradeAuthor').on('click', () => {
+=======
                 	$('#gradeMember').on('click', function(){
                         location.href="signUpForm.me?memberGrade=" + $('#gradeMember').val();
                     });
                     $('#gradeAuthor').on('click', function(){
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
                         location.href="signUpForm.me?memberGrade=" + $('#gradeAuthor').val();
                     });
                 </script>

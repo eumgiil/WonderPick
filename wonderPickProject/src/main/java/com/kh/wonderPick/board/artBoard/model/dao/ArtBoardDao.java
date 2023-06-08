@@ -7,10 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
-import com.kh.wonderPick.board.artBoard.model.vo.DetailOp;
-import com.kh.wonderPick.board.artBoard.model.vo.MainOption;
+import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
-import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 
 @Repository
 public class ArtBoardDao {
@@ -28,17 +26,10 @@ public class ArtBoardDao {
 		return sqlSession.insert("artBoardMapper.insertArtBoard", artBoard);
 	}
 	
-	public int insertOptions(SqlSessionTemplate sqlSession, String options) {
-		return sqlSession.insert("artBoardMapper.insertOptions", options);
+	public int insertOptions(SqlSessionTemplate sqlSession, Option option) {
+		return sqlSession.insert("artBoardMapper.insertOptions", option);
 	}
 	
-	public int insertDeList(SqlSessionTemplate sqlSession, ArrayList<DetailOp> list) {
-		return sqlSession.insert("artBoardMapper.insertDeList", list);
-	}
-	
-	public int insertPrList(SqlSessionTemplate sqlSession, BoardImage boardImg) {
-		
-	}
 	
 	
 

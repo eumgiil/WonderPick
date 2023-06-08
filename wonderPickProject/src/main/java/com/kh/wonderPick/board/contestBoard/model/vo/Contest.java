@@ -26,6 +26,8 @@ public class Contest extends Board{
 	private int voteStatus;
 	private int voteCount;
 	
+	private String filePath;
+	
 	
 	
 

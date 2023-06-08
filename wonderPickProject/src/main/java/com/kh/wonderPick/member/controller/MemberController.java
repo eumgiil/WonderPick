@@ -5,9 +5,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.wonderPick.common.model.vo.PageInfo;
+import com.kh.wonderPick.common.template.Pagination;
 import com.kh.wonderPick.member.model.service.MemberService;
 import com.kh.wonderPick.member.model.vo.Member;
 
@@ -92,6 +95,4 @@ public class MemberController {
 	public void signUpMember(Member m) {
 		System.out.println(m);
 	}
-	
-	
 }

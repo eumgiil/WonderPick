@@ -156,7 +156,7 @@
 	                        <td colspan="2">★★★★☆</td>
 	                    </tr>
 	                    <tr>
-	                        <td class="boardNo" ><a href="detail.go?boardNo=" + ${g.boardNo}>${g.boardTitle }</a></td>
+	                        <td><a href="detail.go?boardNo= ${ g.boardNo }">${g.boardTitle }</a></td>
 	                        <td style="float: right;">${g.price}</td>
 	                    </tr>
                     </table>
@@ -174,7 +174,7 @@
 	
 	<script>
 	$(function(){
-		$('.goodsList2 > table > tr').click(function(){
+		$('.boardNo').click(function(){
 			location.href = 'detail.go?boardNo=' + $(this).childen('.boardNo').text();
 		});
 	})

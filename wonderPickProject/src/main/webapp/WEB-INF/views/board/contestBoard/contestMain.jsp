@@ -195,8 +195,8 @@
                                     <tr >
                                         <td colspan="3">
                                             <div align="center">
-                                                <img src="/resources/kakaoEmogi.gif" alt="">
-                                                ${ list.modifyName}
+                                                <img src="${ list.filePath }" alt="">
+                                                
                                             </div>
                                         </td>
                                     </tr>
@@ -205,7 +205,7 @@
                                     <tr >
                                         <th class="table_title" colspan="2">
                                             <div class="table_title"> 
-                                                ${ list.boardTitle}
+                                                ${ list.boardTitle }
                                             </div>
                                         </th>
                                         <td class="vote_heart">♡</td>
@@ -218,7 +218,7 @@
                                             </div>
                                         </td>
                                         <td>${ list.nickName }</td>
-                                        <td>${ list.voteCount}</td>
+                                        <td>${ list.voteCount }</td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">

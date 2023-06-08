@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
@@ -24,19 +25,27 @@ public class ContestServiceImpl implements ContestService {
 	public ArrayList<Contest> selectTop10() {
 		return (ArrayList)contestDao.selectTop10(sqlSession);
 	}
-
+	
+	@Transactional
 	@Override
-	public int insertContest(Board board, BoardImage boardImage, Contest contest) {
-		
-		contestDao.insertMainBoard(sqlSession, board);
-		
-		contestDao.insertBoardImage(sqlSession, boardImage);
-		
-		contestDao.insertEmoticon(sqlSession, contest);
+	public int insertContest(Board board, ArrayList<BoardImage> list, int price) {
 		
 		
+		int result1 = contestDao.insertMainBoard(sqlSession, board);
 		
-		return 0;
+		int result2 = 1;
+		
+		for(int i = 0; i < list.size(); i++ ) {
+			
+			contestDao.insertBoardImage(sqlSession, list.get(i));
+			
+		}
+		
+	    int result3 = contestDao.insertPrice(sqlSession, price);
+		
+		
+		
+		return (result1 * result2 * result3);
 		
 	}
 

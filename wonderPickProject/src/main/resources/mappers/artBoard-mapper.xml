@@ -72,7 +72,7 @@
 			   )
 	</insert>
 	
-	<insert id="insertOptions" parameterType="string">
+	<insert id="insertOptions" parameterType="option">
 		insert
 		  into
 		  	   art_option
@@ -80,14 +80,18 @@
 		  	   OPTION_NO
 		  	  ,BOARD_NO
 		  	  ,MAIN_OPTION
+		  	  ,DETAIL_OPTION
+		  	  ,PRICE
 		  	   )
 		values
 			   (
-		       seq_option_no.nextval
+		       SEQ_OPTION_NO.nextval
 		      ,seq_board_no.currval
-		      ,#{item.options}
+		      ,#{mainOp}
+		      ,#{detail}
+		      ,#{price}
 			   )
-   	</insert>
+	</insert>
 
 
 
