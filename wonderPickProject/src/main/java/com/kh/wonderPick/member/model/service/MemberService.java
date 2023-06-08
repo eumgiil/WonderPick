@@ -9,8 +9,5 @@ public interface MemberService {
 	
 	public Member loginMember(Member m);
 	
-	//회원 전체조회
-	int selectListCount();
-	//회원 전체조회
-	ArrayList<Member> selectMemberList(PageInfo pi);
+
 }

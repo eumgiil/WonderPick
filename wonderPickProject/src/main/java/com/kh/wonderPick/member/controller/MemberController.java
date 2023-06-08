@@ -94,20 +94,7 @@ public class MemberController {
 	
 	
 	
-	//회원 전체조회
-	@RequestMapping("memberlist.ml")
-	public String selectMemberList(@RequestParam(value="cPage", defaultValue="1") int currentPage,
-			Model model) {
-		
-		PageInfo pi = Pagination.getPageInfo(memberService.selectListCount(), currentPage, 10, 10);
-			model.addAttribute("pi", pi);
-			model.addAttribute("list",memberService.selectMemberList(pi));
-		
-		
-		return "member/memberListView";
-	}
-	
-	
+
 	
 	
 	
