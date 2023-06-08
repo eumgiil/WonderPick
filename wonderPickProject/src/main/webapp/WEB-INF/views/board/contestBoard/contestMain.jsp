@@ -167,7 +167,7 @@
       
               <div id="btn_area">
                   <div id="vote_btn" class="btn">
-                     <img src="../../../../resources/boardUpfiles/contestFiles/dance_emogi.gif" class="btn_img">
+                     <img src="" class="btn_img">
                      <span>투표하러가기 ></span> 
                      <hr>
                   </div>

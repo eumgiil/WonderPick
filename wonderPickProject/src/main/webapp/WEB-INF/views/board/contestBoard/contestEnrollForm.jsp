@@ -23,7 +23,7 @@
             height: 100px;
             margin: auto;
         }
-        #thumnailImage{
+        #thumnailImage1{
             width: 200px;
             height: 200px;
         }
@@ -59,20 +59,20 @@
             <hr>
         </div>
         <div>
-            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage">
+            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage1">
         </div>
         <div>
-            <img src="/resources/no-image.svg" class="noImge" id="Image1">
-            <img src="/resources/no-image.svg" class="noImge" id="Image2">
-            <img src="/resources/no-image.svg" class="noImge" id="Image3">
-            <img src="/resources/no-image.svg" class="noImge" id="Image4">
+            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage2">
+            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage3">
+            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage4">
+            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage5">
         </div>
         <div id="input_file">
             1. <input type="file"  name="thumbnailUpFile" required onchange="thumbnailReadURL(this,1)"><br>
-            2. <input type="file"  name="upFile" onchange="thumbnailReadURL2(this,2)"><br>
-            3. <input type="file"  name="upFile" onchange="thumbnailReadURL3(this,3)"><br>
-            4. <input type="file"  name="upFile" onchange="thumbnailReadURL4(this,4)"><br>
-            5. <input type="file"  name="upFile" onchange="thumbnailReadURL5(this,5)"><br>
+            2. <input type="file"  name="upFile" onchange="thumbnailReadURL(this,2)"><br>
+            3. <input type="file"  name="upFile" onchange="thumbnailReadURL(this,3)"><br>
+            4. <input type="file"  name="upFile" onchange="thumbnailReadURL(this,4)"><br>
+            5. <input type="file"  name="upFile" onchange="thumbnailReadURL(this,5)"><br>
             
         </div>
         <div>
@@ -120,7 +120,47 @@
     
     
   <script>
-        function thumbnailReadURL(input,){
+
+        function thumbnailReadURL(input, number){
+
+            console.log(input.files.length)
+
+            if(input.files.length == 1){
+                 let reader = new FileReader();
+
+            reader.readAsDataURL(input.files[0]);
+            reader.onload = function(e){
+
+                switch(number){
+                    case 1 : document.getElementById('thumnailImage1').src = e.target.result; break;
+                    case 2 : document.getElementById('thumnailImage2').src = e.target.result; break;
+                    case 3 : document.getElementById('thumnailImage3').src = e.target.result; break;
+                    case 4 : document.getElementById('thumnailImage4').src = e.target.result; break;
+                    case 5 : document.getElementById('thumnailImage5').src = e.target.result; break;
+
+                }
+            }
+            }else{
+
+                let noImg = "https://www.spectory.net/src/images/noImg.gif";
+                switch(number){
+                    case 1 : document.getElementById('thumnailImage1').src = noImg; break;
+                    case 2 : document.getElementById('thumnailImage2').src = noImg; break;
+                    case 3 : document.getElementById('thumnailImage3').src = noImg; break;
+                    case 4 : document.getElementById('thumnailImage4').src = noImg; break;
+                    case 5 : document.getElementById('thumnailImage5').src = noImg; break;
+                }
+
+            }
+
+           
+        }
+
+
+
+
+       /*  function thumbnailReadURL(input){
+
             if(input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -141,7 +181,7 @@
             } else {
                 document.getElementById('Image1').src = "";
             }
-        }
+        } */
     </script>
     
 
