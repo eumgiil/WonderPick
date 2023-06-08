@@ -52,6 +52,8 @@
 </head>
 <body>
 
+    <jsp:include page="../../common/header.jsp" />
+
     <form action="insertContest.ct" method="post" enctype="multipart/form-data">
         <div id="all_area" align="center">
         <div id="enroll_title">
@@ -87,7 +89,7 @@
             <span>* 등록 후 수정이 불가능 하오니 신중하게 입력해주세요.</span><br>
             <input type="number" name="price" value="" min="2000" max="30000" id="emg_price" required > 원
             <input type="hidden" name="boardType" value="C">
-           <%--  <input type="hidden" name="${ sessionScope.loginUser.memberNo }"> --%>
+            <input type="hidden" name="memberNo">
             
         </div>
         <br><hr>
