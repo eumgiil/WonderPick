@@ -17,19 +17,15 @@ public class ContestDao {
 	}
 
 	public int insertMainBoard(SqlSessionTemplate sqlSession, Board board) {
-		//System.out.println(board);
 		return sqlSession.insert("contestBoardMapper.insertMainBoard", board);
-		
 	}
 
 	public int insertBoardImage(SqlSessionTemplate sqlSession, BoardImage boardImage) {
-		
-		//System.out.println(boardImage);
 		return sqlSession.insert("contestBoardMapper.insertBoardImage", boardImage);
 	}
 
-	public int insertEmoticon(SqlSessionTemplate sqlSession, Contest contest) {
-		return sqlSession.insert("contestBoardMapper.insertEmoticon");
+	public int insertPrice(SqlSessionTemplate sqlSession, int price) {
+		return sqlSession.insert("contestBoardMapper.insertPrice", price);
 	}
 
 

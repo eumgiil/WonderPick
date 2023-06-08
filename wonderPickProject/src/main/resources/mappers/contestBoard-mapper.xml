@@ -23,38 +23,40 @@
 			<!-- 투표테이블  -->
 			<result column="VOTE_STATUS" property="voteStatus"/>
 			<result column="VOTE_COUNT" property="voteCount"/>
+			<result column="FILE_PATH" property="filePath"/>
 		</resultMap>
 		
 		<select id="selectTop10" resultMap="contestBoardResultSet">
 			SELECT  *
-			        FROM(   SELECT
-			                     BOARD.BOARD_TITLE    
-			                    ,MEMBER.NICKNAME      
-			                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME    
-			                    ,BOARD_IMAGE.MODIFY_NAME    
-			                    ,BOARD_IMAGE.UPLOAD_DATE   
-			                    ,VOTE.VOTE_COUNT   
-			          FROM 
-			                 BOARD
-			        LEFT JOIN
-			                 MEMBER ON(BOARD.MEMBER_NO = MEMBER.MEMBER_NO)
-			        LEFT JOIN 
-			        
-			                BOARD_IMAGE  ON(BOARD.BOARD_NO = BOARD_IMAGE.BOARD_NO)
-			        LEFT JOIN
-			                MEMBER_IMAGE  ON(BOARD.MEMBER_NO = MEMBER_IMAGE.MEMBER_NO)
-			        LEFT JOIN   
-			                VOTE ON(BOARD.BOARD_NO = VOTE.BOARD_NO)
-			        LEFT JOIN
-			                EMOTICON ON(BOARD.BOARD_NO = EMOTICON.BOARD_NO)
-			                
-			        WHERE
-			                BOARD_IMAGE.FILE_LEVEL = 1
-			          AND 
-			                EMOTICON.PRICE_STATUS = 0
-			        ORDER
-			           BY   
-			                VOTE.VOTE_COUNT DESC )
+		        FROM(   SELECT
+		                     BOARD.BOARD_TITLE    
+		                    ,MEMBER.NICKNAME      
+		                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME    
+		                    ,BOARD_IMAGE.MODIFY_NAME   
+		                    ,BOARD_IMAGE.UPLOAD_DATE    
+		                    ,VOTE.VOTE_COUNT   
+		                    ,FILE_PATH
+		          FROM 
+		                 BOARD
+		        LEFT JOIN
+		                 MEMBER ON(BOARD.MEMBER_NO = MEMBER.MEMBER_NO)
+		        LEFT JOIN 
+		        
+		                BOARD_IMAGE  ON(BOARD.BOARD_NO = BOARD_IMAGE.BOARD_NO)
+		        LEFT JOIN
+		                MEMBER_IMAGE  ON(BOARD.MEMBER_NO = MEMBER_IMAGE.MEMBER_NO)
+		        LEFT JOIN   
+		                VOTE ON(BOARD.BOARD_NO = VOTE.BOARD_NO)
+		        LEFT JOIN
+		                EMOTICON ON(BOARD.BOARD_NO = EMOTICON.BOARD_NO)
+		                
+		        WHERE
+		                BOARD_IMAGE.FILE_LEVEL = 1
+		          AND 
+		                EMOTICON.PRICE_STATUS = 0
+		        ORDER
+		           BY   
+		                VOTE_COUNT DESC )
 			WHERE ROWNUM BETWEEN 1 AND 10
 		</select>
 		
@@ -75,7 +77,7 @@
 			VALUES
 					(
 					SEQ_BOARD_NO.NEXTVAL
-					,3
+					,#{ memberNo }
 					,#{ boardTitle }
 					,#{ boardContent }
 					,SYSDATE
@@ -111,20 +113,25 @@
 		</insert>
 		
 		
-		<!-- <insert id="insertEmoticon" parameterType="contestBoard">
+		<insert id="insertPrice" parameterType="_int">
 			INSERT 
 			  INTO 
 			  		EMOTICON
+			  		(
+			  		 EMOTICON_NO
+			  		,BOARD_NO
+			  		,PRICE
+			  		,PRICE_STATUS
+			  		)
 			VALUES
 					(
 					SEQ_EMOTICONIMG_NO.NEXTVAL
-					
-					,18
-					,5000
+					,SEQ_BOARD_NO.CURRVAL
+					,#{ price }
 					,0
 					)
 		
-		</insert> -->
+		</insert> 
 	
 		
 
