@@ -71,10 +71,6 @@ public class MemberController {
 		return "member/selectmemberGrade";
 	}
 	
-<<<<<<< HEAD
-	@RequestMapping("signUpForm.me")
-	public String signUpMember(Member m,
-=======
 	/**
 	 * 등급 선택창에서 선택을 하면, 회원가입 폼으로 보내주는 메소드
 	 * @param m : 선택한 등급이 담겨있는 객체
@@ -83,13 +79,10 @@ public class MemberController {
 	 */
 	@RequestMapping("signUpForm.me")
 	public String signUpForm(Member m,
->>>>>>> 5250815160f2874be5265705773837986c3974e6
 							   HttpSession session) {
 		session.setAttribute("memberGrade", m.getMemberGrade());
 		return "member/signUpForm";
 	}
-	
-<<<<<<< HEAD
 	
 	
 	
@@ -102,10 +95,8 @@ public class MemberController {
 	
 	
 	
-=======
 	@RequestMapping("signUp.me")
 	public void signUpMember(Member m) {
 		System.out.println(m);
 	}
->>>>>>> 5250815160f2874be5265705773837986c3974e6
 }

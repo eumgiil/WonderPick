@@ -60,9 +60,9 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 		int result3 = 1;
 		for(int i = 0; i < list.size(); i++) {
 			result3 = result3 * artDao.insertOptions(sqlSession, list.get(i).getOptions());
+			
 		}
 		
-		int result4 = artDao.insert
 		
 		
 		
