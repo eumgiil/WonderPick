@@ -3,6 +3,7 @@ package com.kh.wonderPick.board.contestBoard.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -39,16 +40,45 @@ public class ContestController {
 	}
 	
 	@RequestMapping("insertContest.ct")
-	public String insertContest(Board b,
-								BoardImage bi,
-								Contest c,
+	public String insertContest(Board board,
+								BoardImage boardImage,
+								Contest contest,
 								MultipartFile thumbnailUpFile,
 								MultipartFile[] upFile,
 								Model model,
 								HttpSession session) {
 		
-		System.out.println(b);
-		System.out.println(upFile.length);
+		//System.out.println(b);
+		//System.out.println(upFile.length);
+		
+		
+		ArrayList list = new ArrayList();
+		
+		String originName2 = thumbnailUpFile.getOriginalFilename();
+		
+		String currentTime2 = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+		
+		int randomNumber2 = (int)(Math.random() * 90000 + 10000);
+		
+		String ext2 = originName2.substring(originName2.lastIndexOf("."));
+		
+		String changeName2 = currentTime2 + randomNumber2 + ext2;
+		
+		
+		String savePath2 = session.getServletContext().getRealPath("/resources/boardUpfiles/emoticonFiles/");
+		
+		try {
+			thumbnailUpFile.transferTo(new File(savePath2 + changeName2));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		boardImage.setOriginName(thumbnailUpFile.getOriginalFilename());
+		boardImage.setModifyName("/resources/boardUpfiles/emoticonFiles/");
+		
+		list.add(boardImage);
+		
+		
 		
 	
 		
@@ -73,8 +103,8 @@ public class ContestController {
 				e.printStackTrace();
 			}
 			
-			bi.setOriginName(multipartFile.getOriginalFilename());
-			bi.setModifyName("/resources/boardUpfiles/emoticonFiles/");
+			boardImage.setOriginName(multipartFile.getOriginalFilename());
+			boardImage.setModifyName("/resources/boardUpfiles/emoticonFiles/");
 			
 		
 	}
@@ -82,7 +112,7 @@ public class ContestController {
 		
 		
 		
-		if(contestService.insertContest(b, bi, c) > 0) {
+		if(contestService.insertContest(board, boardImage, contest) > 0) {
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
 			return "board/contestBoard/contestMain";
 			
