@@ -15,11 +15,7 @@ public interface ContestService {
 	// 여기는 역대우승 이모티콘만 불러오면 됨(10개) + 댓글기능
 	ArrayList<Contest> selectTop10();
 
-<<<<<<< HEAD
 	int insertContest(Board board, ArrayList<BoardImage> list, Contest contest);
-=======
-	int insertContest(Board board, BoardImage boardImage, Contest contest);
->>>>>>> 5250815160f2874be5265705773837986c3974e6
 
 	
 	
