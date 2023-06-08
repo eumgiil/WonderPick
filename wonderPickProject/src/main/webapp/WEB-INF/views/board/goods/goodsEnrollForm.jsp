@@ -55,25 +55,15 @@
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상품 대표 이미지</h5></td>
                 <td align="center" colspan="3">
-                    <img id="titleimg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
+                    <img id="titleimg"  src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
                 </td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상세이미지</h5></td>
-                <td><img id="contentImg1" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg1"  src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
                 <td><img id="contentImg2" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
                 <td><img id="contentImg3"  src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
             </tr>
-            
-		            <!--  판매자는 최소 하나는 첨부해야함 -->
-		    <div id="file-area">
-		        <input type="file" id="file1" name="upfile" required onchange="loadImg(this, 1);">
-		        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);">
-		        <input type="file" id="file3" name="upfile" onchange="loadImg(this, 3);">
-		        <input type="file" id="file4" name="upfile" onchange="loadImg(this, 4);">
-		    </div>
-    
-    
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상품설명</h5></td>
                 <td colspan="3"><textarea name="boardContent" id="" cols="30" rows="10" style="width: 100%;" required></textarea></td>
@@ -139,7 +129,13 @@
     </script>
          
 
-    
+    <!--  판매자는 최소 하나는 첨부해야함 -->
+    <div id="file-area">
+        <input type="file" id="file1" name="file1" required onchange="loadImg(this, 1);">
+        <input type="file" id="file2" name="file2" onchange="loadImg(this, 2);">
+        <input type="file" id="file3" name="file3" onchange="loadImg(this, 3);">
+        <input type="file" id="file4" name="file4" onchange="loadImg(this, 4);">
+    </div>
 
     <script>
 

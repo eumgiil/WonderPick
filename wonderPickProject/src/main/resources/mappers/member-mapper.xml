@@ -46,26 +46,12 @@
 		   	   status = 'N'	
 	</select>
 	
-	
-	<!-- 	회원 전체조회 -->
-	<select id="selectListCount" resultType="_int">
-	select
-		count(*)
-	from
-		member 
-</select>
-	<!-- 	회원 전체조회 -->
-<select id="selectMemberList" resultMap="memberResultSet">
-	select 
-				member_id,
-        nickname,
-        member_grade,
-        enroll_date,
-        status
-	from
-		member
-	order by
-		member_no desc 
-</select>
-	
+	<!-- 아이디 중복체크용 쿼리문 -->
+	<select id="idCheckMember" resultType="_int">
+		select
+			   count(*)
+		 where
+		 	   member_id = #{checkId}
+	</select>
+
 </mapper>

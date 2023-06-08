@@ -287,7 +287,7 @@
         				
         				url :'rinsert.go',
         				data : {
-        					boardNo : #{g.boardNo},
+        					boardNo : ${g.boardNo},
         					content : $('#content').val(),
         					nickname : '${loginMember.memberId}'
         				},
@@ -308,11 +308,34 @@
         		}else{
         			alertify.alert('다시 이용해주세요');
         		}
-        	}
+        	};
         	
-        	
-        
-        
+           function selectReplyList(){
+        	   $.ajax({
+        		   url : 'rlist.go',
+        		   data : {
+        			   boardNo: ${g.boardNo}
+        		   },
+        		   success : function(replyList){
+        			   console.log(replyList);
+        			   
+        			   let value="";
+        			   for(let i in replyList){
+        				   value + = '<tr>'
+        				         + '<th>' + reviewList[i].nickname + '<th>'
+        				         + '<th>' + reviewList[i].content + '<th>'
+        				         + '<th>' + reviewList[i].createDate + '<th>'
+        				         + '<th>' +  + '<th>'
+        				         + '</tr>';
+        			   };
+        			   $('#replyArea thead').html(value);
+        		   },
+        		   error : function(){
+        			   console.log('댓글 목록 조회 실패');
+        		   }
+        		   
+        	   });
+           };
         </script>
 
         

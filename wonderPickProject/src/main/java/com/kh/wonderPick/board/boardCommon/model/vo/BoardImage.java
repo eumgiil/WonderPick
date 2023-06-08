@@ -1,7 +1,5 @@
 package com.kh.wonderPick.board.boardCommon.model.vo;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.Data;
 
 @Data
@@ -14,8 +12,5 @@ public class BoardImage {
 	private String modifyName; //MODIFY_NAME	VARCHAR2(1000 BYTE)
 	private String uploadDate; //UPLOAD_DATE	DATE
 	private int fileLevel; //FILE_LEVEL	NUMBER 1-썸네일 2-그 외
-	
-	private String filePath;
-
 
 }

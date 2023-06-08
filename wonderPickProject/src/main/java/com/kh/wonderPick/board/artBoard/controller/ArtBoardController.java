@@ -58,12 +58,15 @@ public class ArtBoardController {
 			
 			DetailOp detailOp = new DetailOp();
 			
-			detailOp.setDeList(request.getParameterValues("detailOp" + i));
-			detailOp.setPrList(request.getParameterValues("opPrice" + i));
+			detailOp.setDeList(
+					Arrays.toString(request.getParameterValues("detailOp" + i)));
+			detailOp.setPrList(
+					Arrays.toString(request.getParameterValues("opPrice" + i)));
 			detailOp.setOptions(request.getParameter("option_" + i));
 			
 			list.add(detailOp);
 		}
+		
 		
 		int result = artService.insertArtBoard(board, artBoard, /* boardImg,*/ list);
 		System.out.println(result);

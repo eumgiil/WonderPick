@@ -5,12 +5,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.wonderPick.common.model.vo.PageInfo;
-import com.kh.wonderPick.common.template.Pagination;
 import com.kh.wonderPick.member.model.service.MemberService;
 import com.kh.wonderPick.member.model.vo.Member;
 
@@ -71,10 +67,6 @@ public class MemberController {
 		return "member/selectmemberGrade";
 	}
 	
-<<<<<<< HEAD
-	@RequestMapping("signUpForm.me")
-	public String signUpMember(Member m,
-=======
 	/**
 	 * 등급 선택창에서 선택을 하면, 회원가입 폼으로 보내주는 메소드
 	 * @param m : 선택한 등급이 담겨있는 객체
@@ -82,43 +74,21 @@ public class MemberController {
 	 * @return : signUpForm.jsp로 보내줌
 	 */
 	@RequestMapping("signUpForm.me")
-	public String signUpForm(Member m,
->>>>>>> 5250815160f2874be5265705773837986c3974e6
+	public String signUpForm(Member m,	
 							   HttpSession session) {
 		session.setAttribute("memberGrade", m.getMemberGrade());
 		return "member/signUpForm";
 	}
 	
-<<<<<<< HEAD
-	
-	
-	
-	
-	//회원 전체조회
-	@RequestMapping("memberlist.ml")
-	public String selectMemberList(@RequestParam(value="cPage", defaultValue="1") int currentPage,
-			Model model) {
-		
-		PageInfo pi = Pagination.getPageInfo(memberService.selectListCount(), currentPage, 10, 10);
-			model.addAttribute("pi", pi);
-			model.addAttribute("list",memberService.selectMemberList(pi));
-		
-		
-		return "member/memberListView";
+	@RequestMapping("idCheck.me")
+	public void idCheckMember(String checkId) {
+		memberService.idCheckMember(checkId);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-=======
 	@RequestMapping("signUp.me")
 	public void signUpMember(Member m) {
 		System.out.println(m);
 	}
->>>>>>> 5250815160f2874be5265705773837986c3974e6
+	
+	
 }

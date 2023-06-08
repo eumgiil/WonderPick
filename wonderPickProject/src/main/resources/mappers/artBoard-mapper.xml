@@ -72,8 +72,8 @@
 			   )
 	</insert>
 	
-	<update id="insertDeList" parameterType="java.util.ArrayList">
-		<foreach collection="list" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+	<insert id="insertOptions" parameterType="string">
+		insert
 		  into
 		  	   art_option
 		  	   (
@@ -87,8 +87,7 @@
 		      ,seq_board_no.currval
 		      ,#{item.options}
 			   )
-    	</foreach>
-	</update>
+   	</insert>
 
 
 

@@ -10,5 +10,5 @@ public class Re_Reply {
 	private int member_no; //MEMBER_NO	NUMBER
 	private String content; //CONTENT	VARCHAR2(1000 BYTE)
 	private String createDate; //CREATE_DATE	DATE
-	private String nickname;
+
 }

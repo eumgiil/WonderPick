@@ -7,7 +7,6 @@ import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
-import com.kh.wonderPick.board.review.model.vo.Review;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 
 public interface GoodsService {
@@ -30,21 +29,11 @@ public interface GoodsService {
 	// 게시글 수정하기
 	int updateGoods(Goods g);
 	
-	// 리뷰 총 개수 조회
-	//int selectReviewCount(int boardNo);
-	
-	// 상품 리뷰 리스트 조회
-	ArrayList<Review> selectReviewList(int boardNo);
-	
-	
-	
 	// 댓글 리스트 조회
 	ArrayList<Reply> selectReplyList(int boardNo);
 	
 	// 댓글 작성
 	int insertReply(Reply r);
-	
-	
 	
 	// 대댓글 리스트 조회
 	ArrayList<Re_Reply> selectReReplyList(int replyNo);
