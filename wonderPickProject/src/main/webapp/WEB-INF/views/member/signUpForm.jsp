@@ -97,6 +97,7 @@
 			var successColor = '#FF8399';
 			const $idInput = $('#signUpInput #memberId');
 			const $PwdInput = $('#signUpInput #memberPwd');
+			const $RepwdInput = $('#signUpInput #memberRepwd');
 			
 			$idInput.keyup(function(){	
 				var regExp = /^[a-zA-Z][a-zA-Z0-9]{4,19}$/;
@@ -126,8 +127,7 @@
 			});
 			
 			$PwdInput.keyup(function(){
-				console.log($PwdInput.val());
-				// 
+				// 최소 8자 ~ 최대 20자, 문자, 숫자, 특수문자(!@#$%^)하나 포함
 				var regExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^]).{8,20}$/
 				if(regExp.test($PwdInput.val())){
 					$('#checkPwdResult').text('');
@@ -138,6 +138,16 @@
 				}
 			});
 			
+			$RepwdInput.keyup(function(){
+				console.log($RepwdInput.val());
+				if($RepwdInput.val() == $PwdInput.val()){
+					$('#checkPwdReresult').text('');
+					$('#submitBtn').removeAttr('disabled');
+				} else{
+					$('#checkPwdReresult').css('color', errorColor ).text('비밀번호가 동일하지 않습니다.');
+					$('#submitBtn').attr('disabled', true);
+				}
+			})
 		});
 		
 	</script>
