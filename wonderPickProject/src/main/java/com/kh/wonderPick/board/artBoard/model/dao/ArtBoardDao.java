@@ -28,17 +28,17 @@ public class ArtBoardDao {
 		return sqlSession.insert("artBoardMapper.insertArtBoard", artBoard);
 	}
 	
+	public int insertOptions(SqlSessionTemplate sqlSession, String options) {
+		return sqlSession.insert("artBoardMapper.insertOptions", options);
+	}
+	
 	public int insertDeList(SqlSessionTemplate sqlSession, ArrayList<DetailOp> list) {
 		return sqlSession.insert("artBoardMapper.insertDeList", list);
 	}
 	
-//	public int insertDeList(SqlSessionTemplate sqlSession, ArrayList<DetailOp> list) {
-//		return sqlSession.insert("artBoardMapper.insertDeList", list);
-//	}
-	
-//	public int insertDetailOp(SqlSessionTemplate sqlSession, BoardImage boardImg) {
-//		
-//	}
+	public int insertPrList(SqlSessionTemplate sqlSession, BoardImage boardImg) {
+		
+	}
 	
 	
 

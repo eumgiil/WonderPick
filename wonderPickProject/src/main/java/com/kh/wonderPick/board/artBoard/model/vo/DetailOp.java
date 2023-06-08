@@ -9,7 +9,7 @@ public class DetailOp {
 	
 	private int opDetailNo; // OP_DETAIL_NO	NUMBER
 	private String options;
-	private String[] deList;
-	private String[] prList;
+	private String deList;
+	private String prList;
 		
 }
