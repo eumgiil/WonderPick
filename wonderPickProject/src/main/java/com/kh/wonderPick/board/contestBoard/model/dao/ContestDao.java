@@ -17,14 +17,14 @@ public class ContestDao {
 	}
 
 	public int insertMainBoard(SqlSessionTemplate sqlSession, Board board) {
-		System.out.println(board);
+		//System.out.println(board);
 		return sqlSession.insert("contestBoardMapper.insertMainBoard", board);
 		
 	}
 
 	public int insertBoardImage(SqlSessionTemplate sqlSession, BoardImage boardImage) {
 		
-		System.out.println(boardImage);
+		//System.out.println(boardImage);
 		return sqlSession.insert("contestBoardMapper.insertBoardImage", boardImage);
 	}
 

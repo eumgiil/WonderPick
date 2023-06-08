@@ -44,7 +44,7 @@ public class ContestServiceImpl implements ContestService {
 			return contestDao.insertBoardImage(sqlSession, list.get(i));
 			
 		}
-		System.out.println(result2);
+		//System.out.println(result2);
 		
 		
 		int result3 = contestDao.insertEmoticon(sqlSession, contest);
