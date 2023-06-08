@@ -19,6 +19,31 @@
             <div id="signUpTitle">
                 <h1>회원가입</h1>
             </div>
+<<<<<<< HEAD
+            <div id="signUpMain">
+                <form action="signUp.me">
+                    <div id="signUpInput">
+                        <label>아이디</label><br>
+                        <input type="text" placeholder="아이디를 입력해주세요.">
+                        <br>
+                        <label>비밀번호</label><br>
+                        <input type="password" placeholder="비밀번호를 입력해주세요.">
+                        <br>
+                        <label>비밀번호 재확인</label><br>
+                        <input type="password" placeholder="비밀번호를 한번 더 입력해주세요.">
+                        <br>
+                        <label>이름</label><br>
+                        <input type="text" placeholder="이름을 입력해주세요.">
+                        <br>
+                        <label>닉네임</label><br>
+                        <input type="text" placeholder="닉네임을 입력해주세요.">
+                        <br>
+                        <label>전화번호</label><br>
+                        <input type="text" placeholder="전화번호를 입력해주세요.">
+                        <br>
+                        <label>이메일</label><br>
+                        <input type="email" placeholder="이메일을 입력해주세요.">
+=======
             <div id="signUpMain" method="post">
                 <form action="signUp.me">
                     <div id="signUpInput">
@@ -49,19 +74,28 @@
                         <label>이메일</label><br>
                         <input type="email" id="email" name="email" placeholder="이메일을 입력해주세요.">
                         <input type="hidden" id="memberGrade" name="memberGrade" value="${ sessionScope.memberGrade }">
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
                     </div>
                     <div id="signUpCheckbox">
                         <input type="checkbox"> 이용약관 수집에 동의합니다.<br>
                         <input type="checkbox"> 이메일 수신에 동의합니다.<br>
                     </div>
                     <div>
+<<<<<<< HEAD
+                        <button type="submit">회원가입</button>
+=======
                         <button type="submit" id="submitBtn">회원가입</button>
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
                     </div>
                 </form>
             </div>
         </div>
     </div>
 	
+<<<<<<< HEAD
+	<script>
+		console.log('${sessionScope.memberGrade}');
+=======
 	<!-- 입력칸을 누르면 안내 문구 -->
 	<script>
 		// 아이디
@@ -100,19 +134,8 @@
 			$idInput.keyup(function(){	
 				console.log($idInput.val());
 				if($idInput.val().length >= 5){
-					
-					$.ajax({
-						url : 'idCheck.me',
-						data : { checkId : $idInput.val()},
-						success : function(){
-							$('#checkIdResult').css('color', successColor).text('멋진 아이디내요!');
-							$('#submitBtn').removeAttr('disabled');
-						},
-						error : function(){
-							$('#checkIdResult').css('color', errorColor ).text('중복된 아이디가 존재합니다.');
-							$('#submitBtn').attr('disabled', true);
-						}
-					});
+					$('#checkIdResult').css('color', successColor).text('멋진 아이디내요!');
+					$('#submitBtn').removeAttr('disabled');
 				} else if($idInput.val() == '') {
 					$('#checkIdResult').css('color', errorColor ).text('필수 입력란입니다');
 					$('#submitBtn').attr('disabled', true);
@@ -122,6 +145,7 @@
 				}
 			});
 		});
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
 	</script>
 </body>
 </html>
