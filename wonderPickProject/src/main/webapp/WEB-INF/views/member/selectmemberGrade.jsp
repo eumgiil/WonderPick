@@ -26,11 +26,11 @@
             <div id="gradeBtn">
                 <div>
                     <label>서비스를 의뢰하고 싶다면</label><br>
-                    <button id="gradeMember" value="'일반 회원'">일반 회원 가입</button>
+                    <button id="gradeMember" value="일반회원">일반 회원 가입</button>
                 </div>
                 <div>
                     <lable>전문성을 판매하고 싶다면</lable><br>
-                    <button id="gradeAuthor" value="'작가'">작가 회원 가입</button>
+                    <button id="gradeAuthor" value="작가">작가 회원 가입</button>
                 </div>
                 <script>
                 	$('#gradeMember').on('click', function(){

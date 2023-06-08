@@ -50,6 +50,8 @@
 	<select id="idCheckMember" resultType="_int">
 		select
 			   count(*)
+		  from
+		  	   member
 		 where
 		 	   member_id = #{checkId}
 	</select>

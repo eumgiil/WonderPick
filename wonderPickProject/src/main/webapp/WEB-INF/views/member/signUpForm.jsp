@@ -24,11 +24,11 @@
                     <div id="signUpInput">
                         <label>* 아이디</label><br>
                         <input type="text" id="memberId" name="memberId" placeholder="아이디를 입력해주세요." required>
-                        <div id="checkIdResult">영문자, 숫자로 5~20자로 입력해주세요.</div>
+                        <div id="checkIdResult">첫 글자는 반드시 영문자로, 그리고 영문자, 숫자로 5~20자로<br> 입력해주세요.</div>
                         <br>
                         <label>* 비밀번호</label><br>
                         <input type="password" id="memberPwd" name="memberPwd" placeholder="비밀번호를 입력해주세요." required>
-                        <div id="checkPwdResult">영문자, 숫자, 특수문자(!@#$%^)로  8~20자로 입력해주세요.</div>
+                        <div id="checkPwdResult">영문자(대소문자 포함), 숫자, 특수문자(!@#$%^)를 하나씩 포함하여  8~20자로 입력해주세요.</div>
                         <br>
                         <label>* 비밀번호 재확인</label><br>
                         <input type="password" placeholder="비밀번호를 한번 더 입력해주세요." id="memberRepwd" required>
@@ -96,32 +96,53 @@
 			var errorColor = 'crimson';
 			var successColor = '#FF8399';
 			const $idInput = $('#signUpInput #memberId');
+			const $PwdInput = $('#signUpInput #memberPwd');
 			
 			$idInput.keyup(function(){	
-				console.log($idInput.val());
-				if($idInput.val().length >= 5){
-					
-					$.ajax({
-						url : 'idCheck.me',
-						data : { checkId : $idInput.val()},
-						success : function(){
-							$('#checkIdResult').css('color', successColor).text('멋진 아이디내요!');
-							$('#submitBtn').removeAttr('disabled');
-						},
-						error : function(){
-							$('#checkIdResult').css('color', errorColor ).text('중복된 아이디가 존재합니다.');
-							$('#submitBtn').attr('disabled', true);
-						}
-					});
-				} else if($idInput.val() == '') {
-					$('#checkIdResult').css('color', errorColor ).text('필수 입력란입니다');
-					$('#submitBtn').attr('disabled', true);
-				}else{
-					$('#checkIdResult').css('color', errorColor ).text('5글자 이상 입력해주세요');
+				var regExp = /^[a-zA-Z][a-zA-Z0-9]{4,19}$/;
+				if(regExp.test($idInput.val())){
+					if($idInput.val().length >= 5){
+						$.ajax({
+							url : 'idCheck.me',
+							data : { checkId : $idInput.val()},
+							success : function(result){
+								if(result === "NNNNN"){
+									$('#checkIdResult').css('color', errorColor ).text('중복된 아이디가 존재합니다.');
+									$('#submitBtn').attr('disabled', true);
+								} else {
+									$('#checkIdResult').css('color', successColor).text('멋진 아이디내요!');
+									$('#submitBtn').removeAttr('disabled');
+								}
+							}
+						});
+					} else {
+						$('#checkIdResult').css('color', errorColor ).text('5글자 이상 입력해주세요');
+						$('#submitBtn').attr('disabled', true);
+					}
+				} else {
+					$('#checkIdResult').css('color', errorColor ).text('조건이 올바르지 않습니다.');
 					$('#submitBtn').attr('disabled', true);
 				}
 			});
+			
+			$PwdInput.keyup(function(){
+				console.log($PwdInput.val());
+				// 
+				var regExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^]).{8,20}$/
+				if(regExp.test($PwdInput.val())){
+					$('#checkPwdResult').text('');
+					$('#submitBtn').removeAttr('disabled');
+				} else {
+					$('#checkPwdResult').css('color', errorColor ).text('조건이 올바르지 않습니다.');
+					$('#submitBtn').attr('disabled', true);
+				}
+			});
+			
 		});
+		
+		
+			
+		
 	</script>
 </body>
 </html>
