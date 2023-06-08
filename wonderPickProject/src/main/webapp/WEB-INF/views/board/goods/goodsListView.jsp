@@ -25,6 +25,7 @@
         .goodsList1{
             border: 1px solid black;
             width: 900px;
+            margin-left:50px;
             
         }
         .all_area{
@@ -66,6 +67,10 @@
          float : left;
          margin-left : 500px;
         }
+        .pagingArea{
+        margin-left : 450px;
+        }
+        
         
         
         
@@ -141,7 +146,7 @@
         <br><br><br>
 
         
-        <div class="goodsList1"  id="goods" style="width: 1300px;" align="center">
+        <div class="goodsList1"  id="goods" style="width: 900px;" align="center">
           <c:choose>  
             <c:when test="${not empty list}">
               <c:forEach items="${list}" var="g">
@@ -182,7 +187,7 @@
 	
 	
 	<br><br>
-	<div class="pagingArea"   align="center" >
+	<div class="pagingArea"  align="center" >
                 <ul class="pagination" >
                 <c:choose>
                   <c:when test="${pi.currentPage eq 1 }">

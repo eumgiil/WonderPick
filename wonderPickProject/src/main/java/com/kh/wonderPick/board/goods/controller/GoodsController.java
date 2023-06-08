@@ -35,7 +35,7 @@ public class GoodsController {
 	
 	@RequestMapping("list.go")
 	public String selectList(@RequestParam(value="cPage", defaultValue="1")int currentPage, Model model) {
-		PageInfo pi = Pagination.getPageInfo(goodsService.selectListCount(), currentPage, 9, 10);
+		PageInfo pi = Pagination.getPageInfo(goodsService.selectListCount(), currentPage,12, 10);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", goodsService.selectGoodsList(pi));

@@ -12,14 +12,14 @@
     <style>
         .content {
             /* background-color:rgb(247, 245, 245); */
-            width:1000px;
+            width:700px;
             margin:auto;
             margin-top: 150px;
         }
         .detail{
             float: left;
             /* display: inline-block; */
-            width : 65%;
+            width : 55%;
         }        
         .detail_img{
             padding-right: 1px;    
@@ -27,7 +27,9 @@
         }
         .artist{
             display: inline-block;
-            width : 30%
+            width : 35%;
+            float : right;
+            
         }
         .list{
             width : 150px;
@@ -61,11 +63,25 @@
         .width{
             width: 100%;
         }
+        .product{
+        
+        
+        }
+        
+        
     </style>
 </head>
 <body>
-    <div class="content">
 
+	 <jsp:include page="../../common/header.jsp" />
+      <jsp:include page="goodsCategory.jsp" />
+ 
+    <div class="content" >
+		<h2 align="center" style="color: rgb(255, 131, 153); font-weight:bolder;">굿즈</h2>
+		<br>
+		<hr>
+		<br>
+		 <div class="product" align="center">
         <!-- 여기는 제품 사진 및 정보 -->
         <div class="detail" style="margin-right:20px; margin-bottom: 50px;" align="center">
 
@@ -191,7 +207,7 @@
                         <td class="height_10px">${r.createDate }</td>
                     </tr>
                     <tr>
-                        <td class="height_10px">${r.boardContent }</td>
+                        <td class="height_10px">${ r.boardContent }</td>
                     </tr>
 
                     <!--  반복시 hr 태그 추가되도록
@@ -217,12 +233,12 @@
                 <h3>[ 문의 댓글 ]</h3>
                 <hr>
                 <br>
-                <table id="replyArea" align="center">
+				<table id="replyArea" align="center">
 				<thead>
 				<c:choose>
                     <c:when test="${not empty replyList}">
                         <c:forEach items="${replyList}" var="r">
-                <table class="t_align_left" border="1">
+                   <table class="t_align_left" border="1">
                     <tr>
                         <td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">
                             <img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">
@@ -247,49 +263,10 @@
                 </c:when>
                 <c:otherwise>
                     <h6>댓글 내역이 존재하지 않습니다.</h3>
+                    <br>
+                    <hr><br>
                 </c:otherwise>
                 </c:choose>
-
-                <br>
-                
-                
-                
-                
-				
-				<table id="replyArea" align="center">
-				<thead>
-				<c:choose>
-                    <c:when test="${not empty replyList}">
-                        <c:forEach items="${replyList}" var="r">
-                   <table class="t_align_left" border="1">
-                    <tr>
-                        <td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">
-                            <img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">
-                        </td>
-                        <td width="70%" style="padding-left:10px;">#{ }</td>
-                        <td width="15%" rowspan="3">
-                            <!--
-                                입력한 사람한텐 삭제,
-                                아닌 사람한텐 신고
-                            -->
-                            <!-- 삭제 -->
-                            <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>
-                            <!-- 신고 -->
-                            <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left:10px;">댓글 내용 : 것이 따뜻한 봄바람이다 인생에 따뜻한 봄바람을 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의</td>
-                    </tr>
-                </table>
-                </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <h6>댓글 내역이 존재하지 않습니다.</h3>
-                </c:otherwise>
-                </c:choose>
-				
-				
 				</thead>
 				<tbody>
 				<c:choose>
@@ -298,7 +275,6 @@
 					<th colspan="2">
 						<textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>로그인 후 댓글 작성가능합니다.</textarea>
 					</th>
-					<th style="vertical-align:middle"><button class="btn btn-secondary">등록하기</button></th>
 				</tr>
 				</c:when>
 				<c:otherwise>
@@ -378,23 +354,25 @@
         	   });
            };
         </script>
-
+		</div>
         
 
 
 
 
         <!-- 오른쪽 정보 -->
-        <div class="artist" style="margin-left:10px;">
+        <div class="artist" style="margin-left:10px; float:right;">
 
             <div>
                 <table class="width" >
                     <tr>
                         <th style="font-size: 35px;"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" width="30" style="float: left;"alt=""></th>
+                        <if test="${loginMember == g.memberNo}">
                         <td class="t_align_right"><a href="" class="btn btn-secondary" style="width: 100px;">수정</a></td>
+                        </if>
                     </tr>
                     <tr>
-                        <td colspan="2" style="font-size: 25px; font-weight:bold;">작품명</td>
+                        <td colspan="2" style="font-size: 25px; font-weight:bold;">${g.boardTitle }</td>
                     </tr>
                 </table>
             </div>
@@ -405,7 +383,7 @@
                 <table class="width">
                     <tr>
                         <td rowspan="2" style="width:100px;"><img class="detail_img" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif" alt=""></td>
-                        <td style="font-size: 30px;">작가명</td>
+                        <td style="font-size: 30px;">${g.nickName}</td>
                     </tr>
                     <tr>
                         <td style="font-size: 20px;">★★★★☆</td>
@@ -424,15 +402,15 @@
                 <table class="width">
                     <tr>
                         <td>기본 시안 횟수</td>
-                        <td class="t_align_right">2회</td>
+                        <td class="t_align_right">${g.draft }회</td>
                     </tr>
                     <tr>
                         <td>기본 수정 갯수</td>
-                        <td class="t_align_right">2회</td>
+                        <td class="t_align_right">${g.modifyCount }회</td>
                     </tr>
                     <tr>
                         <td>작업기간</td>
-                        <td class="t_align_right">시작일로부터 1주일</td>
+                        <td class="t_align_right">${g.workday }</td>
                     </tr>
                 </table>
             </div>
@@ -466,7 +444,7 @@
                     </tr>
                 </table>
             </div>
-            </div>
+           </div>
             <hr>
             <br>
 
@@ -474,7 +452,7 @@
                 <table class="goods_option">
                     <tr>
                         <td class="op_subTitle" style="font-size:20px; font-weight: bolder;" class="num">결제금액</td>
-                        <td class="t_align_right"><input type="text" class=" num_only num_comma num_sum" id="totalPrice" placeholder="${price}"></td>
+                        <td class="t_align_right"><input type="text" class=" num_only num_comma num_sum" id="totalPrice" placeholder="${g.price}"></td>
                     </tr>
                 </table>
             </div>
@@ -515,8 +493,10 @@
                 });
             });
         </script>
+        </div>
  
-    </div>
+    
+
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>
