@@ -72,7 +72,7 @@
 			   )
 	</insert>
 	
-	<insert id="insertDeList" parameterType="string">
+	<insert id="insertOptions" parameterType="string">
 		insert
 		  into
 		  	   art_option
