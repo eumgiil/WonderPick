@@ -167,7 +167,7 @@
       
               <div id="btn_area">
                   <div id="vote_btn" class="btn">
-                     <img src="../../../../resources/boardUpfiles/contestFiles/dance_emogi.gif" class="btn_img">
+                     <img src="" class="btn_img">
                      <span>투표하러가기 ></span> 
                      <hr>
                   </div>
@@ -196,7 +196,6 @@
                                         <td colspan="3">
                                             <div align="center">
                                                 <img src="${ list.filePath }" alt="">
-                                                
                                             </div>
                                         </td>
                                     </tr>
@@ -326,15 +325,17 @@
     <script>
         $('#vote_btn').click(function(){
 
+            location.href="selectVotePage.ct"
+
             
-            alert('지금은 투표 기간이 아닙니다. 매 달 마지막 주 투표가 시작됩니다.');
+            //alert('지금은 투표 기간이 아닙니다. 매 달 마지막 주 투표가 시작됩니다.');
         })
 
         $('#enroll_btn').click(function(){
-          //  alert('이모티콘 공모전은 "작가" 회원만 참여 가능합니다.');
-         // alert('지금은 참가기간이 아닙니다. 다음달에 도전 해주세요!');
+            //  alert('이모티콘 공모전은 "작가" 회원만 참여 가능합니다.');
+            // alert('지금은 참가기간이 아닙니다. 다음달에 도전 해주세요!');
 
-         location.href="enrollForm.ct"
+            location.href="enrollForm.ct"
          
         })
 
