@@ -119,6 +119,8 @@ public class ContestController {
 		int result = contestService.insertContest(board, list, price);
 		
 		if(result > 0) {
+			
+			model.addAttribute("result", result);
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
 			return "board/contestBoard/contestMain";
 			
