@@ -83,11 +83,31 @@
 		  	   )
 		values
 			   (
+		       SEQ_OPTION_NO.nextval
+		      ,seq_board_no.currval
+		      ,#{options}
+			   )
+	</insert>
+<<<<<<< HEAD
+	
+	<insert id="insertDeList" parameterType="string">
+		insert
+		  into
+		  	   art_option_detail
+		  	   (
+		  	   
+		  	  ,option_detail
+		  	  ,price
+		  	   )
+		values
+			   (
 		       seq_option_no.nextval
 		      ,seq_board_no.currval
 		      ,#{item.options}
 			   )
-   	</insert>
+	</insert>
+=======
+>>>>>>> parent of b775ed4 (Merge branch 'main' of https://github.com/eumgiil/WonderPick)
 
 
 

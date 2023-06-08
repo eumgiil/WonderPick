@@ -16,20 +16,23 @@ public class ContestDao {
 		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectTop10");
 	}
 
-	public void insertMainBoard(SqlSessionTemplate sqlSession, Board board) {
-		
-		
-	}
-
-	public void insertBoardImage(SqlSessionTemplate sqlSession, BoardImage boardImage) {
-		// TODO Auto-generated method stub
+	public int insertMainBoard(SqlSessionTemplate sqlSession, Board board) {
+		System.out.println(board);
+		return sqlSession.insert("contestBoardMapper.insertMainBoard", board);
 		
 	}
 
-	public void insertEmoticon(SqlSessionTemplate sqlSession, Contest contest) {
-		// TODO Auto-generated method stub
+	public int insertBoardImage(SqlSessionTemplate sqlSession, BoardImage boardImage) {
 		
+		System.out.println(boardImage);
+		return sqlSession.insert("contestBoardMapper.insertBoardImage", boardImage);
 	}
+
+	public int insertEmoticon(SqlSessionTemplate sqlSession, Contest contest) {
+		return sqlSession.insert("contestBoardMapper.insertEmoticon");
+	}
+
+
 
 
 }

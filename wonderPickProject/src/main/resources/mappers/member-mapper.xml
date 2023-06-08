@@ -46,12 +46,7 @@
 		   	   status = 'N'	
 	</select>
 	
-	<!-- 아이디 중복체크용 쿼리문 -->
-	<select id="idCheckMember" resultType="_int">
-		select
-			   count(*)
-		 where
-		 	   member_id = #{checkId}
-	</select>
-
+	
+	
+	
 </mapper>

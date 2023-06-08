@@ -1,5 +1,4 @@
 package com.kh.wonderPick.board.contestBoard.controller;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -41,7 +40,7 @@ public class ContestController {
 	
 	@RequestMapping("insertContest.ct")
 	public String insertContest(Board board,
-								BoardImage boardImage,
+//								BoardImage boardImage,
 								Contest contest,
 								MultipartFile thumbnailUpFile,
 								MultipartFile[] upFile,
@@ -49,75 +48,77 @@ public class ContestController {
 								HttpSession session) {
 		
 		//System.out.println(b);
-		//System.out.println(upFile.length);
-		
-		
+		//System.out.println(upFile[0]);
+		//System.out.println(c);
+		System.out.println("썸네일" + thumbnailUpFile);
+
 		ArrayList list = new ArrayList();
 		
-		String originName2 = thumbnailUpFile.getOriginalFilename();
+		String originName = thumbnailUpFile.getOriginalFilename();
 		
-		String currentTime2 = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
 		
-		int randomNumber2 = (int)(Math.random() * 90000 + 10000);
+		String ext = originName.substring(originName.lastIndexOf("."));
 		
-		String ext2 = originName2.substring(originName2.lastIndexOf("."));
+		int randomNumber = (int)(Math.random() * 9000 + 1000);
 		
-		String changeName2 = currentTime2 + randomNumber2 + ext2;
+		String changeName = currentTime + randomNumber + ext;
 		
+		String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/emoticonFiles/");
 		
-		String savePath2 = session.getServletContext().getRealPath("/resources/boardUpfiles/emoticonFiles/");
+		//multipartFile.transferTo(new File(savePath + changeName));
 		
-		try {
-			thumbnailUpFile.transferTo(new File(savePath2 + changeName2));
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-		
-		boardImage.setOriginName(thumbnailUpFile.getOriginalFilename());
-		boardImage.setModifyName("/resources/boardUpfiles/emoticonFiles/");
+		BoardImage boardImage =  new BoardImage();
+		boardImage.setOriginName(originName);
+		boardImage.setModifyName(board.getBoardTitle());
+		boardImage.setFileLevel(1);
+		boardImage.setFilePath("/resources/boardUpfiles/emoticonFiles/" + changeName);
 		
 		list.add(boardImage);
 		
 		
 		
-	
 		
 		for(MultipartFile multipartFile : upFile) {
 			
-			String originName = multipartFile.getOriginalFilename();
-			
-			String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-			
-			int randomNumber = (int)(Math.random() * 90000 + 10000);
-			
-			String ext = originName.substring(originName.lastIndexOf("."));
-			
-			String changeName = currentTime + randomNumber + ext;
-			
-			
-			String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/emoticonFiles/");
-			
-			try {
-				multipartFile.transferTo(new File(savePath + changeName));
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
+			if(multipartFile.getSize() != 0) {
+				
+				
+				
+				String originName2 = multipartFile.getOriginalFilename();
+				
+				System.out.println("나머지들 :" + originName2);
+				
+				String currentTime2 = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+				
+				String ext2 = originName2.substring(originName2.lastIndexOf("."));
+				
+				int randomNumber2 = (int)(Math.random() * 9000 + 1000);
+				
+				String changeName2 = currentTime2 + randomNumber2 + ext2;
+				
+				String savePath2 = session.getServletContext().getRealPath("/resources/boardUpfiles/emoticonFiles/");
+				
+				try {
+					multipartFile.transferTo(new File(savePath + changeName));
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+				
+				boardImage =  new BoardImage();
+				boardImage.setOriginName(originName2);
+				boardImage.setModifyName(board.getBoardTitle());
+				boardImage.setFileLevel(2);
+				boardImage.setFilePath("/resources/boardUpfiles/emoticonFiles/" + changeName2);
+				
+				list.add(boardImage);
 			}
 			
-			boardImage.setOriginName(multipartFile.getOriginalFilename());
-			boardImage.setModifyName("/resources/boardUpfiles/emoticonFiles/");
-			
-			list.add(boardImage);
-			
-		
-	}
-		
-		
-		
+		}
 		
 		if(contestService.insertContest(board, list, contest) > 0) {
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
 			return "board/contestBoard/contestMain";
-			
 			
 		}else {
 			model.addAttribute("errorMsg", "게시글 작성에 실패하였습니다.");
@@ -129,6 +130,6 @@ public class ContestController {
 		
 		
 
-	}
 
+	}
 }

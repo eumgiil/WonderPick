@@ -22,6 +22,21 @@
   	<result column="create_date" property="createDate" />
   	<result column="board_count" property="boardCount" />
   	<result column="nickname" property="nickName" />
+  	<result column="goods_no" property="goodsNo" />
+  </resultMap>
+  
+  
+  <resultMap id="reviewResultSet" type="review">
+   <result column="review_no" property="reviewNo" />
+   <result column="board_no" property="boardNo" />
+   <result column="member_no" property="memberNo" />
+   <result column="nickname" property="nickname" />
+   <result column="star" property="star" />
+   <result column="create_date" property="createDate" />
+   <result column="origin_name" property="originName" />
+   <result column="modify_name" property="modifyName" />
+   <result column="board_title" property="boardTitle" />
+   <result column="board_content" property="boardContent" />
   </resultMap>
   
   
@@ -50,7 +65,7 @@ select
       member using (member_no)
  join 
  	 board_image using (board_no)
- join goods using(board_no)
+ join goods using (board_no )
  where
      b.status = 'Y'
 and 
@@ -85,7 +100,7 @@ order by
   into 
       goods
       (
-      board_no,
+      goods_no,
       price,
       draft,
       modify_count,
@@ -97,7 +112,6 @@ order by
  values
       (
       seq_board_no.currval,
-      #{boardNo},
       #{price},
       #{draft},
       #{modifyCount},
@@ -143,7 +157,7 @@ order by
       	price,
       	draft,
       	modify_count,
-      	workday,
+      	WORKDAY,
       	add_draft,
       	add_modify,
       	goods_category
@@ -152,8 +166,64 @@ order by
  join member using(member_no)
  where board_no = #{boardNo}
   </select>
-
-  
+  <select id="selectReviewCount" resultType="_int" >
+	select 
+	       * 
+	 from 
+	 		review
+	join 
+		  board using(board_no)
+	where 
+		 board_no = #{boardNo}
+  </select>
+  <select id="selectReviewList" resultMap="reviewResultSet">
+  select 
+  		nickname, 
+  		board_title, 
+  		board_content, 
+  		star, 
+  		create_date, 
+  		origin_name
+	from review
+	join member using (member_no)
+	join board using (board_no)
+	where board_no = #{boardNo}
+  </select>
+  <select id="selectReplyList" resultType="reply">
+  select
+         nickname nickname,
+         content content,
+         to_char(create_date, 'YYYY-MM-DD') as "createDate"
+ 	from  reply
+  	join  member using (member_no)
+	where board_no = #{boardNo}
+ 	order 
+ 	   by 
+ 	       create_date desc
+  </select>
+  <insert id="insertReply" parameterType="reply">
+  insert
+    into
+        reply
+                 (
+               reply_no, 
+               board_no,
+               member_no,
+               content, 
+               create_date
+                   ) 
+               values
+                  (
+                seq_reply_no.nextval,
+               #{boardNo},
+               #{memberNo},
+               #{content},
+               #{createDate}
+                   )
+  </insert>
+ 
+ 
+ 
   
 
 
