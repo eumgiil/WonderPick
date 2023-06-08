@@ -28,6 +28,7 @@ public class ContestServiceImpl implements ContestService {
 	
 	@Transactional
 	@Override
+<<<<<<< HEAD
 	public int insertContest(Board board, ArrayList<BoardImage> list, Contest contest) {
 		
 		
@@ -48,6 +49,15 @@ public class ContestServiceImpl implements ContestService {
 		
 		
 		int result3 = contestDao.insertEmoticon(sqlSession, contest);
+=======
+	public int insertContest(Board board, BoardImage boardImage, Contest contest) {
+		
+		contestDao.insertMainBoard(sqlSession, board);
+		
+		contestDao.insertBoardImage(sqlSession, boardImage);
+		
+		contestDao.insertEmoticon(sqlSession, contest);
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
 		
 		
 		

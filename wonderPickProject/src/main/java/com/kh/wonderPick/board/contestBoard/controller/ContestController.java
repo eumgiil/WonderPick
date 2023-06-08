@@ -40,7 +40,12 @@ public class ContestController {
 	
 	@RequestMapping("insertContest.ct")
 	public String insertContest(Board board,
+<<<<<<< HEAD
 //								BoardImage boardImage,
+=======
+								BoardImage boardImage,
+								Contest contest,
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
 								MultipartFile thumbnailUpFile,
 								MultipartFile[] upFile,
 								Contest contest,
@@ -48,6 +53,7 @@ public class ContestController {
 								HttpSession session) {
 		
 		//System.out.println(b);
+<<<<<<< HEAD
 		//System.out.println(upFile[0]);
 		//System.out.println(c);
 		System.out.println("썸네일" + thumbnailUpFile);
@@ -73,11 +79,42 @@ public class ContestController {
 		boardImage.setModifyName(board.getBoardTitle());
 		boardImage.setFileLevel(1);
 		boardImage.setFilePath("/resources/boardUpfiles/emoticonFiles/" + changeName);
+=======
+		//System.out.println(upFile.length);
+		
+		
+		ArrayList list = new ArrayList();
+		
+		String originName2 = thumbnailUpFile.getOriginalFilename();
+		
+		String currentTime2 = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+		
+		int randomNumber2 = (int)(Math.random() * 90000 + 10000);
+		
+		String ext2 = originName2.substring(originName2.lastIndexOf("."));
+		
+		String changeName2 = currentTime2 + randomNumber2 + ext2;
+		
+		
+		String savePath2 = session.getServletContext().getRealPath("/resources/boardUpfiles/emoticonFiles/");
+		
+		try {
+			thumbnailUpFile.transferTo(new File(savePath2 + changeName2));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		boardImage.setOriginName(thumbnailUpFile.getOriginalFilename());
+		boardImage.setModifyName("/resources/boardUpfiles/emoticonFiles/");
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
 		
 		list.add(boardImage);
 		
 		
+<<<<<<< HEAD
 		
+=======
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
 		
 		
 		for(MultipartFile multipartFile : upFile) {
@@ -115,7 +152,13 @@ public class ContestController {
 				list.add(boardImage);
 			}
 			
+<<<<<<< HEAD
 		}
+=======
+			boardImage.setOriginName(multipartFile.getOriginalFilename());
+			boardImage.setModifyName("/resources/boardUpfiles/emoticonFiles/");
+			
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
 		
 		//System.out.println(list);
 		
@@ -166,8 +209,12 @@ public class ContestController {
 		//System.out.println("22222 : " + bi);
 		//System.out.println("33 :" + c);
 		
+<<<<<<< HEAD
 		
 		if(contestService.insertContest(board, list, contest) > 0) {
+=======
+		if(contestService.insertContest(board, boardImage, contest) > 0) {
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
 			return "board/contestBoard/contestMain";
 			

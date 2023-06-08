@@ -65,16 +65,25 @@
 
     /* 제목 */
     #signUpTitle{
+<<<<<<< HEAD
         margin : 50px 0px;
+=======
+        margin : 15px 0px;
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
         line-height: normal;
     }
 
     /* 메인영역 */
+<<<<<<< HEAD
     #signUpInput{
         margin-top : 20px;
     }
     #signUpInput input{
         margin : 20px 0px;
+=======
+    #signUpInput input{
+        margin-top : 20px;
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
         height : 50px;
         width : 400px;
         padding-left: 20px;
@@ -82,18 +91,34 @@
         border : 1px solid #85727d;
     }
     #signUpInput label{
+<<<<<<< HEAD
         font-weight: bold;
     }
+=======
+    	display : inline-block;
+        font-weight: bold;
+        margin-top : 20px;
+    }
+
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
     #signUpCheckbox{
         border-radius : 5px;
         border : 1px solid #85727d;
         height : 90px;
         margin-bottom: 20px;
+<<<<<<< HEAD
+=======
+        margin-top : 20px;
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
     }
     #signUpCheckbox input{
         margin : 20px 0px 5px 20px;
     }
+<<<<<<< HEAD
     #signUpMain button{
+=======
+    #submitBtn{
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
         width : 400px;
         height : 60px;
         margin : auto;
@@ -102,4 +127,17 @@
         color : #fff;
         border-radius: 5px;
         font-size: 15px;
+<<<<<<< HEAD
+=======
+    }
+    #signUpInput div{
+    	padding-left : 20px;
+    	margin-top : 10px;
+    	color : #85727d;
+    	font-size : 14px;
+    	display : none;
+    }
+    #submitBtn:disabled{
+        background-color : gray;
+>>>>>>> 5250815160f2874be5265705773837986c3974e6
     }

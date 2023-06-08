@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class ArtBoard extends Board{
 	
+	private int boardNo; // BOARD_NO	NUMBER
 	private String fileType; // FILE_TYPE	VARCHAR2(5 BYTE)
 	private String dpi; // DPI	VARCHAR2(20 BYTE)
 	private String defaultSize; // DEFAULT_SIZE	VARCHAR2(50 BYTE)
