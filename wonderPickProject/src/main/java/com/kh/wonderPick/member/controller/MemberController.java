@@ -74,7 +74,7 @@ public class MemberController {
 	 * @return : signUpForm.jsp로 보내줌
 	 */
 	@RequestMapping("signUpForm.me")
-	public String signUpForm(Member m,
+	public String signUpForm(Member m,	
 							   HttpSession session) {
 		session.setAttribute("memberGrade", m.getMemberGrade());
 		return "member/signUpForm";
