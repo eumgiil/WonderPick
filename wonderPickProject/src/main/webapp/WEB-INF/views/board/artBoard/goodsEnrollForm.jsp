@@ -182,6 +182,7 @@
             <input type="hidden" id="prList" name="prList" value="'+ prList +'">
             <input type="hidden" id="options" name="options" value="'+ options +'">
             
+            
 		    <div id="file-area">
 		        <input type="file" id="file1" name="upfile" required onchange="loadImg(this, 1);">
 		        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);">
@@ -210,7 +211,9 @@
         /* 옵션+버튼 스크립트 */
         let i = 1;
         let j = 1;
+        let num;
         var art_table = document.getElementById('art_table');
+        
 
         function op_plus(){
             let value = '';
@@ -241,7 +244,7 @@
         	let tbody = e.parentElement.parentElement.parentElement;
             let id = tbody.id;
             // let str = id.slice(0, id.indexOf('y') + 1);
-            let num = parseInt(id.slice(id.indexOf('y')+1));
+            num = parseInt(id.slice(id.indexOf('y')+1));
             let value = '';
             value = '<th>'
                         +'<h5>옵션명</h5></th>'
@@ -282,7 +285,7 @@
 
                 deList.push('#'+option.value+'#');
                 prList.push('#'+option.value+'#');
-                options.push('#'+option.value+'#');
+                options.push(option.value);
 
                 for(let j = 0; j < detailOp.length; j++){
                     deList.push(detailOp[j].value);
@@ -295,6 +298,7 @@
             document.getElementById('deList').value = deList;
             document.getElementById('prList').value = prList;
             document.getElementById('options').value = options;
+            
             
            	form.action = 'enroll.at';
             form.submit();

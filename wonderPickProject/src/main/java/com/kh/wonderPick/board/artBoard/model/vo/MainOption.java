@@ -4,10 +4,12 @@ import lombok.Data;
 
 @Data
 public class MainOption {
+	
+	//죽은 Vo
 
 	private int optionNo; // OPTION_NO	NUMBER
 	private int boardNo; // BOARD_NO	NUMBER
-	private String[] options; // MAIN_OPTION	VARCHAR2(100 BYTE)
+//	private String[] options; // MAIN_OPTION	VARCHAR2(100 BYTE)
 	
 	
 }

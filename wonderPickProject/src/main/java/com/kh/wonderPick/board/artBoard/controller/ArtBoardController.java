@@ -1,8 +1,9 @@
 package com.kh.wonderPick.board.artBoard.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.wonderPick.board.artBoard.model.service.ArtBoardService;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
 import com.kh.wonderPick.board.artBoard.model.vo.DetailOp;
-import com.kh.wonderPick.board.artBoard.model.vo.MainOption;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 
@@ -44,18 +44,30 @@ public class ArtBoardController {
 	@RequestMapping("enroll.at")
 	public String enrollArtBoard(Board board,
 			                     ArtBoard artBoard,
-			                     DetailOp detailOp,
-			                     MainOption mainOption,
-			                     BoardImage boardImg,
+			                     String[] options,
 			                     MultipartFile[] upfile,
+			                     HttpServletRequest request,
 			                     HttpSession session,
 			                     Model model) {
 		
-//		System.out.println(board);
-//		System.out.println(artBoard);
-//		System.out.println(detailOp);
-//		System.out.println(mainOption);
-		System.out.println(Arrays.toString(upfile));
+		ArrayList<DetailOp> list = new ArrayList();
+		BoardImage boardImg = new BoardImage();
+		for(int i = 1; i <= options.length; i++) {
+			
+//			list.add(request.getParameterValues("detailOp" + i));
+			
+			DetailOp detailOp = new DetailOp();
+			
+			detailOp.setDeList(request.getParameterValues("detailOp" + i));
+			detailOp.setPrList(request.getParameterValues("opPrice" + i));
+			detailOp.setOptions(request.getParameter("option_" + i));
+			
+			list.add(detailOp);
+		}
+		
+		int result = artService.insertArtBoard(board, artBoard, /* boardImg,*/ list);
+		System.out.println(result);
+//		artService.insertArtBoard(board, artBoard, detailOp, mainOption, boardImg);
 		
 		
 		

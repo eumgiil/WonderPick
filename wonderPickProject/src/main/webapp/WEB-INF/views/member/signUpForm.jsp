@@ -65,39 +65,39 @@
 	<!-- 입력칸을 누르면 안내 문구 -->
 	<script>
 		// 아이디
-		$('#memberId').on('click', () => {
+		$('#memberId').on('click', function(){
 			$('#checkIdResult').show();
 		});
 		// 비밀번호
-		$('#memberPwd').on('click', () =>{
+		$('#memberPwd').on('click', function(){
 			$('#checkPwdResult').show();
 		});
 		// 비밀번호 재확인
-		$('#memberRepwd').on('click', () =>{
+		$('#memberRepwd').on('click', function(){
 			$('#checkPwdReresult').show();
 		});
 		// 이름
-		$('#memberName').on('click', () =>{
+		$('#memberName').on('click', function(){
 			$('#checkNameResult').show();
 		});
 		// 닉네임
-		$('#nickName').on('click', () =>{
+		$('#nickName').on('click', function(){
 			$('#checkNickResult').show();
 		});
 		// 전화번호
-		$('#phone').on('click', () =>{
+		$('#phone').on('click', function(){
 			$('#checkPhoneResult').show();
 		});
 	</script>
 	<!-- 정규표현식 검사 -->
 	<script>
 		// 아이디 중복검사
-		$(() => {
+		$(function(){
 			var errorColor = 'crimson';
 			var successColor = '#FF8399';
 			const $idInput = $('#signUpInput #memberId');
 			
-			$idInput.keyup(() => {	
+			$idInput.keyup(function(){	
 				console.log($idInput.val());
 				if($idInput.val().length >= 5){
 					$('#checkIdResult').css('color', successColor).text('멋진 아이디내요!');

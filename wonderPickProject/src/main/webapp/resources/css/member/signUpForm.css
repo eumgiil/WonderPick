@@ -112,5 +112,5 @@
     	display : none;
     }
     #submitBtn:disabled{
-        background-color : red;
+        background-color : gray;
     }

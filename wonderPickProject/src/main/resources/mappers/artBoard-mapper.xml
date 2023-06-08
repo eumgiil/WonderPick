@@ -23,14 +23,72 @@
 		  into
 		  	   board
 		  	   (
-		  	   
+		  	   board_no,
+		  	   member_no,
+		  	   board_title,
+		  	   board_content,
+		  	   create_date,
+		  	   status,
+		  	   board_count,
+		  	   board_type
 		  	   )
+		values
+			   (
+			   seq_board_no.nextval,
+			   1,
+               '아트보드테스트1 제목',
+               '아트보드테스트1 내용',
+               sysdate,
+               'Y',
+               0,
+               'D'
+			   )
 	</insert>
 
 	<insert id="insertArtBoard" parameterType="artBoard">
-	
+		insert
+		  into
+		  	   art_board
+		  	   (
+		  	   BOARD_NO,
+		  	   FILE_TYPE,
+		  	   DPI,
+		  	   DEFAULT_SIZE,
+		  	   MODIFY_COUNT,
+		  	   WORKDAY,
+		  	   CATEGORY,
+		  	   PRICE
+		  	   )
+		values
+			   (
+			   seq_board_no.currval,
+			   'JPG',
+               100,
+               '1920*980',
+               0,
+               '작업시작일로부터 약 7일',
+               'CI',
+               10000
+			   )
 	</insert>
 	
+	<update id="insertDeList" parameterType="java.util.ArrayList">
+		<foreach collection="list" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+		  into
+		  	   art_option
+		  	   (
+		  	   OPTION_NO
+		  	  ,BOARD_NO
+		  	  ,MAIN_OPTION
+		  	   )
+		values
+			   (
+		       seq_option_no.nextval
+		      ,seq_board_no.currval
+		      ,#{item.options}
+			   )
+    	</foreach>
+	</update>
 
 
 

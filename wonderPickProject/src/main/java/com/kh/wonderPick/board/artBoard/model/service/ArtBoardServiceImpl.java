@@ -9,7 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.wonderPick.board.artBoard.model.dao.ArtBoardDao;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
+import com.kh.wonderPick.board.artBoard.model.vo.DetailOp;
+import com.kh.wonderPick.board.artBoard.model.vo.MainOption;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 
 @Service
 public class ArtBoardServiceImpl implements ArtBoardService {
@@ -27,15 +30,62 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	}
 
 
+
+
 //	@Override
 //	@Transactional
-//	public int enrollArtBoard(Board board, ArtBoard artBoard, Option options) {
-//		artDao.insertBoard(sqlSession, board);
-//		artDao.insertArtBoard(sqlSession, artBoard);
-//		artDao.insertOption(options);
+//	public int insertArtBoard(Board board, ArtBoard artBoard, DetailOp detailOp, MainOption mainOption, BoardImage boardImg) {
 //		
-//		return 0;
+//		int result1 = artDao.insertBoard(sqlSession, board);
+//		int result2 = artDao.insertArtBoard(sqlSession, artBoard);
+//		
+//		int result3 = artDao.insertDetailOp(sqlSession, detailOp);
+//		int result4 = artDao.insertMainOption(sqlSession, mainOption);
+//		
+//		int result5 = artDao.insertBoardImg(sqlSession, boardImg);
+//		
+//		
+//		return (result1 * result2 * result3 * result4 * result5);
 //	}
+
+
+
+
+	@Override
+	@Transactional(
+			)
+	public int insertArtBoard(Board board, ArtBoard artBoard, /*BoardImage boardImg,*/ ArrayList<DetailOp> list) {
+		int result1 = artDao.insertBoard(sqlSession, board);
+		int result2 = artDao.insertArtBoard(sqlSession, artBoard);
+		int result3 = artDao.insertDeList(sqlSession, list);
+		
+		
+//		int result4 = artDao.insertDetailOp(sqlSession, boardImg);
+		return (result1 * result2 * result3);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 
