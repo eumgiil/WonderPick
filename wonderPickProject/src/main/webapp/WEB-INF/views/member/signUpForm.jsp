@@ -22,33 +22,32 @@
             <div id="signUpMain" method="post">
                 <form action="signUp.me">
                     <div id="signUpInput">
-                        <label>아이디</label><br>
-                        <input type="text" id="memberId" name="memberId" placeholder="아이디를 입력해주세요.">
+                        <label>* 아이디</label><br>
+                        <input type="text" id="memberId" name="memberId" placeholder="아이디를 입력해주세요." required>
                         <div id="checkIdResult">영문자, 숫자로 5~20자로 입력해주세요.</div>
                         <br>
-                        <label>비밀번호</label><br>
-                        <input type="password" id="memberPwd" name="memberPwd" placeholder="비밀번호를 입력해주세요.">
+                        <label>* 비밀번호</label><br>
+                        <input type="password" id="memberPwd" name="memberPwd" placeholder="비밀번호를 입력해주세요." required>
                         <div id="checkPwdResult">영문자, 숫자, 특수문자(!@#$%^)로  8~20자로 입력해주세요.</div>
                         <br>
-                        <label>비밀번호 재확인</label><br>
-                        <input type="password" placeholder="비밀번호를 한번 더 입력해주세요." id="memberRepwd">
+                        <label>* 비밀번호 재확인</label><br>
+                        <input type="password" placeholder="비밀번호를 한번 더 입력해주세요." id="memberRepwd" required>
                         <div id="checkPwdReresult">위 비밀번호와 일치하게 입력해주세요.</div>
                         <br>
-                        <label>이름</label><br>
-                        <input type="text" id="memberName" name="memberName" placeholder="이름을 입력해주세요.">
-                        <div id="checkNameResult"></div>
+                        <label>* 이름</label><br>
+                        <input type="text" id="memberName" name="memberName" placeholder="이름을 입력해주세요." required>
+                        <div id="checkNameResult">한글로 2글자 이상 입력해주세요.(입금자명과 동일해야합니다.)</div>
                         <br>
-                        <label>닉네임</label><br>
-                        <input type="text" id="nickName" name="nickName" placeholder="닉네임을 입력해주세요.">
-                        <div id="checkNickResult"></div>
+                        <label>* 닉네임</label><br>
+                        <input type="text" id="nickName" name="nickName" placeholder="닉네임을 입력해주세요." required>
+                        <div id="checkNickResult">20자이내로 자유롭게  입력해주세요.</div>
                         <br>
-                        <label>전화번호</label><br>
-                        <input type="text" id="phone" name="phone" placeholder="전화번호를 입력해주세요. ( - 없이 숫자만 입력해주세요.)">
-                        <div id="checkPhoneResult"></div>
+                        <label>* 전화번호</label><br>
+                        <input type="text" id="phone" name="phone" placeholder="전화번호를 입력해주세요." required>
+                        <div id="checkPhoneResult">- 없이 숫자만 입력해주세요.</div>
                         <br>
                         <label>이메일</label><br>
                         <input type="email" id="email" name="email" placeholder="이메일을 입력해주세요.">
-                        
                         <input type="hidden" id="memberGrade" name="memberGrade" value="${ sessionScope.memberGrade }">
                     </div>
                     <div id="signUpCheckbox">
@@ -56,7 +55,7 @@
                         <input type="checkbox"> 이메일 수신에 동의합니다.<br>
                     </div>
                     <div>
-                        <button type="submit">회원가입</button>
+                        <button type="submit" id="submitBtn">회원가입</button>
                     </div>
                 </form>
             </div>
@@ -93,8 +92,24 @@
 	<!-- 정규표현식 검사 -->
 	<script>
 		// 아이디 중복검사
-		$(function(){
+		$(() => {
+			var errorColor = 'crimson';
+			var successColor = '#FF8399';
+			const $idInput = $('#signUpInput #memberId');
 			
+			$idInput.keyup(() => {	
+				console.log($idInput.val());
+				if($idInput.val().length >= 5){
+					$('#checkIdResult').css('color', successColor).text('멋진 아이디내요!');
+					$('#submitBtn').removeAttr('disabled');
+				} else if($idInput.val() == '') {
+					$('#checkIdResult').css('color', errorColor ).text('필수 입력란입니다');
+					$('#submitBtn').attr('disabled', true);
+				}else{
+					$('#checkIdResult').css('color', errorColor ).text('5글자 이상 입력해주세요');
+					$('#submitBtn').attr('disabled', true);
+				}
+			});
 		});
 	</script>
 </body>

@@ -94,7 +94,7 @@
     #signUpCheckbox input{
         margin : 20px 0px 5px 20px;
     }
-    #signUpMain button{
+    #submitBtn{
         width : 400px;
         height : 60px;
         margin : auto;
@@ -110,4 +110,7 @@
     	color : #85727d;
     	font-size : 14px;
     	display : none;
+    }
+    #submitBtn:disabled{
+        background-color : red;
     }
