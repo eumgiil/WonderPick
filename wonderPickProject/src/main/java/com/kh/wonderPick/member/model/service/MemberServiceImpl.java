@@ -26,6 +26,4 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.idCheckMember(checkId, sqlSession);
 	}
 
-	
-
 }
