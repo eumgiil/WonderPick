@@ -249,16 +249,71 @@
                 </c:choose>
 
                 <br>
-                <form action="" method="post">
-                <textarea class="width" name="content" id="" rows="10" maxlength="500" style="resize:none;"></textarea>
-
-
-                <div class="t_align_right width" >
-                    <button type="submit" class="btn btn-secondary" style="color: rgb(255, 131, 153);">작성하기</button>
-                </div>
+                
+                
+                
+                
+				
+				<table id="replyArea" align="center">
+				<thead>
+				<c:choose>
+                    <c:when test="${not empty replyList}">
+                        <c:forEach items="${replyList}" var="r">
+                   <table class="t_align_left" border="1">
+                    <tr>
+                        <td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">
+                            <img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">
+                        </td>
+                        <td width="70%" style="padding-left:10px;">#{ }</td>
+                        <td width="15%" rowspan="3">
+                            <!--
+                                입력한 사람한텐 삭제,
+                                아닌 사람한텐 신고
+                            -->
+                            <!-- 삭제 -->
+                            <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>
+                            <!-- 신고 -->
+                            <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:10px;">댓글 내용 : 것이 따뜻한 봄바람이다 인생에 따뜻한 봄바람을 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의</td>
+                    </tr>
+                </table>
+                </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <h6>댓글 내역이 존재하지 않습니다.</h3>
+                </c:otherwise>
+                </c:choose>
+				
+				
+				</thead>
+				<tbody>
+				<c:choose>
+				<c:when test="${empty loginMember}" >
+				<tr> 
+					<th colspan="2">
+						<textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>로그인 후 댓글 작성가능합니다.</textarea>
+					</th>
+					<th style="vertical-align:middle"><button class="btn btn-secondary">등록하기</button></th>
+				</tr>
+				</c:when>
+				<c:otherwise>
+				<tr>
+				     <th colspan="2">
+                     <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+                     </th>
+                     <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
+				</tr>
+				</c:otherwise>
+				</c:choose>
+				</tbody>
+				
+			
                 </form>
             </div>
-
+				</table>
 
             <br><br><br><br><br>
 
