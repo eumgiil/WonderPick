@@ -1,12 +1,9 @@
 package com.kh.wonderPick.member.model.service;
 
-import java.util.ArrayList;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.wonderPick.common.model.vo.PageInfo;
 import com.kh.wonderPick.member.model.dao.MemberDao;
 import com.kh.wonderPick.member.model.vo.Member;
 
