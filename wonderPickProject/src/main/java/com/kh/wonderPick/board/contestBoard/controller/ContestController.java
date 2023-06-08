@@ -42,6 +42,7 @@ public class ContestController {
 	public String insertContest(Board b,
 								BoardImage bi,
 								Contest c,
+								MultipartFile thumbnailUpFile,
 								MultipartFile[] upFile,
 								Model model,
 								HttpSession session) {

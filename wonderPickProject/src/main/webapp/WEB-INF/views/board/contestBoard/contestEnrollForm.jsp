@@ -68,7 +68,7 @@
             <img src="/resources/no-image.svg" class="noImge">
         </div>
         <div id="input_file">
-            1. <input type="file" name="upFile" required><br>
+            1. <input type="file" name="thumbnailUpFile" required><br>
             2. <input type="file" name="upFile" ><br>
             3. <input type="file" name="upFile" ><br>
             4. <input type="file" name="upFile" ><br>
