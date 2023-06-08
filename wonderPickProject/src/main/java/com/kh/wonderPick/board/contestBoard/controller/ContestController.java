@@ -106,13 +106,15 @@ public class ContestController {
 			boardImage.setOriginName(multipartFile.getOriginalFilename());
 			boardImage.setModifyName("/resources/boardUpfiles/emoticonFiles/");
 			
+			list.add(boardImage);
+			
 		
 	}
 		
 		
 		
 		
-		if(contestService.insertContest(board, boardImage, contest) > 0) {
+		if(contestService.insertContest(board, list, contest) > 0) {
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
 			return "board/contestBoard/contestMain";
 			
