@@ -87,7 +87,7 @@
 		      ,seq_board_no.currval
 		      ,#{item.options}
 			   )
-	</insert>
+   	</insert>
 
 
 
