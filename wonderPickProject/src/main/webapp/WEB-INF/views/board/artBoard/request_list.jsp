@@ -66,7 +66,11 @@
 <body>
     <div class="all_area">
 
-        <div class="dd">
+        <div class="left_bar">
+            
+        </div>
+
+        <div class="content">
 
             <div class="head" align="center">
                 <h2> 작품 의뢰 </h2>
@@ -77,7 +81,7 @@
             <br><br><br>
 
             <div class="t_align_right">
-                <button>글작성</button>
+                <button onclick="location.href='#'">글작성</button>
             </div>
             <div>
                 <div class="inline-block" style="width:49%;">n개의 의뢰접수가 있습니다.</div>
