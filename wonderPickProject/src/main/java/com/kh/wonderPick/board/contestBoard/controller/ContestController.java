@@ -136,7 +136,7 @@ public class ContestController {
 	@RequestMapping("selectVotePage.ct")
 	public String selectVotePage() {
 		
-		contestService.selectVotePage();
+		//contestService.selectVotePage();
 		
 		return "board/contestBoard/contestVote";
 	}
