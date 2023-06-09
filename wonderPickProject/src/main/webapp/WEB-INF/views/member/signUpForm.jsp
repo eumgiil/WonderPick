@@ -143,7 +143,7 @@
 			
 			// 비밀번호 재확인
 			$repwdInput.keyup(function(){
-				if($repwdInput.val() == $PwdInput.val()){
+				if($repwdInput.val() == $pwdInput.val()){
 					$('#checkPwdReresult').text('');
 					$('#submitBtn').removeAttr('disabled');
 				} else{
@@ -154,9 +154,8 @@
 			
 			// 이름 정규표현식 검사
 			$nameInput.keyup(function(){
-				console.log($nameInput.val());
 				regExp = /^[가-힣]{2,}$/;
-				if(regExp.test($memberName.val())){
+				if(regExp.test($nameInput.val())){
 					$('#checkNameResult').text('');
 					$('#submitBtn').removeAttr('disabled');
 				} else {

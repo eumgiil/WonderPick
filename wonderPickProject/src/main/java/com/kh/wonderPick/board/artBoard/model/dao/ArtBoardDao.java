@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
+import com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.common.model.vo.PageInfo;
@@ -19,7 +20,7 @@ public class ArtBoardDao {
 		return sqlSession.selectOne("artBoardMapper.selectArtListCount");
 	}
 	
-	public ArrayList<ArtBoard> selectArtList(SqlSessionTemplate sqlSession, PageInfo pi){
+	public ArrayList<ArtBoardDTO> selectArtList(SqlSessionTemplate sqlSession, PageInfo pi){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		// 페이징처리 해야함. offset도 해야함

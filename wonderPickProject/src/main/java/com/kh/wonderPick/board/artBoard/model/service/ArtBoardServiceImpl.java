@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.wonderPick.board.artBoard.model.dao.ArtBoardDao;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
+import com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.common.model.vo.PageInfo;
@@ -32,7 +33,7 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	}
 	
 	@Override
-	public ArrayList<ArtBoard> selectArtList(PageInfo pi) {
+	public ArrayList<ArtBoardDTO> selectArtList(PageInfo pi) {
 		return artDao.selectArtList(sqlSession, pi);
 	}
 

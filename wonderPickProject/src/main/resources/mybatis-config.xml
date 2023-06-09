@@ -10,6 +10,7 @@
 	
 	<typeAliases>
 		<typeAlias type="com.kh.wonderPick.member.model.vo.Member" alias="member" />
+		<typeAlias type="com.kh.wonderPick.member.model.vo.MemberImage" alias="memberImage" />
 		
 		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Board" alias="board" />
 		<typeAlias type="com.kh.wonderPick.board.artBoard.model.vo.ArtBoard" alias="artBoard" />
