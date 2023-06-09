@@ -31,6 +31,7 @@ public class ArtBoardController {
 		
 		// 페이징 처리 등 해야함
 		PageInfo pi = Pagination.getPageInfo(artService.selectArtListCount(), currentPage, 12, 10);
+		System.out.println(artService.selectArtList(pi));
 		mv.addObject("pi", pi).addObject("list", artService.selectArtList(pi)).setViewName("board/artBoard/artListView");
 		return mv;
 	}
@@ -46,7 +47,7 @@ public class ArtBoardController {
 		return "board/artBoard/artEnrollForm";
 	}
 	
-	@RequestMapping("enroll.at")
+	@RequestMapping("insertBoard.at")
 	public ModelAndView enrollArtBoard(Board board,
 			ArtBoard artBoard,
 			String[] options,

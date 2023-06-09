@@ -5,38 +5,84 @@
 
 <mapper namespace="artBoardMapper">
 
-	<resultMap id="artBoardResultSet" type="artBoard">
-		<result column="NICKNAME" property="nickname" />
-		
+	<resultMap id="board" type="board">
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="BOARD_TITLE" property="boardTitle" />
+		<result column="BOARD_CONTENT" property="boardContent" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="STATUS" property="status" />
+		<result column="BOARD_COUNT" property="boardCount" />
+		<result column="BOARD_TYPE" property="boardType" />
+	</resultMap>
+	
+	<resultMap id="artBoard" type="artBoard">
+		<result column="FILE_TYPE" property="fileType" />
+		<result column="DPI" property="dpi" />
+		<result column="DEFAULT_SIZE" property="defaultSize" />
+		<result column="MODIFY_COUNT" property="modifyCount" />
+		<result column="WORKDAY" property="workday" />
+		<result column="CATEGORY" property="category" />
+		<result column="PRICE" property="price" />
+	</resultMap>
+	
+
+	
+	<resultMap id="review" type="review">
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="STAR" property="star" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="MODIFY_NAME" property="modifyName" />
 	</resultMap>
 
-	<select id="selectArtListCount" resultMap="artBoardResultSet">
+	
+
+	<resultMap id="artBoardDTO" type="com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO">
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="BOARD_TITLE" property="boardTitle" />
+		<result column="NICKNAME" property="nickname" />
+		<result column="PRICE" property="price" />
+		<result column="STAR" property="star" />
+		<result column="MODIFY_NAME" property="modifyName" />
+	</resultMap>
+
+	<select id="selectArtListCount" resultType="_int">
 		select
 		       count(*)
 		  from
-		       art_board
+		       board
 		 where
+		 	   board_type = 'D'
+		   and
 		 	   status = 'Y'
 	</select>
 	
-	<select id="selectArtList" resultMap="artBoardResultSet">
-		select
-			   board_no
-			  ,board_title
-			  ,nickname
-			  ,star
-			  ,price
+	<select id="selectArtList" resultMap="artBoardDTO">
+		select 
+		       b.board_no
+		      ,b.board_title
+		      ,m.nickname
+		      ,NVL(ab.price, 0) price
+		      ,AVG(NVL(r.star, 0))
+		      ,bi.modify_name bi
 		  from
-		 	   board "b"
+		       board b
 		  join
-		 	   art_board "art" using(board_no)
+		       member m on(b.member_no = m.member_no)
 		  join
-		  	   member "m" using(member_no)
+		       art_board ab on(b.board_no = ab.board_no)
+		  left join
+		       review r on(b.board_no = r.board_no)
 		  join
-		  	   member "m" using(member_no)
-		  	   
-		 	   
-		 
+		       board_image bi on(bi.board_no = b.board_no)
+	     where 
+	     	   b.status = 'Y'
+		 group by
+		       b.board_no, b.board_title, m.nickname, price, bi.modify_name
+		 order by
+		       board_no desc
 	</select>
 
 	<insert id="insertBoard" parameterType="board">
