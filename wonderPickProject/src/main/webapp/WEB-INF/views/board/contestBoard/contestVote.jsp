@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +39,7 @@
            margin: auto;
 
         }
-        ul>li{
+        .winner_list>li{
            /*  border: 1px solid black; */
             display: inline;
             padding: 20px
@@ -69,12 +70,8 @@
             width: 90%;
         }
 
-        img{
-            /* border: 1px solid black; */
-            width: 100px;
-            height: 100px; 
-        }
-        table{
+      
+        .table{
          display: inline-block;
          border-radius: 40px;
          padding: 20px;
@@ -120,21 +117,28 @@
         .table_sysdate{
             color: gray;
         }
+        .top10_image{
+            width: 100px;
+            height: 100px; 
+        }
+        #header-1 h1{
+            font-size: 32px;
+        }
     </style>
     
 </head>
 <body>
 
-    <jsp:include page="../../common/header.jsp" />
 
+    <jsp:include page="../../common/header.jsp" />
   <div id="all_area">
      <div id="votePage_area" >
-            <div id="header" align="center">
+            <div id="header-1" align="center">
                 <div class="header_area">
-                <h1>이달의 이모티콘 투표 <hr id="hr_1"></h1> 
+                <h1>2달의 2모티콘 투표 <hr id="hr_1"></h1> 
                 </div>
                 <div class="header_area">
-                    <h1>역대 이달의 우승작<hr></h1>
+                    <h1>역대 2달의 우승작ssss<hr></h1>
                 </div>
                 <div id="d_day">
                 <h3> 2023.05.28</h3> <hr>
@@ -157,14 +161,14 @@
                 </div>
                 <div class="contest_list">
                     <ul class="winner_list">
-                      <c:forEach var="list" items="${ list }" >
+                      <c:forEach var="list" items="" >
                        <li>
                             <table border="1" class="table">
                                 <thead>
                                     <tr >
                                         <td colspan="3">
                                             <div align="center">
-                                                <img src="${ list.filePath }" alt="">
+                                                <img src="" alt="" class="top10_image">
                                             </div>
                                         </td>
                                     </tr>
@@ -173,7 +177,7 @@
                                     <tr >
                                         <th class="table_title" colspan="2">
                                             <div class="table_title"> 
-                                                ${ list.boardTitle }
+                                              
                                             </div>
                                         </th>
                                         <td class="vote_heart">♡</td>
@@ -182,15 +186,15 @@
                                         <td class="table_profile_img">
                                             <div align="center">
                                                 <img src="/resources/개발진스.png" class="profile_img">
-                                                ${ list.memberModifyName }
+                                             
                                             </div>
                                         </td>
-                                        <td>${ list.nickName }</td>
-                                        <td>${ list.voteCount }</td>
+                                        <td>s</td>
+                                        <td>s</td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">
-                                            <span class="table_sysdate">${ list.uploadDate }</span> 
+                                            <span class="table_sysdate">date</span> 
                                         </td>
                                     </tr>
                                 </tbody>
@@ -211,40 +215,49 @@
                 <img src="/resources/new3.png" id="refresh">
             </div>
             <div id="voteList_area" align="center">
-            
-                <table >
-                    <thead>
-                        <tr >
-                            <td colspan="3">
-                                <div align="center">
-                                    <img src="/resources/kakaoEmogi.gif" alt="">
-                                </div>
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr >
-                            <th class="table_title" colspan="2">
-                                <div class="table_title"> 
-                                    카카오톡따라하기모음ddddd집
-                                </div>
-                            </th>
-                            <td class="vote_heart">♡</td>
-                        </tr>
-                        <tr>
-                            <td class="table_profile_img">
-                                <div align="center">
-                                    <img src="/resources/개발진스.png" class="profile_img">
-                                </div>
-                            </td>
-                            <td>따라쟁이</td>
-                            <td>340</td>
-                        </tr>
-                    </tbody>
-                </table>
-            
-            </div>
-
+                <div class="contest_list">
+                      <c:forEach  items="${ list }" var="list">
+                            <table border="1" class="table">
+                                <thead>
+                                    <tr >
+                                        <td colspan="3">
+                                            <div align="center">
+                                                <img src="" alt="" class="top10_image">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr >
+                                        <th class="table_title" colspan="2">
+                                            <div class="table_title"> 
+                                              ${ list.boardTitle }
+                                            </div>
+                                        </th>
+                                        <td class="vote_heart">♡</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table_profile_img">
+                                            <div align="center">
+                                                <img src="/resources/개발진스.png" class="profile_img">
+                                             
+                                            </div>
+                                        </td>
+                                        <td>s</td>
+                                        <td>s</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <span class="table_sysdate">date</span> 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>	
+                      </c:forEach>
+  
+                       
+  
+                </div>
             
         </div>
     </div>

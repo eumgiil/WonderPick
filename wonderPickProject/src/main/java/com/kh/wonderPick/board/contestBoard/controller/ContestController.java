@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -134,9 +136,11 @@ public class ContestController {
 
 	}
 	@RequestMapping("selectVotePage.ct")
-	public String selectVotePage() {
+	public String selectVotePage(Model model) {
 		
-		//contestService.selectVotePage();
+		model.addAttribute("list", contestService.selectVotePage());
+		
+		System.out.println("??: " + contestService.selectVotePage());
 		
 		return "board/contestBoard/contestVote";
 	}
