@@ -65,4 +65,38 @@
 		 where
 		 	   nickname = #{checkNick}
 	</select>
+	
+	<!-- 회원가입용 쿼리문 -->
+	<insert id="signUpMember" >
+		insert
+		  into
+		       member
+		       (
+		       member_no
+		      ,member_grade
+		      ,member_id
+		      ,member_pwd
+		      ,member_name
+		      ,nickname
+		      ,phone
+		      ,email
+		      ,email_agree
+		      ,status
+		      ,enroll_date
+		       )
+		values
+			   (
+			   seq_member_no.nextval
+			  ,#{memberGrade}
+			  ,#{memberId}
+			  ,#{memberPwd}
+			  ,#{memberName}
+			  ,#{nickName}
+			  ,#{phone}
+			  ,#{email}
+			  ,#{emailAgree}
+			  ,default
+			  ,default			   
+			   )
+	</insert>
 </mapper>
