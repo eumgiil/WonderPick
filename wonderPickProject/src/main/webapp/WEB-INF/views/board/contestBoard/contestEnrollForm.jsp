@@ -61,13 +61,13 @@
             <hr>
         </div>
         <div>
-            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage1">
+            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage1">
         </div>
         <div>
-            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage2">
-            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage3">
-            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage4">
-            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage5">
+            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage2">
+            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage3">
+            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage4">
+            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage5">
         </div>
         <div id="input_file">
             1. <input type="file"  name="thumbnailUpFile" required onchange="thumbnailReadURL(this,1)"><br>
@@ -89,7 +89,7 @@
             <span>* 등록 후 수정이 불가능 하오니 신중하게 입력해주세요.</span><br>
             <input type="number" name="price" value="" min="2000" max="30000" id="emg_price" required > 원
             <input type="hidden" name="boardType" value="C">
-            <input type="hidden" name="memberNo">
+            <input type="hidden" name="memberNo" value="${ sessionScope.loginMember.memberNo }">
             
         </div>
         <br><hr>

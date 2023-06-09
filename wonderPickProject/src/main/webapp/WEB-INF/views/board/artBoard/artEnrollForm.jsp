@@ -185,7 +185,7 @@
             <input type="hidden" id="options" name="options" value="'+ options +'">
             
             
-		    <div id="file-area">
+		    <div style="display:none;" id="file-area">
 		        <input type="file" id="file1" name="upfile" required onchange="loadImg(this, 1);">
 		        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);">
 		        <input type="file" id="file3" name="upfile" onchange="loadImg(this, 3);">

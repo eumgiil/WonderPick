@@ -51,8 +51,8 @@
                         <input type="hidden" id="memberGrade" name="memberGrade" value="${ sessionScope.memberGrade }">
                     </div>
                     <div id="signUpCheckbox">
-                        <input type="checkbox"> 이용약관 수집에 동의합니다.<br>
-                        <input type="checkbox"> 이메일 수신에 동의합니다.<br>
+                        <input type="checkbox" id="ToUAgree"> 개인정보 수집/이용에 동의합니다.<br>
+                        <input type="checkbox" id="emailAgree"> 이메일 수신에 동의합니다.<br>
                     </div>
                     <div>
                         <button type="submit" id="submitBtn">회원가입</button>
@@ -99,6 +99,7 @@
 			const $repwdInput = $('#signUpInput #memberRepwd');
 			const $nameInput = $('#signUpInput #memberName');
 			const $nickInput = $('#signUpInput #nickName');
+			const $phoneInput = $('#signUpInput #phone');
 			
 			// 아이디 정규표현식 검사, 중복검사
 			$idInput.keyup(function(){	
@@ -143,7 +144,7 @@
 			
 			// 비밀번호 재확인
 			$repwdInput.keyup(function(){
-				if($repwdInput.val() == $PwdInput.val()){
+				if($repwdInput.val() == $pwdInput.val()){
 					$('#checkPwdReresult').text('');
 					$('#submitBtn').removeAttr('disabled');
 				} else{
@@ -154,9 +155,8 @@
 			
 			// 이름 정규표현식 검사
 			$nameInput.keyup(function(){
-				console.log($nameInput.val());
 				regExp = /^[가-힣]{2,}$/;
-				if(regExp.test($memberName.val())){
+				if(regExp.test($nameInput.val())){
 					$('#checkNameResult').text('');
 					$('#submitBtn').removeAttr('disabled');
 				} else {
@@ -167,10 +167,9 @@
 			
 			// 닉네임 정규표현식, 중복검사
 			$nickInput.keyup(function(){
-				console.log($nickInput.val());
 				regExp = /^[가-힣a-zA-Z0-9]{1,20}$/;
 				if(regExp.test($nickInput.val())){
-					$.ajax({
+						$.ajax({
 						url : 'nickCheck.me',
 						data : { checkNick : $nickInput.val()},
 						success : function(result){
@@ -188,6 +187,21 @@
 					$('#submitBtn').attr('disabled', true);
 				}
 			});
+			
+			// 핸드폰 정규표현식
+			$phoneInput.keyup(function(){
+				console.log($phoneInput.val());
+				regExp = /^[0-9]{10,11}$/;
+				if(regExp.test($phoneInput.val())){
+					$('#checkPhoneResult').text('');
+					$('#submitBtn').removeAttr('disabled');
+				} else {
+					$('#checkPhoneResult').css('color', errorColor ).text('올바른 번호를 입력해주세요.');  
+					$('#submitBtn').attr('disabled', true);
+				}
+			});
+			
+			// 모든 조건을 체크해서 submit버튼 활성화
 		});
 	</script>
 </body>

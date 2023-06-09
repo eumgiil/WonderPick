@@ -48,6 +48,7 @@
     }
     #vote_btn{
        /*  border: 1px solid black; */
+    
     }
     #enroll_btn{
        /*  border: 1px solid black; */
@@ -167,12 +168,13 @@
       
               <div id="btn_area">
                   <div id="vote_btn" class="btn">
-                     <img src="" class="btn_img">
+                    <img src="resources/boardUpfiles/contestFiles/dance_2.gif" alt=""class="btn_img">
                      <span>투표하러가기 ></span> 
                      <hr>
                   </div>
                   <div id="enroll_btn" class="btn">
-                      <img src="/resources/dance_emogi.gif" class="btn_img">
+                    
+                      <img src="resources/boardUpfiles/contestFiles/dance_emogi.gif" class="btn_img">
                       <span>참가/등록하기 ></span> 
                       <hr>
                   </div>
@@ -185,6 +187,12 @@
           <div id="body_area">
               <div id="winnerList_title" >
                   <span><h1>역대 우승 이모티콘<hr></h1></span>
+
+
+                <!-- 아마 지금 여기 안나오는 이유는 투표수에 null값이 있어서 그런듯 나중에 게시판까지 다 만들고 더미있을때 다시해보자 -->
+
+
+
               </div>
               <div class="contest_list">
                   <ul class="winner_list">
@@ -212,7 +220,7 @@
                                     <tr>
                                         <td class="table_profile_img">
                                             <div align="center">
-                                                <img src="/resources/개발진스.png" class="profile_img">
+                                                <img src="/" class="profile_img">
                                                 ${ list.memberModifyName }
                                             </div>
                                         </td>
@@ -252,7 +260,7 @@
               <div id="reply-area" >
                   <div >
                       <p>
-                          닉네임 : ${ list.get(0).nickName }
+                          닉네임 : ${ sessionScope.loginMember.nickName }
                       </p>
                   
                   </div>
@@ -322,24 +330,47 @@
 
 
 <br><br><br><br><br><br><br><br><br><br>
-    <script>
-        $('#vote_btn').click(function(){
-
-            location.href="selectVotePage.ct"
-
-            
-            //alert('지금은 투표 기간이 아닙니다. 매 달 마지막 주 투표가 시작됩니다.');
-        })
-
-        $('#enroll_btn').click(function(){
-            //  alert('이모티콘 공모전은 "작가" 회원만 참여 가능합니다.');
-            // alert('지금은 참가기간이 아닙니다. 다음달에 도전 해주세요!');
-
-            location.href="enrollForm.ct"
-         
-        })
-
-    </script>
+	<c:choose>
+       <c:when test="${ !empty sessionScope.loginMember }">
+	    <script>
+	    
+	        $('#vote_btn').click(function(){
+	
+	            location.href="selectVotePage.ct"
+	
+	            
+	            //alert('지금은 투표 기간이 아닙니다. 매 달 마지막 주 투표가 시작됩니다.');
+	        })
+	        $('#enroll_btn').click(function(){
+	            //  alert('이모티콘 공모전은 "작가" 회원만 참여 가능합니다.');
+	            // alert('지금은 참가기간이 아닙니다. 다음달에 도전 해주세요!');
+	            location.href="enrollForm.ct"
+	        })
+	
+	    </script>
+       </c:when>
+       <c:otherwise>
+        <script>
+	    
+	        $('#vote_btn').click(function(){
+	
+	           // location.href="selectVotePage.ct"
+	
+	            
+	            alert('로그인 후 이용가능합니다.');
+	            //alert('지금은 투표 기간이 아닙니다. 매 달 마지막 주 투표가 시작됩니다.');
+	        })
+	        $('#enroll_btn').click(function(){
+	        	 alert('로그인 후 이용가능합니다.');
+	            //  alert('이모티콘 공모전은 "작가" 회원만 참여 가능합니다.');
+	            // alert('지금은 참가기간이 아닙니다. 다음달에 도전 해주세요!');
+	            //location.href="enrollForm.ct"
+	        })
+	
+	    </script>
+       	
+       </c:otherwise>
+     </c:choose>
     
     
 
