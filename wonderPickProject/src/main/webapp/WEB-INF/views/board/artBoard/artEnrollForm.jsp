@@ -255,7 +255,7 @@
                     +'</td>'
                     +'<th><h5>가격</h5></th>'
                     +'<td>'
-                        +'<input type="text" name="opPrice'+ num +'" class="opPrice'+ num +'">'
+                        +'<input type="text" name="opPrice'+ num +'" class="opPrice'+ num +'" oninput="this.value = this.value.replace(/[^0-9]/, '')">'
                     +'</td>';
             
             let tr = document.createElement('tr');

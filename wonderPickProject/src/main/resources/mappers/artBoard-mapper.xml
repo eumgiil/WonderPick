@@ -10,7 +10,7 @@
 		
 	</resultMap>
 
-	<select id="selectArtList" resultMap="artBoardResultSet">
+	<select id="selectArtListCount" resultMap="artBoardResultSet">
 		select
 		       count(*)
 		  from
@@ -26,10 +26,16 @@
 			  ,nickname
 			  ,star
 			  ,price
-		 from
+		  from
 		 	   board "b"
-		 join
+		  join
 		 	   art_board "art" using(board_no)
+		  join
+		  	   member "m" using(member_no)
+		  join
+		  	   member "m" using(member_no)
+		  	   
+		 	   
 		 
 	</select>
 

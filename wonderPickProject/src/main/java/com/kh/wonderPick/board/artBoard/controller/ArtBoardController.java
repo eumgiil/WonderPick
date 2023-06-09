@@ -31,8 +31,7 @@ public class ArtBoardController {
 		
 		// 페이징 처리 등 해야함
 		PageInfo pi = Pagination.getPageInfo(artService.selectArtListCount(), currentPage, 12, 10);
-		mv.addObject("pi", pi).addObject("list", artService.selectArtList(pi));
-		mv.setViewName("board/artBoard/artListView");
+		mv.addObject("pi", pi).addObject("list", artService.selectArtList(pi)).setViewName("board/artBoard/artListView");
 		return mv;
 	}
 	
