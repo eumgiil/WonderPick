@@ -3,6 +3,7 @@ package com.kh.wonderPick.board.goods.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -24,6 +25,7 @@ import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.service.GoodsService;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
+import com.kh.wonderPick.board.review.model.vo.Review;
 import com.kh.wonderPick.common.template.Pagination;
 import com.google.gson.Gson;
 
@@ -148,6 +150,7 @@ public class GoodsController {
 		if(goodsService.increaseCount(boardNo)>0) {
 			mv.addObject("g", goodsService.selectGoods(boardNo));
 			mv.addObject("reviewList", goodsService.selectReviewList(boardNo));
+			mv.addObject("replyList", goodsService.selectReplyList(boardNo));
 			mv.setViewName("board/goods/goodsDetailView");
 		}else {
 			mv.addObject("errorMsg", "조회수 증가 실패");
@@ -159,13 +162,18 @@ public class GoodsController {
 	// 댓글
 	@ResponseBody
 	@RequestMapping(value="rlist.go", produces="application/json; charset=UTF-8")
-	public String ajaxSelectReplyList(int boardNo) {
+	public String ajaxSelectReplyList(int boardNo, ModelAndView mv, HttpSession session) {
+		ArrayList<Reply> replyList = new ArrayList<Reply>();
+		Reply reply = new Reply();
+		replyList.add(reply);
 		return new Gson().toJson(goodsService.selectReplyList(boardNo));
 	}
 	@ResponseBody
 	@RequestMapping("rinsert.go")
 	public String ajaxInsertReply(Reply r) {
+		System.out.println(r);
 		return goodsService.insertReply(r) > 0 ? "success" : "fail";
+		
 	}
 	
 	//대댓글
