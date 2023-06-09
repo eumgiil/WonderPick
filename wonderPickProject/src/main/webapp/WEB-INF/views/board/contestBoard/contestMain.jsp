@@ -187,6 +187,12 @@
           <div id="body_area">
               <div id="winnerList_title" >
                   <span><h1>역대 우승 이모티콘<hr></h1></span>
+
+
+                <!-- 아마 지금 여기 안나오는 이유는 투표수에 null값이 있어서 그런듯 나중에 게시판까지 다 만들고 더미있을때 다시해보자 -->
+
+
+
               </div>
               <div class="contest_list">
                   <ul class="winner_list">

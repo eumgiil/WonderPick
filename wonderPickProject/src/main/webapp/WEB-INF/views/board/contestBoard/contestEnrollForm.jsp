@@ -61,13 +61,13 @@
             <hr>
         </div>
         <div>
-            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage1">
+            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage1">
         </div>
         <div>
-            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage2">
-            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage3">
-            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage4">
-            <img src="/resources/no-image.svg" class="noImge" id="thumnailImage5">
+            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage2">
+            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage3">
+            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage4">
+            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage5">
         </div>
         <div id="input_file">
             1. <input type="file"  name="thumbnailUpFile" required onchange="thumbnailReadURL(this,1)"><br>

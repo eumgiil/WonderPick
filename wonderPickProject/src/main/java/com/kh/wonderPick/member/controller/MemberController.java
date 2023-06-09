@@ -84,6 +84,11 @@ public class MemberController {
 		return "member/signUpForm";
 	}
 	
+	/**
+	 * 아이디 중복을 확인해주는 메소드
+	 * @param checkId : 사용자가 입력한 아이디
+	 * @return : 문자열로 중복이 있는지 없는지 보냄
+	 */
 	@ResponseBody
 	@RequestMapping("idCheck.me")
 	public String idCheckMember(String checkId) { // 숫자로 바로 보내려고하니까 406오류가뜸
@@ -91,11 +96,17 @@ public class MemberController {
 		return memberService.idCheckMember(checkId) > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	/**
+	 * 닉네임 중복을 확인해주는 메소드
+	 * @param checkNick : 사용자가 입력한 닉네임
+	 * @return : 문자열로 중복이 잇는지 없는지 보냄
+	 */
 	@ResponseBody
 	@RequestMapping("nickCheck.me")
 	public String nickCheckMember(String checkNick) {
 		return memberService.nickCheckMember(checkNick) > 0 ? "NNNNN" : "NNNNY";
 	}
+	
 	
 	@RequestMapping("signUp.me")
 	public void signUpMember(Member m) {
