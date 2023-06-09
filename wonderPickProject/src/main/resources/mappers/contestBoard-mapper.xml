@@ -164,8 +164,8 @@
 			                EMOTICON.PRICE_STATUS = 0
 			        ORDER
 			           BY   
-			                UPLOAD_DATE  )
-			WHERE ROWNUM BETWEEN 1 AND 10
+			                UPLOAD_DATE DESC)
+			WHERE ROWNUM BETWEEN 1 AND 12
 			
 		
 		</select>

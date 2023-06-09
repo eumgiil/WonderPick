@@ -9,4 +9,6 @@ public interface MemberService {
 	public int idCheckMember(String checkId);
 	
 	public int nickCheckMember(String checkNick);
+	
+	public int signUpMember(Member m);
 }

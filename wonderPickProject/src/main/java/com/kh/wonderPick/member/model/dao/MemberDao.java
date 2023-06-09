@@ -19,4 +19,8 @@ public class MemberDao {
 	public int nickCheckMember(String checkNick, SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("memberMapper.nickCheckMember", checkNick);
 	}
+	
+	public int signUpMember(Member m, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("memberMapper.signUpMember", m);
+	}
 }
