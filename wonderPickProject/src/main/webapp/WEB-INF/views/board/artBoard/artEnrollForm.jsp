@@ -70,16 +70,16 @@
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품명</h5></th>
-	                    <td colspan="3"><input type="text"  name="boardTitle" style="width: 85%;"></td>
+	                    <td colspan="3"><input type="text"  name="boardTitle" style="width: 85%;" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품가격</h5></th>
-	                    <td><input type="number" name="price" style="width: 70%;">원 </td>
+	                    <td><input type="number" name="price" style="width: 70%;" required>원 </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품 대표 이미지</h5></th>
 	                    <td align="center" colspan="3">
-	                        <img id="titleimg" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+	                        <img id="titleimg" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
 	                    </td>
 	                </tr>
 	                <tr>
@@ -93,29 +93,29 @@
 	                <tr>
 	                    <th><h5 class="sub_title">상품설명</h5></th>
 	                    <td colspan="3">
-	                        <textarea name="boardContent" id="boardContent" style="width: 100%; height:400px; resize:none;" maxlength="1000"></textarea>
+	                        <textarea name="boardContent" id="boardContent" style="width: 100%; height:400px; resize:none;" maxlength="1000" required></textarea>
 	                    </td>
 	                </tr>
 	                
 	                <tr>
 	                    <th><h5 class="sub_title">파일유형</h5></th>
-	                    <td><input type="text" name="fileType"></td>
+	                    <td><input type="text" name="fileType" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">해상도</h5> </th>
-	                    <td><input type="text" name="dpi"></td>
+	                    <td><input type="text" name="dpi" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본사이즈</h5></th>
-	                    <td><input type="text" name="defaultSize"></td>
+	                    <td><input type="text" name="defaultSize" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본수정횟수</h5></th>
-	                    <td><input type="number" name="modifyCount"></td>
+	                    <td><input type="number" name="modifyCount" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">작업기간</h5></th>
-	                    <td><input type="text" name="workday"></td>
+	                    <td><input type="text" name="workday" required></td>
 	                </tr>
 	                <tr>
 	                    <th colspan="4"><hr class="line"></th>
