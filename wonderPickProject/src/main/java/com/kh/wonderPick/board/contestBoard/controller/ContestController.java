@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.contestBoard.model.service.ContestService;
-import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
 
 @Controller
 public class ContestController {
@@ -134,6 +133,7 @@ public class ContestController {
 	@RequestMapping("selectVotePage.ct")
 	public String selectVotePage() {
 		
+		contestService.selectVotePage();
 		
 		return "board/contestBoard/contestVote";
 	}

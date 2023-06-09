@@ -28,6 +28,10 @@ public class ContestDao {
 		return sqlSession.insert("contestBoardMapper.insertPrice", price);
 	}
 
+	public ArrayList<Contest> selectVotePage(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectVotePage");
+	}
+
 
 
 
