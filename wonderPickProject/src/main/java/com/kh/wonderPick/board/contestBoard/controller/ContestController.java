@@ -26,6 +26,9 @@ public class ContestController {
 	@RequestMapping("selectTop10.ct")
 	public String selectTop10(Model model) {
 		
+		
+		
+		
 		model.addAttribute("list",contestService.selectTop10());
 		
 		return "board/contestBoard/contestMain";
@@ -49,7 +52,7 @@ public class ContestController {
 		
 		
 		
-		//System.out.println(b);
+		System.out.println(board);
 		//System.out.println(upFile[0]);
 		//System.out.println(c);
 
@@ -108,7 +111,7 @@ public class ContestController {
 				boardImage.setOriginName(originName2);
 				boardImage.setModifyName(board.getBoardTitle());
 				boardImage.setFileLevel(2);
-				boardImage.setFilePath("/resources/boardUpfiles/emoticonFiles/" + changeName2);
+				boardImage.setFilePath("resources/boardUpfiles/emoticonFiles/" + changeName2);
 				
 				list.add(boardImage);
 			}
