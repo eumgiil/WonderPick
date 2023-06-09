@@ -10,12 +10,33 @@
 		
 	</resultMap>
 
-	<select id="selectArtList" resultMap="artBoardResultSet">
+	<select id="selectArtListCount" resultMap="artBoardResultSet">
 		select
-		       board_title
-		      
+		       count(*)
 		  from
 		       art_board
+		 where
+		 	   status = 'Y'
+	</select>
+	
+	<select id="selectArtList" resultMap="artBoardResultSet">
+		select
+			   board_no
+			  ,board_title
+			  ,nickname
+			  ,star
+			  ,price
+		  from
+		 	   board "b"
+		  join
+		 	   art_board "art" using(board_no)
+		  join
+		  	   member "m" using(member_no)
+		  join
+		  	   member "m" using(member_no)
+		  	   
+		 	   
+		 
 	</select>
 
 	<insert id="insertBoard" parameterType="board">

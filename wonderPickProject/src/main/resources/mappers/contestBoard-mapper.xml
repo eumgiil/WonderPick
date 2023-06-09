@@ -29,12 +29,12 @@
 		<select id="selectTop10" resultMap="contestBoardResultSet">
 			SELECT  *
 		        FROM(   SELECT
-		                     BOARD.BOARD_TITLE    -- 제목(이모티콘제목)       -- BOARD
-		                    ,MEMBER.NICKNAME       -- 닉네임                -- MEMBER
-		                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME    -- 수정파일(프로필)        -- MEMBER_IMAGE
-		                    ,BOARD_IMAGE.MODIFY_NAME    -- 수정파일(썸네일) : 1    -- BOARD_IMAGE
-		                    ,BOARD_IMAGE.UPLOAD_DATE    -- 업로드일              -- BOARD_IMAGE
-		                    ,VOTE.VOTE_COUNT     -- 투표수               -- VOTE
+		                     BOARD.BOARD_TITLE    
+		                    ,MEMBER.NICKNAME      
+		                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME    
+		                    ,BOARD_IMAGE.MODIFY_NAME   
+		                    ,BOARD_IMAGE.UPLOAD_DATE    
+		                    ,VOTE.VOTE_COUNT   
 		                    ,FILE_PATH
 		          FROM 
 		                 BOARD
@@ -77,7 +77,7 @@
 			VALUES
 					(
 					SEQ_BOARD_NO.NEXTVAL
-					,3
+					,#{ memberNo }
 					,#{ boardTitle }
 					,#{ boardContent }
 					,SYSDATE

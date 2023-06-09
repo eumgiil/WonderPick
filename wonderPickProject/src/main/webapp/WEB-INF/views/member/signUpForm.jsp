@@ -36,11 +36,11 @@
                         <br>
                         <label>* 이름</label><br>
                         <input type="text" id="memberName" name="memberName" placeholder="이름을 입력해주세요." required>
-                        <div id="checkNameResult">한글로 2글자 이상 입력해주세요.(입금자명과 동일해야합니다.)</div>
+                        <div id="checkNameResult">한글로 2글자 이상 입력해주세요. (입금자명과 동일해야합니다.)</div>
                         <br>
                         <label>* 닉네임</label><br>
                         <input type="text" id="nickName" name="nickName" placeholder="닉네임을 입력해주세요." required>
-                        <div id="checkNickResult">20자이내로 자유롭게  입력해주세요.</div>
+                        <div id="checkNickResult">최소 1자 이상 20자이내로 자유롭게  입력해주세요.</div>
                         <br>
                         <label>* 전화번호</label><br>
                         <input type="text" id="phone" name="phone" placeholder="전화번호를 입력해주세요." required>
@@ -95,9 +95,10 @@
 			var errorColor = 'crimson';
 			var successColor = '#FF8399';
 			const $idInput = $('#signUpInput #memberId');
-			const $PwdInput = $('#signUpInput #memberPwd');
-			const $RepwdInput = $('#signUpInput #memberRepwd');
-			const $memberName = $('#signUpInput #memberName');
+			const $pwdInput = $('#signUpInput #memberPwd');
+			const $repwdInput = $('#signUpInput #memberRepwd');
+			const $nameInput = $('#signUpInput #memberName');
+			const $nickInput = $('#signUpInput #nickName');
 			
 			// 아이디 정규표현식 검사, 중복검사
 			$idInput.keyup(function(){	
@@ -128,10 +129,10 @@
 			});
 			
 			// 비밀번호 정규표현식 검사
-			$PwdInput.keyup(function(){
+			$pwdInput.keyup(function(){
 				// 최소 8자 ~ 최대 20자, 문자, 숫자, 특수문자(!@#$%^)하나 포함
-				var regExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^]).{8,20}$/
-				if(regExp.test($PwdInput.val())){
+				regExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^]).{8,20}$/;
+				if(regExp.test($pwdInput.val())){
 					$('#checkPwdResult').text('');
 					$('#submitBtn').removeAttr('disabled');
 				} else {
@@ -141,8 +142,8 @@
 			});
 			
 			// 비밀번호 재확인
-			$RepwdInput.keyup(function(){
-				if($RepwdInput.val() == $PwdInput.val()){
+			$repwdInput.keyup(function(){
+				if($repwdInput.val() == $PwdInput.val()){
 					$('#checkPwdReresult').text('');
 					$('#submitBtn').removeAttr('disabled');
 				} else{
@@ -152,14 +153,38 @@
 			});
 			
 			// 이름 정규표현식 검사
-			$memberName.keyup(function(){
-				console.log($memberName.val());
+			$nameInput.keyup(function(){
+				console.log($nameInput.val());
 				regExp = /^[가-힣]{2,}$/;
 				if(regExp.test($memberName.val())){
 					$('#checkNameResult').text('');
 					$('#submitBtn').removeAttr('disabled');
 				} else {
 					$('#checkNameResult').css('color', errorColor ).text('조건이 올바르지 않습니다.');
+					$('#submitBtn').attr('disabled', true);
+				}
+			});
+			
+			// 닉네임 정규표현식, 중복검사
+			$nickInput.keyup(function(){
+				console.log($nickInput.val());
+				regExp = /^[가-힣a-zA-Z0-9]{1,20}$/;
+				if(regExp.test($nickInput.val())){
+					$.ajax({
+						url : 'nickCheck.me',
+						data : { checkNick : $nickInput.val()},
+						success : function(result){
+							if(result === "NNNNN"){
+								$('#checkNickResult').css('color', errorColor ).text('중복된 닉네임이 존재합니다.');
+								$('#submitBtn').attr('disabled', true);
+							} else {
+								$('#checkNickResult').css('color', successColor).text('멋진 닉네임이내요!');
+								$('#submitBtn').removeAttr('disabled');
+							}
+						}
+					});
+				} else {
+					$('#checkNickResult').css('color', errorColor ).text('조건이 올바르지 않습니다.');
 					$('#submitBtn').attr('disabled', true);
 				}
 			});

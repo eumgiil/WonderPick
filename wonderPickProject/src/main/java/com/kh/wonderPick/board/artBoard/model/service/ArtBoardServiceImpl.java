@@ -12,6 +12,7 @@ import com.kh.wonderPick.board.artBoard.model.dao.ArtBoardDao;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.common.model.vo.PageInfo;
 
 @Service
 public class ArtBoardServiceImpl implements ArtBoardService {
@@ -23,9 +24,16 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	private SqlSessionTemplate sqlSession;
 	
 	
+	
+	
 	@Override
-	public ArrayList<ArtBoard> selectArtList() {
-		return artDao.selectArtList(sqlSession);
+	public int selectArtListCount() {
+		return artDao.selectArtListCount(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<ArtBoard> selectArtList(PageInfo pi) {
+		return artDao.selectArtList(sqlSession, pi);
 	}
 
 
@@ -41,6 +49,9 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 		}
 		return (result1 * result2 * result3);
 	}
+
+
+	
 	
 	
 	

@@ -12,7 +12,11 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.loginMember", m);
 	}
 	
-	public int idCheckMember(String CheckId, SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("memberMapper.idCheckMember", CheckId);
+	public int idCheckMember(String checkId, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.idCheckMember", checkId);
+	}
+	
+	public int nickCheckMember(String checkNick, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.nickCheckMember", checkNick);
 	}
 }

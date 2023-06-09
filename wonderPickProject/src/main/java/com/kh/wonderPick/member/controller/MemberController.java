@@ -91,6 +91,12 @@ public class MemberController {
 		return memberService.idCheckMember(checkId) > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	@ResponseBody
+	@RequestMapping("nickCheck.me")
+	public String nickCheckMember(String checkNick) {
+		return memberService.nickCheckMember(checkNick) > 0 ? "NNNNN" : "NNNNY";
+	}
+	
 	@RequestMapping("signUp.me")
 	public void signUpMember(Member m) {
 		System.out.println(m);

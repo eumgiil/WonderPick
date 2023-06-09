@@ -55,5 +55,14 @@
 		 where
 		 	   member_id = #{checkId}
 	</select>
-
+	
+	<!-- 닉네임 중복체크용 쿼리문 -->
+	<select id="nickCheckMember" resultType="_int">
+		select
+		       count(*)
+		  from
+		  	   member
+		 where
+		 	   nickname = #{checkNick}
+	</select>
 </mapper>

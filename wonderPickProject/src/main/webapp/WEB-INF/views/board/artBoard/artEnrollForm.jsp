@@ -178,8 +178,10 @@
 	            </tr>
 	        </table>
 	        
+	        <!-- 
 	        <input type="hidden" id="deList" name="deList" value="'+ deList +'">
             <input type="hidden" id="prList" name="prList" value="'+ prList +'">
+	        -->
             <input type="hidden" id="options" name="options" value="'+ options +'">
             
             
@@ -253,7 +255,7 @@
                     +'</td>'
                     +'<th><h5>가격</h5></th>'
                     +'<td>'
-                        +'<input type="text" name="opPrice'+ num +'" class="opPrice'+ num +'">'
+                        +'<input type="text" name="opPrice'+ num +'" class="opPrice'+ num +'" oninput="this.value = this.value.replace(/[^0-9]/, '')">'
                     +'</td>';
             
             let tr = document.createElement('tr');
@@ -283,6 +285,7 @@
                 opPrice = document.getElementsByClassName('opPrice' + i);
                 option = document.getElementById('option_'+ i);
 
+                /*
                 deList.push('#'+option.value+'#');
                 prList.push('#'+option.value+'#');
                 options.push(option.value);
@@ -291,12 +294,14 @@
                     deList.push(detailOp[j].value);
                     prList.push(opPrice[j].value);
                 }
+                */
             };
 
             let form = document.getElementById('form');
-            
+            /*
             document.getElementById('deList').value = deList;
             document.getElementById('prList').value = prList;
+            */
             document.getElementById('options').value = options;
             
             

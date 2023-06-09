@@ -36,7 +36,7 @@
                     <li class="mainCategory">
                         <a href="#"><span class="material-symbols-outlined">menu</span> 카테고리</a>
                             <ul class="detailCategory">
-                                <li><a href="#">캐릭터일러스트</a></li>
+                                <li><a href="artList.bo">캐릭터일러스트</a></li>
                                 <li><a href="#">일러스트</a> </li>
                                 <li><a href="#">버츄얼</a></li>
                                 <li><a href="#">디자인</a></li>

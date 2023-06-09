@@ -17,6 +17,8 @@ public interface ContestService {
 
 	int insertContest(Board board, ArrayList<BoardImage> list, int price);
 
+	ArrayList<Contest> selectVotePage();
+
 	
 	
 	

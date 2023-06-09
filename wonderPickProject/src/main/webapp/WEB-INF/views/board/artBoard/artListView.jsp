@@ -86,7 +86,7 @@
             <h2 class="pink" align="center">그림</h2>
             <hr class="line">
             <div class="">
-                <h6 style="width:500px; display: inline-block;"> ${ list.size }개의 상품이 있습니다.</h6> <button>글쓰기</button>
+                <h6 style="width:500px; display: inline-block;"> ${ list.size }개의 상품이 있습니다.</h6> <button onclick="location.href='enrollForm.at'">글쓰기</button>
             </div>
             <div id="searchGoods">
                 <select name="" id="option">
