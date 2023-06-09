@@ -102,7 +102,7 @@ public class ContestController {
 				String savePath2 = session.getServletContext().getRealPath("/resources/boardUpfiles/emoticonFiles/");
 				
 				try {
-					multipartFile.transferTo(new File(savePath + changeName));
+					multipartFile.transferTo(new File(savePath2 + changeName2));
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
 				}
