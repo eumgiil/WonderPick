@@ -16,7 +16,7 @@ public class Member {
 	private String email;
 	private String address;
 	private String payAccount;
-	private String emailYN;
+	private String emailAgree;
 	private String status;
 	private Date enrollDate;
 	private Date modifyDate;

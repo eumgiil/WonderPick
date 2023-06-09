@@ -15,7 +15,7 @@
 		<result column="email" property="email" />
 		<result column="address" property="address" />
 		<result column="pay_account" property="payAccount" />
-		<result column="email_yn" property="emailYN" />
+		<result column="email_agree" property="emailAgree" />
 		<result column="status" property="status" />
 		<result column="enroll_date" property="enrollDate" />
 		<result column="modify_date" property="modifyDate" />
@@ -34,7 +34,7 @@
 			  ,email
 			  ,address
 			  ,pay_account
-			  ,email_yn
+			  ,email_agree
 			  ,status
 			  ,enroll_date
 			  ,modify_date
