@@ -19,6 +19,8 @@ import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.controller.BoardController;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.review.model.service.ReviewService;
+import com.kh.wonderPick.board.review.model.vo.Review;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 import com.kh.wonderPick.common.template.Pagination;
 import com.kh.wonderPick.member.model.vo.Member;
@@ -28,6 +30,10 @@ public class ArtBoardController {
 	
 	@Autowired
 	private ArtBoardService artService;
+	
+	@Autowired
+	private ReviewService reviewService;
+	
 	
 	@RequestMapping("artList.bo")
 	public ModelAndView selectArtList(ModelAndView mv, @RequestParam(value="cPage", defaultValue="1") int currentPage) {
@@ -68,6 +74,7 @@ public class ArtBoardController {
 		
 		String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/artBoardFiles/");
 		String folderPath = "resources/boardUpfiles/artBoardFiles/";
+		
 		ArrayList<BoardImage> files = new BoardController().saveFile(upFile, session, savePath, folderPath);
 		System.out.println(files.toString());
 		
@@ -90,7 +97,19 @@ public class ArtBoardController {
 	@RequestMapping("artDetail.bo")
 	public ModelAndView artDetail(ModelAndView mv, int bno) {
 		
-		System.out.println(bno);
+		
+//		board
+//		artBoard
+//		boardImage
+//		member
+//		memberImage
+//		review
+//		reply
+		
+		ArtBoard artBoard = artService.selectArtBoard(bno);
+		ArrayList<BoardImage> boardImage = artService.selectBoardImage(bno);
+		ArrayList<Review> reviewList = reviewService.selectBoardReviewList(bno);
+		
 		mv.setViewName("board/artBoard/artDetailView");
 		return mv;
 	}

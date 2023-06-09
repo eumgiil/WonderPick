@@ -17,4 +17,8 @@ public interface ArtBoardService {
 	
 	int insertArtBoard(Board board, ArtBoard artBoard, ArrayList<Option> list, ArrayList<BoardImage> files);
 	
+	ArtBoard selectArtBoard(int bno);
+	
+	ArrayList<BoardImage> selectBoardImage(int bno);
+	
 }

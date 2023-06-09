@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="reviewMapper">
+
+	<resultMap id="board" type="board">
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="BOARD_TITLE" property="boardTitle" />
+		<result column="BOARD_CONTENT" property="boardContent" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="STATUS" property="status" />
+		<result column="BOARD_COUNT" property="boardCount" />
+		<result column="BOARD_TYPE" property="boardType" />
+	</resultMap>
+
+	<resultMap id="review" type="review">
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="STAR" property="star" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="MODIFY_NAME" property="modifyName" />
+		<collection property="board" resultMap="board" />
+	</resultMap>
+	
+	
+	
+	
+	<select id="selectBoardReviewList" parameterType="_int">
+		select
+			   review_no
+		  	  ,r.member_no
+		  	  ,nickname
+		  	  ,star
+		  	  ,origin_name
+		  	  ,modify_name
+		  	  ,board_title
+		  	  ,board_content
+		  	  ,create_date
+		  from
+		  	   review r
+          join
+               board b using(board_no)
+          join
+               member m on(m.member_no = r.member_no)
+         where
+         	   board_no = #{ bno }
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
+	
+	
+	
+	

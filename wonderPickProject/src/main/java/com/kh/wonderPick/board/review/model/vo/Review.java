@@ -15,4 +15,6 @@ public class Review extends Board {
 	private String modifyName; //MODIFY_NAME	VARCHAR2(1000 BYTE)
 	private String nickname;
 
+	private Board board;
+	
 }

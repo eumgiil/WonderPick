@@ -43,6 +43,7 @@
 		<mapper resource="/mappers/goods-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/chating-mapper.xml" />
+		<mapper resource="/mappers/review-mapper.xml" />
 	</mappers>	
 	
 	
