@@ -44,7 +44,7 @@
     <div class="all_area">
 
         <div >
-            <h2 class="title">굿즈 상품 등록</h2>
+            <h2 class="title">그 상품 등록</h2>
             <hr class="line">
         </div>
         
@@ -70,16 +70,16 @@
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품명</h5></th>
-	                    <td colspan="3"><input type="text"  name="boardTitle" style="width: 85%;"></td>
+	                    <td colspan="3"><input type="text"  name="boardTitle" style="width: 85%;" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품가격</h5></th>
-	                    <td><input type="number" name="price" style="width: 70%;">원 </td>
+	                    <td><input type="number" name="price" style="width: 70%;" required>원 </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품 대표 이미지</h5></th>
 	                    <td align="center" colspan="3">
-	                        <img id="titleimg" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+	                        <img id="titleimg" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
 	                    </td>
 	                </tr>
 	                <tr>
@@ -93,29 +93,29 @@
 	                <tr>
 	                    <th><h5 class="sub_title">상품설명</h5></th>
 	                    <td colspan="3">
-	                        <textarea name="boardContent" id="boardContent" style="width: 100%; height:400px; resize:none;" maxlength="1000"></textarea>
+	                        <textarea name="boardContent" id="boardContent" style="width: 100%; height:400px; resize:none;" maxlength="1000" required></textarea>
 	                    </td>
 	                </tr>
 	                
 	                <tr>
 	                    <th><h5 class="sub_title">파일유형</h5></th>
-	                    <td><input type="text" name="fileType"></td>
+	                    <td><input type="text" name="fileType" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">해상도</h5> </th>
-	                    <td><input type="text" name="dpi"></td>
+	                    <td><input type="text" name="dpi" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본사이즈</h5></th>
-	                    <td><input type="text" name="defaultSize"></td>
+	                    <td><input type="text" name="defaultSize" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본수정횟수</h5></th>
-	                    <td><input type="number" name="modifyCount"></td>
+	                    <td><input type="number" name="modifyCount" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">작업기간</h5></th>
-	                    <td><input type="text" name="workday"></td>
+	                    <td><input type="text" name="workday" required></td>
 	                </tr>
 	                <tr>
 	                    <th colspan="4"><hr class="line"></th>
@@ -185,11 +185,12 @@
             <input type="hidden" id="options" name="options" value="'+ options +'">
             
             
+            
 		    <div style="display:none;" id="file-area">
-		        <input type="file" id="file1" name="upfile" required onchange="loadImg(this, 1);">
-		        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);">
-		        <input type="file" id="file3" name="upfile" onchange="loadImg(this, 3);">
-		        <input type="file" id="file4" name="upfile" onchange="loadImg(this, 4);">
+		        <input type="file" id="file1" name="upFile" required onchange="loadImg(this, 1);">
+		        <input type="file" id="file2" name="upFile" onchange="loadImg(this, 2);">
+		        <input type="file" id="file3" name="upFile" onchange="loadImg(this, 3);">
+		        <input type="file" id="file4" name="upFile" onchange="loadImg(this, 4);">
 	    	</div>
 	    	
 	    </form>
@@ -255,7 +256,7 @@
                     +'</td>'
                     +'<th><h5>가격</h5></th>'
                     +'<td>'
-                        +'<input type="text" name="opPrice'+ num +'" class="opPrice'+ num +'" oninput="this.value = this.value.replace(/[^0-9]/, '')">'
+                        +'<input type="text" name="opPrice'+ num +'" class="opPrice'+ num +'" oninput="this.value = this.value.replace(/[^0-9]/)">'
                     +'</td>';
             
             let tr = document.createElement('tr');
@@ -305,7 +306,7 @@
             document.getElementById('options').value = options;
             
             
-           	form.action = 'enroll.at';
+           	form.action = 'insertBoard.at';
             form.submit();
 
         }

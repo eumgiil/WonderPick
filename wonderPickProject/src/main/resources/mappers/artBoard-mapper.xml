@@ -66,7 +66,7 @@
 		      ,m.nickname
 		      ,NVL(ab.price, 0) price
 		      ,AVG(NVL(r.star, 0))
-		      ,bi.modify_name bi
+		      ,bi.modify_name
 		  from
 		       board b
 		  join
@@ -79,6 +79,8 @@
 		       board_image bi on(bi.board_no = b.board_no)
 	     where 
 	     	   b.status = 'Y'
+           and
+               bi.file_level = '1'
 		 group by
 		       b.board_no, b.board_title, m.nickname, price, bi.modify_name
 		 order by
@@ -102,12 +104,12 @@
 		values
 			   (
 			   seq_board_no.nextval,
-			   1,
-               '아트보드테스트1 제목',
-               '아트보드테스트1 내용',
-               sysdate,
-               'Y',
-               0,
+			   #{memberNo},
+               #{boardTitle},
+               #{boardContent},
+               default,
+               default,
+               default,
                'D'
 			   )
 	</insert>
@@ -129,13 +131,13 @@
 		values
 			   (
 			   seq_board_no.currval,
-			   'JPG',
-               100,
-               '1920*980',
-               0,
-               '작업시작일로부터 약 7일',
-               'CI',
-               10000
+			   #{fileType},
+               #{dpi},
+               #{defaultSize},
+               #{modifyCount},
+               #{workday},
+               #{category},
+               #{price}
 			   )
 	</insert>
 	
@@ -157,6 +159,31 @@
 		      ,#{mainOp}
 		      ,#{detail}
 		      ,#{price}
+			   )
+	</insert>
+	
+	<insert id="insertFiles" parameterType="boardImage">
+		insert
+		  into
+		  	   board_image
+		  	   (
+		  	   BOARD_IMG_NO
+		  	  ,BOARD_NO
+		  	  ,ORIGIN_NAME
+		  	  ,MODIFY_NAME
+		  	  ,UPLOAD_DATE
+		  	  ,FILE_LEVEL
+		  	  ,FILE_PATH
+		  	   )
+		values
+			   (
+		       seq_boardimg_no.nextval
+		      ,seq_board_no.currval
+		      ,#{originName}
+		      ,#{modifyName}
+		      ,sysdate
+		      ,#{fileLevel}
+		      ,#{filePath}
 			   )
 	</insert>
 
