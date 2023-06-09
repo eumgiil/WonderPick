@@ -30,6 +30,7 @@
         box-sizing: border-box;
         font-family: 'Noto Sans KR', sans-serif;
     }
+   
 
     /* 공용 클래스 */
     /* float 부모요소에는 무조건 clear 삽입 */
