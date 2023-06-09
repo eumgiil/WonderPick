@@ -256,7 +256,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding-left:10px;">댓글 내용 : 것이 따뜻한 봄바람이다 인생에 따뜻한 봄바람을 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의</td>
+                        <td style="padding-left:10px;">${r.content}</td>
                     </tr>
                 </table>
                 </c:forEach>
@@ -269,6 +269,7 @@
                 </c:choose>
 				</thead>
 				<tbody>
+				<br><hr>
 				<c:choose>
 				<c:when test="${empty loginMember}" >
 				<tr> 
@@ -280,9 +281,14 @@
 				<c:otherwise>
 				<tr>
 				     <th colspan="2">
-                     <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+				     <input type="hidden" value="${boardNo}" id="boardNo">
+				     <input type="hidden" value="${loginMember.memberNo }">
+                     <textarea class="form-control" name="content" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
                      </th>
-                     <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
+                     <br>
+                     <th style="vertical-align:middle">
+                     <a class="btn btn-secondary" onclick="addReply();">등록하기</a>
+                     </th>
 				</tr>
 				</c:otherwise>
 				</c:choose>
@@ -298,32 +304,31 @@
         	$(function(){
         		selectReplyList();
         	});
-        	function insertReply(){
+        	
+        	function addReply(){
         		if($('#content').val().trim() != ''){
         			$.ajax({
         				
         				url :'rinsert.go',
         				data : {
-        					boardNo : ${g.boardNo},
+        					boardNo : ${g.boardNo} , 
         					content : $('#content').val(),
-        					nickname : '${loginMember.memberId}'
+        					memberNo : ${loginMember.memberNo}
         				},
         				success : function(result){
         					console.log(result);
         					
         					if(result == 'success'){
-        						selectRepltList(){
-        							$('#content').val('');
-        						}
+        						selectReplyList($('#content').val(''));
         					};
         				},
         				error : function(){
-        					console.log('실패');
+        			    console.log('실패');
         				}
         			});
         			
         		}else{
-        			alertify.alert('다시 이용해주세요');
+        			window.alert('다시 이용해주세요');
         		}
         	};
         	
@@ -338,11 +343,14 @@
         			   
         			   let value="";
         			   for(let i in replyList){
-        				   value + = '<tr>'
-        				         + '<th>' + reviewList[i].nickname + '<th>'
-        				         + '<th>' + reviewList[i].content + '<th>'
-        				         + '<th>' + reviewList[i].createDate + '<th>'
-        				         + '<th>' +  + '<th>'
+        				   value += '<tr>'
+        				         + '<th>' + replyList[i].nickname + '<th>'
+        				         + '<th>' + replyList[i].content + '<th>'
+        				         + '<th>' + replyList[i].createDate + '<th>'
+        				         + '<th>' 
+                                 + '<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>'
+                                   '<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
+                                 + '<th>'
         				         + '</tr>';
         			   };
         			   $('#replyArea thead').html(value);
@@ -367,7 +375,7 @@
                 <table class="width" >
                     <tr>
                         <th style="font-size: 35px;"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" width="30" style="float: left;"alt=""></th>
-                        <if test="${loginMember == g.memberNo}">
+                        <if test="${loginMember.memberNo == g.memberNo}">
                         <td class="t_align_right"><a href="" class="btn btn-secondary" style="width: 100px;">수정</a></td>
                         </if>
                     </tr>
@@ -423,23 +431,23 @@
             
 
             <div class="">
-                <table class="goods_option" border="1">
+                <table class="goods_option"  >
                     <tr>
-                        <td width="40%">추가시안횟수</td>
-                        <td class="t_align_right">
-                            <input type="number" style="width: 25%;" id="addDraft" class="form-control num_only num_comma num_sum" >회
-                        </td>
+                        <td width="50%">추가시안횟수</td>
+                        <td class="t_align_right" style="float:right;" width="100%">
+                            <input type="number" style="width: 100px; " id="addDraft" class="form-control num_only num_comma num_sum" >회
+                       </td>
                     </tr>
                     <tr>
                         <td>추가수정횟수</td>
                         <td class="t_align_right">
-                            <input type="number" style="width: 25%;" id="addModify" class="form-control num_only num_comma num_sum" >회
+                            <input type="number" style="width: 100px;" id="addModify" class="form-control num_only num_comma num_sum" >회
                         </td>
                     </tr>
                     <tr>
                         <td>주문수량</td>
                         <td class="t_align_right">
-                            <input type="number" style="width: 25%;" id="amount" class="form-control num_only num_comma num_sum" >개
+                            <input type="number" style="width: 100px;" id="amount" class="form-control num_only num_comma num_sum" >개
                         </td>
                     </tr>
                 </table>
@@ -470,28 +478,29 @@
 
         <!-- 주문 금액 계산 -->
         <script>
-            $(function(){
-                $('input.num_only').on('keyup', function(){
-                    var count = $('.goods_option input.num_sum').length;
-                    console.log(count);
+        $(function(){
+            $('input.num_only').on('keyup', function(){
+                var count = $('.goods_option input.num_sum').length;
+                console.log(count);
 
-                    for(var i=1; i<count; i++){
-                        var sum = parseInt($(this).val() || 0);
-                        sum++
-                        console.log(sum);
-                    }
-
-                    var sum1 = parseInt($("#addDraft").val() || 0);
-                    var sum2 = parseInt($("#addModify").val() || 0);
-                    var sum1 = parseInt($("#amount").val() || 0);
-
-                    var sum = sum1 + sum2 + sum3;
-
+                for(var i=1; i<count; i++){
+                    var sum = parseInt($(this).val() || 0);
+                    sum++;
                     console.log(sum);
-                    $("#totalPrice").val(sum);
-                    
-                });
+                }
+
+                var sum1 = parseInt($("#addDraft").val()|| 0 );
+                var sum2 = parseInt($("#addModify").val()|| 0 );
+                var sum3 = parseInt($("#amount").val()|| 0);
+
+                var sum = $('#totalPrice').val() + sum1 + sum2 + sum3;
+
+                console.log(sum);
+                $("#totalPrice").val(sum);
+                
             });
+        });
+
         </script>
         </div>
  

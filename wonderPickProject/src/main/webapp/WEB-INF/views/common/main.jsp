@@ -61,8 +61,9 @@
         </div>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <div id="content_3" align="center">
-    	<img src="resources/common/001.png">
+    <div id="content_3" align="center" style="border:1px solid black;">
+    	<h1 style="color:rgb(255, 131, 153)">WONDERPICK은?</h1>
+    	<img src="resources/common/001.png" >
     </div>
 ​
     <script>

@@ -177,17 +177,24 @@ order by
 		 board_no = #{boardNo}
   </select>
   <select id="selectReviewList" resultMap="reviewResultSet">
-  select 
-  		nickname, 
-  		board_title, 
-  		board_content, 
-  		star, 
-  		create_date, 
-  		origin_name
-	from review
-	join member using (member_no)
-	join board using (board_no)
-	where board_no = #{boardNo}
+select
+       nickname
+      ,board_content
+      ,star
+      ,create_date
+  from
+       board b
+  join
+       member m using(member_no)
+  join
+       review using(member_no)
+ where
+       member_no in (select
+                           member_no
+                      from
+                           review r
+                     where
+                           board_no = #{boardNo})
   </select>
   <select id="selectReplyList" resultType="reply">
   select
@@ -209,16 +216,14 @@ order by
                reply_no, 
                board_no,
                member_no,
-               content, 
-               create_date
+               content
                    ) 
                values
                   (
                 seq_reply_no.nextval,
                #{boardNo},
                #{memberNo},
-               #{content},
-               #{createDate}
+               #{content}
                    )
   </insert>
  
