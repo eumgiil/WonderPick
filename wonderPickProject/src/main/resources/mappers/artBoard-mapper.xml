@@ -52,8 +52,10 @@
 		select
 		       count(*)
 		  from
-		       art_board
+		       board
 		 where
+		 	   board_type = 'D'
+		   and
 		 	   status = 'Y'
 	</select>
 	

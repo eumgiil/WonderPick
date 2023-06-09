@@ -86,7 +86,7 @@
             <h2 class="pink" align="center">그림</h2>
             <hr class="line">
             <div class="">
-                <h6 style="width:500px; display: inline-block;"> ${ list.size }개의 상품이 있습니다.</h6> <button onclick="location.href='enrollForm.at'">글쓰기</button>
+                <h6 style="width:500px; display: inline-block;"> ${list.size()}개의 상품이 있습니다.</h6> <button onclick="location.href='enrollForm.at'">글쓰기</button>
             </div>
             <div id="searchGoods">
                 <select name="" id="option">
@@ -111,7 +111,7 @@
             
             <div class="list_all"><!-- list  div -->
                 <c:choose>
-                    <c:when test="${ not empty goodsList }">
+                    <c:when test="${ not empty list }">
 
                 <!-- 필요한정보 : 글번호, 해당사진, 해당작가 -->
                         <c:forEach items="${ list }" var = "b">
@@ -123,11 +123,11 @@
                                         <td class="right" rowspan="2"><img class="artist_img" src=""></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">★★★★☆</td>
+                                        <td colspan="2">${ b.star }</td>
                                     </tr>
                                     <tr>
                                         <td>${ b.boardTitle }</td>
-                                        <td class="right">${ b.price }가격</td>
+                                        <td class="right">${ b.price }원</td>
                                     </tr>
                                 </table>
                                 <br>

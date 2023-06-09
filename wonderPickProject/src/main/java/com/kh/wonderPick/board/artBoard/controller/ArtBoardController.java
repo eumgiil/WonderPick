@@ -47,7 +47,7 @@ public class ArtBoardController {
 		return "board/artBoard/artEnrollForm";
 	}
 	
-	@RequestMapping("enroll.at")
+	@RequestMapping("insertBoard.at")
 	public ModelAndView enrollArtBoard(Board board,
 			ArtBoard artBoard,
 			String[] options,
