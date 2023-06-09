@@ -49,5 +49,11 @@ public class ContestServiceImpl implements ContestService {
 		
 	}
 
+	@Override
+	public ArrayList<Contest> selectVotePage() {
+		
+		return contestDao.selectVotePage(sqlSession);
+	}
+
 
 }
