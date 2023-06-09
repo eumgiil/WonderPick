@@ -35,17 +35,17 @@
             width: 300px;
         }
         #body_area{
-           /*  border: 1px solid black; */
+            border: 1px solid black;
            margin: auto;
 
         }
         .winner_list>li{
-           /*  border: 1px solid black; */
+            border: 1px solid black;
             display: inline;
             padding: 20px
         }
         .contest_list{
-            /* border: 1px solid black; */
+            border: 1px solid black;
             width: 800px;
             height: 300px;
             overflow: auto;
@@ -71,12 +71,11 @@
         }
 
       
-        .table{
+        .contest_table{
          display: inline-block;
          border-radius: 40px;
          padding: 20px;
          box-shadow: 1px 1px 10px rgb(200, 200, 200) ;
-
         }
         #voteList_area{
             margin: auto;
@@ -129,16 +128,15 @@
 </head>
 <body>
 
-
     <jsp:include page="../../common/header.jsp" />
   <div id="all_area">
      <div id="votePage_area" >
             <div id="header-1" align="center">
                 <div class="header_area">
-                <h1>2달의 2모티콘 투표 <hr id="hr_1"></h1> 
+                <h1>이달의 이모티콘 투표 <hr id="hr_1"></h1> 
                 </div>
                 <div class="header_area">
-                    <h1>역대 2달의 우승작ssss<hr></h1>
+                    <h1>역대 이달의 우승작ssss<hr></h1>
                 </div>
                 <div id="d_day">
                 <h3> 2023.05.28</h3> <hr>
@@ -159,11 +157,11 @@
                 <div id="winnerList_title" >
                     <span><h1>실시간 TOP10<hr align="left" id="top10_hr"></h1></span>
                 </div>
-                <div class="contest_list">
+                <div class="contest_lit">
                     <ul class="winner_list">
                       <c:forEach var="list" items="" >
                        <li>
-                            <table border="1" class="table">
+                            <table border="1" class="contest_table">
                                 <thead>
                                     <tr >
                                         <td colspan="3">
@@ -212,17 +210,17 @@
             <!-- =============================== 최신순 LIST ===============================-->
 
             <div align="right">
-                <img src="/resources/new3.png" id="refresh">
+                <img src="resources/boardUpfiles/contestFiles/new3.png" id="refresh">
             </div>
             <div id="voteList_area" align="center">
-                <div class="contest_list">
+                <div >
                       <c:forEach  items="${ list }" var="list">
-                            <table border="1" class="table">
+                            <table border="1" class="contest_table">
                                 <thead>
                                     <tr >
                                         <td colspan="3">
                                             <div align="center">
-                                                <img src="" alt="" class="top10_image">
+                                                <img src="${ list.filePath }" alt="" class="top10_image">
                                             </div>
                                         </td>
                                     </tr>
@@ -239,16 +237,16 @@
                                     <tr>
                                         <td class="table_profile_img">
                                             <div align="center">
-                                                <img src="/resources/개발진스.png" class="profile_img">
+                                                <img src="#" class="profile_img">
                                              
                                             </div>
                                         </td>
-                                        <td>s</td>
-                                        <td>s</td>
+                                        <td>${ list.nickName }</td>
+                                        <td>${ list.voteCount }</td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">
-                                            <span class="table_sysdate">date</span> 
+                                            <span class="table_sysdate">${ list.uploadDate }</span> 
                                         </td>
                                     </tr>
                                 </tbody>
