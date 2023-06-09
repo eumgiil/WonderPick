@@ -11,6 +11,7 @@ import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 
 @Repository
@@ -37,6 +38,10 @@ public class ArtBoardDao {
 	
 	public int insertOptions(SqlSessionTemplate sqlSession, Option option) {
 		return sqlSession.insert("artBoardMapper.insertOptions", option);
+	}
+	
+	public int insertFiles(SqlSessionTemplate sqlSession, BoardImage boardImage) {
+		return sqlSession.insert("artBoardMapper.insertFiles", boardImage);
 	}
 	
 	

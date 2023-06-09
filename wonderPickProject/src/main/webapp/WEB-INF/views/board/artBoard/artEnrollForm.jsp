@@ -44,7 +44,7 @@
     <div class="all_area">
 
         <div >
-            <h2 class="title">굿즈 상품 등록</h2>
+            <h2 class="title">그 상품 등록</h2>
             <hr class="line">
         </div>
         
@@ -185,11 +185,12 @@
             <input type="hidden" id="options" name="options" value="'+ options +'">
             
             
+            
 		    <div style="display:none;" id="file-area">
-		        <input type="file" id="file1" name="upfile" required onchange="loadImg(this, 1);">
-		        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);">
-		        <input type="file" id="file3" name="upfile" onchange="loadImg(this, 3);">
-		        <input type="file" id="file4" name="upfile" onchange="loadImg(this, 4);">
+		        <input type="file" id="file1" name="upFile" required onchange="loadImg(this, 1);">
+		        <input type="file" id="file2" name="upFile" onchange="loadImg(this, 2);">
+		        <input type="file" id="file3" name="upFile" onchange="loadImg(this, 3);">
+		        <input type="file" id="file4" name="upFile" onchange="loadImg(this, 4);">
 	    	</div>
 	    	
 	    </form>
@@ -255,7 +256,7 @@
                     +'</td>'
                     +'<th><h5>가격</h5></th>'
                     +'<td>'
-                        +'<input type="text" name="opPrice'+ num +'" class="opPrice'+ num +'" oninput="this.value = this.value.replace(/[^0-9]/, '')">'
+                        +'<input type="text" name="opPrice'+ num +'" class="opPrice'+ num +'" oninput="this.value = this.value.replace(/[^0-9]/)">'
                     +'</td>';
             
             let tr = document.createElement('tr');
@@ -305,7 +306,7 @@
             document.getElementById('options').value = options;
             
             
-           	form.action = 'enroll.at';
+           	form.action = 'insertBoard.at';
             form.submit();
 
         }
