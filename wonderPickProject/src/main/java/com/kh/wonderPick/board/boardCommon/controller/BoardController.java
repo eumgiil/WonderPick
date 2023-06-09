@@ -15,24 +15,16 @@ import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 
 public class BoardController {
 
-	public ArrayList<BoardImage> saveFile(MultipartFile[] upFile, HttpSession session, String savePath) {
-		
-		System.out.println(Arrays.toString(upFile));
+	public ArrayList<BoardImage> saveFile(MultipartFile[] upFile, HttpSession session, String savePath, String folderPath) {
 		
 		ArrayList<BoardImage> list = new ArrayList();
-		
 		for(int i = 0; i < upFile.length; i ++) {
-			
 			if(upFile[i].getSize() != 0) {
 
 				String originName = upFile[i].getOriginalFilename();
-				
 				String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-				
 				String ext = originName.substring(originName.lastIndexOf("."));
-				
 				int randomNumber = (int)(Math.random() * 9000 + 1000);
-				
 				String changeName = currentTime + randomNumber + ext;
 				
 				try {
@@ -43,20 +35,17 @@ public class BoardController {
 				
 				BoardImage boardImage =  new BoardImage();
 				boardImage.setOriginName(originName);
-				boardImage.setModifyName(savePath + changeName);
+				boardImage.setModifyName(folderPath + changeName);
 				if(i == 0) {
 					boardImage.setFileLevel(1);
 				} else {
 					boardImage.setFileLevel(2);
 				}
-				boardImage.setFilePath(savePath);
+				boardImage.setFilePath(folderPath + changeName);
 				
 				list.add(boardImage);
 			}
-			System.out.println(list.toString());
-			
 		}
-		
 		return list;
 	}
 	

@@ -87,9 +87,11 @@
             <hr class="line">
             <div class="">
                 <h6 style="width:500px; display: inline-block;"> ${list.size()}개의 상품이 있습니다.</h6>
-                <c:if test="${ not empty loginUser} }">
+                
+                <%-- <c:if test="${ not empty loginUser} }"> --%>
 	                <button onclick="location.href='enrollForm.at'">글쓰기</button>
-                </c:if>
+                <%-- </c:if> --%>
+                
             </div>
             <div id="searchGoods">
                 <select name="" id="option">
@@ -119,7 +121,7 @@
                 <!-- 필요한정보 : 글번호, 해당사진, 해당작가 -->
                         <c:forEach items="${ list }" var = "b">
                             <div class="item" onclick="location.href='artDetail.bo?bno=${ b.boardNo }'">
-                                <img class="list_img" src=""><br>
+                                <img class="list_img" src="${ b.modifyName }"><br>
                                 <table class="goodsInfo" width="100%">
                                     <tr>
                                         <th>${ b.nickname }</th>
@@ -148,7 +150,7 @@
 
     <script>
         $(function(){
-            $('.list_img').attr('src', img);
+           /*  $('.list_img').attr('src', img); */
             $('.artist_img').attr('src', img);
         })
 

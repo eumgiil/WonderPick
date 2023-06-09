@@ -40,7 +40,7 @@ public class ArtBoardController {
 	}
 	
 	@RequestMapping("enrollForm.at")
-	public String abc() {
+	public String toEnroll() {
 		return "board/artBoard/artEnrollForm";
 	}
 	
@@ -67,11 +67,18 @@ public class ArtBoardController {
 		}
 		
 		String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/artBoardFiles/");
-		ArrayList<BoardImage> files = new BoardController().saveFile(upFile, session, savePath);
+		String folderPath = "resources/boardUpfiles/artBoardFiles/";
+		ArrayList<BoardImage> files = new BoardController().saveFile(upFile, session, savePath, folderPath);
+		System.out.println(files.toString());
 		
+		// 로그인 나오면 지울 부
+		Member loginUser = new Member();
+		loginUser.setMemberNo(1);
+		session.setAttribute("loginUser", loginUser);
+		// 지울 부분 끝
 		
+		board.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
 		int result = artService.insertArtBoard(board, artBoard, list, files);
-		
 		if(result > 0) {
 			mv.addObject("alertMsg", "업로드 성공").setViewName("board/artBoard/request_list");
 		} else {
@@ -80,7 +87,13 @@ public class ArtBoardController {
 		return mv;
 	}
 	
-//	@RequestMapping("artDetail.bo")
+	@RequestMapping("artDetail.bo")
+	public ModelAndView artDetail(ModelAndView mv, int bno) {
+		
+		System.out.println(bno);
+		mv.setViewName("board/artBoard/artDetailView");
+		return mv;
+	}
 	
 	
 	

@@ -66,7 +66,7 @@
 		      ,m.nickname
 		      ,NVL(ab.price, 0) price
 		      ,AVG(NVL(r.star, 0))
-		      ,bi.modify_name bi
+		      ,bi.modify_name
 		  from
 		       board b
 		  join
@@ -104,7 +104,7 @@
 		values
 			   (
 			   seq_board_no.nextval,
-			   1,
+			   #{memberNo},
                #{boardTitle},
                #{boardContent},
                default,
