@@ -1,11 +1,12 @@
 package com.kh.wonderPick.board.artBoard.model.vo;
 
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 
 import lombok.Data;
 
 @Data
-public class ArtBoard extends Board{
+public class ArtBoard{
 	
 	private int boardNo; // BOARD_NO	NUMBER
 	private String fileType; // FILE_TYPE	VARCHAR2(5 BYTE)
@@ -16,6 +17,6 @@ public class ArtBoard extends Board{
 	private String category; // CATEGORY	VARCHAR2(2 BYTE)
 	private String price; // PRICE	NUMBER
 	
-	
+	private Board board;
 	
 }

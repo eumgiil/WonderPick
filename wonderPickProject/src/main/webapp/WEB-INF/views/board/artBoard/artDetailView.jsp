@@ -32,7 +32,7 @@
             width : 30%
         }
         .list{
-            width : 150px;
+            width : 143px;
             display: inline-block;
         }
         .t_align_right{

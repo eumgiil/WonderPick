@@ -88,9 +88,9 @@
             <div class="">
                 <h6 style="width:500px; display: inline-block;"> ${list.size()}개의 상품이 있습니다.</h6>
                 
-                <%-- <c:if test="${ not empty loginUser} }"> --%>
+                <c:if test="${ not empty loginUser} }">
 	                <button onclick="location.href='enrollForm.at'">글쓰기</button>
-                <%-- </c:if> --%>
+                </c:if>
                 
             </div>
             <div id="searchGoods">

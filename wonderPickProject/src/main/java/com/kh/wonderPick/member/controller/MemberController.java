@@ -109,7 +109,15 @@ public class MemberController {
 	
 	
 	@RequestMapping("signUp.me")
-	public void signUpMember(Member m) {
-		System.out.println(m);
+	public String signUpMember(Member m,
+							   HttpSession session) {
+		String encPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
+		m.setMemberPwd(encPwd);
+		if(memberService.signUpMember(m)>0) {
+			return "redirect:/";
+		} else {
+			session.setAttribute("errorMsg", "회원가입 실패");
+			return "common/error";
+		}
 	}
 }

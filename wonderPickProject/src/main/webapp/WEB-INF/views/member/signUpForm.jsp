@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Wonder Pick</title>
 <!-- google font 스타일시트 -->
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@900&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/member/signUpForm.css">
@@ -52,7 +52,9 @@
                     </div>
                     <div id="signUpCheckbox">
                         <input type="checkbox" id="ToUAgree"> 개인정보 수집/이용에 동의합니다.<br>
-                        <input type="checkbox" id="emailAgree"> 이메일 수신에 동의합니다.<br>
+                        <input type="checkbox" id="emailCheck"> 이메일 수신에 동의합니다.<br>
+                        <input type="hidden" id="emailAgree" name="emailAgree">
+                        
                     </div>
                     <div>
                         <button type="submit" id="submitBtn">회원가입</button>
@@ -62,30 +64,30 @@
         </div>
     </div>
 	
-	<!-- 입력칸을 누르면 안내 문구 -->
+	<!-- input란 focus되면 안내 문구 -->
 	<script>
 		// 아이디
-		$('#memberId').on('click', function(){
+		$('#memberId').on('focus', function(){
 			$('#checkIdResult').show();
 		});
 		// 비밀번호
-		$('#memberPwd').on('click', function(){
+		$('#memberPwd').on('focus', function(){
 			$('#checkPwdResult').show();
 		});
 		// 비밀번호 재확인
-		$('#memberRepwd').on('click', function(){
+		$('#memberRepwd').on('focus', function(){
 			$('#checkPwdReresult').show();
 		});
 		// 이름
-		$('#memberName').on('click', function(){
+		$('#memberName').on('focus', function(){
 			$('#checkNameResult').show();
 		});
 		// 닉네임
-		$('#nickName').on('click', function(){
+		$('#nickName').on('focus', function(){
 			$('#checkNickResult').show();
 		});
 		// 전화번호
-		$('#phone').on('click', function(){
+		$('#phone').on('focus', function(){
 			$('#checkPhoneResult').show();
 		});
 	</script>
@@ -100,6 +102,15 @@
 			const $nameInput = $('#signUpInput #memberName');
 			const $nickInput = $('#signUpInput #nickName');
 			const $phoneInput = $('#signUpInput #phone');
+			
+			var memberId = false;
+			var memberPwd = false;
+			var memberName = false;
+			var nickName = false;
+			var phone = false;
+			var email = false;
+			
+			
 			
 			// 아이디 정규표현식 검사, 중복검사
 			$idInput.keyup(function(){	
@@ -116,6 +127,7 @@
 								} else {
 									$('#checkIdResult').css('color', successColor).text('멋진 아이디내요!');
 									$('#submitBtn').removeAttr('disabled');
+									memberId = true;
 								}
 							}
 						});
@@ -136,6 +148,7 @@
 				if(regExp.test($pwdInput.val())){
 					$('#checkPwdResult').text('');
 					$('#submitBtn').removeAttr('disabled');
+					$('#checkPwdResult').hide();
 				} else {
 					$('#checkPwdResult').css('color', errorColor ).text('조건이 올바르지 않습니다.');
 					$('#submitBtn').attr('disabled', true);
@@ -147,6 +160,8 @@
 				if($repwdInput.val() == $pwdInput.val()){
 					$('#checkPwdReresult').text('');
 					$('#submitBtn').removeAttr('disabled');
+					$('#checkPwdReresult').hide();
+					memberPwd = true;
 				} else{
 					$('#checkPwdReresult').css('color', errorColor ).text('비밀번호가 동일하지 않습니다.');
 					$('#submitBtn').attr('disabled', true);
@@ -159,6 +174,8 @@
 				if(regExp.test($nameInput.val())){
 					$('#checkNameResult').text('');
 					$('#submitBtn').removeAttr('disabled');
+					$('#checkNameResult').hide();
+					memberName = true;
 				} else {
 					$('#checkNameResult').css('color', errorColor ).text('조건이 올바르지 않습니다.');
 					$('#submitBtn').attr('disabled', true);
@@ -179,6 +196,7 @@
 							} else {
 								$('#checkNickResult').css('color', successColor).text('멋진 닉네임이내요!');
 								$('#submitBtn').removeAttr('disabled');
+								nickName = true;
 							}
 						}
 					});
@@ -190,18 +208,36 @@
 			
 			// 핸드폰 정규표현식
 			$phoneInput.keyup(function(){
-				console.log($phoneInput.val());
 				regExp = /^[0-9]{10,11}$/;
 				if(regExp.test($phoneInput.val())){
 					$('#checkPhoneResult').text('');
 					$('#submitBtn').removeAttr('disabled');
+					$('#checkPhoneResult').hide();
+					phone = true;
 				} else {
 					$('#checkPhoneResult').css('color', errorColor ).text('올바른 번호를 입력해주세요.');  
 					$('#submitBtn').attr('disabled', true);
 				}
 			});
 			
-			// 모든 조건을 체크해서 submit버튼 활성화
+			$('#submitBtn').on('click', function(){
+				if(!$('#signUpInput #email').val() == ''){
+					email = true;
+				} else {
+					email = false;
+				}
+				
+				if(memberId && memberPwd && memberName && nickName && phone && $('#signUpCheckbox #ToUAgree').prop('checked')){
+					if($('#signUpCheckbox #emailCheck').prop('checked')){
+						$('#signUpCheckbox #emailAgree').val("Y");
+					} else {
+						$('#signUpCheckbox #emailAgree').val("N");
+					}
+					return true;
+				}else{
+					return false;
+				}
+			});
 		});
 	</script>
 </body>

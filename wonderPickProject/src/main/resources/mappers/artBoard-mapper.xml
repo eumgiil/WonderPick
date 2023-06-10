@@ -24,9 +24,19 @@
 		<result column="WORKDAY" property="workday" />
 		<result column="CATEGORY" property="category" />
 		<result column="PRICE" property="price" />
+		<collection property="board" resultMap="board" />
 	</resultMap>
 	
-
+	<resultMap id="boardImage" type="boardImage">
+		<result column="board_img_no" property="boardImgNo" />
+		<result column="board_no" property="boardNo" />
+		<result column="origin_name" property="originName" />
+		<result column="modify_name" property="modifyName" />
+		<result column="file_level" property="fileLevel" />
+		<result column="file_path" property="filePath" />
+	</resultMap>
+	
+	
 	
 	<resultMap id="review" type="review">
 		<result column="REVIEW_NO" property="reviewNo" />
@@ -36,8 +46,6 @@
 		<result column="ORIGIN_NAME" property="originName" />
 		<result column="MODIFY_NAME" property="modifyName" />
 	</resultMap>
-
-	
 
 	<resultMap id="artBoardDTO" type="com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO">
 		<result column="BOARD_NO" property="boardNo" />
@@ -187,8 +195,44 @@
 			   )
 	</insert>
 
+	<select id="selectArtBoard" parameterType="_int" resultMap="artBoard">
+		select
+			   member_no
+			  ,board_title
+			  ,board_content
+			  ,create_date
+			  ,board_count
+			  ,file_type
+			  ,dpi
+			  ,default_size
+			  ,modify_count
+			  ,workday
+			  ,category
+			  ,price
+		  from
+		  	   board b
+		  join
+		  	   art_board using(board_no)
+		 where
+		 	   board_no = #{ bno }
+		   and
+		 	   status = 'Y'
+	</select>
 
-
+	<select id="selectBoardImage" parameterType="_int" resultMap="boardImage" >
+		select
+		 	   board_img_no
+		 	  ,board_no
+		 	  ,origin_name
+		 	  ,modify_name
+		 	  ,upload_date
+		 	  ,file_level
+		 	  ,file_path
+		  from
+		  	   board_image
+		 where
+		  	   board_no = #{ bno };
+	</select>
 
 
 
