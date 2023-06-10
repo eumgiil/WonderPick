@@ -123,6 +123,11 @@
         #header-1 h1{
             font-size: 32px;
         }
+
+        #puls_btn{
+            width: 50px;
+            height: 50px;
+        }
     </style>
     
 </head>
@@ -157,7 +162,7 @@
                 <div id="winnerList_title" >
                     <span><h1>실시간 TOP10<hr align="left" id="top10_hr"></h1></span>
                 </div>
-                <div class="contest_lit">
+                <div class="contest_list">
                     <ul class="winner_list">
                       <c:forEach var="list" items="" >
                        <li>
@@ -256,6 +261,8 @@
                        
   
                 </div>
+
+                <img src="resources/boardUpfiles/contestFiles/plus.webp" alt="" id="puls_btn">
             
         </div>
     </div>
