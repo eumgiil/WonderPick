@@ -276,6 +276,11 @@
                                             <span class="table_sysdate">${ list.uploadDate }</span> 
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <span class="table_sysdate">조회수</span> 
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>	
                       </c:forEach>
