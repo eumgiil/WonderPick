@@ -152,10 +152,24 @@ public class ContestController {
 	}
 	
 	// 투표 페이징 처리
+	@RequestMapping("moreList.ct")
+	public String selectMoreList(int startNumber) {
+		System.out.println(startNumber);
+		
+		int endNumber = startNumber + 12;
+		contestService.selectMoreList(startNumber, endNumber);
+		
+		
+		return null;
+		
+	}
 	
 	// 게시판 DetailView
 	@RequestMapping("contestDeatil.ct")
-	public String selectContestDetail() {
+	public String selectContestDetail(int bno) {
+		System.out.println(bno);
+		
+		contestService.increaseCount(bno);
 			
 		
 		return "board/contestBoard/contestDetailView";

@@ -8,5 +8,8 @@
 </head>
 <body>
 
+
+    디테일 뷰뷰뷰뷰뷰
+
 </body>
 </html>
