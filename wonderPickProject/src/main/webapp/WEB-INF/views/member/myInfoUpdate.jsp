@@ -19,17 +19,33 @@
                     <button>프로필 변경</button>
                 </div>
                 <div id="rightInfo">
-                    <label>아이디</label>
+                    <label>아이디</label><br>
                     <input type="text" value="${sessionScope.loginMember.memberId}" readonly />
                     <br>
-                    <label>이름</label>
+                    <label>이름</label><br>
                     <input type="text" value="${sessionScope.loginMember.memberName}" />
                     <br>
-                    <label>닉네임</label>
+                    <label>닉네임</label><br>
                     <input type="text" value="${sessionScope.loginMember.nickName}" />
                     <br>
-                    <label>전화번호</label>
+                    <label>전화번호</label><br>
                     <input type="text" value="${sessionScope.loginMember.phone}" />
+                    <hr>
+                    <label>주소</label><br>
+                    <input type="text" value="${sessionScope.loginMember.adress}" />
+                    <br>
+                    <label>계좌번호</label><br>
+                    <input type="text" value="${sessionScope.loginMember.payAccount}" />
+                    <br>
+                    <label>이메일 수신 동의</label><br>
+                    <input type="checkbox" />
+                    <br>
+                    <hr>
+                    <label>회원가입 날짜</label><br>
+                    <input type="text" readonly value="${sessionScope.loginMember.enrollDate}" />
+                    <br>
+                    <label>수정날짜</label><br>
+                    <input type="text" readonly value="${sessionScope.loginMember.modifyDate}" />
                     
                 </div>
             </div>
