@@ -91,28 +91,27 @@
         <div class="detail" align="center">
 
             <div class="">
-                <div class="">
-                    <img class="detail_img" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif" alt="">
-                </div>
-                <div class="list">
-                    <img class="detail_img" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif" alt="">
-                </div>
-                <div class="list">
-                    <img class="detail_img" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif" alt="">
-                </div>
-                <div class="list">
-                    <img class="detail_img" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif" alt="">
-                </div>
-                <div class="list">
-                    <img class="detail_img" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif" alt="">
-                </div>
+            	<c:forEach items="${boardImage}" var="img">
+	            	<c:choose>
+	            		<c:when test="${ img.fileLevel eq 1 }">
+	            			<div class="">
+			                    <img class="detail_img" src="${img.modifyName}" alt="">
+			                </div>
+	            		</c:when>
+	            		<c:otherwise>
+	            			<div class="list">
+			                    <img class="detail_img" src="${img.modifyName}" alt="">
+			                </div>
+	            		</c:otherwise>
+	            	</c:choose>
+            	</c:forEach>
             </div>
             <br><br>
 
 
 
             <div>
-                ★★★☆☆  3.1( xx개 평가 )
+                ★★★☆☆  3.1( xx개 평가 )  
             </div>
             <br><br><hr><br>
 
@@ -134,7 +133,7 @@
             <br><br><br>
             
             <div id="explain">
-                여기는 설명 사진하고 글 ~~~
+                ${ artBoard.board.boardContent }
             </div>
 
             
@@ -272,7 +271,7 @@
                         <td class="t_align_right"><button>수정</button></td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="font-size: 25px; font-weight:bold;">작품명</td>
+                        <td colspan="2" style="font-size: 25px; font-weight:bold;">${artBoard.board.boardTitle}</td>
                     </tr>
                 </table>
             </div>
@@ -301,37 +300,31 @@
                 <table class="width">
                     <tr>
                         <td>제출파일 유형</td>
-                        <td class="t_align_right">png</td>
+                        <td class="t_align_right">${artBoard.fileType}</td>
                     </tr>
                     <tr>
                         <td>해상도</td>
-                        <td class="t_align_right">300dpi</td>
+                        <td class="t_align_right">${artBoard.dpi}</td>
                     </tr>
                     <tr>
                         <td>기본사이즈</td>
-                        <td class="t_align_right">1920*1080</td>
+                        <td class="t_align_right">${artBoard.defaultSize}</td>
                     </tr>
                     <tr>
                         <td>수정 횟수</td>
-                        <td class="t_align_right">2회</td>
+                        <td class="t_align_right">${artBoard.modifyCount}</td>
                     </tr>
                     <tr>
                         <td>작업기간</td>
-                        <td class="t_align_right">시작일로부터 1주일</td>
+                        <td class="t_align_right">${artBoard.workday}</td>
                     </tr>
                 </table>
             </div>
             <br><br>
 
-                                                        <!-- 가격옵션 -->
-            <c:choose>
-                <c:when test="">
-
-                </c:when>
-                <c:otherwise>
-
-                </c:otherwise>
-            </c:choose>
+                                      <!-- 가격옵션 -->
+                                      
+            
 
             <div class="op_title">
                 <h3 class="op_title width">가격 옵션</h3>
@@ -339,6 +332,35 @@
             <div class="">
                 <table class="width">
                     <!-- 여기서부터 -->
+                    <c:forEach items="${optionList}" var="option">
+	                        	<c:set var="detail" value="${ option.detail }" />
+                    	<tr>
+	                        <td>${ option.mainOp }</td>
+	                        <td class="t_align_right">
+	                            <select name="" id="">
+	                                <option value="">
+	                                
+		                                <c:forEach items="${ option.detail }" var="detail">${ detail }</c:forEach>
+		                                <c:forEach items="${ option.price }" var="price">${ price }</c:forEach>
+									</option>
+	                            </select>
+	                        </td>
+	                    </tr>
+                    </c:forEach>
+      
+                    
+                    
+                    <c:choose>
+		                <c:when test="">
+		
+		                </c:when>
+		                <c:otherwise>
+		
+		                </c:otherwise>
+		            </c:choose>
+		            
+		            
+		            
                     <tr>
                         <td>옵션 1</td>
                         <td class="t_align_right">
@@ -445,6 +467,13 @@
             window.scrollTo({top:location - 200, behavior:"smooth"});
         }
 
+		window.onload = function(){
+			console.log('${artBoard}');
+			console.log('${boardImage}');
+			console.log('${reviewList}');
+			console.log('${optionList}');
+		}        
+        
 
 
 

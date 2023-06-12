@@ -21,4 +21,6 @@ public interface ArtBoardService {
 	
 	ArrayList<BoardImage> selectBoardImage(int bno);
 	
+	ArrayList<Option> selectOptionList(int bno);
+	
 }

@@ -7,9 +7,11 @@ import lombok.Data;
 @Data
 public class Option {
 	
-	private int opDetailNo; // OP_DETAIL_NO	NUMBER
+	private int optionNo; // OP_DETAIL_NO	NUMBER
+	private int board_no;
 	private String mainOp;
 	private String detail;
 	private String price;
+	private ArrayList opPr;
 		
 }
