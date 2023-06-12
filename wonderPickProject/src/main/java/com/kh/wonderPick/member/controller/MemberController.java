@@ -136,7 +136,7 @@ public class MemberController {
 	@RequestMapping("myPage.me")
 	public String myPageMember(HttpSession session) {
 		if(session.getAttribute("loginMember") != null) {
-			return "member/myPage";
+			return "member/myInfoUpdate";
 		} else {
 			session.setAttribute("alertMsg", "올바르지 않은 접근입니다!");
 			return "redirect:/";

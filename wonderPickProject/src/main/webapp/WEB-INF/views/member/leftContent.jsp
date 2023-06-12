@@ -23,6 +23,7 @@
             <li>내 정보<span class="material-symbols-outlined">expand_more</span>
                 <ul>
                     <li><a href="">내 정보 조회 및 수정</a></li>
+                    <li><a href="">비밀번호 변경</a></li>
                     <li><a href="">회원 탈퇴</a></li>
                 </ul>
             </li>
