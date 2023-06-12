@@ -5,25 +5,28 @@
 
 	<mapper namespace="contestBoardMapper">
 	
-		<resultMap id="contestBoardResultSet" type="contestBoard">
+		<resultMap id="contestBoardResultSet" type="contest">
 		
-			<!-- 게시판공통 테이블 -->
+			<result column="BOARD_NO" property="boardNo"/>
 			<result column="BOARD_TITLE" property="boardTitle"/>
+		
+			
 			<result column="NICKNAME" property="nickName"/>
 			
 			<result column="MEMBER_MODIFY_NAME" property="memberModifyName"/>
 			<result column="MODIFY_NAME" property="modifyName"/>
-			<result column="UPLOAD_DATE" property="uploadDate"/>
+			<result column="UPLOAD_DATE" property="uploadDate"/> 
 			
 				
-			<!-- 이모티콘테이블 -->
 			<result column="EMOTICON_NO" property="emoticonNo"/>
 			<result column="PRICE" property="price"/>
 			<result column="PRICE_STATUS" property="priceStatus"/>
-			<!-- 투표테이블  -->
+			
 			<result column="VOTE_STATUS" property="voteStatus"/>
 			<result column="VOTE_COUNT" property="voteCount"/>
 			<result column="FILE_PATH" property="filePath"/>
+			
+			
 		</resultMap>
 		
 		<select id="selectTop10" resultMap="contestBoardResultSet">
@@ -59,7 +62,6 @@
 		                VOTE_COUNT DESC )
 			WHERE ROWNUM BETWEEN 1 AND 10
 		</select>
-		
 		<insert id="insertMainBoard" parameterType="board">
 			INSERT
 			  INTO 
@@ -77,7 +79,7 @@
 			VALUES
 					(
 					SEQ_BOARD_NO.NEXTVAL
-					,#{ memberNo }
+					,2
 					,#{ boardTitle }
 					,#{ boardContent }
 					,SYSDATE
@@ -137,7 +139,8 @@
 			
 			SELECT  *
 			        FROM(   SELECT
-			                     BOARD.BOARD_TITLE    
+			        			 BOARD.BOARD_NO
+			                    ,BOARD.BOARD_TITLE    
 			                    ,MEMBER.NICKNAME      
 			                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 			                    ,BOARD_IMAGE.MODIFY_NAME    
@@ -169,7 +172,43 @@
 			
 		
 		</select>
-	
+		
+		<select id="selectMoreList" parameterType="contest" resultMap="contestBoardResultSet">
+			 SELECT  *
+			        FROM(   SELECT ROWNUM RNUM
+                            ,A.* FROM(SELECT
+					        			 BOARD.BOARD_NO
+					                    ,BOARD.BOARD_TITLE    
+					                    ,MEMBER.NICKNAME      
+					                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
+					                    ,BOARD_IMAGE.MODIFY_NAME    
+					                    ,BOARD_IMAGE.UPLOAD_DATE               
+					                    ,VOTE.VOTE_COUNT   
+					                    ,FILE_PATH
+			          FROM 
+			                 BOARD
+			        LEFT JOIN
+			                 MEMBER ON(BOARD.MEMBER_NO = MEMBER.MEMBER_NO)
+			        LEFT JOIN 
+			        
+			                BOARD_IMAGE  ON(BOARD.BOARD_NO = BOARD_IMAGE.BOARD_NO)
+			        LEFT JOIN
+			                MEMBER_IMAGE  ON(BOARD.MEMBER_NO = MEMBER_IMAGE.MEMBER_NO)
+			        LEFT JOIN   
+			                VOTE ON(BOARD.BOARD_NO = VOTE.BOARD_NO)
+			        LEFT JOIN
+			                EMOTICON ON(BOARD.BOARD_NO = EMOTICON.BOARD_NO)
+			                
+			        WHERE
+			                BOARD_IMAGE.FILE_LEVEL = 1
+			          AND 
+			                EMOTICON.PRICE_STATUS = 0
+			        ORDER
+			           BY   
+			                UPLOAD_DATE DESC)A)
+			WHERE RNUM BETWEEN #{ startNumber } AND #{ endNumber }
+         
+		</select>
 		
 
 		

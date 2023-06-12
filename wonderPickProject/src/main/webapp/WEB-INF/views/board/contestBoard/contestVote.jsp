@@ -6,18 +6,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 
 <style>
         #all_area{
-            width: 1300px;
-            margin: auto;
+        width: 1300px;
+        height: auto;
+        margin: auto;
         }
-        #votePage_area{
+        #main_area{
             box-shadow: 1px 1px 10px rgb(200, 200, 200) ;
             border-radius: 20px;
             margin: auto;
-            width: 800px;
-            padding: 50px;
+            width: 900px;
+            padding: 20px;
+            margin-top:20px;
+            height: auto;
+
         }
         .header_area{
             display: inline-block;
@@ -119,24 +125,51 @@
         .top10_image{
             width: 100px;
             height: 100px; 
+            background-color: red;
         }
         #header-1 h1{
             font-size: 32px;
         }
+        #puls_btn_image{
+            margin: auto;
+            width: 50px;
+            height: 50px;
+            display: block;
+        }
+        #puls_btn{
+            background-color: whitesmoke;
+            margin: auto;
+            margin-top: 30px;
+            width: 90%;
+            border-radius: 50px;
+        }
+        #puls_btn:hover{
+            cursor: pointer;
+            opacity: 0.8;
+            transition: transform 100ms ease-in-out;
+            transform: scale(1.05);
+        }
+        .movePage{
+            background-color: yellow;
+        }
+        .movePage:hover{
+            cursor: pointer;
+        }
+      
     </style>
     
 </head>
 <body>
 
     <jsp:include page="../../common/header.jsp" />
-  <div id="all_area">
-     <div id="votePage_area" >
+    <div id="all_area">
+        <div id="main_area" >
             <div id="header-1" align="center">
                 <div class="header_area">
-                <h1>이달의 이모티콘 투표 <hr id="hr_1"></h1> 
+                <h1>이달의 이모티콘 투표<hr id="hr_1"></h1> 
                 </div>
                 <div class="header_area">
-                    <h1>역대 이달의 우승작ssss<hr></h1>
+                    <h1>역대 이달의 우승작<hr></h1>
                 </div>
                 <div id="d_day">
                 <h3> 2023.05.28</h3> <hr>
@@ -157,7 +190,7 @@
                 <div id="winnerList_title" >
                     <span><h1>실시간 TOP10<hr align="left" id="top10_hr"></h1></span>
                 </div>
-                <div class="contest_lit">
+                <div class="contest_list">
                     <ul class="winner_list">
                       <c:forEach var="list" items="" >
                        <li>
@@ -173,7 +206,7 @@
                                 </thead>
                                 <tbody>
                                     <tr >
-                                        <th class="table_title" colspan="2">
+                                        <th class="table_tite" colspan="2">
                                             <div class="table_title"> 
                                               
                                             </div>
@@ -213,53 +246,179 @@
                 <img src="resources/boardUpfiles/contestFiles/new3.png" id="refresh">
             </div>
             <div id="voteList_area" align="center">
-                <div >
-                      <c:forEach  items="${ list }" var="list">
-                            <table border="1" class="contest_table">
-                                <thead>
-                                    <tr >
-                                        <td colspan="3">
-                                            <div align="center">
-                                                <img src="${ list.filePath }" alt="" class="top10_image">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr >
-                                        <th class="table_title" colspan="2">
-                                            <div class="table_title"> 
-                                              ${ list.boardTitle }
-                                            </div>
-                                        </th>
-                                        <td class="vote_heart">♡</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table_profile_img">
-                                            <div align="center">
-                                                <img src="#" class="profile_img">
-                                             
-                                            </div>
-                                        </td>
-                                        <td>${ list.nickName }</td>
-                                        <td>${ list.voteCount }</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <span class="table_sysdate">${ list.uploadDate }</span> 
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>	
-                      </c:forEach>
-  
-                       
-  
-                </div>
-            
-        </div>
+                <c:forEach  items="${ list }" var="list">
+                    <table border="1" class="contest_table">
+                        <tr >
+                            <td colspan="3">
+                                <div align="center" class="movePage" id="boardImage">
+                                    <img src="${ list.filePath }" alt="" class="top10_image">
+                                    <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr >
+                            <th class="table_title" colspan="2">
+                                <div>
+                                    <a href="#" class="movePage" id="boardTitle">
+                                        <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
+                                        ${ list.boardTitle }
+                                    </a>
+                                </div>
+                            </th>
+                            <td class="vote_heart">♡</td>
+                        </tr>
+                        <tr>
+                            <td class="table_profile_img">
+                                <div align="center">
+                                    <img src="#" class="profile_img">
+                                    
+                                </div>
+                            </td>
+                            <td>${ list.nickName }</td>
+                            <td>${ list.voteCount }</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <span class="table_sysdate">${ list.uploadDate }</span> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="table_sysdate">조회수</div> 
+                            </td>
+                        </tr>
+                        <tbody id="selectList">
+                        </tbody>
+
+                    </table>	
+                </c:forEach>
+            </div>
+            <div id="puls_btn">
+                <img src="resources/boardUpfiles/contestFiles/plus.webp" alt="" id="puls_btn_image">
+            </div>
+          
+        </div>        
     </div>
+
+    <br><br><br><br><br><br><br><br><br><br>
+
+
+
+   
+
+
+    <script>
+
+
+        
+        //let movePage =  document.querySelectorAll('.movePage');
+        
+
+
+            //console.log(this.name);
+
+            //location.href='contestDetail.ct?bno=' + 
+
+
+        // document.querySelector('.movePage').addEventListener('click',function(e){
+
+        //     console.log(this);
+        // })
+
+        var movePage = document.querySelectorAll('.movePage');
+
+        // [].forEach.call(cols,function(movePage)){
+        //     movePage.add
+        // }
+
+        movePage.forEach( i => i.addEventListener('click', e => {
+
+            if(e.currentTarget.id == 'boardImage'){
+               console.log(e.currentTarget.children[1].value);
+                let clickImageBoardNo = e.currentTarget.children[1].value;
+               // location.href = 'contestDetail.ct?bno=' + clickBoardNo;
+            }else{
+                console.log(e.currentTarget.children[0].value);
+                let clickTitleBoardNo = e.currentTarget.children[0].value;
+                //location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
+            }
+
+        }))
+
+        // 플러스버튼 더보기 
+        document.getElementById('puls_btn').addEventListener('click', function(){
+
+            console.log($('.contest_table').length)
+            $.ajax({
+                url : 'moreList.ct',
+                type : 'post',
+                data : {
+                    checkNumber : $('.contest_table').length
+                },
+                success : function(result){
+                    console.log(result.nickName);
+
+                        let value = "";
+                    for(let i in result){
+                        
+                        value += '<tr>'
+                                    + '<td colspan="3">'
+                                    +' <div align="center" class="movePage" id="boardImage">'
+                                        +  '<img src="' + result[i].nickName + '" class="top10_image">'
+                                       + '<input type="hidden" value="'${ list.boardNo }">'
+                                    + '</div>'
+                                + '</td>'
+                            + '</tr>'
+                            + '<tr >'
+                                + '<th class="table_title" colspan="2">'
+                                    +  '<div>'
+                                        + '<a href="#" class="movePage" id="boardTitle">'
+                                            + result[i].boardTitle
+                                        +' </a>'
+                                        +'</div>'
+                                + '</th>'
+                                + '<td class="vote_heart">♡</td>'
+                                +'</tr>'
+                            + '<tr>'
+                                + '<td class="table_profile_img">'
+                                    +  ' <div align="center">'
+                                        +  '<img src="#" class="profile_img">'
+                                            
+                                        +'</div>'
+                                + '</td>'
+                                    +'<td>'+ result[i].nickName +'</td>'
+                                + '<td>'+ result[i].voteCount + '</td>'
+                                +'</tr>'
+                            + '<tr>'
+                                + '<td colspan="3">'
+                                    +   '<span class="table_sysdate">'+ result[i].uploadDate + '</span> '
+                                + ' </td>'
+                                +'</tr>'
+                            + '<tr>'
+                                +  '<td colspan="3">'
+                                    + '<div class="table_sysdate">조회수</div> '
+                                + '</td>'
+                                +'</tr> ';
+
+                        $('#selectList').html(value);
+
+                 
+                    }
+
+
+                },
+                error : function(){
+                    alert('조회 실패입니디')
+                }
+            })
+        })
+
+
+      
+        
+
+    </script>
 
 
 </body>
-</html>
+</html>-

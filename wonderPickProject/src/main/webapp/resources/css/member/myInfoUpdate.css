@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+    #rightContent p{
+        margin : 20px 0px 0px 0px;
+        font-size : 18px;
+        font-weight : bold;
+    }
+
+    #rightMainContent{
+        border : 1px solid #FF8399;
+        margin-top : 20px;
+        padding : 40px;
+        border-radius: 5px;
+    }
+    #rightInfo{
+        width : 732px;
+        display : inline-block;
+    }
+    #rightProfile{
+        width : 130px;
+        float : left;
+        text-align : center;
+
+    }
+    #rightProfile img{
+        width : 120px;
+        height : 120px;
+        border-radius: 50%;
+    }
+    #rightProfile button{
+        margin-top : 10px;
+        width : 120px;
+        border-radius: 5px;
+        border : 1px solid black;
+        height : 36px;
+        background-color: #fff;
+    }
+    #rightProfile button:hover{
+        border : 1px solid #FF8399;
+        background-color: #fff3f3;
+    }
+    #rightInfo{
+        padding-left : 40px;
+    }
+    
