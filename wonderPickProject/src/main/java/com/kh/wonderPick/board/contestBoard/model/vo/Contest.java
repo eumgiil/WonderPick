@@ -10,7 +10,7 @@ import lombok.Data;
 public class Contest extends Board{
 	
 	private int emoticonNo; 	// EMOTICON_NO	NUMBER
-	private int boardNo; 		// BOARD_NO	NUMBER
+	//private int boardNo; 		// BOARD_NO	NUMBER
 	private int imgNo; 		// IMG_NO	NUMBER
 	private int price; 			// PRICE	NUMBER
 	private int priceStatus; 	// PRICE_STATUS	NUMBER
@@ -32,6 +32,15 @@ public class Contest extends Board{
 	// 더보기 페이징 처리 
 	private int startNumber;
 	private int endNumber;
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

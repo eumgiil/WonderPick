@@ -354,7 +354,13 @@
                 url : 'moreList.ct',
                 type : 'post',
                 data : {
-                    startNumber : $('.contest_table').length
+                    checkNumber : $('.contest_table').length
+                },
+                success : function(result){
+                    console.log(result);
+                },
+                error : function(){
+                    alert('조회 실패입니디')
                 }
             })
         })

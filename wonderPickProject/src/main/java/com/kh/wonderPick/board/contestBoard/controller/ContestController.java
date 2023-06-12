@@ -10,14 +10,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.contestBoard.model.service.ContestService;
+import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
 
 @Controller
 public class ContestController {
@@ -152,29 +153,31 @@ public class ContestController {
 	}
 	
 	// 투표 페이징 처리
-	@RequestMapping("moreList.ct")
-	public String selectMoreList(int startNumber) {
-		System.out.println(startNumber);
+	@ResponseBody
+	@RequestMapping(value="moreList.ct", produces="application/json; charset=UTF-8")
+	public String selectMoreList(int checkNumber, Contest contest) {
+		//System.out.println(checkNumber);
 		
-		int endNumber = startNumber + 12;
-		contestService.selectMoreList(startNumber, endNumber);
+		int endNumber = checkNumber + 12;
 		
+		contest.setStartNumber(checkNumber);
+		contest.setEndNumber(endNumber);
 		
-		return null;
+		return new Gson().toJson(contestService.selectMoreList(contest));
 		
 	}
 	
-	// 게시판 DetailView
-	@RequestMapping("contestDeatil.ct")
-	public String selectContestDetail(int bno) {
-		System.out.println(bno);
-		
-		contestService.increaseCount(bno);
-			
-		
-		return "board/contestBoard/contestDetailView";
-	}
-	
+//	// 게시판 DetailView
+//	@RequestMapping("contestDeatil.ct")
+//	public String selectContestDetail(int bno) {
+//		System.out.println(bno);
+//		
+//		contestService.increaseCount(bno);
+//			
+//		
+//		return "board/contestBoard/contestDetailView";
+//	}
+//	
 	
 	
 	
