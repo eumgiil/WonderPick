@@ -143,6 +143,9 @@
         .movePage{
             background-color: yellow;
         }
+        .movePage:hover{
+            cursor: pointer;
+        }
     </style>
     
 </head>
@@ -239,7 +242,7 @@
                                 <thead>
                                     <tr >
                                         <td colspan="3">
-                                            <div align="center" class="movePage" id="sss">
+                                            <div align="center" class="movePage" id="boardImage">
                                                 <img src="${ list.filePath }" alt="" class="top10_image">
                                                 <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
                                             </div>
@@ -250,7 +253,10 @@
                                     <tr >
                                         <th class="table_title" colspan="2">
                                             <div>
-                                                <a href="#" class="movePage" id="boardTitle">${ list.boardTitle }</a>
+                                                <a href="#" class="movePage" id="boardTitle">
+                                                    <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
+                                                    ${ list.boardTitle }
+                                                </a>
                                             </div>
                                         </th>
                                         <td class="vote_heart">♡</td>
@@ -268,6 +274,11 @@
                                     <tr>
                                         <td colspan="3">
                                             <span class="table_sysdate">${ list.uploadDate }</span> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <span class="table_sysdate">조회수</span> 
                                         </td>
                                     </tr>
                                 </tbody>
@@ -307,15 +318,17 @@
         // }
 
         movePage.forEach( i => i.addEventListener('click', e => {
-            //alert('ss')
-            //console.log(this.DocumentType)
-            console.log(e.currentTarget.id);
 
-            if(e.currentTarget.id == boardTitle){
-                alert('s')
+            if(e.currentTarget.id == 'boardImage'){
+               // console.log(e.currentTarget.children[1].value);
+                let clickImageBoardNo = e.currentTarget.children[1].value;
+                location.href = 'contestDetail.ct?bno=' + clickBoardNo;
+            }else{
+                //console.log(e.currentTarget.children[0].value);
+                let clickTitleBoardNo = e.currentTarget.children[0].value;
+                location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
             }
-            let clickBoardNo = e.currentTarget.children[1].value;
-            location.href='contestDetail.ct?bno=' + clickBoardNo;
+
         }))
 
         
@@ -324,4 +337,4 @@
 
 
 </body>
-</html>
+</html>-

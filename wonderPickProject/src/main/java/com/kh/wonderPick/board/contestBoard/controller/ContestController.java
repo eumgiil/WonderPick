@@ -153,6 +153,13 @@ public class ContestController {
 	
 	// 투표 페이징 처리
 	
+	// 게시판 DetailView
+	@RequestMapping("contestDeatil.ct")
+	public String selectContestDetail() {
+			
+		
+		return "board/contestBoard/contestDetailView";
+	}
 	
 	
 	
