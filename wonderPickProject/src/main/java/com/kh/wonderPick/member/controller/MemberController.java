@@ -128,8 +128,18 @@ public class MemberController {
 		}
 	}
 	
+	/**
+	 * 마이페이지url을 정확하게 알려주지 않기 위해서 거쳐서 보내줌
+	 * @param session : 로그인 된 회원의 정보가 담겨있는지 확인 / 없다면 alertMsg에 메시지를 담아서 반환
+	 * @return : 로그인 되어있다면 마이페이지jsp로, 되어있지않다면 경고메시지와함께 메인페이지로 보냄
+	 */
 	@RequestMapping("myPage.me")
-	public String myPageMember() {
-		return "member/myPage";
+	public String myPageMember(HttpSession session) {
+		if(session.getAttribute("loginMember") != null) {
+			return "member/myPage";
+		} else {
+			session.setAttribute("alertMsg", "올바르지 않은 접근입니다!");
+			return "redirect:/";
+		}
 	}
 }
