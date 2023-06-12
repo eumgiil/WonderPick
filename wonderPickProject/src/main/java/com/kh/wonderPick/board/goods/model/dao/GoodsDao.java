@@ -29,6 +29,19 @@ public class GoodsDao {
 		return (ArrayList)sqlSession.selectList("goodsMapper.selectGoodsList", null , rowBounds);
 	}
 	
+	public int selectCategoryListCount(SqlSessionTemplate sqlSession, String goodsCategory) {
+		return sqlSession.selectOne("goodsMapper.selectCategoryListCount", goodsCategory);
+	}
+	
+	public ArrayList<Goods> selectCategoryList(SqlSessionTemplate sqlSession, PageInfo pi, String goodsCategory){
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectCategoryList", null , rowBounds);
+	}
+	
+	
+	
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("goodsMapper.insertBoard", b);
 	}
@@ -63,6 +76,11 @@ public class GoodsDao {
 	}
 	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.insert("goodsMapper.insertReply", r);
+	}
+	
+	public int selectReplyListCount(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("goodsMapper.selectReplyListCount", boardNo);
+		
 	}
 	
 	//대댓글

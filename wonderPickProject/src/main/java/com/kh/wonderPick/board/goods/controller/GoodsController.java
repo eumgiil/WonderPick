@@ -49,6 +49,18 @@ public class GoodsController {
 	public String enrollForm() {
 		return "board/goods/goodsEnrollForm";
 	}
+	@RequestMapping("categorylist.go")
+	public String selectCategoryList(@RequestParam(value="cPage", defaultValue="1")int currentPage, String goodsCategory, Model model) {
+		PageInfo pi = Pagination.getPageInfo(goodsService.selectCategoryListCount(goodsCategory), currentPage,12, 10);
+		
+		
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", goodsService.selectCategoryList(pi, goodsCategory));
+		
+		return "board/goods/goodsCategoryListView";
+		
+	}
 	/*
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		// 파일명 수정 작업 후 서버에 업로드시키기
@@ -145,18 +157,22 @@ public class GoodsController {
 	}
 	
 	@RequestMapping("detail.go")
-	public ModelAndView selectGoods(ModelAndView mv, int boardNo,  HttpSession session) {
+	public ModelAndView selectGoods(ModelAndView mv, int boardNo,   HttpSession session) {
 		
 		if(goodsService.increaseCount(boardNo)>0) {
 			mv.addObject("g", goodsService.selectGoods(boardNo));
 			mv.addObject("reviewList", goodsService.selectReviewList(boardNo));
 			mv.addObject("replyList", goodsService.selectReplyList(boardNo));
 			mv.setViewName("board/goods/goodsDetailView");
+			
 		}else {
 			mv.addObject("errorMsg", "조회수 증가 실패");
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
+		
+		
+		
 	}
 	
 	// 댓글
@@ -179,9 +195,18 @@ public class GoodsController {
 	//대댓글
 	@ResponseBody
 	@RequestMapping(value="relist.go", produces="application/json; charset=UTF-8")
-	public String ajaxSelectReReplyList(int replyNo) {
+	public String ajaxSelectReReplyList(int replyNo, int boardNo, ModelAndView mv, HttpSession session) {
+		System.out.println("dfkdfkdajf;djf");
+		if(goodsService.selectReplyListCount(boardNo) > 0 ) {
+			System.out.println(goodsService.selectReplyListCount(boardNo));
+			mv.addObject("reReplyList", goodsService.selectReReplyList(replyNo));
+			mv.setViewName("board/goods/goodsDetailView");
+		}
+		
 		return new Gson().toJson(goodsService.selectReReplyList(replyNo));
 	}
+	
+	
 	@ResponseBody
 	@RequestMapping("reinsert.go")
 	public String ajaxInsertReReply(Re_Reply re) {

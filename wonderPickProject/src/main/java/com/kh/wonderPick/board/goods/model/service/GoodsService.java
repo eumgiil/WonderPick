@@ -20,6 +20,13 @@ public interface GoodsService {
 	// 게시글 리스트 조회
 	ArrayList<Goods> selectGoodsList(PageInfo pi);
 	
+	// 카테고리별 게시글 총 개수 조회
+	int selectCategoryListCount(String goodsCategory);
+	
+	
+	// 카테고리별 게시글 리스트 조회
+	ArrayList<Goods> selectCategoryList(PageInfo pi, String goodsCategory);
+	
 	// 게시글 작성하기
 	int insertGoods(Goods g, Board b, BoardImage bi);
 	
@@ -46,7 +53,7 @@ public interface GoodsService {
 	// 댓글 작성
 	int insertReply(Reply r);
 	
-	
+	int selectReplyListCount(int boardNo);
 	
 	// 대댓글 리스트 조회
 	ArrayList<Re_Reply> selectReReplyList(int replyNo);

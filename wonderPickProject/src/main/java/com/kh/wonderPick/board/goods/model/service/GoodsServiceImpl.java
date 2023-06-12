@@ -34,6 +34,17 @@ public class GoodsServiceImpl implements GoodsService {
 	public ArrayList<Goods> selectGoodsList(PageInfo pi) {
 		return goodsDao.selectGoodsList(sqlSession, pi);
 	}
+	
+	@Override
+	public int selectCategoryListCount(String goodsCategory) {
+		return goodsDao.selectCategoryListCount(sqlSession, goodsCategory);
+	}
+	@Override
+	public ArrayList<Goods> selectCategoryList(PageInfo pi, String goodsCategory) {
+		return goodsDao.selectCategoryList(sqlSession, pi, goodsCategory);
+	}
+	
+	
 
 	@Override
 	@Transactional
@@ -82,6 +93,8 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	// 대댓글
+	
+	
 	@Override
 	public ArrayList<Re_Reply> selectReReplyList(int replyNo) {
 		return goodsDao.selectReReplyList(sqlSession, replyNo);
@@ -92,7 +105,10 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsDao.insertReReply(sqlSession, re);
 	}
 	
-	
+	@Override
+	public int selectReplyListCount(int boardNo) {
+		return goodsDao.selectReplyListCount(sqlSession, boardNo);
+	}
 	
 	@Override
 	public int updateGoods(Goods g) {

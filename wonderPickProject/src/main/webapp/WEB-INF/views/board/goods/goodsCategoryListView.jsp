@@ -22,12 +22,21 @@
            
         }
         
-        .goodsList1 , .categoryList{
+        .goodsList1 {
             border: 1px solid black;
             width: 900px;
             margin-left:50px;
             
         }
+        
+        .categoryList {
+            border: 1px solid black;
+            width: 900px;
+            margin-left:500px;
+            margin-top : 200px;
+            
+        }
+        
         .all_area{
             width: 1300px;
         }
@@ -70,6 +79,7 @@
         .pagingArea{
         margin-left : 450px;
         }
+        
         .category{
             float: left;
             margin-left: 5%;
@@ -101,15 +111,15 @@
 </head>
 <body>
 	<jsp:include page="../../common/header.jsp" />
- <div class="category">
+	 <div class="category">
         <h3 style="font-weight: bold; color:rgb(255, 131, 153) ;">카테고리</h3>
         <hr style="border: 1px solid black; width: 200px;">
         <table class="category_option">
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${ goodsCategory.equals('FASHION') }&cPage=1">패션</a></td>
+                <td><a href="categorylist.go?goodsCategory=${ g.goodsCategory.equals('FASHION') }&cPage=1">패션</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${goodsCategory.kitchen}&cPage=1">주방</a></td>
+                <td><a href="categorylist.go?goodsCategory=${category.kitchen}&cPage=1">주방</a></td>
             </tr>
             <tr>
                 <td><a href="categorylist.go?goodsCategory=${category.interior}&cPage=1">인테리어</a></td>
@@ -122,9 +132,8 @@
                 <td><a href="categorylist.go?goodsCategory=${category.etc}&cPage=1">기타</a></td>
             </tr>
         </table>
-
-
     </div>
+    
     
 <div class="main">
 
@@ -188,13 +197,16 @@
         </div>
         <br><br><br>
 
-        <!-- 전체리스트 -->
-        <div class="goodsList1"  id="goods" style="width: 900px;" align="center">
+      
+
+	</div>
+	<!--  카테고리별  리스트-->
+	<div class="categoryList"  id="goods" style="width: 900px;" align="center">
           <c:choose>  
-            <c:when test="${not empty list}">
-              <c:forEach items="${list}" var="g">
-                  <div class="goodsList2" style="display:inline-block;">
-                    <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="like"><br>
+            <c:when test="${not empty categoryList}">
+              <c:forEach items="${categoryList}" var="g">
+                  <div class="goodsList2" style="display:inline-block;" align="center">
+                    <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
                     <table id="goodsInfo"  id="goods" width="250">
 	                    <tr>
 	                        <td>${g.nickName}</td>
@@ -219,94 +231,6 @@
         </c:choose>
 
 	</div>
-	<script>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	</script>
-	
 	
 	<script>
 	$(function(){
