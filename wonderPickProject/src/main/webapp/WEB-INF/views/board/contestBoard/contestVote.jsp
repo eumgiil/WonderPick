@@ -248,49 +248,48 @@
             <div id="voteList_area" align="center">
                 <c:forEach  items="${ list }" var="list">
                     <table border="1" class="contest_table">
-                        <thead>
-                            <tr >
-                                <td colspan="3">
-                                    <div align="center" class="movePage" id="boardImage">
-                                        <img src="${ list.filePath }" alt="" class="top10_image">
+                        <tr >
+                            <td colspan="3">
+                                <div align="center" class="movePage" id="boardImage">
+                                    <img src="${ list.filePath }" alt="" class="top10_image">
+                                    <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr >
+                            <th class="table_title" colspan="2">
+                                <div>
+                                    <a href="#" class="movePage" id="boardTitle">
                                         <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
-                                    </div>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr >
-                                <th class="table_title" colspan="2">
-                                    <div>
-                                        <a href="#" class="movePage" id="boardTitle">
-                                            <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
-                                            ${ list.boardTitle }
-                                        </a>
-                                    </div>
-                                </th>
-                                <td class="vote_heart">♡</td>
-                            </tr>
-                            <tr>
-                                <td class="table_profile_img">
-                                    <div align="center">
-                                        <img src="#" class="profile_img">
-                                        
-                                    </div>
-                                </td>
-                                <td>${ list.nickName }</td>
-                                <td>${ list.voteCount }</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <span class="table_sysdate">${ list.uploadDate }</span> 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="table_sysdate">조회수</div> 
-                                </td>
-                            </tr>
+                                        ${ list.boardTitle }
+                                    </a>
+                                </div>
+                            </th>
+                            <td class="vote_heart">♡</td>
+                        </tr>
+                        <tr>
+                            <td class="table_profile_img">
+                                <div align="center">
+                                    <img src="#" class="profile_img">
+                                    
+                                </div>
+                            </td>
+                            <td>${ list.nickName }</td>
+                            <td>${ list.voteCount }</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <span class="table_sysdate">${ list.uploadDate }</span> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="table_sysdate">조회수</div> 
+                            </td>
+                        </tr>
+                        <tbody id="selectList">
                         </tbody>
+
                     </table>	
                 </c:forEach>
             </div>
@@ -335,13 +334,13 @@
         movePage.forEach( i => i.addEventListener('click', e => {
 
             if(e.currentTarget.id == 'boardImage'){
-               // console.log(e.currentTarget.children[1].value);
+               console.log(e.currentTarget.children[1].value);
                 let clickImageBoardNo = e.currentTarget.children[1].value;
-                location.href = 'contestDetail.ct?bno=' + clickBoardNo;
+               // location.href = 'contestDetail.ct?bno=' + clickBoardNo;
             }else{
-                //console.log(e.currentTarget.children[0].value);
+                console.log(e.currentTarget.children[0].value);
                 let clickTitleBoardNo = e.currentTarget.children[0].value;
-                location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
+                //location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
             }
 
         }))
@@ -357,7 +356,56 @@
                     checkNumber : $('.contest_table').length
                 },
                 success : function(result){
-                    console.log(result);
+                    console.log(result.nickName);
+
+                        let value = "";
+                    for(let i in result){
+                        
+                        value += '<tr>'
+                                    + '<td colspan="3">'
+                                    +' <div align="center" class="movePage" id="boardImage">'
+                                        +  '<img src="' + result[i].nickName + '" class="top10_image">'
+                                       + '<input type="hidden" value="'${ list.boardNo }">'
+                                    + '</div>'
+                                + '</td>'
+                            + '</tr>'
+                            + '<tr >'
+                                + '<th class="table_title" colspan="2">'
+                                    +  '<div>'
+                                        + '<a href="#" class="movePage" id="boardTitle">'
+                                            + result[i].boardTitle
+                                        +' </a>'
+                                        +'</div>'
+                                + '</th>'
+                                + '<td class="vote_heart">♡</td>'
+                                +'</tr>'
+                            + '<tr>'
+                                + '<td class="table_profile_img">'
+                                    +  ' <div align="center">'
+                                        +  '<img src="#" class="profile_img">'
+                                            
+                                        +'</div>'
+                                + '</td>'
+                                    +'<td>'+ result[i].nickName +'</td>'
+                                + '<td>'+ result[i].voteCount + '</td>'
+                                +'</tr>'
+                            + '<tr>'
+                                + '<td colspan="3">'
+                                    +   '<span class="table_sysdate">'+ result[i].uploadDate + '</span> '
+                                + ' </td>'
+                                +'</tr>'
+                            + '<tr>'
+                                +  '<td colspan="3">'
+                                    + '<div class="table_sysdate">조회수</div> '
+                                + '</td>'
+                                +'</tr> ';
+
+                        $('#selectList').html(value);
+
+                 
+                    }
+
+
                 },
                 error : function(){
                     alert('조회 실패입니디')
