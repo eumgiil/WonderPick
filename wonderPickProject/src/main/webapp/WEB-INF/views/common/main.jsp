@@ -8,30 +8,9 @@
 <title>Insert title here</title>
 
  <!-- swiper.js 라이브러리추가 -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-​
-
-	 <style>
-    /* 이미지 영역 사이즈 조절 */
-    .swiper {
-        width: 1200px;
-        height: 500px;
-    }
-​
-    /* 이미지 사이즈 조절 */
-    .swiper-slide>img {
-        width : 100%;
-        height : 100%;
-    }
-​
-    /* 화살표 버튼색 변경 (기본색은 파란색) */
-    div[class^=swiper-button] {
-        color : white;
-        /* display : none; */ /* 아니면 안보이게 숨기기도 가능 */
-    }
-    </style>
-    
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="resources/css/common/main.css" />
 </head>
 <body>
 	<jsp:include page="header.jsp" />
