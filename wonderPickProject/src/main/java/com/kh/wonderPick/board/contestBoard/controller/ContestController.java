@@ -146,7 +146,7 @@ public class ContestController {
 		
 		model.addAttribute("list", contestService.selectVotePage());
 		
-		System.out.println("??: " + contestService.selectVotePage());
+		//System.out.println("??: " + contestService.selectVotePage());
 		
 		return "board/contestBoard/contestVote";
 	}
