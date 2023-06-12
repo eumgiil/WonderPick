@@ -55,5 +55,17 @@ public class ContestServiceImpl implements ContestService {
 		return contestDao.selectVotePage(sqlSession);
 	}
 
+	@Override
+	public void increaseCount(int bno) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public ArrayList<Contest> selectMoreList(int startNumber, int endNumber) {
+		return contestDao.selectMoreList(sqlSession, startNumber, endNumber);
+	}
+
 
 }

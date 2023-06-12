@@ -29,6 +29,12 @@ public class Contest extends Board{
 	private String filePath;
 	
 	
+	// 더보기 페이징 처리 
+	private int startNumber;
+	private int endNumber;
+	
+	
+	
 	
 
 }

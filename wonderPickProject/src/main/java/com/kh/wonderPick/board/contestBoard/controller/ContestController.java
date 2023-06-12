@@ -72,13 +72,18 @@ public class ContestController {
 		
 		String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/emoticonFiles/");
 		
-		//multipartFile.transferTo(new File(savePath + changeName));
+		try {
+			thumbnailUpFile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		BoardImage boardImage =  new BoardImage();
 		boardImage.setOriginName(originName);
 		boardImage.setModifyName(board.getBoardTitle());
 		boardImage.setFileLevel(1);
-		boardImage.setFilePath("/resources/boardUpfiles/emoticonFiles/" + changeName);
+		boardImage.setFilePath("resources/boardUpfiles/emoticonFiles/" + changeName);
 		
 		list.add(boardImage);
 		
@@ -135,15 +140,42 @@ public class ContestController {
 		
 
 	}
+	// 투표하기 페이지 최신순 list select
 	@RequestMapping("selectVotePage.ct")
 	public String selectVotePage(Model model) {
 		
 		model.addAttribute("list", contestService.selectVotePage());
 		
-		System.out.println("??: " + contestService.selectVotePage());
+		//System.out.println("??: " + contestService.selectVotePage());
 		
 		return "board/contestBoard/contestVote";
 	}
+	
+	// 투표 페이징 처리
+	@RequestMapping("moreList.ct")
+	public String selectMoreList(int startNumber) {
+		System.out.println(startNumber);
+		
+		int endNumber = startNumber + 12;
+		contestService.selectMoreList(startNumber, endNumber);
+		
+		
+		return null;
+		
+	}
+	
+	// 게시판 DetailView
+	@RequestMapping("contestDeatil.ct")
+	public String selectContestDetail(int bno) {
+		System.out.println(bno);
+		
+		contestService.increaseCount(bno);
+			
+		
+		return "board/contestBoard/contestDetailView";
+	}
+	
+	
 	
 	
 }
