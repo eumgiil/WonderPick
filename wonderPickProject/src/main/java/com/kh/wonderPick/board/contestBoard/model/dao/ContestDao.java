@@ -32,6 +32,11 @@ public class ContestDao {
 		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectVotePage");
 	}
 
+	public ArrayList<Contest> selectMoreList(SqlSessionTemplate sqlSession, Contest contest) {
+		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectMoreList", contest);
+	}
+
+
 
 
 

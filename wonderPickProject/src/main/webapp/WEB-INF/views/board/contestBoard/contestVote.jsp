@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 
 <style>
         #all_area{
@@ -20,6 +22,7 @@
             width: 900px;
             padding: 20px;
             margin-top:20px;
+            height: auto;
 
         }
         .header_area{
@@ -127,12 +130,18 @@
         #header-1 h1{
             font-size: 32px;
         }
-
-        #puls_btn{
+        #puls_btn_image{
             margin: auto;
-            margin-top: 30px;
             width: 50px;
             height: 50px;
+            display: block;
+        }
+        #puls_btn{
+            background-color: whitesmoke;
+            margin: auto;
+            margin-top: 30px;
+            width: 90%;
+            border-radius: 50px;
         }
         #puls_btn:hover{
             cursor: pointer;
@@ -146,13 +155,14 @@
         .movePage:hover{
             cursor: pointer;
         }
+      
     </style>
     
 </head>
 <body>
 
     <jsp:include page="../../common/header.jsp" />
-  <div id="all_area">
+    <div id="all_area">
         <div id="main_area" >
             <div id="header-1" align="center">
                 <div class="header_area">
@@ -236,69 +246,74 @@
                 <img src="resources/boardUpfiles/contestFiles/new3.png" id="refresh">
             </div>
             <div id="voteList_area" align="center">
-                <div >
-                      <c:forEach  items="${ list }" var="list">
-                            <table border="1" class="contest_table">
-                                <thead>
-                                    <tr >
-                                        <td colspan="3">
-                                            <div align="center" class="movePage" id="boardImage">
-                                                <img src="${ list.filePath }" alt="" class="top10_image">
-                                                <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr >
-                                        <th class="table_title" colspan="2">
-                                            <div>
-                                                <a href="#" class="movePage" id="boardTitle">
-                                                    <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
-                                                    ${ list.boardTitle }
-                                                </a>
-                                            </div>
-                                        </th>
-                                        <td class="vote_heart">♡</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table_profile_img">
-                                            <div align="center">
-                                                <img src="#" class="profile_img">
-                                             
-                                            </div>
-                                        </td>
-                                        <td>${ list.nickName }</td>
-                                        <td>${ list.voteCount }</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <span class="table_sysdate">${ list.uploadDate }</span> 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <span class="table_sysdate">조회수</span> 
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>	
-                      </c:forEach>
-  
-                       
-  
-                </div>
-
-                <img src="resources/boardUpfiles/contestFiles/plus.webp" alt="" id="puls_btn">
-            
-        </div>
+                <c:forEach  items="${ list }" var="list">
+                    <table border="1" class="contest_table">
+                        <thead>
+                            <tr >
+                                <td colspan="3">
+                                    <div align="center" class="movePage" id="boardImage">
+                                        <img src="${ list.filePath }" alt="" class="top10_image">
+                                        <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
+                                    </div>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <th class="table_title" colspan="2">
+                                    <div>
+                                        <a href="#" class="movePage" id="boardTitle">
+                                            <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
+                                            ${ list.boardTitle }
+                                        </a>
+                                    </div>
+                                </th>
+                                <td class="vote_heart">♡</td>
+                            </tr>
+                            <tr>
+                                <td class="table_profile_img">
+                                    <div align="center">
+                                        <img src="#" class="profile_img">
+                                        
+                                    </div>
+                                </td>
+                                <td>${ list.nickName }</td>
+                                <td>${ list.voteCount }</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <span class="table_sysdate">${ list.uploadDate }</span> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="table_sysdate">조회수</div> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>	
+                </c:forEach>
+            </div>
+            <div id="puls_btn">
+                <img src="resources/boardUpfiles/contestFiles/plus.webp" alt="" id="puls_btn_image">
+            </div>
+          
+        </div>        
     </div>
+
+    <br><br><br><br><br><br><br><br><br><br>
+
+
+
+   
+
 
     <script>
 
 
         
         //let movePage =  document.querySelectorAll('.movePage');
+        
 
 
             //console.log(this.name);
@@ -331,6 +346,27 @@
 
         }))
 
+        // 플러스버튼 더보기 
+        document.getElementById('puls_btn').addEventListener('click', function(){
+
+            console.log($('.contest_table').length)
+            $.ajax({
+                url : 'moreList.ct',
+                type : 'post',
+                data : {
+                    checkNumber : $('.contest_table').length
+                },
+                success : function(result){
+                    console.log(result);
+                },
+                error : function(){
+                    alert('조회 실패입니디')
+                }
+            })
+        })
+
+
+      
         
 
     </script>
