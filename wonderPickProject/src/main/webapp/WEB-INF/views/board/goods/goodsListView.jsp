@@ -194,11 +194,11 @@
             <c:when test="${not empty list}">
               <c:forEach items="${list}" var="g">
                   <div class="goodsList2" style="display:inline-block;">
-                    <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="like"><br>
+                    <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="heart();" id="heart"><br>
                     <table id="goodsInfo"  id="goods" width="250">
 	                    <tr>
 	                        <td>${g.nickName}</td>
-	                        <td><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" alt="" width="30" style="float: right;"></td>
+	                        <td><span id="heart"><i class="fa fa-heart-o" width="30" style="float: right;"></i></span></td>
 	                    </tr>
 	                    <tr>
 	                        <td colspan="2">★★★★☆</td>
@@ -221,85 +221,43 @@
 	</div>
 	<script>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	selectHeart();
+	heartUpdate();
+	
+	function selectHeart(){
+		$.ajax({
+			url : 'selectHeart.go',
+			data : {
+				boardNo : #{g.boardNo}
+			},
+			success : function(result){
+				if(result > 0 ){
+					$('#heart').html('<label style="font-size:20px; color:rgb(255, 131, 153);">♥</label>');
+				}else{
+					$('#heart').html('<label style="font-size:20px;">♡</label>');
+				}
+			},
+			error : function(){
+				console.log('좋아요 실패');
+			}
+		})
+	}
+	
+	function heartUpdate(){
+		$.ajax({
+			url : 'heartCount.go',
+			data : {
+				boardNo : #{g.boardNo}
+			},
+			success : function(result){
+				selectHeart();
+				
+			},
+			error :  function(){
+				console.log('실패');
+			}
+		})
+	}
 	
 	
 	
