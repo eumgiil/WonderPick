@@ -68,6 +68,11 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 		return artDao.selectBoardImage(sqlSession, bno);
 	}
 
+	@Override
+	public ArrayList<Option> selectOptionList(int bno) {
+		return artDao.selectOptionList(sqlSession, bno);
+	}
+
 
 	
 	

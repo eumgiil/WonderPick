@@ -5,7 +5,7 @@
 
 <mapper namespace="reviewMapper">
 
-	<resultMap id="board" type="board">
+	<resultMap id="boardResultSet" type="board">
 		<result column="BOARD_NO" property="boardNo" />
 		<result column="MEMBER_NO" property="memberNo" />
 		<result column="BOARD_TITLE" property="boardTitle" />
@@ -16,7 +16,7 @@
 		<result column="BOARD_TYPE" property="boardType" />
 	</resultMap>
 
-	<resultMap id="review" type="review">
+	<resultMap id="reviewResultSet" type="review">
 		<result column="REVIEW_NO" property="reviewNo" />
 		<result column="BOARD_NO" property="boardNo" />
 		<result column="MEMBER_NO" property="memberNo" />
@@ -29,7 +29,7 @@
 	
 	
 	
-	<select id="selectBoardReviewList" parameterType="_int">
+	<select id="selectBoardReviewList" parameterType="_int" resultMap="reviewResultSet">
 		select
 			   review_no
 		  	  ,r.member_no

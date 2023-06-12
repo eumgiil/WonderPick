@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.wonderPick.board.artBoard.model.service.ArtBoardService;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.controller.BoardController;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.reply.model.service.ReplyService;
 import com.kh.wonderPick.board.review.model.service.ReviewService;
 import com.kh.wonderPick.board.review.model.vo.Review;
 import com.kh.wonderPick.common.model.vo.PageInfo;
@@ -30,9 +32,14 @@ public class ArtBoardController {
 	
 	@Autowired
 	private ArtBoardService artService;
-	
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private ReplyService replyService;
+	
+	
+	
+	
 	
 	
 	@RequestMapping("artList.bo")
@@ -94,26 +101,67 @@ public class ArtBoardController {
 		return mv;
 	}
 	
-	@RequestMapping("artDetail.bo")
+	@RequestMapping(value="artDetail.bo")
 	public ModelAndView artDetail(ModelAndView mv, int bno) {
 		
 		
-//		board
-//		artBoard
-//		boardImage
+//		board 완
+//		artBoard 완료
+		
+//		boardImage 완료
+		
 //		member
 //		memberImage
-//		review
+		
+//		review 완료
+		
 //		reply
+//		re_reply
+		
 		
 		ArtBoard artBoard = artService.selectArtBoard(bno);
+		ArrayList<Option> optionList = artService.selectOptionList(bno);
+		
+		
+		System.out.println(optionList.get(1).getDetail());
+		
+//		for(int i = 0; i < optionList.size(); i ++) {
+//			String detail = optionList.get(i).getDetail();
+//			detail.replaceAll(" ", "");
+//			detail.replaceAll("\\p{Z}", "");
+//			detail.split(",");
+//			String[] detailArr = detail.split(",");
+//			
+//			String price = optionList.get(i).getPrice();
+//			detail.replaceAll(" ", "");
+//			detail.replaceAll("\\p{Z}", "");
+//			detail.split(",");
+//			String[] detailArr = detail.split(",");
+//			
+//			
+//		}
+		
+		
+		
+		
 		ArrayList<BoardImage> boardImage = artService.selectBoardImage(bno);
 		ArrayList<Review> reviewList = reviewService.selectBoardReviewList(bno);
 		
-		mv.setViewName("board/artBoard/artDetailView");
+		
+		
+		// 이 부분 따로 빼는거 상의해야함
+//		ArrayList<Reply1> replyList = replyService.selectReplyList(bno);
+		
+		mv.addObject("artBoard", artBoard)
+		.addObject("optionList", optionList)
+		  .addObject("boardImage", boardImage)
+		  .addObject("reviewList", reviewList)
+//		  .addObject("replyList", replyList)
+//		  .addObject("member", member)
+//		  .addObject("memberImage", rmemberImage)
+		  .setViewName("board/artBoard/artDetailView");
 		return mv;
 	}
-	
 	
 	
 	
