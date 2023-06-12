@@ -131,7 +131,7 @@
 		                    <li><a href="selectGrade.me">회원가입</a></li>
                 		</c:when>
                 		<c:otherwise>
-                			<li><a href="#">마이페이지</a></li>
+                			<li><a href="myPage.me">마이페이지</a></li>
 	                    	<li><a href="logout.me">로그아웃</a></li>
                 		</c:otherwise>
                 	</c:choose>

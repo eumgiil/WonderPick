@@ -101,23 +101,35 @@ public class MemberController {
 	 * @param checkNick : 사용자가 입력한 닉네임
 	 * @return : 문자열로 중복이 잇는지 없는지 보냄
 	 */
-	@ResponseBody
+	@ResponseBody 
 	@RequestMapping("nickCheck.me")
 	public String nickCheckMember(String checkNick) {
 		return memberService.nickCheckMember(checkNick) > 0 ? "NNNNN" : "NNNNY";
 	}
 	
 	
+	/**
+	 * 회원가입 서비스
+	 * @param m : 사용자가 입력한 값들을 담은 객체
+	 * @param session : 메시지를 담아서 alert창으로 띄워줌
+	 * @return : 회원가입 성공시 메인화면으로 돌려보냄
+	 */
 	@RequestMapping("signUp.me")
 	public String signUpMember(Member m,
 							   HttpSession session) {
 		String encPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 		m.setMemberPwd(encPwd);
 		if(memberService.signUpMember(m)>0) {
+			session.setAttribute("alertMsg", "회원가입을 축하합니다!");
 			return "redirect:/";
 		} else {
-			session.setAttribute("errorMsg", "회원가입 실패");
+			session.setAttribute("alertMsg", "회원가입에 실패하셨습니다.");
 			return "common/error";
 		}
+	}
+	
+	@RequestMapping("myPage.me")
+	public String myPageMember() {
+		return "member/myPage";
 	}
 }
