@@ -9,15 +9,18 @@
 
 <style>
         #all_area{
-            width: 1300px;
-            margin: auto;
+        width: 1300px;
+        height: auto;
+        margin: auto;
         }
-        #votePage_area{
+        #main_area{
             box-shadow: 1px 1px 10px rgb(200, 200, 200) ;
             border-radius: 20px;
             margin: auto;
-            width: 800px;
-            padding: 50px;
+            width: 900px;
+            padding: 20px;
+            margin-top:20px;
+
         }
         .header_area{
             display: inline-block;
@@ -119,14 +122,26 @@
         .top10_image{
             width: 100px;
             height: 100px; 
+            background-color: red;
         }
         #header-1 h1{
             font-size: 32px;
         }
 
         #puls_btn{
+            margin: auto;
+            margin-top: 30px;
             width: 50px;
             height: 50px;
+        }
+        #puls_btn:hover{
+            cursor: pointer;
+            opacity: 0.8;
+            transition: transform 100ms ease-in-out;
+            transform: scale(1.05);
+        }
+        .movePage{
+            background-color: yellow;
         }
     </style>
     
@@ -135,13 +150,13 @@
 
     <jsp:include page="../../common/header.jsp" />
   <div id="all_area">
-     <div id="votePage_area" >
+        <div id="main_area" >
             <div id="header-1" align="center">
                 <div class="header_area">
-                <h1>이달의 이모티콘 투표 <hr id="hr_1"></h1> 
+                <h1>이달의 이모티콘 투표<hr id="hr_1"></h1> 
                 </div>
                 <div class="header_area">
-                    <h1>역대 이달의 우승작ssss<hr></h1>
+                    <h1>역대 이달의 우승작<hr></h1>
                 </div>
                 <div id="d_day">
                 <h3> 2023.05.28</h3> <hr>
@@ -178,7 +193,7 @@
                                 </thead>
                                 <tbody>
                                     <tr >
-                                        <th class="table_title" colspan="2">
+                                        <th class="table_tite" colspan="2">
                                             <div class="table_title"> 
                                               
                                             </div>
@@ -224,8 +239,9 @@
                                 <thead>
                                     <tr >
                                         <td colspan="3">
-                                            <div align="center">
+                                            <div align="center" class="movePage" id="sss">
                                                 <img src="${ list.filePath }" alt="" class="top10_image">
+                                                <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
                                             </div>
                                         </td>
                                     </tr>
@@ -233,8 +249,8 @@
                                 <tbody>
                                     <tr >
                                         <th class="table_title" colspan="2">
-                                            <div class="table_title"> 
-                                              ${ list.boardTitle }
+                                            <div>
+                                                <a href="#" class="movePage" id="boardTitle">${ list.boardTitle }</a>
                                             </div>
                                         </th>
                                         <td class="vote_heart">♡</td>
@@ -266,6 +282,45 @@
             
         </div>
     </div>
+
+    <script>
+
+
+        
+        //let movePage =  document.querySelectorAll('.movePage');
+
+
+            //console.log(this.name);
+
+            //location.href='contestDetail.ct?bno=' + 
+
+
+        // document.querySelector('.movePage').addEventListener('click',function(e){
+
+        //     console.log(this);
+        // })
+
+        var movePage = document.querySelectorAll('.movePage');
+
+        // [].forEach.call(cols,function(movePage)){
+        //     movePage.add
+        // }
+
+        movePage.forEach( i => i.addEventListener('click', e => {
+            //alert('ss')
+            //console.log(this.DocumentType)
+            console.log(e.currentTarget.id);
+
+            if(e.currentTarget.id == boardTitle){
+                alert('s')
+            }
+            let clickBoardNo = e.currentTarget.children[1].value;
+            location.href='contestDetail.ct?bno=' + clickBoardNo;
+        }))
+
+        
+
+    </script>
 
 
 </body>

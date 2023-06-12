@@ -8,6 +8,7 @@
 		<resultMap id="contestBoardResultSet" type="contestBoard">
 		
 			<!-- 게시판공통 테이블 -->
+			<result column="BOARD_NO" property="boardNo"/>
 			<result column="BOARD_TITLE" property="boardTitle"/>
 			<result column="NICKNAME" property="nickName"/>
 			
@@ -77,7 +78,7 @@
 			VALUES
 					(
 					SEQ_BOARD_NO.NEXTVAL
-					,#{ memberNo }
+					,2
 					,#{ boardTitle }
 					,#{ boardContent }
 					,SYSDATE
@@ -137,7 +138,8 @@
 			
 			SELECT  *
 			        FROM(   SELECT
-			                     BOARD.BOARD_TITLE    
+			        			 BOARD.BOARD_NO
+			                    ,BOARD.BOARD_TITLE    
 			                    ,MEMBER.NICKNAME      
 			                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 			                    ,BOARD_IMAGE.MODIFY_NAME    

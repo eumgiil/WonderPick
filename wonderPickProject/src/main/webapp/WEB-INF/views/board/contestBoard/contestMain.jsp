@@ -12,13 +12,20 @@
 
 
 <style>
+    
     #all_area{
+        width: 1300px;
+        height: auto;
+        margin: auto;
+    }
+    #main_area{
         box-shadow: 1px 1px 10px rgb(200, 200, 200) ;
         border-radius: 20px;
         margin: auto;
         width: 900px;
         padding: 20px;
         margin-top:20px;
+
     }
     .winner_list>li{
        /*  border: 1px solid black; */
@@ -135,12 +142,11 @@
 
 	<jsp:include page="../../common/header.jsp" />
 
+
+
     <div id="all_area">
-
-
-
         <div id="main_area">
-              <div id="header_area" align="center">
+            <div id="header_area" align="center">
       
               <div>
                   <h1><span>이모티콘 공모전<hr></span></h1>
@@ -322,16 +328,17 @@
           
               </div>
           
-          </div>
+        </div>
 
     </div>
 
 
 
 
+
 <br><br><br><br><br><br><br><br><br><br>
 	<c:choose>
-       <c:when test="${ !empty sessionScope.loginMember }">
+       <c:when test="${ empty sessionScope.loginMember }">
 	    <script>
 	    
 	        $('#vote_btn').click(function(){
