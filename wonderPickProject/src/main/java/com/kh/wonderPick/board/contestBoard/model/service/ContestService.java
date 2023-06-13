@@ -20,10 +20,10 @@ public interface ContestService {
 	ArrayList<Contest> selectVotePage();
 
 	// 조회수 증가
-	void increaseCount(int bno);
+	//void increaseCount(int bno);
 
 	//더보기 페이징처리
-	ArrayList<Contest> selectMoreList(int startNumber, int endNumber);
+	ArrayList<Contest> selectMoreList(Contest contest);
 
 	
 	

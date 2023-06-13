@@ -1,7 +1,6 @@
 package com.kh.wonderPick.board.boardCommon.model.vo;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class Board {

@@ -27,6 +27,14 @@
 		<collection property="board" resultMap="board" />
 	</resultMap>
 	
+	<resultMap id="option" type="option">
+		<result column="option_no" property="optionNo" />
+		<result column="board_no" property="board_no" />
+		<result column="main_option" property="mainOp" />
+		<result column="detail_option" property="detail" />
+		<result column="PRICE" property="price" />
+	</resultMap>
+	
 	<resultMap id="boardImage" type="boardImage">
 		<result column="board_img_no" property="boardImgNo" />
 		<result column="board_no" property="boardNo" />
@@ -218,6 +226,22 @@
 		   and
 		 	   status = 'Y'
 	</select>
+	
+	<select id="selectOptionList" parameterType="_int" resultMap="option">
+		select
+		       option_no
+		      ,board_no
+		      ,main_option
+		      ,substr(detail_option, 2, instr(detail_option, ']', -1)-2) as detail_option
+		      ,substr(price, 2, instr(price, ']', -1)-2) as price
+		      
+		      ,price
+		  from
+		       art_option
+		 where
+		       board_no = 119
+	</select>
+	
 
 	<select id="selectBoardImage" parameterType="_int" resultMap="boardImage" >
 		select
@@ -231,7 +255,7 @@
 		  from
 		  	   board_image
 		 where
-		  	   board_no = #{ bno };
+		  	   board_no = #{ bno }
 	</select>
 
 

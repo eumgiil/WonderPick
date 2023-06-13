@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="replywMapper">
+
+	<resultMap id="reReplyResultSet" type="reReply1">
+		<result column="RE_REPLY_NO" property="reReplyNo" />
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="MEMBER_NO" property="member_no" />
+		<result column="CONTENT" property="content" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="NICKNAME" property="nickname" />
+		<result column="MODIFY_NAME" property="memberModifyName" />
+	</resultMap>
+
+	<resultMap id="replyResultSet" type="reply1">
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="CONTENT" property="content" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="NICKNAME" property="nickname" />
+		<result column="MODIFY_NAME" property="memberModifyName" />
+		<collection property="reReply" resultMap="reReply" />
+	</resultMap>
+	
+	
+	
+	
+	<select id="selectReplyList" parameterType="_int" resultMap="replyResultSet">
+		select
+		       reply_no
+		      ,nickname
+		      ,MODIFY_NAME
+		      ,content
+		  from
+		       reply r
+		  join
+		       member m on(r.member_no = m.member_no)
+		  join
+		       member_image mi on(r.member_no = mi.member_no)
+		 where
+		       r.board_no = #{ bno }
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
+	
+	
+	
+	

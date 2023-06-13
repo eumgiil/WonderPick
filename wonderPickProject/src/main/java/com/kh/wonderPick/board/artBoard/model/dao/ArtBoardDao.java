@@ -47,6 +47,9 @@ public class ArtBoardDao {
 	public ArtBoard selectArtBoard(SqlSessionTemplate sqlSession, int bno) {
 		return sqlSession.selectOne("artBoardMapper.selectArtBoard", bno);
 	}
+	public ArrayList<Option> selectOptionList(SqlSessionTemplate sqlSession, int bno){
+		return (ArrayList)sqlSession.selectList("artBoardMapper.selectOptionList", bno);
+	}
 	public ArrayList<BoardImage> selectBoardImage(SqlSessionTemplate sqlSession, int bno){
 		return (ArrayList)sqlSession.selectList("artBoardMapper.selectBoardImage", bno);
 	}
