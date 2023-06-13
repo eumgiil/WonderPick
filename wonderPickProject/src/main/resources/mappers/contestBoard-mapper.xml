@@ -210,6 +210,16 @@
          
 		</select>
 		
+		<update id="increaseCount" parameterType="_int">
+			UPDATE
+					BOARD
+			SET	
+					BOARD_COUNT = BOARD_COUNT + 1
+			WHERE
+					BOARD_NO = #{ boardNo }
+			AND
+					STATUS = 'Y'
+		</update>
 
 		
 	</mapper>

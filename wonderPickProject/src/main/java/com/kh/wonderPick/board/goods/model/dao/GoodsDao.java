@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
@@ -28,6 +29,19 @@ public class GoodsDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("goodsMapper.selectGoodsList", null , rowBounds);
 	}
+	
+	public int selectCategoryListCount(SqlSessionTemplate sqlSession, String goodsCategory) {
+		return sqlSession.selectOne("goodsMapper.selectCategoryListCount", goodsCategory);
+	}
+	
+	public ArrayList<Goods> selectCategoryList(SqlSessionTemplate sqlSession, PageInfo pi, String goodsCategory){
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectCategoryList", null , rowBounds);
+	}
+	
+	
 	
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("goodsMapper.insertBoard", b);
@@ -65,11 +79,22 @@ public class GoodsDao {
 		return sqlSession.insert("goodsMapper.insertReply", r);
 	}
 	
+	public int selectReplyListCount(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("goodsMapper.selectReplyListCount", boardNo);
+		
+	}
+	
 	//대댓글
 	public ArrayList<Re_Reply> selectReReplyList(SqlSessionTemplate sqlSession, int replyNo){
 		return (ArrayList)sqlSession.selectList("goodsMapper.selectReReplyLiST", replyNo);
 	}
 	public int insertReReply(SqlSessionTemplate sqlSession, Re_Reply re) {
 		return sqlSession.insert("goodsMapper.insertReReply", re);
+	}
+	
+	// 회원별 좋아요 조회
+	public ArrayList<Heart> selectHeartList(SqlSessionTemplate sqlSession, int memberNo){
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectHeartList", memberNo);
+		
 	}
 }

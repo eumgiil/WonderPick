@@ -6,8 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 <style>
         #all_area{
@@ -247,20 +248,21 @@
             </div>
             <div id="voteList_area" align="center">
                 <c:forEach  items="${ list }" var="list">
-                    <table border="1" class="contest_table">
+                <table border="1" class="contest_table">
+                    <tbody>
                         <tr >
                             <td colspan="3">
                                 <div align="center" class="movePage" id="boardImage">
                                     <img src="${ list.filePath }" alt="" class="top10_image">
-                                    <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
+                                    <input type="hidden" value="${ list.boardNo }">
                                 </div>
                             </td>
                         </tr>
                         <tr >
                             <th class="table_title" colspan="2">
-                                <div>
+                                <div class="table_title">
                                     <a href="#" class="movePage" id="boardTitle">
-                                        <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
+                                        <input type="hidden" value="${ list.boardNo }">
                                         ${ list.boardTitle }
                                     </a>
                                 </div>
@@ -271,7 +273,6 @@
                             <td class="table_profile_img">
                                 <div align="center">
                                     <img src="#" class="profile_img">
-                                    
                                 </div>
                             </td>
                             <td>${ list.nickName }</td>
@@ -287,29 +288,61 @@
                                 <div class="table_sysdate">조회수</div> 
                             </td>
                         </tr>
-                        <tbody id="selectList">
                         </tbody>
-
-                    </table>	
+                        
+                    </table>
                 </c:forEach>
+
+                <hr>
+                
+                <div class="selectList">
+
+                </div>
+              
+               
             </div>
             <div id="puls_btn">
                 <img src="resources/boardUpfiles/contestFiles/plus.webp" alt="" id="puls_btn_image">
             </div>
-          
+
+
+
+
+            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    Show a second modal and hide this one with the button below.
+                    </div>
+                    <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+        <a id="modal_1" class="btn btn-primary" data-bs-toggle="modal" href="ss" role="button">Open first modal</a>
+
+
+
+
+
+
+
+
         </div>        
     </div>
 
-    <br><br><br><br><br><br><br><br><br><br>
-
-
+       
 
    
 
 
     <script>
-
-
         
         //let movePage =  document.querySelectorAll('.movePage');
         
@@ -325,19 +358,27 @@
         //     console.log(this);
         // })
 
-        var movePage = document.querySelectorAll('.movePage');
-
         // [].forEach.call(cols,function(movePage)){
         //     movePage.add
         // }
 
+        // 클릭 시 해당 게시물 이동
+        var movePage = document.querySelectorAll('.movePage');
+
+
         movePage.forEach( i => i.addEventListener('click', e => {
 
-            if(e.currentTarget.id == 'boardImage'){
+           console.log(document.getElementById('modal_1').href)
+           document.getElementById('modal_1').href ='#exampleModalToggle';
+           
+            if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
+                console.log('이미지 클릭함')
                console.log(e.currentTarget.children[1].value);
                 let clickImageBoardNo = e.currentTarget.children[1].value;
                // location.href = 'contestDetail.ct?bno=' + clickBoardNo;
+               //location.href = '#exampleModalToggle';
             }else{
+                console.log('제목 클릭함')
                 console.log(e.currentTarget.children[0].value);
                 let clickTitleBoardNo = e.currentTarget.children[0].value;
                 //location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
@@ -347,7 +388,7 @@
 
         // 플러스버튼 더보기 
         document.getElementById('puls_btn').addEventListener('click', function(){
-
+            console.log($('#selectList').html())
             console.log($('.contest_table').length)
             $.ajax({
                 url : 'moreList.ct',
@@ -361,18 +402,21 @@
                         let value = "";
                     for(let i in result){
                         
-                        value += '<tr>'
+                        value += 
+                        '<table border="1" class="contest_table">'
+                            + '<tr>'
                                     + '<td colspan="3">'
                                     +' <div align="center" class="movePage" id="boardImage">'
-                                        +  '<img src="' + result[i].nickName + '" class="top10_image">'
-                                       + '<input type="hidden" value="'${ list.boardNo }">'
+                                        +  '<img src="' + result[i].filePath + '" class="top10_image">'
+                                       + '<input type="hidden" value="'+ result[i].boardNo +'">'
                                     + '</div>'
                                 + '</td>'
                             + '</tr>'
                             + '<tr >'
                                 + '<th class="table_title" colspan="2">'
-                                    +  '<div>'
+                                    +  '<div class="table_title">'
                                         + '<a href="#" class="movePage" id="boardTitle">'
+                                            +  '<input type="hidden" value="'+ result[i].boardNo +'">'
                                             + result[i].boardTitle
                                         +' </a>'
                                         +'</div>'
@@ -398,12 +442,35 @@
                                 +  '<td colspan="3">'
                                     + '<div class="table_sysdate">조회수</div> '
                                 + '</td>'
-                                +'</tr> ';
+                                +'</tr>'
+                        + '</table>';
 
-                        $('#selectList').html(value);
+                                
+                                
+                            }
+                            $('.selectList').html(value);
 
-                 
-                    }
+                            var movePage = document.querySelectorAll('.movePage');
+
+
+                            movePage.forEach( i => i.addEventListener('click', e => {
+
+                            console.log('hi')
+                                
+                                
+                                if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
+                                    console.log('이미지 클릭함')
+                                console.log(e.currentTarget.children[1].value);
+                                    let clickImageBoardNo = e.currentTarget.children[1].value;
+                                // location.href = 'contestDetail.ct?bno=' + clickBoardNo;
+                                }else{
+                                    console.log('제목 클릭함')
+                                    console.log(e.currentTarget.children[0].value);
+                                    let clickTitleBoardNo = e.currentTarget.children[0].value;
+                                    //location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
+                                }
+
+                            }))
 
 
                 },

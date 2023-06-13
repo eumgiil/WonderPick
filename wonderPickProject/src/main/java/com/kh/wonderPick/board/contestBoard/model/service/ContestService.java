@@ -25,6 +25,10 @@ public interface ContestService {
 	//더보기 페이징처리
 	ArrayList<Contest> selectMoreList(Contest contest);
 
+	int increaseCount(int boardNo);
+
+	Contest selectContestDetail(int boardNo);
+
 	
 	
 	

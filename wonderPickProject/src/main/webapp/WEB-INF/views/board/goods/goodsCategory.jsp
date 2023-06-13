@@ -39,20 +39,20 @@
         <hr style="border: 1px solid black; width: 200px;">
         <table class="category_option">
             <tr>
-                <td><a href="list.go?category=${category.fashion}&cPage=1">패션</a></td>
+                <td><a href="categorylist.go?goodsCategory=${ g.goodsCategory.equals('FASHION') }&cPage=1">패션</a></td>
             </tr>
             <tr>
-                <td><a href="list.go?category=${category.kitchen}&cPage=1">주방</a></td>
+                <td><a href="categorylist.go?goodsCategory=${category.kitchen}&cPage=1">주방</a></td>
             </tr>
             <tr>
-                <td><a href="list.go?category=${category.interior}&cPage=1">인테리어</a></td>
+                <td><a href="categorylist.go?goodsCategory=${category.interior}&cPage=1">인테리어</a></td>
             </tr>
             <tr>
-                <td><a href="list.go?category=${category.stationery}&cPage=1">문구</a></td>
+                <td><a href="categorylist.go?goodsCategory=${category.stationery}&cPage=1">문구</a></td>
             </tr>
             <tr>
             </tr>
-                <td><a href="list.go?category=${category.etc}&cPage=1">기타</a></td>
+                <td><a href="categorylist.go?goodsCategory=${category.etc}&cPage=1">기타</a></td>
             </tr>
         </table>
 

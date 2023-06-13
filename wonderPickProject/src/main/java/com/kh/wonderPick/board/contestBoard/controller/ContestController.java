@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
@@ -55,7 +56,7 @@ public class ContestController {
 		
 		
 		
-		System.out.println(board);
+		//System.out.println(board);
 		//System.out.println(upFile[0]);
 		//System.out.println(c);
 
@@ -147,16 +148,14 @@ public class ContestController {
 		
 		model.addAttribute("list", contestService.selectVotePage());
 		
-		//System.out.println("??: " + contestService.selectVotePage());
 		
 		return "board/contestBoard/contestVote";
 	}
 	
-	// 투표 페이징 처리
+	// 투표 페이징 처리(플러스 버튼)
 	@ResponseBody
 	@RequestMapping(value="moreList.ct", produces="application/json; charset=UTF-8")
 	public String selectMoreList(int checkNumber, Contest contest) {
-		//System.out.println(checkNumber);
 		
 		int endNumber = checkNumber + 12;
 		
@@ -167,17 +166,21 @@ public class ContestController {
 		
 	}
 	
-//	// 게시판 DetailView
-//	@RequestMapping("contestDeatil.ct")
-//	public String selectContestDetail(int bno) {
-//		System.out.println(bno);
-//		
-//		contestService.increaseCount(bno);
-//			
-//		
-//		return "board/contestBoard/contestDetailView";
-//	}
-//	
+	// 게시판 DetailView
+	@RequestMapping("contestDeatil.ct")
+	public String selectContestDetail(int boardNo, ModelAndView modelAndView) {
+		
+		
+		if(contestService.increaseCount(boardNo) > 0 ) {
+			modelAndView.addObject("b",contestService.selectContestDetail(boardNo)).setViewName("board/contestBoard/contestDetailView");
+		}else {
+			modelAndView.addObject("errorMsg", "상세조회 실패").setViewName("errorPage");
+		}
+		
+		contestService.selectContestDetail(boardNo);
+		
+		return modelAndView;
+	}
 	
 	
 	

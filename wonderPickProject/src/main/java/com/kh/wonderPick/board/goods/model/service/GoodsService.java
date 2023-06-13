@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
@@ -19,6 +20,13 @@ public interface GoodsService {
 	
 	// 게시글 리스트 조회
 	ArrayList<Goods> selectGoodsList(PageInfo pi);
+	
+	// 카테고리별 게시글 총 개수 조회
+	int selectCategoryListCount(String goodsCategory);
+	
+	
+	// 카테고리별 게시글 리스트 조회
+	ArrayList<Goods> selectCategoryList(PageInfo pi, String goodsCategory);
 	
 	// 게시글 작성하기
 	int insertGoods(Goods g, Board b, BoardImage bi);
@@ -39,20 +47,23 @@ public interface GoodsService {
 	ArrayList<Review> selectReviewList(int boardNo);
 	
 	
-	
 	// 댓글 리스트 조회
 	ArrayList<Reply> selectReplyList(int boardNo);
 	
 	// 댓글 작성
 	int insertReply(Reply r);
 	
-	
+	int selectReplyListCount(int boardNo);
 	
 	// 대댓글 리스트 조회
 	ArrayList<Re_Reply> selectReReplyList(int replyNo);
 	
 	// 대댓글 작성
 	int insertReReply(Re_Reply re);
+	
+	// 회원별 좋아요 조회
+	ArrayList<Heart> selectHeartList(int memberNo);
+	
 	
 	
 	

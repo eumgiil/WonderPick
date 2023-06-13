@@ -67,6 +67,9 @@
         
         
         }
+        .reReply{
+        border : 1px solid black;
+        }
         
         
     </style>
@@ -258,8 +261,29 @@
                     <tr>
                         <td style="padding-left:10px;">${r.content}</td>
                     </tr>
-                </table>
-                </c:forEach>
+                    <c:if test="${not empty reReplyList }">
+                    <input type="hidden" value="${re.replyNo }">
+                    <c:forEach items="${reReplyList }" var="re">
+                    </table>
+                    <table class="reReply" border="1">
+                    <tr>
+                    <td width="15%" rowspan="3" style="padding:10px; border-right: 1px solid lightslategray;">판매자 프로필</td>
+                    </tr>
+                    <tr>
+                       <td width="70%" style="padding-left:10px;">${re.nickname }</td>
+                       <td width="15%" rowspan="3">
+	                       <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>
+	                       <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>
+                        </td>
+                    </tr>
+                    <tr>
+                       <td style="padding-left:10px;">${re.content}</td>
+                    </tr>
+                    </table>
+                    </c:forEach>
+                    </c:if>
+                    <br>
+                 </c:forEach>
                 </c:when>
                 <c:otherwise>
                     <h6>댓글 내역이 존재하지 않습니다.</h3>
@@ -269,14 +293,18 @@
                 </c:choose>
 				</thead>
 				<tbody>
-				<br><hr>
+				<br>
+				<hr>
+				<br>
 				<c:choose>
 				<c:when test="${empty loginMember}" >
+				<table border="1">
 				<tr> 
 					<th colspan="2">
 						<textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>로그인 후 댓글 작성가능합니다.</textarea>
 					</th>
 				</tr>
+				</table>
 				</c:when>
 				<c:otherwise>
 				<tr>
