@@ -171,14 +171,16 @@ public class ContestController {
 	public ModelAndView selectContestDetail(int boardNo, ModelAndView modelAndView) {
 		
 		System.out.println("hihhihihi");
+		System.out.println(boardNo);
 		
 		if(contestService.increaseCount(boardNo) > 0 ) {
 			modelAndView.addObject("b",contestService.selectContestDetail(boardNo)).setViewName("board/contestBoard/contestDetailView");
 		}else {
-			modelAndView.addObject("errorMsg", "상세조회 실패").setViewName("errorPage");
+			modelAndView.addObject("errorMsg", "상세조회 실패ㅠ").setViewName("errorPage");
 		}
 		
 		contestService.selectContestDetail(boardNo);
+		
 		
 		return modelAndView;
 	}

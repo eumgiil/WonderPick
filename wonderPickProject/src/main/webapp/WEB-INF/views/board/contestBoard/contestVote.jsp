@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -372,27 +372,22 @@
            //document.getElementById('modal_1').href ='#exampleModalToggle';
 
             if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
-                console.log('이미지 클릭함')
-                console.log(e.currentTarget.children[1].value);
                 let clickImageBoardNo = e.currentTarget.children[1].value;
+                console.log(clickImageBoardNo);
                 location.href = 'contestDetail.ct?boardNo=' + clickImageBoardNo;
                //location.href = '#exampleModalToggle';
             }else{
-                console.log('제목 클릭함')
-                console.log(e.currentTarget.children[0].value);
                 let clickTitleBoardNo = e.currentTarget.children[0].value;
-                //location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
+                console.log(clickTitleBoardNo);
+                location.href = 'contestDetail.ct?boardNo=' + clickTitleBoardNo;
             }
 
         }))
 
         // 플러스버튼 더보기 
         document.getElementById('puls_btn').addEventListener('click', function(){
-            console.log($('#selectList').html())
-            console.log($('.contest_table').length)
             $.ajax({
                 url : 'moreList.ct',
-                type : 'post',
                 data : {
                     checkNumber : $('.contest_table').length
                 },
@@ -445,29 +440,22 @@
                                 +'</tr>'
                         + '</table>';
 
-                                
-                                
                             }
                             $('.selectList').html(value);
 
                             var movePage = document.querySelectorAll('.movePage');
-
-
                             movePage.forEach( i => i.addEventListener('click', e => {
 
-                            console.log('hi')
-                                
-                                
                                 if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
                                     console.log('이미지 클릭함')
                                 console.log(e.currentTarget.children[1].value);
                                     let clickImageBoardNo = e.currentTarget.children[1].value;
-                                // location.href = 'contestDetail.ct?bno=' + clickBoardNo;
+                                    location.href = 'contestDetail.ct?boardNo=' + clickImageBoardNo;
                                 }else{
                                     console.log('제목 클릭함')
                                     console.log(e.currentTarget.children[0].value);
                                     let clickTitleBoardNo = e.currentTarget.children[0].value;
-                                    //location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
+                                    location.href = 'contestDetail.ct?boardNo=' + clickTitleBoardNo;
                                 }
 
                             }))

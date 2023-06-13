@@ -9,6 +9,7 @@
 		
 			<result column="BOARD_NO" property="boardNo"/>
 			<result column="BOARD_TITLE" property="boardTitle"/>
+			<result column="BOARD_CONTENT" property="boardContent"/>
 		
 			
 			<result column="NICKNAME" property="nickName"/>
