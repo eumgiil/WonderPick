@@ -33,30 +33,25 @@
     }
     #header_area{
         border: 1px solid black;
-    }
-    #thumbnail_area{
-        border: 1px solid black;
-        background-color: red;
-        display: inline;
         margin: auto;
     }
-    #text_area2{
-        border: 1px solid black;
-        background-color: yellow;
-        display: inline;
+
+
+    #header_table{
         margin: auto;
     }
-    #body_area{
-        border: 1px solid black;
-    }
-    .adad{
-        display: inline-table;
-    }
+  
     #vote_heart{
         color: red;
-        font-size: large;
+        font-size: 80px;
     }
-    #image_area{
+   
+    #heart_area{
+        text-align: center;
+        font-size: 80px;
+    }
+
+    #body_area{
         margin: auto;
     }
    
@@ -71,53 +66,50 @@
     <div id="main_area">
 
         <div id="header_area">
-            <div>
-                여기는 썸네일 이랑 제목 희망가격 닉네임 들어갈자리
-            </div>
-           
-            <div id="thumbnail_area" class="adad" >
-                <img src="${ b.get(0).filePath }" alt="" id="thumbnail_image">
-            </div>
-           
-            <div id="text_area2" class="adad">
-                <div class="adad">
-                        제목 : ${ b.get(0).boardTitle }
-                </div>
-                <div id="nickName" class="adad">닉네임 :${ b.get(0).nickName }</div>
-                <div class="adad">희망판매가 : ${ b.get(0).price } </div>
-
-
-                <table border="1">
-                    <tr>
-                        <td>
-                            제목 : ${ b.get(0).boardTitle }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+            <table border="1" id="header_table">
+                <tr>
+                    <td rowspan="4">
+                        <div>
+                            <img src="${ b.get(0).filePath }" alt="" id="thumbnail_image">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>
+                            <h1>
+                                ${ b.get(0).boardTitle }
+                            </h1>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>
                             닉네임 :${ b.get(0).nickName }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            희망판매가 : ${ b.get(0).price } 
-                        </td>
-                    </tr>
-                </table>
-            </div>
-               
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>
+                            <h3>
+                                등록자 희망 판매가 : ${ b.get(0).price } 
+                            </h3>
+                        </span>
+                    </td>
+                </tr>
+            </table>
         </div>
 
-        <div id="body_area">
+        <div id="body_area" align="center">
 
-            <div>
-                좋아요 투표 
+            <div id="heart_area">
                 <span id="vote_heart">♡</span>
-                ${ b.get(0).voteCount }
+                <span id="vote_count">${ b.get(0).voteCount }</span>
             </div>
     
             <div>
-                글 내용 
                 ${ b.get(0).boardContent }
             </div>
     

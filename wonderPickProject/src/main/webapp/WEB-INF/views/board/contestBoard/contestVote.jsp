@@ -42,17 +42,14 @@
             width: 300px;
         }
         #body_area{
-            border: 1px solid black;
            margin: auto;
 
         }
         .winner_list>li{
-            border: 1px solid black;
             display: inline;
             padding: 20px
         }
         .contest_list{
-            border: 1px solid black;
             width: 800px;
             height: 300px;
             overflow: auto;
@@ -126,7 +123,6 @@
         .top10_image{
             width: 100px;
             height: 100px; 
-            background-color: red;
         }
         #header-1 h1{
             font-size: 32px;
@@ -151,7 +147,6 @@
             transform: scale(1.05);
         }
         .movePage{
-            background-color: yellow;
         }
         .movePage:hover{
             cursor: pointer;
@@ -195,7 +190,7 @@
                     <ul class="winner_list">
                       <c:forEach var="list" items="" >
                        <li>
-                            <table border="1" class="contest_table">
+                            <table class="contest_table">
                                 <thead>
                                     <tr >
                                         <td colspan="3">
