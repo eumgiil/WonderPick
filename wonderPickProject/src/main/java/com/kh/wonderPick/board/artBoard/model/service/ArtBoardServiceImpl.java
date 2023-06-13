@@ -42,19 +42,20 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public int insertArtBoard(Board board, ArtBoard artBoard, ArrayList<Option> list, ArrayList<BoardImage> files) {
-		int result1 = artDao.insertBoard(sqlSession, board);
-		int result2 = artDao.insertArtBoard(sqlSession, artBoard);
-		int result3 = 1;
-		int result4 = 1;
-		
+		int result = artDao.insertBoard(sqlSession, board);
+		result *= artDao.insertArtBoard(sqlSession, artBoard);
 		for(int i = 0; i < list.size(); i++) {
-			result3 = result3 * artDao.insertOptions(sqlSession, list.get(i));
+			result *= artDao.insertOptions(sqlSession, list.get(i));
+			System.out.println(list.get(i));
+			for(int j = 0; j < list.get(i).getDetailOption().size(); j++) {
+				result *= artDao.insertDetailOption(sqlSession, list.get(i).getDetailOption().get(j));
+				System.out.println(list.get(i).getDetailOption().get(j));
+			}
 		}
-		for(int j = 0; j < files.size(); j++) {
-			result4 = result4 * artDao.insertFiles(sqlSession, files.get(j));
+		for(int k = 0; k < files.size(); k++) {
+			result *= artDao.insertFiles(sqlSession, files.get(k));
 		}
-		
-		return (result1 * result2 * result3 * result4);
+		return result;
 	}
 
 
@@ -64,14 +65,15 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	}
 
 	@Override
+	public ArrayList<Option> selectOptionList(int bno) {
+		return artDao.selectOptionList(sqlSession, bno);
+	}
+	
+	@Override
 	public ArrayList<BoardImage> selectBoardImage(int bno) {
 		return artDao.selectBoardImage(sqlSession, bno);
 	}
 
-	@Override
-	public ArrayList<Option> selectOptionList(int bno) {
-		return artDao.selectOptionList(sqlSession, bno);
-	}
 
 
 	
