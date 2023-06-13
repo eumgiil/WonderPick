@@ -27,11 +27,16 @@
 		<collection property="board" resultMap="board" />
 	</resultMap>
 	
+	
 	<resultMap id="option" type="option">
 		<result column="option_no" property="optionNo" />
 		<result column="board_no" property="board_no" />
 		<result column="main_option" property="mainOp" />
-		<result column="detail_option" property="detail" />
+		<collection property="detailOption" resultMap="detailOption" />
+	</resultMap>
+	<resultMap id="detailOption" type="detailOption">
+		<result column="option_no" property="optionNo" />
+		<result column="DETAIL" property="detail" />
 		<result column="PRICE" property="price" />
 	</resultMap>
 	
@@ -76,29 +81,29 @@
 	</select>
 	
 	<select id="selectArtList" resultMap="artBoardDTO">
-		select 
-		       b.board_no
+		select
+		       ab.board_no
 		      ,b.board_title
+		      ,NVL(bi.modify_name, 'resources/boardUpfiles/artBoardFiles/2023061222534502.jpg') modify_name
 		      ,m.nickname
-		      ,NVL(ab.price, 0) price
 		      ,AVG(NVL(r.star, 0))
-		      ,bi.modify_name
+		      ,NVL(ab.price, 0) price
 		  from
-		       board b
+		       art_board ab
+		  join
+		       board b on(b.board_no = ab.board_no)
+		  left join
+		       board_image bi on(bi.board_no = b.board_no)
 		  join
 		       member m on(b.member_no = m.member_no)
-		  join
-		       art_board ab on(b.board_no = ab.board_no)
 		  left join
 		       review r on(b.board_no = r.board_no)
-		  join
-		       board_image bi on(bi.board_no = b.board_no)
-	     where 
-	     	   b.status = 'Y'
-           and
-               bi.file_level = '1'
+		 where
+		       b.status = 'Y'
+		   <!-- and
+		       bi.file_level = '1' -->
 		 group by
-		       b.board_no, b.board_title, m.nickname, price, bi.modify_name
+		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name
 		 order by
 		       board_no desc
 	</select>
@@ -165,16 +170,29 @@
 		  	   OPTION_NO
 		  	  ,BOARD_NO
 		  	  ,MAIN_OPTION
-		  	  ,DETAIL_OPTION
-		  	  ,PRICE
 		  	   )
 		values
 			   (
 		       SEQ_OPTION_NO.nextval
 		      ,seq_board_no.currval
-		      ,#{mainOp}
-		      ,#{detail}
-		      ,#{price}
+		      ,#{ mainOp }
+			   )
+	</insert>
+	
+	<insert id="insertDetailOption" parameterType="detailOption">
+		insert
+		  into
+		  	   art_option_detail
+		  	   (
+		  	   OPTION_NO
+		  	  ,DETAIL
+		  	  ,PRICE
+		  	   )
+		values
+			   (
+		       SEQ_OPTION_NO.currval
+		      ,#{ detail }
+		      ,#{ price }
 			   )
 	</insert>
 	
@@ -230,16 +248,15 @@
 	<select id="selectOptionList" parameterType="_int" resultMap="option">
 		select
 		       option_no
-		      ,board_no
 		      ,main_option
-		      ,substr(detail_option, 2, instr(detail_option, ']', -1)-2) as detail_option
-		      ,substr(price, 2, instr(price, ']', -1)-2) as price
-		      
-		      ,price
+              ,detail
+              ,price
 		  from
-		       art_option
+		       art_option ar
+          join
+               art_option_detail ad using(option_no)
 		 where
-		       board_no = 119
+		       board_no = #{ bno }
 	</select>
 	
 

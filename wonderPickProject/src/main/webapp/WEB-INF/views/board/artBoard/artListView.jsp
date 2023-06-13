@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>굿즈판매목록페이지</title>
+    <title>그판매목록페이지</title>
     <style>
         body{
             width : 900px;
@@ -88,9 +88,9 @@
             <div class="">
                 <h6 style="width:500px; display: inline-block;"> ${list.size()}개의 상품이 있습니다.</h6>
                 
-                <c:if test="${ not empty loginUser} }">
+                <%-- <c:if test="${ not empty loginUser} }"> --%>
 	                <button onclick="location.href='enrollForm.at'">글쓰기</button>
-                </c:if>
+                <%-- </c:if> --%>
                 
             </div>
             <div id="searchGoods">

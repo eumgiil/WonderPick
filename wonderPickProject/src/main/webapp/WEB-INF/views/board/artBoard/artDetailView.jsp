@@ -81,6 +81,7 @@
         .inquire_img{
             border-right: 1px solid lightslategray;
         }
+     
 
     </style>
 </head>
@@ -333,47 +334,23 @@
                 <table class="width">
                     <!-- 여기서부터 -->
                     <c:forEach items="${optionList}" var="option">
-	                        	<c:set var="detail" value="${ option.detail }" />
                     	<tr>
 	                        <td>${ option.mainOp }</td>
 	                        <td class="t_align_right">
-	                            <select name="" id="">
-	                                <option value="">
-	                                
-		                                <c:forEach items="${ option.detail }" var="detail">${ detail }</c:forEach>
-		                                <c:forEach items="${ option.price }" var="price">${ price }</c:forEach>
-									</option>
+	                            <select class="select" onchange="choice();" style="width:70%;">
+	                            	<option value="0">===</option>
+									<c:forEach items="${ option.detailOption }" var="detail">
+										<option value="${ detail.price }" align="center" >
+											 ${ detail.detail }  
+											&nbsp;&nbsp;&nbsp;&nbsp;
+											 ${ detail.price }원 
+										</option>
+									</c:forEach>
 	                            </select>
 	                        </td>
 	                    </tr>
                     </c:forEach>
-      
-                    
-                    
-                    <c:choose>
-		                <c:when test="">
-		
-		                </c:when>
-		                <c:otherwise>
-		
-		                </c:otherwise>
-		            </c:choose>
-		            
-		            
-		            
-                    <tr>
-                        <td>옵션 1</td>
-                        <td class="t_align_right">
-                            <select name="" id="">
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                            </select>
-                        </td>
-                    </tr>
                     <!-- 여기까지 반복 -->
-                    
-
                 </table>
             </div>
             <br><br>
@@ -433,7 +410,7 @@
                 <table class="width">
                     <tr>
                         <td class="op_subTitle" style="font-size:20px; font-weight: bolder;">결제금액</td>
-                        <td class="t_align_right">150,000원</td>
+                        <td class="t_align_right" id="totalPrice">${ artBoard.price }</td>
                     </tr>
                 </table>
             </div>
@@ -467,12 +444,24 @@
             window.scrollTo({top:location - 200, behavior:"smooth"});
         }
 
+        
 		window.onload = function(){
-			console.log('${artBoard}');
-			console.log('${boardImage}');
-			console.log('${reviewList}');
-			console.log('${optionList}');
-		}        
+			//console.log('${artBoard}');
+			//console.log('${boardImage}');
+			//console.log('${reviewList}');
+			//console.log('${optionList}');
+			//console.log('${optionList.size()}');
+		}
+		
+		function choice(){
+			let number = parseInt('${ artBoard.price }');
+            let option = document.querySelectorAll('.select > option:checked');
+			for(var i = 0; i < option.length; i++){
+                number += parseInt(option[i].value);
+            }
+            let price = document.getElementById('totalPrice');
+            price.innerHTML = number;
+		}
         
 
 

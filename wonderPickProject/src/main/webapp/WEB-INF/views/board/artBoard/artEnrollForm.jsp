@@ -99,23 +99,23 @@
 	                
 	                <tr>
 	                    <th><h5 class="sub_title">파일유형</h5></th>
-	                    <td><input type="text" name="fileType" required></td>
+	                    <td><input type="text" name="fileType" maxlength="5" placeholder="영어로만 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">해상도</h5> </th>
-	                    <td><input type="text" name="dpi" required></td>
+	                    <td><input type="text" name="dpi" maxlength="20" placeholder="영어로만 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본사이즈</h5></th>
-	                    <td><input type="text" name="defaultSize" required></td>
+	                    <td><input type="text" name="defaultSize" maxlength="50" placeholder="영어로만 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본수정횟수</h5></th>
-	                    <td><input type="number" name="modifyCount" required></td>
+	                    <td><input type="number" name="modifyCount" placeholder="영어로만 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">작업기간</h5></th>
-	                    <td><input type="text" name="workday" required></td>
+	                    <td><input type="text" name="workday" placeholder="영어로만 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th colspan="4"><hr class="line"></th>
@@ -286,16 +286,16 @@
                 opPrice = document.getElementsByClassName('opPrice' + i);
                 option = document.getElementById('option_'+ i);
 
-                /*
+                
                 deList.push('#'+option.value+'#');
                 prList.push('#'+option.value+'#');
                 options.push(option.value);
 
-                for(let j = 0; j < detailOp.length; j++){
+                /* for(let j = 0; j < detailOp.length; j++){
                     deList.push(detailOp[j].value);
                     prList.push(opPrice[j].value);
-                }
-                */
+                } */
+                
             };
 
             let form = document.getElementById('form');
