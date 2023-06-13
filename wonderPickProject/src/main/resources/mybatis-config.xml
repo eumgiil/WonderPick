@@ -23,6 +23,7 @@
 		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply" alias="reReply" />
 		<typeAlias type="com.kh.wonderPick.board.reply.model.vo.Reply1" alias="reply1" />
 		<typeAlias type="com.kh.wonderPick.board.reply.model.vo.Re_Reply1" alias="reReply1" />
+		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Heart" alias="heart" />
 	
 
 		<typeAlias type="com.kh.wonderPick.chatting.model.vo.Chating" alias="chating"/>
