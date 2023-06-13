@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.dao.GoodsDao;
@@ -113,6 +114,11 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public int updateGoods(Goods g) {
 		return 0;
+	}
+	
+	@Override
+	public ArrayList<Heart> selectHeartList(int memberNo){
+		return goodsDao.selectHeartList(sqlSession, memberNo);
 	}
 
 	

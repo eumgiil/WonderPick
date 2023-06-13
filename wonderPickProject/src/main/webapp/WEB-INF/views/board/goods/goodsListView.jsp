@@ -93,8 +93,6 @@
         }
         
         
-        
-        
 
     </style>
  
@@ -179,10 +177,6 @@
         	}
         		
         });
-        
-        
-        
-        
         </script>
 
         </div>
@@ -198,7 +192,15 @@
                     <table id="goodsInfo"  id="goods" width="250">
 	                    <tr>
 	                        <td>${g.nickName}</td>
-	                        <td><span id="heart"><i class="fa fa-heart-o" width="30" style="float: right;"></i></span></td>
+	                        <c:choose>
+	                        <c:when test="${empty loginMember}">
+	                        <td></td>
+	                        </c:when>
+	                        <c:otherwise>
+	                        <td onclick="heartUpdate();" id="heart"></td>
+	                        </c:otherwise>
+	                        </c:choose>
+	                        
 	                    </tr>
 	                    <tr>
 	                        <td colspan="2">★★★★☆</td>
@@ -217,53 +219,50 @@
                 <h3>등록된 상품이 없습니다.</h3>
             </c:otherwise>
         </c:choose>
-
+	
 	</div>
+	
 	<script>
-	
-	selectHeart();
-	heartUpdate();
-	
-	function selectHeart(){
-		$.ajax({
-			url : 'selectHeart.go',
-			data : {
-				boardNo : #{g.boardNo}
-			},
-			success : function(result){
-				if(result > 0 ){
-					$('#heart').html('<label style="font-size:20px; color:rgb(255, 131, 153);">♥</label>');
-				}else{
-					$('#heart').html('<label style="font-size:20px;">♡</label>');
+		$(function(){
+			selectHeart();
+			heartUpdate();
+		});
+		
+		function selectHeart(){
+			$.ajax({
+				url : 'selectHeart.go',
+				data : {
+					memberNo : ${loginMember.memberNo}
+				},
+				success : function(result){
+					if(result > 0 ){
+						$('#heart').html('<img src="resources/common/heart.png">');
+					}else{
+						$('#heart').html('<img src="resources/common/noheart.png">');
+					}
+				},
+				error : function(){
+					console.log('좋아요 조회 실패');
 				}
-			},
-			error : function(){
-				console.log('좋아요 실패');
-			}
-		})
-	}
-	
-	function heartUpdate(){
-		$.ajax({
-			url : 'heartCount.go',
-			data : {
-				boardNo : #{g.boardNo}
-			},
-			success : function(result){
-				selectHeart();
-				
-			},
-			error :  function(){
-				console.log('실패');
-			}
-		})
-	}
-	
-	
-	
-	
-	
-	</script>
+			});
+		};
+		
+		function heartUpdate(){
+			$.ajax({
+				url : 'heartCount.go',
+				data : {
+					boardNo : ${g.boardNo},
+					memberNo : ${loginMember.memberNo}
+				},
+				success : function(result){
+					selectHeart();
+				},
+				error :  function(){
+					console.log('실패');
+				}
+			});
+		};
+		</script>
 	
 	
 	<script>

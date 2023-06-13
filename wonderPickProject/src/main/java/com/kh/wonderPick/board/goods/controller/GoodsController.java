@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.service.GoodsService;
@@ -211,6 +212,13 @@ public class GoodsController {
 	@RequestMapping("reinsert.go")
 	public String ajaxInsertReReply(Re_Reply re) {
 		return goodsService.insertReReply(re) > 0 ? "success" : "fail";
+	}
+	
+	// 회원별 좋아요 조회
+	@ResponseBody
+	@RequestMapping(value="selectHeart.go", produces="application/json; charset=UTF-8" )
+	public String ajaxSelectHeartList(int memberNo) {
+		return new Gson().toJson(goodsService.selectHeartList(memberNo));
 	}
 	
 	

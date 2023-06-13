@@ -282,6 +282,13 @@ select
 	      reply_no = #{replyNo}
   
   </select>
+  <select id="selectHeartList" resultType="heart">
+  select *
+	from 
+		  heart
+	where 
+	      member_no = #{memberNo}
+  </select>
  
  
  

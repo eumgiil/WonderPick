@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
@@ -89,5 +90,11 @@ public class GoodsDao {
 	}
 	public int insertReReply(SqlSessionTemplate sqlSession, Re_Reply re) {
 		return sqlSession.insert("goodsMapper.insertReReply", re);
+	}
+	
+	// 회원별 좋아요 조회
+	public ArrayList<Heart> selectHeartList(SqlSessionTemplate sqlSession, int memberNo){
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectHeartList", memberNo);
+		
 	}
 }
