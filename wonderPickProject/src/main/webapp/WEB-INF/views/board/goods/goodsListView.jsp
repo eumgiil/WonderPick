@@ -104,7 +104,7 @@
         <hr style="border: 1px solid black; width: 200px;">
         <table class="category_option">
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${ goodsCategory.equals('FASHION') }&cPage=1">패션</a></td>
+                <td><a href="categorylist.go?goodsCategory=${g.goodsCategory.values('FASHION')}&cPage=1">패션</a></td>
             </tr>
             <tr>
                 <td><a href="categorylist.go?goodsCategory=${goodsCategory.kitchen}&cPage=1">주방</a></td>
@@ -161,7 +161,6 @@
         $.ajax({
         	url : 'list.go?cPage=1',
         	data : num ,
-        	dataType :'json'
         	type :'get',
         	success : function(result){
         		for(var i = 0 ; i< result.length; i++){
@@ -188,7 +187,7 @@
             <c:when test="${not empty list}">
               <c:forEach items="${list}" var="g">
                   <div class="goodsList2" style="display:inline-block;">
-                    <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="heart();" id="heart"><br>
+                    <img src="resources/boardUpfiles/goodsFiles/b61adf9a35bba64590b9bc1d10734d93.jpg" alt=""  width="250" ><br>
                     <table id="goodsInfo"  id="goods" width="250">
 	                    <tr>
 	                        <td>${g.nickName}</td>
@@ -197,7 +196,7 @@
 	                        <td></td>
 	                        </c:when>
 	                        <c:otherwise>
-	                        <td onclick="heartUpdate();" id="heart"></td>
+	                        <td><img id="heart" src=""></td>
 	                        </c:otherwise>
 	                        </c:choose>
 	                        
@@ -212,7 +211,6 @@
                     </table>
                     <br>
                     </div>
-                    
                  </c:forEach> 
             </c:when>
             <c:otherwise>
@@ -236,9 +234,9 @@
 				},
 				success : function(result){
 					if(result > 0 ){
-						$('#heart').html('<img src="resources/common/heart.png">');
+						$('#heart').attr('src', 'resources/common/heart.png');
 					}else{
-						$('#heart').html('<img src="resources/common/noheart.png">');
+						$('#heart').attr('src', 'resources/common/noheart.png');
 					}
 				},
 				error : function(){
@@ -259,6 +257,7 @@
 				},
 				error :  function(){
 					console.log('실패');
+					T
 				}
 			});
 		};
