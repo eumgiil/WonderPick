@@ -8,28 +8,48 @@
 </head>
 <body>
 
+    <jsp:include page="../../common/header.jsp" />
+
 
    <div id="all_area">
     <div id="main_area">
 
-        <div id="enroll_title">
-            <span><h1>공모전 참가/등록</h1></span>
-            <hr>
-        </div>
         <div>
-            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage1">
+            여기는 썸네일 이랑 제목 희망가격 닉네임 들어갈자리
+            ${ b }
+            <div>
+                <img src="${ b.get(0).filePath }" alt="">ss
+            </div>
+            <div>
+                <div>제목 :  ${b.get(0).boardTitle } </div>
+                <div>닉네임 : ${b.get(0).nickName } </div>
+                <div>희망가격 ${ b.get(0).price }</div>
+                <div></div>
+            </div>
         </div>
+
+
         <div>
-            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage2">
-            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage3">
-            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage4">
-            <img src="resources/boardUpfiles/contestFiles/noimage.png" class="noImge" id="thumnailImage5">
+            좋아요 투표 
+            ${ b.get(0).voteCount }
+        </div>
+
+        <div>
+            글 내용 
+            ${ b.get(0).boardContent }
+        </div>
+
+        <div>
+            
+            나머지 4개 사진들
+            <img src="  ${ b.get(1).filePath } " alt="">
+            <img src="  ${ b.get(2).filePath } " alt="">
+            <img src="  ${ b.get(3).filePath } " alt="">
+            <img src="  ${ b.get(4).filePath } " alt="">
+           
         </div>
        
-        <div>
-            * 이모티콘(사진)등록은 최소 1장 필수이며, 최대 5장까지 첨부가능합니다.
-            <br>
-        </div>
+       
 
 
     </div>

@@ -373,7 +373,7 @@
 
             if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
                 console.log('이미지 클릭함')
-               console.log(e.currentTarget.children[1].value);
+                console.log(e.currentTarget.children[1].value);
                 let clickImageBoardNo = e.currentTarget.children[1].value;
                 location.href = 'contestDetail.ct?boardNo=' + clickImageBoardNo;
                //location.href = '#exampleModalToggle';
