@@ -26,6 +26,8 @@
 			<result column="VOTE_COUNT" property="voteCount"/>
 			<result column="FILE_PATH" property="filePath"/>
 			
+			<result column="PRICE" property="price" />
+			
 			
 		</resultMap>
 		
@@ -220,6 +222,44 @@
 			AND
 					STATUS = 'Y'
 		</update>
+		
+		<select id="selectContestDetail" resultMap="contestBoardResultSet">
+		
+					SELECT
+		        			 BOARD.BOARD_NO
+		                    ,BOARD.BOARD_TITLE
+		                    ,BOARD_CONTENT
+		                    ,MEMBER.NICKNAME      
+		                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
+		                    ,BOARD_IMAGE.MODIFY_NAME    
+		                    ,BOARD_IMAGE.UPLOAD_DATE 
+		                    ,BOARD_COUNT
+		                    ,VOTE.VOTE_COUNT   
+		                    ,FILE_PATH
+		                    ,BOARD_IMAGE.FILE_LEVEL
+		                    ,PRICE
+			          FROM 
+			                 BOARD
+			        LEFT JOIN
+			                 MEMBER ON(BOARD.MEMBER_NO = MEMBER.MEMBER_NO)
+			        LEFT JOIN 
+			        
+			                BOARD_IMAGE  ON(BOARD.BOARD_NO = BOARD_IMAGE.BOARD_NO)
+			        LEFT JOIN
+			                MEMBER_IMAGE  ON(BOARD.MEMBER_NO = MEMBER_IMAGE.MEMBER_NO)
+			        LEFT JOIN   
+			                VOTE ON(BOARD.BOARD_NO = VOTE.BOARD_NO)
+			        LEFT JOIN
+			                EMOTICON ON(BOARD.BOARD_NO = EMOTICON.BOARD_NO)
+			                
+			        WHERE
+			                
+			                EMOTICON.PRICE_STATUS = 0
+                      AND 
+                            BOARD.BOARD_NO = #{ boardNo }
+			       
+		
+		</select>
 
 		
 	</mapper>

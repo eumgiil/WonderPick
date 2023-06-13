@@ -167,9 +167,10 @@ public class ContestController {
 	}
 	
 	// 게시판 DetailView
-	@RequestMapping("contestDeatil.ct")
-	public String selectContestDetail(int boardNo, ModelAndView modelAndView) {
+	@RequestMapping("contestDetail.ct")
+	public ModelAndView selectContestDetail(int boardNo, ModelAndView modelAndView) {
 		
+		System.out.println("hihhihihi");
 		
 		if(contestService.increaseCount(boardNo) > 0 ) {
 			modelAndView.addObject("b",contestService.selectContestDetail(boardNo)).setViewName("board/contestBoard/contestDetailView");

@@ -27,7 +27,7 @@ public interface ContestService {
 
 	int increaseCount(int boardNo);
 
-	Contest selectContestDetail(int boardNo);
+	ArrayList<Contest> selectContestDetail(int boardNo);
 
 	
 	

@@ -325,7 +325,7 @@
                 </div>
             </div>
             
-        <a id="modal_1" class="btn btn-primary" data-bs-toggle="modal" href="ss" role="button">Open first modal</a>
+        <a id="modal_1" class="btn btn-primary" data-bs-toggle="modal" href="" role="button">Open first modal</a>
 
 
 
@@ -368,14 +368,14 @@
 
         movePage.forEach( i => i.addEventListener('click', e => {
 
-           console.log(document.getElementById('modal_1').href)
-           document.getElementById('modal_1').href ='#exampleModalToggle';
-           
+           //console.log(document.getElementById('modal_1').href)
+           //document.getElementById('modal_1').href ='#exampleModalToggle';
+
             if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
                 console.log('이미지 클릭함')
                console.log(e.currentTarget.children[1].value);
                 let clickImageBoardNo = e.currentTarget.children[1].value;
-               // location.href = 'contestDetail.ct?bno=' + clickBoardNo;
+                location.href = 'contestDetail.ct?boardNo=' + clickImageBoardNo;
                //location.href = '#exampleModalToggle';
             }else{
                 console.log('제목 클릭함')

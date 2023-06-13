@@ -37,11 +37,11 @@ public class ContestDao {
 	}
 
 	public int increaseCount(SqlSessionTemplate sqlSession, int boardNo) {
-		return sqlSession.update("contestMapper.increaseCount", boardNo);
+		return sqlSession.update("contestBoardMapper.increaseCount", boardNo);
 	}
 
-	public Contest selectContestDetail(SqlSessionTemplate sqlSession, int boardNo) {
-		return (Contest)sqlSession.selectList("contestMapper.selectContestDetail", boardNo);
+	public ArrayList<Contest> selectContestDetail(SqlSessionTemplate sqlSession, int boardNo) {
+		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectContestDetail", boardNo);
 	}
 
 
