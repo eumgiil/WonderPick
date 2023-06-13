@@ -36,6 +36,14 @@ public class ContestDao {
 		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectMoreList", contest);
 	}
 
+	public int increaseCount(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("contestMapper.increaseCount", boardNo);
+	}
+
+	public Contest selectContestDetail(SqlSessionTemplate sqlSession, int boardNo) {
+		return (Contest)sqlSession.selectList("contestMapper.selectContestDetail", boardNo);
+	}
+
 
 
 

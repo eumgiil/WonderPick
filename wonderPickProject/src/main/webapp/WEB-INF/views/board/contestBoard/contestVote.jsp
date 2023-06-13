@@ -6,8 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 <style>
         #all_area{
@@ -303,20 +304,45 @@
             <div id="puls_btn">
                 <img src="resources/boardUpfiles/contestFiles/plus.webp" alt="" id="puls_btn_image">
             </div>
-          
+
+
+
+
+            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    Show a second modal and hide this one with the button below.
+                    </div>
+                    <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+        <a id="modal_1" class="btn btn-primary" data-bs-toggle="modal" href="ss" role="button">Open first modal</a>
+
+
+
+
+
+
+
+
         </div>        
     </div>
 
-    <br><br><br><br><br><br><br><br><br><br>
-
-
+       
 
    
 
 
     <script>
-
-
         
         //let movePage =  document.querySelectorAll('.movePage');
         
@@ -342,14 +368,15 @@
 
         movePage.forEach( i => i.addEventListener('click', e => {
 
-           console.log('hi')
-            
-            
+           console.log(document.getElementById('modal_1').href)
+           document.getElementById('modal_1').href ='#exampleModalToggle';
+           
             if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
                 console.log('이미지 클릭함')
                console.log(e.currentTarget.children[1].value);
                 let clickImageBoardNo = e.currentTarget.children[1].value;
                // location.href = 'contestDetail.ct?bno=' + clickBoardNo;
+               //location.href = '#exampleModalToggle';
             }else{
                 console.log('제목 클릭함')
                 console.log(e.currentTarget.children[0].value);

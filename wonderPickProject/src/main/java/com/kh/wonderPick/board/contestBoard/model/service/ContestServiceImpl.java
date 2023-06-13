@@ -59,5 +59,15 @@ public class ContestServiceImpl implements ContestService {
 		return contestDao.selectMoreList(sqlSession, contest);
 	}
 
+	@Override
+	public int increaseCount(int boardNo) {
+		return contestDao.increaseCount(sqlSession, boardNo);
+	}
+
+	@Override
+	public Contest selectContestDetail(int boardNo) {
+		return contestDao.selectContestDetail(sqlSession, boardNo);
+	}
+
 
 }
