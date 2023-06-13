@@ -246,58 +246,59 @@
                 <img src="resources/boardUpfiles/contestFiles/new3.png" id="refresh">
             </div>
             <div id="voteList_area" align="center">
+                <c:forEach  items="${ list }" var="list">
                 <table border="1" class="contest_table">
-                    <c:forEach  items="${ list }" var="list">
                     <tbody>
-
-                            <tr >
-                                <td colspan="3">
-                                    <div align="center" class="movePage" id="boardImage">
-                                        <img src="${ list.filePath }" alt="" class="top10_image">
-                                        <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr >
-                                <th class="table_title" colspan="2">
-                                    <div>
-                                        <a href="#" class="movePage" id="boardTitle">
-                                            <input type="hidden" value="${ list.boardNo }">${ list.boardNo }
-                                            ${ list.boardTitle }
-                                        </a>
-                                    </div>
-                                </th>
-                                <td class="vote_heart">♡</td>
-                            </tr>
-                            <tr>
-                                <td class="table_profile_img">
-                                    <div align="center">
-                                        <img src="#" class="profile_img">
-                                        
-                                    </div>
-                                </td>
-                                <td>${ list.nickName }</td>
-                                <td>${ list.voteCount }</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <span class="table_sysdate">${ list.uploadDate }</span> 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="table_sysdate">조회수</div> 
-                                </td>
-                            </tr>
-
+                        <tr >
+                            <td colspan="3">
+                                <div align="center" class="movePage" id="boardImage">
+                                    <img src="${ list.filePath }" alt="" class="top10_image">
+                                    <input type="hidden" value="${ list.boardNo }">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr >
+                            <th class="table_title" colspan="2">
+                                <div class="table_title">
+                                    <a href="#" class="movePage" id="boardTitle">
+                                        <input type="hidden" value="${ list.boardNo }">
+                                        ${ list.boardTitle }
+                                    </a>
+                                </div>
+                            </th>
+                            <td class="vote_heart">♡</td>
+                        </tr>
+                        <tr>
+                            <td class="table_profile_img">
+                                <div align="center">
+                                    <img src="#" class="profile_img">
+                                </div>
+                            </td>
+                            <td>${ list.nickName }</td>
+                            <td>${ list.voteCount }</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <span class="table_sysdate">${ list.uploadDate }</span> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="table_sysdate">조회수</div> 
+                            </td>
+                        </tr>
                         </tbody>
-                    </c:forEach>
+                        
+                    </table>
+                </c:forEach>
 
-                        <tbody id="selectList2">
-                           
-                        </tbody>
+                <hr>
+                
+                <div class="selectList">
 
-                    </table>	
+                </div>
+              
+               
             </div>
             <div id="puls_btn">
                 <img src="resources/boardUpfiles/contestFiles/plus.webp" alt="" id="puls_btn_image">
@@ -331,19 +332,26 @@
         //     console.log(this);
         // })
 
-        var movePage = document.querySelectorAll('.movePage');
-
         // [].forEach.call(cols,function(movePage)){
         //     movePage.add
         // }
 
+        // 클릭 시 해당 게시물 이동
+        var movePage = document.querySelectorAll('.movePage');
+
+
         movePage.forEach( i => i.addEventListener('click', e => {
 
-            if(e.currentTarget.id == 'boardImage'){
+           console.log('hi')
+            
+            
+            if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
+                console.log('이미지 클릭함')
                console.log(e.currentTarget.children[1].value);
                 let clickImageBoardNo = e.currentTarget.children[1].value;
                // location.href = 'contestDetail.ct?bno=' + clickBoardNo;
             }else{
+                console.log('제목 클릭함')
                 console.log(e.currentTarget.children[0].value);
                 let clickTitleBoardNo = e.currentTarget.children[0].value;
                 //location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
@@ -367,17 +375,21 @@
                         let value = "";
                     for(let i in result){
                         
-                        value += '<tr>'
+                        value += 
+                        '<table border="1" class="contest_table">'
+                            + '<tr>'
                                     + '<td colspan="3">'
                                     +' <div align="center" class="movePage" id="boardImage">'
-                                        +  '<img src="' + result[i].nickName + '" class="top10_image">'
+                                        +  '<img src="' + result[i].filePath + '" class="top10_image">'
+                                       + '<input type="hidden" value="'+ result[i].boardNo +'">'
                                     + '</div>'
                                 + '</td>'
                             + '</tr>'
                             + '<tr >'
                                 + '<th class="table_title" colspan="2">'
-                                    +  '<div>'
+                                    +  '<div class="table_title">'
                                         + '<a href="#" class="movePage" id="boardTitle">'
+                                            +  '<input type="hidden" value="'+ result[i].boardNo +'">'
                                             + result[i].boardTitle
                                         +' </a>'
                                         +'</div>'
@@ -403,12 +415,35 @@
                                 +  '<td colspan="3">'
                                     + '<div class="table_sysdate">조회수</div> '
                                 + '</td>'
-                                +'</tr> ';
+                                +'</tr>'
+                        + '</table>';
 
                                 
                                 
                             }
-                            $('#selectList2').html(value);
+                            $('.selectList').html(value);
+
+                            var movePage = document.querySelectorAll('.movePage');
+
+
+                            movePage.forEach( i => i.addEventListener('click', e => {
+
+                            console.log('hi')
+                                
+                                
+                                if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
+                                    console.log('이미지 클릭함')
+                                console.log(e.currentTarget.children[1].value);
+                                    let clickImageBoardNo = e.currentTarget.children[1].value;
+                                // location.href = 'contestDetail.ct?bno=' + clickBoardNo;
+                                }else{
+                                    console.log('제목 클릭함')
+                                    console.log(e.currentTarget.children[0].value);
+                                    let clickTitleBoardNo = e.currentTarget.children[0].value;
+                                    //location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
+                                }
+
+                            }))
 
 
                 },
