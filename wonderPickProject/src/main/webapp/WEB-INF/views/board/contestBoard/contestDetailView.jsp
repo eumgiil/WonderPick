@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 <style>
     #all_area{
         width: 1300px;
@@ -136,6 +139,29 @@
 
     </div>
    </div>
+
+
+
+   <script>
+
+    $(function(){
+        $.ajax({
+            url : 'selectVoteLike.ct',
+            data : {
+                boardNo : $[ b.get(0).boardNo ]
+            },
+            success : function(){
+                $('#vote_heart').html('♡');
+                $('#vote_count').html();
+
+
+            }
+        })
+    })
+
+    
+
+   </script>
 
 </body>
 </html>

@@ -186,9 +186,9 @@ public class ContestController {
 	}
 	
 	@RequestMapping("contestWinnerList.ct")
-	public String selectWinnerList() {
+	public String selectWinnerList(Model model) {
 		
-		contestService.selectWinnerList();
+		model.addAttribute("list",contestService.selectWinnerList());
 		
 		return "board/contestBoard/contestWinnerList";
 	}

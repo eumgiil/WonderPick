@@ -33,6 +33,8 @@ public class Contest extends Board{
 	private int startNumber;
 	private int endNumber;
 	
+	private int winner;
+	
 	
 	
 	
