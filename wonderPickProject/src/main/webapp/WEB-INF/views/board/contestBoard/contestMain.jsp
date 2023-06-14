@@ -277,9 +277,7 @@
                       <span >
                           <button style="border: none;" onclick="insertReply();">등록</button>
                       </span>
-                  
                   </div>
-          
               </div>
                                                                       
             
@@ -338,7 +336,7 @@
 
 <br><br><br><br><br><br><br><br><br><br>
 	<c:choose>
-       <c:when test="${ empty sessionScope.loginMember }">
+       <c:when test="${ !empty sessionScope.loginMember }">
 	    <script>
 	    
 	        $('#vote_btn').click(function(){

@@ -8,10 +8,10 @@ import lombok.Data;
 public class Option {
 	
 	private int optionNo; // OP_DETAIL_NO	NUMBER
-	private int board_no;
+	private int boardNo;
 	private String mainOp;
-	private String detail;
-	private String price;
-	private ArrayList opPr;
+	
+	private ArrayList<DetailOption> detailOption;
+	
 		
 }

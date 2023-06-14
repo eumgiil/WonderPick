@@ -65,8 +65,13 @@ public class ContestServiceImpl implements ContestService {
 	}
 
 	@Override
-	public Contest selectContestDetail(int boardNo) {
+	public ArrayList<Contest> selectContestDetail(int boardNo) {
 		return contestDao.selectContestDetail(sqlSession, boardNo);
+	}
+
+	@Override
+	public ArrayList<Contest> selectWinnerList() {
+		return contestDao.selectWinnerList(sqlSession);
 	}
 
 

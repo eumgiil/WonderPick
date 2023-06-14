@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO;
+import com.kh.wonderPick.board.artBoard.model.vo.DetailOption;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
@@ -39,6 +40,10 @@ public class ArtBoardDao {
 	public int insertOptions(SqlSessionTemplate sqlSession, Option option) {
 		return sqlSession.insert("artBoardMapper.insertOptions", option);
 	}
+	public int insertDetailOption(SqlSessionTemplate sqlSession, DetailOption detailOption) {
+		return sqlSession.insert("artBoardMapper.insertDetailOption", detailOption);
+	}
+	
 	
 	public int insertFiles(SqlSessionTemplate sqlSession, BoardImage boardImage) {
 		return sqlSession.insert("artBoardMapper.insertFiles", boardImage);

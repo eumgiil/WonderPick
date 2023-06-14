@@ -167,19 +167,30 @@ public class ContestController {
 	}
 	
 	// 게시판 DetailView
-	@RequestMapping("contestDeatil.ct")
-	public String selectContestDetail(int boardNo, ModelAndView modelAndView) {
+	@RequestMapping("contestDetail.ct")
+	public ModelAndView selectContestDetail(int boardNo, ModelAndView modelAndView) {
 		
+		System.out.println("hihhihihi");
+		System.out.println(boardNo);
 		
 		if(contestService.increaseCount(boardNo) > 0 ) {
 			modelAndView.addObject("b",contestService.selectContestDetail(boardNo)).setViewName("board/contestBoard/contestDetailView");
 		}else {
-			modelAndView.addObject("errorMsg", "상세조회 실패").setViewName("errorPage");
+			modelAndView.addObject("errorMsg", "상세조회 실패ㅠ").setViewName("errorPage");
 		}
 		
 		contestService.selectContestDetail(boardNo);
 		
+		
 		return modelAndView;
+	}
+	
+	@RequestMapping("contestWinnerList.ct")
+	public String selectWinnerList() {
+		
+		contestService.selectWinnerList();
+		
+		return "board/contestBoard/contestWinnerList";
 	}
 	
 	
