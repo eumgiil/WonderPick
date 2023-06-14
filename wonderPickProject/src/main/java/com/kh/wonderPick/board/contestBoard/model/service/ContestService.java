@@ -29,6 +29,8 @@ public interface ContestService {
 
 	ArrayList<Contest> selectContestDetail(int boardNo);
 
+	ArrayList<Contest> selectWinnerList();
+
 	
 	
 	

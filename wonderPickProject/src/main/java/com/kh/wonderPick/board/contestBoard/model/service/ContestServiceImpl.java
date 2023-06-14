@@ -69,5 +69,10 @@ public class ContestServiceImpl implements ContestService {
 		return contestDao.selectContestDetail(sqlSession, boardNo);
 	}
 
+	@Override
+	public ArrayList<Contest> selectWinnerList() {
+		return contestDao.selectWinnerList(sqlSession);
+	}
+
 
 }

@@ -185,6 +185,14 @@ public class ContestController {
 		return modelAndView;
 	}
 	
+	@RequestMapping("contestWinnerList.ct")
+	public String selectWinnerList() {
+		
+		contestService.selectWinnerList();
+		
+		return "board/contestBoard/contestWinnerList";
+	}
+	
 	
 	
 }

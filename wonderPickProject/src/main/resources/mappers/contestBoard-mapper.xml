@@ -82,7 +82,7 @@
 			VALUES
 					(
 					SEQ_BOARD_NO.NEXTVAL
-					,2
+					,#{ memberNo }
 					,#{ boardTitle }
 					,#{ boardContent }
 					,SYSDATE

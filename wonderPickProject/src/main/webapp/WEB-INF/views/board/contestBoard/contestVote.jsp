@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
-<style>
+    <style>
         #all_area{
         width: 1300px;
         height: auto;
@@ -162,10 +162,10 @@
         <div id="main_area" >
             <div id="header-1" align="center">
                 <div class="header_area">
-                <h1>이달의 이모티콘 투표<hr id="hr_1"></h1> 
+                <h1 onclick="votePage();">이달의 이모티콘 투표<hr id="hr_1"></h1> 
                 </div>
                 <div class="header_area">
-                    <h1>역대 이달의 우승작<hr></h1>
+                    <h1 onclick="winnerPage();">역대 이달의 우승작<hr></h1>
                 </div>
                 <div id="d_day">
                 <h3> 2023.05.28</h3> <hr>
@@ -460,9 +460,17 @@
                 error : function(){
                     alert('조회 실패입니디')
                 }
-            })
-        })
+            });
+        });
 
+
+        function votePage(){
+            location.href = 'selectVotePage.ct';
+        }
+
+        function winnerPage(){
+            location.href = 'contestWinnerList.ct';
+        }
 
       
         
