@@ -13,13 +13,13 @@
         .all_area{
             width: 900px;   
             margin: auto;
+            padding-top : 70px;
         }
-
-        table{
+        .all_area table{
             width:750px;
             table-layout: fixed; 
         }
-        table th{
+        .all_area table th{
             text-align: center;
             width:150px;
         }
@@ -38,12 +38,20 @@
         .line{
             border: 1px solid gray; width: 800px;
         }
+        #explane{
+            border : 1px solid gray;
+            width: 100%;
+            height:auto;
+            min-height: 400px; 
+            overflow:auto;
+        }
     </style>
 </head>
 <body>
+	<jsp:include page="../../common/header.jsp" />
     <div class="all_area">
 
-        <div >
+        <div>
             <h2 class="title">그 상품 등록</h2>
             <hr class="line">
         </div>
@@ -90,32 +98,80 @@
 	                    <td><img id="contentImg2" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt=""></td>
 	                    <td><img id="contentImg3" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt=""></td>
 	                </tr>
+
+
+
+
+
+
+
+
+
+                    
+
 	                <tr>
 	                    <th><h5 class="sub_title">상품설명</h5></th>
 	                    <td colspan="3">
-	                        <textarea name="boardContent" id="boardContent" style="width: 100%; height:400px; resize:none;" maxlength="1000" required></textarea>
+                            <input type="file" id="explaneFile" name="explaneFile" onchange="explane(this);">
+
+	                    	<div name="explane" id="explane" contentEditable='true' onkeyup="deleteImg(event)" onblur="loseFocus(this)"></div>
+
+                            <input type="hidden" id="boardContent" name="boardContent">
 	                    </td>
 	                </tr>
+
+                    <script>
+                        function loseFocus(e){
+                            let boardContent = document.getElementById('boardContent');  // div 값을 담을 type:hidden의 input태그
+                            boardContent.innerHTML = e.innerHTML;
+                            let nodes = boardContent.childNodes;
+                            // console.dir(boardContent.childNodes);
+                            // console.log(boardContent.childNodes[0].nodeName);
+                            let list = [];
+                            for(var i = 0; i < nodes.length; i++){
+                                if(nodes[i].nodeName == '#text'){
+                                    list.push({'type' : 'text'
+                                              ,'data' : nodes[i].data });
+                                } else {
+                                    list.push({'type' : 'img'
+                                              ,'data' : nodes[i].src});
+                                }
+                            }
+                            // console.log(list);
+                            boardContent.value = JSON.stringify(list);
+                        }   
+                    </script>
+
+
+
+
+
+
+
+
+
+
+
 	                
 	                <tr>
 	                    <th><h5 class="sub_title">파일유형</h5></th>
-	                    <td><input type="text" name="fileType" maxlength="5" placeholder="영어로만 작성" required></td>
+	                    <td><input type="text" name="fileType" maxlength="5" placeholder="영어로 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">해상도</h5> </th>
-	                    <td><input type="text" name="dpi" maxlength="20" placeholder="영어로만 작성" required></td>
+	                    <td><input type="text" name="dpi" maxlength="20" placeholder="영어로 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본사이즈</h5></th>
-	                    <td><input type="text" name="defaultSize" maxlength="50" placeholder="영어로만 작성" required></td>
+	                    <td><input type="text" name="defaultSize" maxlength="50" placeholder="영어로 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본수정횟수</h5></th>
-	                    <td><input type="number" name="modifyCount" placeholder="영어로만 작성" required></td>
+	                    <td><input type="number" name="modifyCount" placeholder="영어로 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">작업기간</h5></th>
-	                    <td><input type="text" name="workday" placeholder="영어로만 작성" required></td>
+	                    <td><input type="text" name="workday" placeholder="영어로 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th colspan="4"><hr class="line"></th>
@@ -150,19 +206,19 @@
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">패션</h5></th>
-	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="fasion" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">문구</h5></th>
-	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="stationery" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">주방</h5></th>
-	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="kitchen" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">인테리어</h5></th>
-	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
+	                <td colspan="3"><input type="text" name="interior" style="width:100%;"></td>
 	            </tr>
 	            <tr>
 	                <th><h5 class="sub_title">주방</h5></th>
@@ -187,7 +243,7 @@
             
             
 		    <div style="display:none;" id="file-area">
-		        <input type="file" id="file1" name="upFile" required onchange="loadImg(this, 1);">
+		        <input type="file" id="file1" name="upFile" onchange="loadImg(this, 1);" required>
 		        <input type="file" id="file2" name="upFile" onchange="loadImg(this, 2);">
 		        <input type="file" id="file3" name="upFile" onchange="loadImg(this, 3);">
 		        <input type="file" id="file4" name="upFile" onchange="loadImg(this, 4);">
@@ -262,9 +318,6 @@
             let tr = document.createElement('tr');
             tr.innerHTML += value;
             tbody.append(tr);
-            
-            
-            
         }
 
         function start(){
@@ -285,7 +338,6 @@
                 detailOp = document.getElementsByClassName('detailOp' + i);
                 opPrice = document.getElementsByClassName('opPrice' + i);
                 option = document.getElementById('option_'+ i);
-
                 
                 deList.push('#'+option.value+'#');
                 prList.push('#'+option.value+'#');
@@ -299,23 +351,45 @@
             };
 
             let form = document.getElementById('form');
-            /*
-            document.getElementById('deList').value = deList;
-            document.getElementById('prList').value = prList;
-            */
             document.getElementById('options').value = options;
-            
             
            	form.action = 'insertBoard.at';
             form.submit();
-
         }
 
+        
 
+        /* 상세설명 이미지 담을 수 있는 메소드 */
+        function explane(inputFile){
+            if(inputFile.files.length == 1){
+                if(null != document.getElementById('explaneImg')){
+                    document.getElementById('explaneImg').remove();
+                }
+                let explane = document.getElementById('explane');
+                let explaneImg = document.createElement('img');
+                let reader = new FileReader();
+                reader.readAsDataURL(inputFile.files[0]);
+                reader.onload = function(e){
+                    explaneImg.setAttribute("src", e.target.result);
+                    explaneImg.setAttribute("width", '100%');
+                    explaneImg.setAttribute("id", 'explaneImg');
+                    explane.append(explaneImg);
+                }
+            }
+            else{
+                document.getElementById('explaneImg').remove();
+            }
+        }
 
+        /* 이미지를 지우면 input[type=file]도 지워지는 메소드 */
+        function deleteImg(event){
+            if(null == document.getElementById('explaneImg')){
+                let explaneFile = document.getElementById('explaneFile');
+                explaneFile.value = "";
+            }
+        }
 
-
-
+        
 
 
 

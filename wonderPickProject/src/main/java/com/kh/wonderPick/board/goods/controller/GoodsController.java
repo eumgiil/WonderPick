@@ -40,8 +40,12 @@ public class GoodsController {
 	public String selectList(@RequestParam(value="cPage", defaultValue="1")int currentPage, Model model) {
 		PageInfo pi = Pagination.getPageInfo(goodsService.selectListCount(), currentPage,12, 10);
 		
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", goodsService.selectGoodsList(pi));
+		
+		System.out.println(pi);
+		System.out.println(goodsService.selectGoodsList(pi).toString());
 		
 		return "board/goods/goodsListView";
 	}
@@ -53,8 +57,6 @@ public class GoodsController {
 	@RequestMapping("categorylist.go")
 	public String selectCategoryList(@RequestParam(value="cPage", defaultValue="1")int currentPage, String goodsCategory, Model model) {
 		PageInfo pi = Pagination.getPageInfo(goodsService.selectCategoryListCount(goodsCategory), currentPage,12, 10);
-		
-		
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", goodsService.selectCategoryList(pi, goodsCategory));

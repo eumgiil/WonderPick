@@ -86,6 +86,7 @@
     </style>
 </head>
 <body>
+	<jsp:include page="../../common/header.jsp" />
     <div class="content">
 
         <!-- 여기는 제품 사진 및 정보 -->
