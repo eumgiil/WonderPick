@@ -182,6 +182,7 @@
             </div>
         
             <!-- 실시간 탑10 -->
+            <!-- 
             <div id="body_area">
                 <div id="winnerList_title" >
                     <span><h1>실시간 TOP10<hr align="left" id="top10_hr"></h1></span>
@@ -233,7 +234,7 @@
   
                     </ul>
                 </div>
-            </div>
+            </div> -->
 
 
             <!-- =============================== 최신순 LIST ===============================-->

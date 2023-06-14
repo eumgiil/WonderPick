@@ -170,8 +170,8 @@ public class ContestController {
 	@RequestMapping("contestDetail.ct")
 	public ModelAndView selectContestDetail(int boardNo, ModelAndView modelAndView) {
 		
-		System.out.println("hihhihihi");
-		System.out.println(boardNo);
+		//System.out.println("hihhihihi");
+		//System.out.println(boardNo);
 		
 		if(contestService.increaseCount(boardNo) > 0 ) {
 			modelAndView.addObject("b",contestService.selectContestDetail(boardNo)).setViewName("board/contestBoard/contestDetailView");
@@ -186,11 +186,23 @@ public class ContestController {
 	}
 	
 	@RequestMapping("contestWinnerList.ct")
-	public String selectWinnerList() {
+	public String selectWinnerList(Model model) {
 		
-		contestService.selectWinnerList();
+		model.addAttribute("list",contestService.selectWinnerList());
 		
 		return "board/contestBoard/contestWinnerList";
+	}
+	
+	@RequestMapping("selectVoteLike.ct")
+	public String selectVoteLike(int boardNo, int memberNo, Contest contest) {
+		
+		//System.out.println(boardNo);
+		
+		contest.setBoardNo(boardNo);
+		contest.setMemberNo(memberNo);
+		
+		contestService.selectVoteLike(contest);
+		return null;
 	}
 	
 	

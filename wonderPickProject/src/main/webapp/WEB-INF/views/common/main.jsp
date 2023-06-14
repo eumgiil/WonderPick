@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Wonderpick</title>
 
  <!-- swiper.js 라이브러리추가 -->
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />

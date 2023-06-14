@@ -28,6 +28,8 @@
 			<result column="FILE_PATH" property="filePath"/>
 			
 			<result column="PRICE" property="price" />
+			<result column="WINNER" property="winner"/>
+			<result column="MEMBER_NO" property="memberNo"/>
 			
 			
 		</resultMap>
@@ -60,6 +62,8 @@
 		                BOARD_IMAGE.FILE_LEVEL = 1
 		          AND 
 		                EMOTICON.PRICE_STATUS = 0
+		          AND
+		          		WINNER = 0
 		        ORDER
 		           BY   
 		                VOTE_COUNT DESC )
@@ -127,12 +131,14 @@
 			  		,BOARD_NO
 			  		,PRICE
 			  		,PRICE_STATUS
+			  		,WINNER
 			  		)
 			VALUES
 					(
 					SEQ_EMOTICONIMG_NO.NEXTVAL
 					,SEQ_BOARD_NO.CURRVAL
 					,#{ price }
+					,0
 					,0
 					)
 		
@@ -168,6 +174,8 @@
 			                BOARD_IMAGE.FILE_LEVEL = 1
 			          AND 
 			                EMOTICON.PRICE_STATUS = 0
+			          AND
+			          		WINNER = 0
 			        ORDER
 			           BY   
 			                UPLOAD_DATE DESC)
@@ -206,6 +214,8 @@
 			                BOARD_IMAGE.FILE_LEVEL = 1
 			          AND 
 			                EMOTICON.PRICE_STATUS = 0
+			          AND
+			          		WINNER = 0
 			        ORDER
 			           BY   
 			                UPLOAD_DATE DESC)A)
@@ -239,6 +249,7 @@
 		                    ,FILE_PATH
 		                    ,BOARD_IMAGE.FILE_LEVEL
 		                    ,PRICE
+		                    ,VOTE.MEMBER_NO
 			          FROM 
 			                 BOARD
 			        LEFT JOIN
@@ -260,6 +271,40 @@
                             BOARD.BOARD_NO = #{ boardNo }
 			       
 		
+		</select>
+		<select id="selectWinnerList" resultMap="contestBoardResultSet">
+					SELECT
+			        			 BOARD.BOARD_NO
+			                    ,BOARD.BOARD_TITLE    
+			                    ,MEMBER.NICKNAME      
+			                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
+			                    ,BOARD_IMAGE.MODIFY_NAME    
+			                    ,BOARD_IMAGE.UPLOAD_DATE               
+			                    ,VOTE.VOTE_COUNT   
+			                    ,FILE_PATH
+			          FROM 
+			                 BOARD
+			        LEFT JOIN
+			                 MEMBER ON(BOARD.MEMBER_NO = MEMBER.MEMBER_NO)
+			        LEFT JOIN 
+			        
+			                BOARD_IMAGE  ON(BOARD.BOARD_NO = BOARD_IMAGE.BOARD_NO)
+			        LEFT JOIN
+			                MEMBER_IMAGE  ON(BOARD.MEMBER_NO = MEMBER_IMAGE.MEMBER_NO)
+			        LEFT JOIN   
+			                VOTE ON(BOARD.BOARD_NO = VOTE.BOARD_NO)
+			        LEFT JOIN
+			                EMOTICON ON(BOARD.BOARD_NO = EMOTICON.BOARD_NO)
+			                
+			        WHERE
+			                BOARD_IMAGE.FILE_LEVEL = 1
+			          AND 
+			                EMOTICON.PRICE_STATUS = 0
+			          AND
+			          		WINNER = 1
+			        ORDER
+			           BY   
+			                UPLOAD_DATE DESC
 		</select>
 
 		

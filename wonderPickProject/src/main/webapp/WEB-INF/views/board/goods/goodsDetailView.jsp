@@ -488,7 +488,7 @@
                 <table class="goods_option">
                     <tr>
                         <td class="op_subTitle" style="font-size:20px; font-weight: bolder;" class="num">결제금액</td>
-                        <td class="t_align_right"><input type="text" class=" num_only num_comma num_sum" id="totalPrice" placeholder="${g.price}"></td>
+                        <td class="t_align_right"><input type="text" class=" num_only num_comma num_sum" id="totalPrice" placeholder="${g.price}" style="width:150px;">원</td>
                     </tr>
                 </table>
             </div>
@@ -497,7 +497,7 @@
             <br>
 
             <div class="center">
-                <button type="submit" class="btn btn-info" style="border: none; background-color:  black; color: rgb(255, 131, 153);">작가에게 주문요청</button>
+                <button type="submit" class="btn btn-info" style="border: none; background-color:  black; color: rgb(255, 131, 153); width:240px; ">작가에게 주문요청</button>
             </div>
 
         </div>

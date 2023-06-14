@@ -48,6 +48,10 @@ public class ContestDao {
 		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectWinnerList");
 	}
 
+	public Contest selectVoteLike(SqlSessionTemplate sqlSession, Contest contest) {
+		//return sqlSession.select;
+	}
+
 
 
 
