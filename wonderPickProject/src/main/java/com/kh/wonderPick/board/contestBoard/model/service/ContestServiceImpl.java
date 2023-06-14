@@ -74,5 +74,10 @@ public class ContestServiceImpl implements ContestService {
 		return contestDao.selectWinnerList(sqlSession);
 	}
 
+	@Override
+	public Contest selectVoteLike(Contest contest) {
+		return contestDao.selectVoteLike(sqlSession, contest);
+	}
+
 
 }

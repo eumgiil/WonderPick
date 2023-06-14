@@ -15,6 +15,7 @@ public class Contest extends Board{
 	private int price; 			// PRICE	NUMBER
 	private int priceStatus; 	// PRICE_STATUS	NUMBER
 	
+	
 	// 멤버추가
 	private String nickName;
 	private String memberModifyName;
@@ -25,6 +26,7 @@ public class Contest extends Board{
 	//투표 추가 
 	private int voteStatus;
 	private int voteCount;
+	private int memberNo;
 	
 	private String filePath;
 	
