@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
-<style>
+    <style>
         #all_area{
         width: 1300px;
         height: auto;
@@ -42,17 +42,14 @@
             width: 300px;
         }
         #body_area{
-            border: 1px solid black;
            margin: auto;
 
         }
         .winner_list>li{
-            border: 1px solid black;
             display: inline;
             padding: 20px
         }
         .contest_list{
-            border: 1px solid black;
             width: 800px;
             height: 300px;
             overflow: auto;
@@ -126,7 +123,6 @@
         .top10_image{
             width: 100px;
             height: 100px; 
-            background-color: red;
         }
         #header-1 h1{
             font-size: 32px;
@@ -151,7 +147,6 @@
             transform: scale(1.05);
         }
         .movePage{
-            background-color: yellow;
         }
         .movePage:hover{
             cursor: pointer;
@@ -167,10 +162,10 @@
         <div id="main_area" >
             <div id="header-1" align="center">
                 <div class="header_area">
-                <h1>이달의 이모티콘 투표<hr id="hr_1"></h1> 
+                <h1 onclick="votePage();">이달의 이모티콘 투표<hr id="hr_1"></h1> 
                 </div>
                 <div class="header_area">
-                    <h1>역대 이달의 우승작<hr></h1>
+                    <h1 onclick="winnerPage();">역대 이달의 우승작<hr></h1>
                 </div>
                 <div id="d_day">
                 <h3> 2023.05.28</h3> <hr>
@@ -195,7 +190,7 @@
                     <ul class="winner_list">
                       <c:forEach var="list" items="" >
                        <li>
-                            <table border="1" class="contest_table">
+                            <table class="contest_table">
                                 <thead>
                                     <tr >
                                         <td colspan="3">
@@ -325,7 +320,7 @@
                 </div>
             </div>
             
-        <a id="modal_1" class="btn btn-primary" data-bs-toggle="modal" href="ss" role="button">Open first modal</a>
+        <a id="modal_1" class="btn btn-primary" data-bs-toggle="modal" href="" role="button">Open first modal</a>
 
 
 
@@ -368,31 +363,26 @@
 
         movePage.forEach( i => i.addEventListener('click', e => {
 
-           console.log(document.getElementById('modal_1').href)
-           document.getElementById('modal_1').href ='#exampleModalToggle';
-           
+           //console.log(document.getElementById('modal_1').href)
+           //document.getElementById('modal_1').href ='#exampleModalToggle';
+
             if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
-                console.log('이미지 클릭함')
-               console.log(e.currentTarget.children[1].value);
                 let clickImageBoardNo = e.currentTarget.children[1].value;
-               // location.href = 'contestDetail.ct?bno=' + clickBoardNo;
+                console.log(clickImageBoardNo);
+                location.href = 'contestDetail.ct?boardNo=' + clickImageBoardNo;
                //location.href = '#exampleModalToggle';
             }else{
-                console.log('제목 클릭함')
-                console.log(e.currentTarget.children[0].value);
                 let clickTitleBoardNo = e.currentTarget.children[0].value;
-                //location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
+                console.log(clickTitleBoardNo);
+                location.href = 'contestDetail.ct?boardNo=' + clickTitleBoardNo;
             }
 
         }))
 
         // 플러스버튼 더보기 
         document.getElementById('puls_btn').addEventListener('click', function(){
-            console.log($('#selectList').html())
-            console.log($('.contest_table').length)
             $.ajax({
                 url : 'moreList.ct',
-                type : 'post',
                 data : {
                     checkNumber : $('.contest_table').length
                 },
@@ -445,29 +435,22 @@
                                 +'</tr>'
                         + '</table>';
 
-                                
-                                
                             }
                             $('.selectList').html(value);
 
                             var movePage = document.querySelectorAll('.movePage');
-
-
                             movePage.forEach( i => i.addEventListener('click', e => {
 
-                            console.log('hi')
-                                
-                                
                                 if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
                                     console.log('이미지 클릭함')
                                 console.log(e.currentTarget.children[1].value);
                                     let clickImageBoardNo = e.currentTarget.children[1].value;
-                                // location.href = 'contestDetail.ct?bno=' + clickBoardNo;
+                                    location.href = 'contestDetail.ct?boardNo=' + clickImageBoardNo;
                                 }else{
                                     console.log('제목 클릭함')
                                     console.log(e.currentTarget.children[0].value);
                                     let clickTitleBoardNo = e.currentTarget.children[0].value;
-                                    //location.href = 'contestDeatil.ct?bno=' + clickTitleBoardNo;
+                                    location.href = 'contestDetail.ct?boardNo=' + clickTitleBoardNo;
                                 }
 
                             }))
@@ -477,9 +460,17 @@
                 error : function(){
                     alert('조회 실패입니디')
                 }
-            })
-        })
+            });
+        });
 
+
+        function votePage(){
+            location.href = 'selectVotePage.ct';
+        }
+
+        function winnerPage(){
+            location.href = 'contestWinnerList.ct';
+        }
 
       
         
