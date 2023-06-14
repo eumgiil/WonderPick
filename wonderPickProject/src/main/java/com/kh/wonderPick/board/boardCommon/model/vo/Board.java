@@ -1,5 +1,7 @@
 package com.kh.wonderPick.board.boardCommon.model.vo;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data

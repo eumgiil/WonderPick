@@ -31,6 +31,8 @@ public interface ContestService {
 
 	ArrayList<Contest> selectWinnerList();
 
+	Contest selectVoteLike(Contest contest);
+
 	
 	
 	

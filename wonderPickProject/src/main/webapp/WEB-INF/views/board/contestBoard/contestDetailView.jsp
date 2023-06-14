@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 <style>
     #all_area{
         width: 1300px;
@@ -41,7 +44,7 @@
         margin: auto;
     }
   
-    #vote_heart{
+    .vote_heart{
         color: red;
         font-size: 80px;
     }
@@ -104,14 +107,25 @@
 
         <div id="body_area" align="center">
 
-            <div id="heart_area">
-                <span id="vote_heart">♡</span>
-                <span id="vote_count">${ b.get(0).voteCount }</span>
-            </div>
-    
+            ${ b }
             <div>
                 ${ b.get(0).boardContent }
             </div>
+
+            <div id="heart_area">
+                <c:choose>
+                    <c:when test="${ b.get(0).memberNo != 0 and b.get(0).memberNo != null }" >
+                        <span class="vote_heart">♥</span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="vote_heart">♡</span>
+                    </c:otherwise>
+                </c:choose>
+
+                <span id="vote_count">${ b.get(0).voteCount }</span>
+            </div>
+    
+           
     
             <div id="image_area">
     
@@ -125,7 +139,6 @@
 
 
 
-
           
             </div>
 
@@ -136,6 +149,30 @@
 
     </div>
    </div>
+
+
+
+   <script>
+
+    $(function(){
+        $.ajax({
+            url : 'selectVoteLike.ct',
+            data : {
+                boardNo : ${ b.get(0).boardNo },
+               
+            },
+            success : function(){
+                $('#vote_heart').html('♡');
+                $('#vote_count').html();
+
+
+            }
+        });
+    });
+
+    
+
+   </script>
 
 </body>
 </html>
