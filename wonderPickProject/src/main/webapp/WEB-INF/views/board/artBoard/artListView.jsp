@@ -10,14 +10,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>그판매목록페이지</title>
     <style>
-        body{
-            width : 900px;
-            margin: auto;
-            text-align: center;
-        }
+        
 
         .all_area{
-            width: 100%;
+            width:900px;
+            margin:auto;
+            margin-top: 150px;
         }
 
         #option{
@@ -75,9 +73,9 @@
  
 </head>
 <body>
-
+	<jsp:include page="../../common/header.jsp" />
     <div class="all_area"> <!-- 전체 -->
-
+ 
         <div class="leftouter">
             
         </div>

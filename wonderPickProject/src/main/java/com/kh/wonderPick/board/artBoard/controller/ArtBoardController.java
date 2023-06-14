@@ -7,11 +7,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.kh.wonderPick.board.artBoard.model.service.ArtBoardService;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
 import com.kh.wonderPick.board.artBoard.model.vo.DetailOption;
@@ -55,16 +58,25 @@ public class ArtBoardController {
 		return "board/artBoard/artEnrollForm";
 	}
 	
-	@RequestMapping("insertBoard.at")
-	public ModelAndView enrollArtBoard(Board board,
-									   ArtBoard artBoard,
-									   String[] options,
-									   MultipartFile[] upFile,
-									   HttpSession session,
-									   HttpServletRequest request,
-									   ModelAndView mv) {
-		ArrayList<Option> list = new ArrayList(); // VO들이 담긴 객체
+	@RequestMapping(value="insertBoard.at" /*, produces = "application/json;charset=UTF-8"*/)
+	public String enrollArtBoard(Board board,
+							     ArtBoard artBoard,
+							     String[] options,
+							     MultipartFile[] upFile,
+							     HttpSession session,
+							     HttpServletRequest request,
+							     Model model) {
 		
+		String boardContent = request.getParameter("boardContent");
+		
+		JsonObject totalObj = JsonParser.parseString(boardContent).getAsJsonObject();
+		
+		
+		
+		
+		
+		
+		ArrayList<Option> list = new ArrayList(); // VO들이 담긴 객체
 		for(int i = 1; i <= options.length; i++) {
 			Option option = new Option();
 			ArrayList<DetailOption> detailList = new ArrayList();
@@ -93,12 +105,11 @@ public class ArtBoardController {
 		board.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
 		int result = artService.insertArtBoard(board, artBoard, list, files);
 		if(result > 0) {
-			mv.addObject("alertMsg", "업로드 성공").setViewName("board/artBoard/artListView");
+			model.addAttribute("alertMsg", "업로드 성공");
 		} else {
-			mv.addObject("alertMsg", "업로드 실패").setViewName("board/artBoard/artListView");
+			model.addAttribute("alertMsg", "업로드 실패");
 		}
-		return mv;
-		// return artList.bo로 리다이렉트 해야함
+		return "redirect:artList.bo";
 	}
 	
 	@RequestMapping(value="artDetail.bo")
