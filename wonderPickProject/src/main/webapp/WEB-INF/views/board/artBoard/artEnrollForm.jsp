@@ -130,19 +130,28 @@
                             let list = [];
                             for(var i = 0; i < nodes.length; i++){
                                 if(nodes[i].nodeName == '#text'){
+                                    let data = nodes[i].data;
                                     list.push({'type' : 'text'
-                                              ,'data' : nodes[i].data });
+                                              ,'data' : data });
                                 } else {
+                                    let data = nodes[i].src;
                                     list.push({'type' : 'img'
-                                              ,'data' : nodes[i].src});
+                                              ,'data' : data});
                                 }
                             }
-                            // console.log(list);
                             boardContent.value = JSON.stringify(list);
+
+                            // let json = {'json' : list};
+                            // console.log(json);
+                            // boardContent.value = JSON.stringify(json);
+                            
+
+                            
+                            
+                            
+                            
                         }   
                     </script>
-
-
 
 
 
