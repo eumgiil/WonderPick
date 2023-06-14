@@ -93,8 +93,8 @@ public class GoodsDao {
 	}
 	
 	// 회원별 좋아요 조회
-	public ArrayList<Heart> selectHeartList(SqlSessionTemplate sqlSession, int memberNo){
-		return (ArrayList)sqlSession.selectList("goodsMapper.selectHeartList", memberNo);
+	public ArrayList<Heart> selectHeartList(SqlSessionTemplate sqlSession, int memberNo ){
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectHeartList", memberNo );
 		
 	}
 }

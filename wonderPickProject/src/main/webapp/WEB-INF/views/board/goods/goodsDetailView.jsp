@@ -402,7 +402,7 @@
             <div>
                 <table class="width" >
                     <tr>
-                        <th style="font-size: 35px;"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" width="30" style="float: left;"alt=""></th>
+                        <th style="font-size: 35px;"><img src="" width="30" style="float: left;"alt="" id="heart"></th>
                         <if test="${loginMember.memberNo == g.memberNo}">
                         <td class="t_align_right"><a href="" class="btn btn-secondary" style="width: 100px;">수정</a></td>
                         </if>
@@ -426,6 +426,36 @@
                     </tr>
                 </table>
             </div>
+            <script>
+            selectHeart();
+            updateHeart();
+            $(function(){
+            	selectHeart();
+            	updateHeart();
+            })
+            function selectHeart(){
+            	$.ajax({
+            		url : 'selectHeart.go',
+            		data : {
+            			memberNo : ${loginMember.memberNo}
+            		},
+            		success : function(result){
+            			if(result > 0 ) {
+            				$('#heart').attr('src', 'resources/common/heart.png');
+            			}else{
+            				$('#heart').attr('src', 'resources/common/noheart.png');
+            			}
+            		},
+            		error : function(){
+            			console.log('좋아요 찜 조회 실패');
+            		}
+            		
+            	});
+            };
+        
+            
+            </script>
+            
 
             <hr>
             <br>
@@ -459,23 +489,24 @@
             
 
             <div class="">
+            <form>
                 <table class="goods_option"  >
                     <tr>
                         <td width="50%">추가시안횟수</td>
                         <td class="t_align_right" style="float:right;" width="100%">
-                            <input type="number" style="width: 100px; " id="addDraft" class="form-control num_only num_comma num_sum" >회
+                            <input type="number" style="width: 100px; " id="addDraft" >회
                        </td>
                     </tr>
                     <tr>
                         <td>추가수정횟수</td>
                         <td class="t_align_right">
-                            <input type="number" style="width: 100px;" id="addModify" class="form-control num_only num_comma num_sum" >회
+                            <input type="number" style="width: 100px;" id="addModify" >회
                         </td>
                     </tr>
                     <tr>
                         <td>주문수량</td>
                         <td class="t_align_right">
-                            <input type="number" style="width: 100px;" id="amount" class="form-control num_only num_comma num_sum" >개
+                            <input type="number" style="width: 100px;" id="amount" >개
                         </td>
                     </tr>
                 </table>
@@ -488,10 +519,34 @@
                 <table class="goods_option">
                     <tr>
                         <td class="op_subTitle" style="font-size:20px; font-weight: bolder;" class="num">결제금액</td>
-                        <td class="t_align_right"><input type="text" class=" num_only num_comma num_sum" id="totalPrice" placeholder="${g.price}" style="width:150px;">원</td>
+                        <td class="t_align_right" id="totalPrice" onchange="choice();"> ${g.price} 원</td>
                     </tr>
                 </table>
             </div>
+            <script>
+            function choice(){
+            	let addDraft = parseInt('${g.addDraft}') * $('#addDraft').val();
+            	let addModify = parseInt('${g.addModify}') * $('#addModify').val();
+            	let amount = $('#amount').val();
+            	let price = parseInt('${g.price}');
+            	
+            	let number = (( addDraft + addModify + price) * amount);
+            	console.log(number);
+            	
+            	let totalPrice = document.getElementById('totalPrice');
+            	totalPrice.innerHTML = number ;
+            	
+            	
+            	//let addDraft = parseInt($('#addDraft').val())*parseInt('${g.addDraft}')  ;
+            	//let addModify = parseInt($('#addModify').val())*parseInt('${g.addModify}');
+            	//let amount = parseInt($('#amount').val());
+            	
+            	//let totalPrice =  document.getElementById('totalPrice');
+            	//totalPrice.innerHTML = $('${g.price}').val() + addDraft + addModify + amount);
+            	
+            	
+            }
+            </script>
 
             <hr>
             <br>
@@ -499,37 +554,12 @@
             <div class="center">
                 <button type="submit" class="btn btn-info" style="border: none; background-color:  black; color: rgb(255, 131, 153); width:240px; ">작가에게 주문요청</button>
             </div>
-
+		</form>
         </div>
         <!-- 오른쪽 정보 끝 -->
         
 
-        <!-- 주문 금액 계산 -->
-        <script>
-        $(function(){
-            $('input.num_only').on('keyup', function(){
-                var count = $('.goods_option input.num_sum').length;
-                console.log(count);
-
-                for(var i=1; i<count; i++){
-                    var sum = parseInt($(this).val() || 0);
-                    sum++;
-                    console.log(sum);
-                }
-
-                var sum1 = parseInt($("#addDraft").val()|| 0 );
-                var sum2 = parseInt($("#addModify").val()|| 0 );
-                var sum3 = parseInt($("#amount").val()|| 0);
-
-                var sum = $('#totalPrice').val() + sum1 + sum2 + sum3;
-
-                console.log(sum);
-                $("#totalPrice").val(sum);
-                
-            });
-        });
-
-        </script>
+        
         </div>
  
     

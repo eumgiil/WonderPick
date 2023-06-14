@@ -44,8 +44,7 @@ public class GoodsController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", goodsService.selectGoodsList(pi));
 		
-		System.out.println(pi);
-		System.out.println(goodsService.selectGoodsList(pi).toString());
+	
 		
 		return "board/goods/goodsListView";
 	}

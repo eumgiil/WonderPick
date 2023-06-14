@@ -117,7 +117,7 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	
 	@Override
-	public ArrayList<Heart> selectHeartList(int memberNo){
+	public ArrayList<Heart> selectHeartList(int memberNo ){
 		return goodsDao.selectHeartList(sqlSession, memberNo);
 	}
 

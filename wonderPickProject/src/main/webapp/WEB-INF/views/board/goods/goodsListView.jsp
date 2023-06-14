@@ -226,17 +226,20 @@
 			heartUpdate();
 		});
 		
+		
 		function selectHeart(){
 			$.ajax({
 				url : 'selectHeart.go',
+				type : "POST",
+				dataType :"json",
 				data : {
 					memberNo : ${loginMember.memberNo}
 				},
 				success : function(result){
 					if(result > 0 ){
-						$('#heart').attr('src', 'resources/common/heart.png');
+						$("#heart").attr("src","resources/common/heart.png");
 					}else{
-						$('#heart').attr('src', 'resources/common/noheart.png');
+						$("#heart").attr("src", "resources/common/noheart.png" );
 					}
 				},
 				error : function(){
