@@ -224,7 +224,9 @@ select
        member m using(member_no)
   join
        review using(member_no)
- where
+ where 
+ 	   board_type = 'R'
+   and
        member_no in (select
                            member_no
                       from

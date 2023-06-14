@@ -1,8 +1,7 @@
 package com.kh.wonderPick.board.artBoard.model.vo;
 
-import java.util.List;
-
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardDetailContent;
 
 import lombok.Data;
 
@@ -17,6 +16,8 @@ public class ArtBoard{
 	private String workday; // WORKDAY	VARCHAR2(100 BYTE)
 	private String category; // CATEGORY	VARCHAR2(2 BYTE)
 	private String price; // PRICE	NUMBER
+	
+	private BoardDetailContent boardDetailContent;
 	
 	
 	private Board board;

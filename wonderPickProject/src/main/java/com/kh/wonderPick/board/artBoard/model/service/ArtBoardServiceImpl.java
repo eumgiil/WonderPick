@@ -46,10 +46,8 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 		result *= artDao.insertArtBoard(sqlSession, artBoard);
 		for(int i = 0; i < list.size(); i++) {
 			result *= artDao.insertOptions(sqlSession, list.get(i));
-			System.out.println(list.get(i));
 			for(int j = 0; j < list.get(i).getDetailOption().size(); j++) {
 				result *= artDao.insertDetailOption(sqlSession, list.get(i).getDetailOption().get(j));
-				System.out.println(list.get(i).getDetailOption().get(j));
 			}
 		}
 		for(int k = 0; k < files.size(); k++) {

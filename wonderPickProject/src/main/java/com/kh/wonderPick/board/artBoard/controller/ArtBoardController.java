@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.wonderPick.board.artBoard.model.service.ArtBoardService;
@@ -21,6 +22,7 @@ import com.kh.wonderPick.board.artBoard.model.vo.DetailOption;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.controller.BoardController;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
+import com.kh.wonderPick.board.boardCommon.model.vo.BoardDetailContent;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.reply.model.service.ReplyService;
 import com.kh.wonderPick.board.review.model.service.ReviewService;
@@ -66,10 +68,22 @@ public class ArtBoardController {
 							     HttpSession session,
 							     HttpServletRequest request,
 							     Model model) {
+//		
+//		ArrayList<BoardDetailContent> contentList = new ArrayList();
+//		String boardContent = request.getParameter("boardContent");
+//		JsonArray totalArr = JsonParser.parseString(boardContent).getAsJsonArray();
+//		System.out.println(totalArr);
+//		
+//		for(int i = 0; i < totalArr.size(); i++) {
+//			BoardDetailContent boardDetailContent = new BoardDetailContent();
+//			JsonObject item = totalArr.get(i).getAsJsonObject();
+//			
+//			
+//			
+//			
+//		}
 		
-		String boardContent = request.getParameter("boardContent");
-		
-		JsonObject totalObj = JsonParser.parseString(boardContent).getAsJsonObject();
+		System.out.println(board.getBoardContent());
 		
 		
 		
