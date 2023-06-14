@@ -193,6 +193,13 @@ public class ContestController {
 		return "board/contestBoard/contestWinnerList";
 	}
 	
+	@RequestMapping("selectVoteLike.ct")
+	public String selectVoteLike(int boardNo) {
+		
+		System.out.println(boardNo);
+		return null;
+	}
+	
 	
 	
 }
