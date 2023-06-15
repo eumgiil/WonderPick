@@ -155,14 +155,14 @@
 	        <br><br>
 	
 	        <table align="center">
-	            <tr>
+	            <!-- <tr>
 	                <th colspan="5">
 	                    <hr class="line">
 	                </th>
-	            </tr>
+	            </tr> -->
 	
 	            <!-- 옵션 -->
-	            <tr>
+	            <!-- <tr>
 	                <th colspan="5">
 	                    <h5 class="sub_title">굿즈 옵션</h5>
 	                </th>
@@ -186,7 +186,7 @@
 	            <tr>
 	                <th><h5 class="sub_title">주방</h5></th>
 	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
-	            </tr>
+	            </tr> -->
 	            <!-- 끝 옵션 -->
 	            <tr>
 	                <td colspan="5"><hr class="line"></td>

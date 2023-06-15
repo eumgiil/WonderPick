@@ -34,7 +34,7 @@
             <div id="mainMenuBar" class="clear">
                 <ul id="mainMenu" class="clear">
                     <li class="mainCategory">
-                        <a href="#"><span class="material-symbols-outlined">menu</span> 카테고리</a>
+                        <a href="artList.bo"><span class="material-symbols-outlined">menu</span> 카테고리</a>
                             <ul class="detailCategory">
                                 <li><a href="artList.bo">캐릭터일러스트</a></li>
                                 <li><a href="#">일러스트</a> </li>
