@@ -305,7 +305,9 @@
 			        ORDER
 			           BY   
 			                UPLOAD_DATE DESC
+			                
 		</select>
+		<insert id="selectVoteLike" parameterType=""
 
 		
 	</mapper>

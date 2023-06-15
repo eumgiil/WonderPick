@@ -115,10 +115,10 @@
             <div id="heart_area">
                 <c:choose>
                     <c:when test="${ b.get(0).memberNo != 0 and b.get(0).memberNo != null }" >
-                        <span class="vote_heart">♥</span>
+                        <span class="vote_heart" onclick="onHeart();">♥</span>
                     </c:when>
                     <c:otherwise>
-                        <span class="vote_heart">♡</span>
+                        <span class="vote_heart" onclick="offHeart();">♡</span>
                     </c:otherwise>
                 </c:choose>
 
@@ -154,21 +154,23 @@
 
    <script>
 
-    $(function(){
+    function offHeart(){
         $.ajax({
-            url : 'selectVoteLike.ct',
+            url : 'insertVote.ct',
             data : {
                 boardNo : ${ b.get(0).boardNo },
-               
+                memberNo : ${ sessionScope.loginMember.memberNo }
             },
             success : function(){
-                $('#vote_heart').html('♡');
-                $('#vote_count').html();
+                
 
 
+            },
+            error : function(){
+                alert('vote error')
             }
         });
-    });
+    };
 
     
 

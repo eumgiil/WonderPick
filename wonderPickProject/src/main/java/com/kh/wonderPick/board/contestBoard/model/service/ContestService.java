@@ -33,6 +33,7 @@ public interface ContestService {
 
 	Contest selectVoteLike(Contest contest);
 
+
 	
 	
 	
