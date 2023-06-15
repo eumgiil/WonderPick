@@ -37,6 +37,12 @@ public interface GoodsService {
 	// 게시글 상세조회
 	Goods selectGoods(int boardNo);
 	
+	// 게시글 검색결과 개수 조회
+	int searchGoodsCount();
+	
+	// 게시글 검색결과 리스트 조회
+	ArrayList<Goods> searchGoods(PageInfo pi, String condition, String keyword);
+	
 	// 게시글 수정하기
 	int updateGoods(Goods g);
 	

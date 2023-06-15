@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -49,20 +50,58 @@ public class GoodsController {
 		return "board/goods/goodsListView";
 	}
 	
+	@RequestMapping("categorylist.go")
+	public ModelAndView selectCategoryList(@RequestParam(value="cPage", defaultValue="1")int currentPage, String goodsCategory, ModelAndView mv) {
+		PageInfo pi = Pagination.getPageInfo(goodsService.selectCategoryListCount(goodsCategory), currentPage,12, 10);
+		System.out.println(pi);
+		
+		mv.addObject("pi", pi);
+		mv.addObject("list", goodsService.selectCategoryList(pi, goodsCategory));
+		mv.setViewName("board/goods/goodsCategoryListView");
+		
+		return mv;
+		
+	}
+
+	@RequestMapping("detail.go")
+	public ModelAndView selectGoods(ModelAndView mv, int boardNo,   HttpSession session) {
+		
+		if(goodsService.increaseCount(boardNo)>0) {
+			mv.addObject("g", goodsService.selectGoods(boardNo));
+			mv.addObject("reviewList", goodsService.selectReviewList(boardNo));
+			mv.addObject("replyList", goodsService.selectReplyList(boardNo));
+			mv.setViewName("board/goods/goodsDetailView");
+			
+		}else {
+			mv.addObject("errorMsg", "조회수 증가 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+		
+		
+		
+	}
+	@RequestMapping("search.go")
+	public ModelAndView searchGoods(@RequestParam(value="cPage", defaultValue="1")int currentPage,ModelAndView mv, String condition, String keyword,  HttpSession session) {
+		HashMap<String, String>map = new HashMap();
+		
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(goodsService.searchGoodsCount(), currentPage,12, 10);
+		
+		mv.addObject("pi", pi);
+		mv.addObject("list", goodsService.searchGoods(pi, condition, keyword));
+		mv.setViewName("board/goods/goodsListView");
+		
+		return mv;
+	}
+	
 	@RequestMapping("enrollForm.go")
 	public String enrollForm() {
 		return "board/goods/goodsEnrollForm";
 	}
-	@RequestMapping("categorylist.go")
-	public String selectCategoryList(@RequestParam(value="cPage", defaultValue="1")int currentPage, String goodsCategory, Model model) {
-		PageInfo pi = Pagination.getPageInfo(goodsService.selectCategoryListCount(goodsCategory), currentPage,12, 10);
-		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", goodsService.selectCategoryList(pi, goodsCategory));
-		
-		return "board/goods/goodsCategoryListView";
-		
-	}
+	
 	/*
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		// 파일명 수정 작업 후 서버에 업로드시키기
@@ -158,24 +197,6 @@ public class GoodsController {
 		
 	}
 	
-	@RequestMapping("detail.go")
-	public ModelAndView selectGoods(ModelAndView mv, int boardNo,   HttpSession session) {
-		
-		if(goodsService.increaseCount(boardNo)>0) {
-			mv.addObject("g", goodsService.selectGoods(boardNo));
-			mv.addObject("reviewList", goodsService.selectReviewList(boardNo));
-			mv.addObject("replyList", goodsService.selectReplyList(boardNo));
-			mv.setViewName("board/goods/goodsDetailView");
-			
-		}else {
-			mv.addObject("errorMsg", "조회수 증가 실패");
-			mv.setViewName("common/errorPage");
-		}
-		return mv;
-		
-		
-		
-	}
 	
 	// 댓글
 	@ResponseBody

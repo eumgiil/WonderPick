@@ -22,7 +22,7 @@ public class GoodsDao {
 		return sqlSession.selectOne("goodsMapper.selectListCount");
 	}
 	
-	
+	// 굿즈리스트 전체 페이지
 	public ArrayList<Goods> selectGoodsList(SqlSessionTemplate sqlSession, PageInfo pi){
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		
@@ -34,11 +34,25 @@ public class GoodsDao {
 		return sqlSession.selectOne("goodsMapper.selectCategoryListCount", goodsCategory);
 	}
 	
+	// 카테고리별 굿즈리스트 페이지
 	public ArrayList<Goods> selectCategoryList(SqlSessionTemplate sqlSession, PageInfo pi, String goodsCategory){
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+	     
 		
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("goodsMapper.selectCategoryList", null , rowBounds);
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectCategoryList", goodsCategory , rowBounds);
+	}
+	
+	// 검색결과 개수 조회
+	public int searchGoodsCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("goodsMapper.searchGoodsCount");
+	}
+
+	// 검색결과 리스트 조회
+	public ArrayList<Goods> searchGoods(SqlSessionTemplate sqlSession, PageInfo pi, String condition, String keyword){
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("goodsMapper.searchGoods",condition, keyword, rowBounds );
 	}
 	
 	

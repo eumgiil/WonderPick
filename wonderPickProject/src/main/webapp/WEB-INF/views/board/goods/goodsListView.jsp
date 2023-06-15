@@ -104,20 +104,21 @@
         <hr style="border: 1px solid black; width: 200px;">
         <table class="category_option">
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${g.goodsCategory.values('FASHION')}&cPage=1">패션</a></td>
+                
+                <td><a href="categorylist.go?goodsCategory=FASHION&cPage=1">패션</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${goodsCategory.kitchen}&cPage=1">주방</a></td>
+                <td><a href="categorylist.go?goodsCategory=${g.goodsCategory}&cPage=1">주방</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${category.interior}&cPage=1">인테리어</a></td>
+                <td><a href="categorylist.go?goodsCategory=${g.goodsCategory}&cPage=1">인테리어</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${category.stationery}&cPage=1">문구</a></td>
+                <td><a href="categorylist.go?goodsCategory=${g.goodsCategory}&cPage=1">문구</a></td>
             </tr>
             <tr>
             </tr>
-                <td><a href="categorylist.go?goodsCategory=${category.etc}&cPage=1">기타</a></td>
+                <td><a href="categorylist.go?goodsCategory=${g.goodsCategory}&cPage=1">기타</a></td>
             </tr>
         </table>
 
@@ -135,18 +136,26 @@
         <h2 align="center" style="color: rgb(255, 131, 153);">굿즈</h2>
         <hr style="width: 600px; border: 1px solid gray;">
         <h6>n개의 상품이 있습니다.</h6>
-
-        <form action="searchGoods.go" method="get" align="center">
-        <div id="searchGoods" >
-         <select name="option" id="option">
+   <div id="searchGoods" >
+        <form action="search.go" method="get" align="center">
+        <input type="hidden" name="currentPage" value="1">
+         <select name="condition" >
             <option value="whole">전체</option>
             <option value="nickname">작가명</option>
             <option value="boardTitle">제목순</option>
         </select>
-        <input type="text" value="" name="searchGoods">
+        <input type="text" value="${ keyword }" name="keyword">
         <button type="submit" style="background-color: white; border: none;"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-search-strong-512.png" alt="" width="40"></button>
         </form>
-
+   </div>
+   <c:if test="${not empty condition}">
+   <script>
+    $(function(){
+    	$('#searchGoods option[value=${condition}]').attr('selected', true);
+    })
+   </script>
+   
+   </c:if>
         <select name="option" id="option">
             <option value="popularity" onclick="option(1)">인기순</option>
             <option value="lowPrice" onclick="option(2)">가격 낮은 순</option>

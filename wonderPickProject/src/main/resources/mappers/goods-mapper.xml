@@ -82,7 +82,7 @@ order by
       and goods_category = #{goodsCategory}
 	      
   </select>
-  <select id="selectCategoryList" resultMap="goodsResultSet">
+  <select id="selectCategoryList" resultMap="goodsResultSet" parameterType="string">
   select
        board_no, 
        board_title, 
@@ -258,14 +258,14 @@ select
   <insert id="insertReply" parameterType="reply">
   insert
     into
-        reply
-                 (
-               reply_no, 
+         reply
+          (
+              reply_no, 
                board_no,
                member_no,
                content
                    ) 
-               values
+         values
                   (
                 seq_reply_no.nextval,
                #{boardNo},

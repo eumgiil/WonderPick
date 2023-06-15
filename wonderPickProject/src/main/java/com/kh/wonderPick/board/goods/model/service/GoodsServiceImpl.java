@@ -38,11 +38,22 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	@Override
 	public int selectCategoryListCount(String goodsCategory) {
+		
 		return goodsDao.selectCategoryListCount(sqlSession, goodsCategory);
 	}
 	@Override
-	public ArrayList<Goods> selectCategoryList(PageInfo pi, String goodsCategory) {
+	public ArrayList<Goods> selectCategoryList(PageInfo pi , String goodsCategory) {
+		System.out.println(goodsDao.selectCategoryList(sqlSession, pi, goodsCategory));
 		return goodsDao.selectCategoryList(sqlSession, pi, goodsCategory);
+	}
+	
+	@Override
+	public int searchGoodsCount() {
+		return goodsDao.searchGoodsCount(sqlSession);
+	}
+	@Override
+	public ArrayList<Goods> searchGoods(PageInfo pi, String condition, String keyword){
+		return goodsDao.searchGoods(sqlSession, pi, condition, keyword);
 	}
 	
 	

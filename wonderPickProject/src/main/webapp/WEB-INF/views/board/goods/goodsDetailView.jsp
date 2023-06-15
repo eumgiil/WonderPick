@@ -261,10 +261,10 @@
                     <tr>
                         <td style="padding-left:10px;">${r.content}</td>
                     </tr>
+                    </table>
                     <c:if test="${not empty reReplyList }">
                     <input type="hidden" value="${re.replyNo }">
                     <c:forEach items="${reReplyList }" var="re">
-                    </table>
                     <table class="reReply" border="1">
                     <tr>
                     <td width="15%" rowspan="3" style="padding:10px; border-right: 1px solid lightslategray;">판매자 프로필</td>
@@ -282,7 +282,6 @@
                     </table>
                     </c:forEach>
                     </c:if>
-                    <br>
                  </c:forEach>
                 </c:when>
                 <c:otherwise>
@@ -294,11 +293,13 @@
 				</thead>
 				<tbody>
 				<br>
-				<hr>
-				<br>
 				<c:choose>
 				<c:when test="${empty loginMember}" >
-				<table border="1">
+				<hr>
+				<table >
+				<tr>
+				<th><hr></th>
+				</tr>
 				<tr> 
 					<th colspan="2">
 						<textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>로그인 후 댓글 작성가능합니다.</textarea>
@@ -307,17 +308,22 @@
 				</table>
 				</c:when>
 				<c:otherwise>
+				<br>
+				<form action="rinsert.go" method="post">
+				<table>
 				<tr>
 				     <th colspan="2">
-				     <input type="hidden" value="${boardNo}" id="boardNo">
-				     <input type="hidden" value="${loginMember.memberNo }">
+				     <input type="hidden" value="${g.boardNo}" id="boardNo" name="${g.boardNo }">
+				     <input type="hidden" value="${loginMember.memberNo }" name="${loginMember.memberNo}">
                      <textarea class="form-control" name="content" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
                      </th>
                      <br>
                      <th style="vertical-align:middle">
-                     <a class="btn btn-secondary" onclick="addReply();">등록하기</a>
+                     <button type="submit" class="btn btn-secondary" onclick="addReply();" id="submit">등록하기</button>
                      </th>
 				</tr>
+				</table>
+				</form>
 				</c:otherwise>
 				</c:choose>
 				</tbody>
@@ -334,31 +340,12 @@
         	});
         	
         	function addReply(){
-        		if($('#content').val().trim() != ''){
-        			$.ajax({
-        				
-        				url :'rinsert.go',
-        				data : {
-        					boardNo : ${g.boardNo} , 
-        					content : $('#content').val(),
-        					memberNo : ${loginMember.memberNo}
-        				},
-        				success : function(result){
-        					console.log(result);
-        					
-        					if(result == 'success'){
-        						selectReplyList($('#content').val(''));
-        					};
-        				},
-        				error : function(){
-        			    console.log('실패');
-        				}
-        			});
-        			
+        		if($('#submit').val() > 0){
+        			window.alert('댓글작성완료');
         		}else{
-        			window.alert('다시 이용해주세요');
+        			console.log('댓글달기실패');
         		}
-        	};
+        	}
         	
            function selectReplyList(){
         	   $.ajax({
@@ -391,11 +378,7 @@
            };
         </script>
 		</div>
-        
-
-
-
-
+		
         <!-- 오른쪽 정보 -->
         <div class="artist" style="margin-left:10px; float:right;">
 
