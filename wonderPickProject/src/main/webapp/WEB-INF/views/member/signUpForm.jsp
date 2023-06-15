@@ -54,7 +54,6 @@
                         <input type="checkbox" id="ToUAgree"> 개인정보 수집/이용에 동의합니다.<br>
                         <input type="checkbox" id="emailCheck"> 이메일 수신에 동의합니다.<br>
                         <input type="hidden" id="emailAgree" name="emailAgree">
-                        
                     </div>
                     <div>
                         <button type="submit" id="submitBtn">회원가입</button>
