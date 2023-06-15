@@ -307,7 +307,9 @@
 			                UPLOAD_DATE DESC
 			                
 		</select>
-		<insert id="selectVoteLike" parameterType=""
+		<insert id="selectVoteLike" parameterType="" >
+		
+		</insert>
 
 		
 	</mapper>
