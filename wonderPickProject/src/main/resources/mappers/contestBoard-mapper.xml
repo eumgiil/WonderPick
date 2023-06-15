@@ -24,7 +24,6 @@
 			<result column="PRICE_STATUS" property="priceStatus"/>
 			
 			<result column="VOTE_STATUS" property="voteStatus"/>
-			<result column="VOTE_COUNT" property="voteCount"/>
 			<result column="FILE_PATH" property="filePath"/>
 			
 			<result column="PRICE" property="price" />
@@ -42,7 +41,6 @@
 		                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME    
 		                    ,BOARD_IMAGE.MODIFY_NAME   
 		                    ,BOARD_IMAGE.UPLOAD_DATE    
-		                    ,VOTE.VOTE_COUNT   
 		                    ,FILE_PATH
 		          FROM 
 		                 BOARD
@@ -64,9 +62,7 @@
 		                EMOTICON.PRICE_STATUS = 0
 		          AND
 		          		WINNER = 0
-		        ORDER
-		           BY   
-		                VOTE_COUNT DESC )
+		         )
 			WHERE ROWNUM BETWEEN 1 AND 10
 		</select>
 		<insert id="insertMainBoard" parameterType="board">
@@ -143,6 +139,22 @@
 					)
 		
 		</insert> 
+		<insert id="insertVote" parameterType="board">
+			INSERT
+			  INTO
+			  		VOTE
+			  		(
+			  		 MEMBER_NO
+			  		,BOARD_NO
+			  		,VOTE_STATUS
+			  		)
+			 VALUES
+			 		(
+			 		 #{ memberNo }
+					,SEQ_BOARD_NO.CURRVAL
+					,DEFAULT
+			 		)
+		</insert>
 		
 		<select id="selectVotePage" resultMap="contestBoardResultSet">
 			
@@ -154,7 +166,6 @@
 			                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 			                    ,BOARD_IMAGE.MODIFY_NAME    
 			                    ,BOARD_IMAGE.UPLOAD_DATE               
-			                    ,VOTE.VOTE_COUNT   
 			                    ,FILE_PATH
 			          FROM 
 			                 BOARD
@@ -168,7 +179,7 @@
 			        LEFT JOIN   
 			                VOTE ON(BOARD.BOARD_NO = VOTE.BOARD_NO)
 			        LEFT JOIN
-			                EMOTICON ON(BOARD.BOARD_NO = EMOTICON.BOARD_NO)
+			                EMOTICON  ON(BOARD.BOARD_NO = EMOTICON.BOARD_NO)
 			                
 			        WHERE
 			                BOARD_IMAGE.FILE_LEVEL = 1
@@ -194,7 +205,6 @@
 					                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 					                    ,BOARD_IMAGE.MODIFY_NAME    
 					                    ,BOARD_IMAGE.UPLOAD_DATE               
-					                    ,VOTE.VOTE_COUNT   
 					                    ,FILE_PATH
 			          FROM 
 			                 BOARD
@@ -245,7 +255,6 @@
 		                    ,BOARD_IMAGE.MODIFY_NAME    
 		                    ,BOARD_IMAGE.UPLOAD_DATE 
 		                    ,BOARD_COUNT
-		                    ,VOTE.VOTE_COUNT   
 		                    ,FILE_PATH
 		                    ,BOARD_IMAGE.FILE_LEVEL
 		                    ,PRICE
@@ -280,7 +289,6 @@
 			                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 			                    ,BOARD_IMAGE.MODIFY_NAME    
 			                    ,BOARD_IMAGE.UPLOAD_DATE               
-			                    ,VOTE.VOTE_COUNT   
 			                    ,FILE_PATH
 			          FROM 
 			                 BOARD
@@ -305,7 +313,38 @@
 			        ORDER
 			           BY   
 			                UPLOAD_DATE DESC
+			                
 		</select>
+		
+		<select id="selectVoteLike" resultType="_int">
+			SELECT
+			         NVL(MEMBER_NO, 0)
+			        ,NVL(SUM(VOTE_STATUS), 0)
+			  FROM 
+			        VOTE
+			 WHERE
+			        BOARD_NO = #{ boardNo }
+			GROUP BY
+			        MEMBER_NO
+		</select>
+		
+		<insert id="insertVoteLike" parameterType="contest">
+			INSERT
+			 INTO 
+			 		VOTE
+			 		(
+			 		 MEMBER_NO
+			 		,BOARD_NO
+			 		,VOTE_STATUS
+			 		)
+			 
+			 VALUES
+			 		(
+			 		 #{ memberNo }
+			 		,#{ boardNo } 
+			 		,1
+			 		)
+		</insert> 
 
 		
 	</mapper>

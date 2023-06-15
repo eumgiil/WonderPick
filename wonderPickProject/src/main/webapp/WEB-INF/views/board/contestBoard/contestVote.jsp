@@ -272,7 +272,7 @@
                                 </div>
                             </td>
                             <td>${ list.nickName }</td>
-                            <td>${ list.voteCount }</td>
+                            <td>투표수 자리</td>
                         </tr>
                         <tr>
                             <td colspan="3">
@@ -422,7 +422,7 @@
                                         +'</div>'
                                 + '</td>'
                                     +'<td>'+ result[i].nickName +'</td>'
-                                + '<td>'+ result[i].voteCount + '</td>'
+                                + '<td> 투표수 자리 </td>'
                                 +'</tr>'
                             + '<tr>'
                                 + '<td colspan="3">'
