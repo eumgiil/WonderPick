@@ -13,7 +13,7 @@ public class BoardImage {
 	private String originName; //ORIGIN_NAME	VARCHAR2(1000 BYTE)
 	private String modifyName; //MODIFY_NAME	VARCHAR2(1000 BYTE)
 	private String uploadDate; //UPLOAD_DATE	DATE
-	private int fileLevel; //FILE_LEVEL	NUMBER 1-썸네일 2-그 외
+	private int fileLevel; //FILE_LEVEL	NUMBER 1-썸네일 2-그 외 3-상세설명
 	
 	private String filePath;
 

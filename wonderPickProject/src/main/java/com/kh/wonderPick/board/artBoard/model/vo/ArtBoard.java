@@ -1,7 +1,8 @@
 package com.kh.wonderPick.board.artBoard.model.vo;
 
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
-import com.kh.wonderPick.board.boardCommon.model.vo.BoardDetailContent;
+import com.kh.wonderPick.member.model.vo.Member;
+import com.kh.wonderPick.member.model.vo.MemberImage;
 
 import lombok.Data;
 
@@ -17,9 +18,8 @@ public class ArtBoard{
 	private String category; // CATEGORY	VARCHAR2(2 BYTE)
 	private String price; // PRICE	NUMBER
 	
-	private BoardDetailContent boardDetailContent;
-	
-	
+	private Member member;
+	private MemberImage memberImg;
 	private Board board;
 	
 }
