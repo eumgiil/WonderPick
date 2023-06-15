@@ -328,7 +328,7 @@
 			        MEMBER_NO
 		</select>
 		
-		<insert id="insertVote" parameterType="contest">
+		<insert id="insertVoteLike" parameterType="contest">
 			INSERT
 			 INTO 
 			 		VOTE

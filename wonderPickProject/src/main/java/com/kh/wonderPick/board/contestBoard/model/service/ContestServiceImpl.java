@@ -82,8 +82,8 @@ public class ContestServiceImpl implements ContestService {
 	}
 
 	@Override
-	public int insertVote(int boardNo) {
-		return contestDao.insertVote(sqlSession, boardNo);
+	public int insertVoteLike(int boardNo) {
+		return contestDao.insertVoteLike(sqlSession, boardNo);
 	}
 
 

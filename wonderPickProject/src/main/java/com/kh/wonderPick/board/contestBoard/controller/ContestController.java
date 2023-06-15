@@ -204,11 +204,11 @@ public class ContestController {
 	
 	@ResponseBody
 	@RequestMapping(value="insertVote.ct", produces="application/json; charset=UTF-8")
-	public String insertVote(int boardNo, int memberNo, Contest contest) {
+	public String insertVoteLike(int boardNo, int memberNo, Contest contest) {
 		
 		
 		
-		return new Gson().toJson(contestService.insertVote(boardNo));
+		return new Gson().toJson(contestService.insertVoteLike(boardNo));
 	}
 	
 	
