@@ -22,7 +22,6 @@ import com.kh.wonderPick.board.artBoard.model.vo.DetailOption;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.boardCommon.controller.BoardController;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
-import com.kh.wonderPick.board.boardCommon.model.vo.BoardDetailContent;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.reply.model.service.ReplyService;
 import com.kh.wonderPick.board.review.model.service.ReviewService;
@@ -60,7 +59,7 @@ public class ArtBoardController {
 		return "board/artBoard/artEnrollForm";
 	}
 	
-	@RequestMapping(value="insertBoard.at" /*, produces = "application/json;charset=UTF-8"*/)
+	@RequestMapping(value="insertBoard.at")
 	public String enrollArtBoard(Board board,
 							   ArtBoard artBoard,
 							   String[] options,
@@ -125,8 +124,8 @@ public class ArtBoardController {
 		
 //		boardImage 완료
 		
-//		member
-//		memberImage
+//		member artBoard에 넣음 
+//		memberImage artBoard에 넣음 
 		
 //		review 완료
 		
@@ -150,8 +149,6 @@ public class ArtBoardController {
 		  .addObject("boardImage", boardImage)
 		  .addObject("reviewList", reviewList)
 //		  .addObject("replyList", replyList)
-//		  .addObject("member", member)
-//		  .addObject("memberImage", rmemberImage)
 		  .setViewName("board/artBoard/artDetailView");
 		return mv;
 	}

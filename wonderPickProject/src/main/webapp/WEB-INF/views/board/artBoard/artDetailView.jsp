@@ -268,8 +268,8 @@
             <div>
                 <table class="width">
                     <tr>
-                        <td rowspan="2" style="width:100px;"><img class="detail_img" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif" alt=""></td>
-                        <td style="font-size: 30px;">작가명</td>
+                        <td rowspan="2" style="width:100px;"><img class="detail_img" src="${artboard.memberImg.memberModifyName}" alt=""></td>
+                        <td style="font-size: 30px;">${artBoard.member.nickname}</td>
                     </tr>
                     <tr>
                         <td style="font-size: 20px;">★★★★☆</td>
