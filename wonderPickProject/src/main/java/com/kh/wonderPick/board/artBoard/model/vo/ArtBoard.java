@@ -19,7 +19,7 @@ public class ArtBoard{
 	private String price; // PRICE	NUMBER
 	
 	private Member member;
-	private MemberImage memberImg;
+	private MemberImage memberImage;
 	private Board board;
 	
 }
