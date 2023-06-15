@@ -193,13 +193,15 @@ public class ContestController {
 		return "board/contestBoard/contestWinnerList";
 	}
 	
-	@RequestMapping("selectVoteLike.ct")
+	@RequestMapping("insertVote.ct")
 	public String selectVoteLike(int boardNo, int memberNo, Contest contest) {
 		
 		//System.out.println(boardNo);
 		
 		contest.setBoardNo(boardNo);
 		contest.setMemberNo(memberNo);
+		
+		System.out.println( "scscscscs :" + contest);
 		
 		contestService.selectVoteLike(contest);
 		return null;
