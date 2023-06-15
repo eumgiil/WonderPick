@@ -122,55 +122,80 @@
                     </c:otherwise>
                 </c:choose>
 
-                <span id="vote_count">${ b.get(0).voteCount }</span>
+                <span id="vote_count">투표수 자리</span>
             </div>
     
-           
-    
             <div id="image_area">
-    
-                
-
                 <c:forEach items="${ b }" var="b">
 
                     <img src="${ b.filePath }" alt="" class="image">
 
                 </c:forEach>
-
-
-
-          
             </div>
-
         </div>
-       
-       
-
-
     </div>
    </div>
 
-
-
    <script>
 
-    function offHeart(){
-        $.ajax({
-            url : 'insertVote.ct',
-            data : {
-                boardNo : ${ b.get(0).boardNo },
-                memberNo : ${ sessionScope.loginMember.memberNo }
-            },
-            success : function(){
-                
-
-
-            },
-            error : function(){
-                alert('vote error')
-            }
+        $(function(){
+            selectVoteLike();
         });
-    };
+
+        // selectVote
+        function selectVoteLike(){
+            $.ajax({
+                url : 'selectVoteLike.ct',
+                data : {
+                    boardNo : ${ b.get(0).boardNo }
+                },
+                success : function(result){
+                    alert('selectVoteLike success!!')
+                    console.log(result)
+                    console.log($('.vote_heart').html())
+                    $('#vote_count').html(result)
+
+
+                    $('.vote_heart').one("click", function(){
+                        if($('.vote_heart').html() == '♥'){
+                            confirm('투표를 취소하시겠습니까?')
+                            deleteVote();
+                        }
+                        else if($('.vote_heart').html() == '♡'){
+                            confirm('투표를 진행하면 중복투표는 불가능합니다. 진행하시겠습니까? ')
+                            insertVote();
+                        }
+                    })
+
+                    // var onHeart = 
+                    // var offHeart = 
+
+                    // if()
+                },
+                error : function(){
+                    alert('selectVoteLike error!!!!')
+                }
+            });
+        };
+
+        // insertVote
+        function insertVote(){
+            $.ajax({
+                url : 'insertVote.ct',
+                data : {
+                    boardNo : ${ b.get(0).boardNo },
+                    memberNo : ${ sessionScope.loginMember.memberNo }
+                },
+                success : function(result){
+                    alert('insertVote success!!')
+                },
+                error : function(){
+                    alert('insertVote error !!!!')
+                }
+            });
+        };
+
+        // deleteVote
 
     
 
