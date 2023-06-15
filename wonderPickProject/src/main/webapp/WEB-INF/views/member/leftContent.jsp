@@ -15,9 +15,11 @@
             <div id="loginNickName">
                 <h3>${sessionScope.loginMember.nickName}님</h3>
             </div>
-            <div >
-                <button id="changeBtn"><span id="changeIcon" class="material-symbols-outlined">sync_alt</span> 전문가로 전환</button>
-            </div>
+            <c:if test="${sessionScope.loginMember.memberGrade eq '일반회원' }">
+	            <div>
+	                <button id="changeBtn"><span id="changeIcon" class="material-symbols-outlined">sync_alt</span> 전문가로 전환</button>
+	            </div>
+            </c:if>
         </div>
         <div id="categoryContent">
             <li>내 정보<span class="material-symbols-outlined">expand_more</span>

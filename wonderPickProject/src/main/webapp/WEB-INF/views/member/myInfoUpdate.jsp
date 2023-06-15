@@ -14,11 +14,13 @@
         <div id="rightContent">
             <p>내 정보 조회 및 수정</p>
             <div id="rightMainContent">
-                <form action="updateInfo.me">
+            	<form enctype="multipart/form-data" action="updateProfile.me" method="post">
 	                <div id="rightProfile">
 	                    <img src="resources/memberUpfiles/basicProfile.jpg">
-	                    <button>프로필 변경</button>
+	                    <button type="submit">프로필 변경</button>
 	                </div>
+            	</form>
+                <form action="updateInfo.me" method="post">
 	                <div id="rightInfo">
 	                    <label>아이디</label><br>
 	                    <input type="text" name="memberId" value="${sessionScope.loginMember.memberId}" readonly />
