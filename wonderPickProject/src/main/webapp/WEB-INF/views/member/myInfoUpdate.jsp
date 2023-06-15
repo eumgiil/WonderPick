@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>test</title>
+<title>Wonder Pick</title>
 <link rel="stylesheet" href="resources/css/member/myInfoUpdate.css" />
 </head>
 <body>
@@ -14,40 +14,46 @@
         <div id="rightContent">
             <p>내 정보 조회 및 수정</p>
             <div id="rightMainContent">
-                <div id="rightProfile">
-                    <img src="resources/memberUpfiles/basicProfile.jpg">
-                    <button>프로필 변경</button>
-                </div>
-                <div id="rightInfo">
-                    <label>아이디</label><br>
-                    <input type="text" value="${sessionScope.loginMember.memberId}" readonly />
-                    <br>
-                    <label>이름</label><br>
-                    <input type="text" value="${sessionScope.loginMember.memberName}" />
-                    <br>
-                    <label>닉네임</label><br>
-                    <input type="text" value="${sessionScope.loginMember.nickName}" />
-                    <br>
-                    <label>전화번호</label><br>
-                    <input type="text" value="${sessionScope.loginMember.phone}" />
-                    <hr>
-                    <label>주소</label><br>
-                    <input type="text" value="${sessionScope.loginMember.adress}" />
-                    <br>
-                    <label>계좌번호</label><br>
-                    <input type="text" value="${sessionScope.loginMember.payAccount}" />
-                    <br>
-                    <label>이메일 수신 동의</label><br>
-                    <input type="checkbox" />
-                    <br>
-                    <hr>
-                    <label>회원가입 날짜</label><br>
-                    <input type="text" readonly value="${sessionScope.loginMember.enrollDate}" />
-                    <br>
-                    <label>수정날짜</label><br>
-                    <input type="text" readonly value="${sessionScope.loginMember.modifyDate}" />
-                    
-                </div>
+                <form action="updateInfo.me">
+	                <div id="rightProfile">
+	                    <img src="resources/memberUpfiles/basicProfile.jpg">
+	                    <button>프로필 변경</button>
+	                </div>
+	                <div id="rightInfo">
+	                    <label>아이디</label><br>
+	                    <input type="text" name="memberId" value="${sessionScope.loginMember.memberId}" readonly />
+	                    <br>
+	                    <label>이름</label><br>
+	                    <input type="text" name="memberName" value="${sessionScope.loginMember.memberName}" />
+	                    <br>
+	                    <label>닉네임</label><br>
+	                    <input type="text" name="nickName" value="${sessionScope.loginMember.nickName}" />
+	                    <br>
+	                    <label>전화번호</label><br>
+	                    <input type="text" name="phone" value="${sessionScope.loginMember.phone}" />
+	                    <br>
+	                    <label>이메일</label><br>
+	                    <input type="text" name="email" value="${sessionScope.loginMember.email}" />
+	                    <hr>
+	                    <label>주소</label><br>
+	                    <input type="text" name="address" value="${sessionScope.loginMember.address}" />
+	                    <br>
+	                    <label>계좌번호</label><br>
+	                    <input type="text" name="payAccount" value="${sessionScope.loginMember.payAccount}" />
+	                    <br>
+	                    <input type="checkbox" name="emailAgree"/> 이메일 수신에 동의합니다.
+	                    <br>
+	                    <hr>
+	                    <label>회원가입 날짜</label><br>
+	                    <input type="text" readonly name="enrollDate" value="${sessionScope.loginMember.enrollDate}" />
+	                    <br>
+	                    <label>수정날짜</label><br>
+	                    <input type="text" readonly name="modifyDate" value="${sessionScope.loginMember.modifyDate}" />
+	                    <input type="hidden" name="memberGrade" value="${sessionScope.loginMember.memberGrade}" />
+	                    <br>
+	                    <button type="submit">수정</button>
+	                </div>
+                </form>
             </div>
         </div>
     </div>
