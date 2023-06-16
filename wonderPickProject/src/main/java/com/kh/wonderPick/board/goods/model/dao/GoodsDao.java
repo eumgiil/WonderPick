@@ -1,6 +1,7 @@
 package com.kh.wonderPick.board.goods.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -44,15 +45,17 @@ public class GoodsDao {
 	}
 	
 	// 검색결과 개수 조회
-	public int searchGoodsCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("goodsMapper.searchGoodsCount");
+	public int searchGoodsCount(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.selectOne("goodsMapper.searchGoodsCount", map);
 	}
 
 	// 검색결과 리스트 조회
-	public ArrayList<Goods> searchGoods(SqlSessionTemplate sqlSession, PageInfo pi, String condition, String keyword){
+	public ArrayList<Goods> searchGoods(SqlSessionTemplate sqlSession, HashMap map, PageInfo pi ){
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("goodsMapper.searchGoods",condition, keyword, rowBounds );
+		System.out.println("안뇽 나는 DAO~헷");
+		return (ArrayList)sqlSession.selectList("goodsMapper.searchGoods",map, rowBounds );
+		
 	}
 	
 	

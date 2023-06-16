@@ -67,7 +67,7 @@
             
 		            <!--  판매자는 최소 하나는 첨부해야함 -->
 		    <div id="file-area">
-		        <input type="file" id="file1" name="upfile" required onchange="loadImg(this, 1);">
+		        <input type="file" id="file1" name="thumbnailUpFile" required onchange="loadImg(this, 1);">
 		        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);">
 		        <input type="file" id="file3" name="upfile" onchange="loadImg(this, 3);">
 		        <input type="file" id="file4" name="upfile" onchange="loadImg(this, 4);">

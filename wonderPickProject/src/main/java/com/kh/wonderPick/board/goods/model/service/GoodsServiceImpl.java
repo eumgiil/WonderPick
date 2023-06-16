@@ -1,6 +1,7 @@
 package com.kh.wonderPick.board.goods.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,28 +49,29 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	
 	@Override
-	public int searchGoodsCount() {
-		return goodsDao.searchGoodsCount(sqlSession);
+	public int searchGoodsCount(HashMap map) {
+		return goodsDao.searchGoodsCount(sqlSession, map);
 	}
 	@Override
-	public ArrayList<Goods> searchGoods(PageInfo pi, String condition, String keyword){
-		return goodsDao.searchGoods(sqlSession, pi, condition, keyword);
+	public ArrayList<Goods> searchGoods(HashMap map, PageInfo pi){
+		return goodsDao.searchGoods(sqlSession, map , pi );
 	}
 	
 	
 
 	@Override
 	@Transactional
-	public int insertGoods(Goods g , Board b, BoardImage bi) {
+	public int insertGoods(Board b, ArrayList<BoardImage> list, Goods g) {
 		
-		int result2 = goodsDao.insertBoard(sqlSession, b);
-		 int result = goodsDao.insertGoods(sqlSession, g);
-		 int result3 = 1;
-		 if(bi != null) {
-			 result3 = goodsDao.insertBoardImage(sqlSession, bi);
-		 }
-		 
-			  return (result*result2*result3);
+		int result1 = goodsDao.insertBoard(sqlSession, b);
+		int result2 = 1;
+		for(int i=0; i<list.size(); i++) {
+			goodsDao.insertBoardImage(sqlSession, list.get(i));
+		}
+		int result3 = goodsDao.insertGoods(sqlSession, g);
+		
+		return (result1 * result2 * result3);
+		
 	}
 
 	@Override

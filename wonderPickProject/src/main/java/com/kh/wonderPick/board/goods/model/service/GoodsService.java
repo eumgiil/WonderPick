@@ -1,8 +1,7 @@
 package com.kh.wonderPick.board.goods.model.service;
 
 import java.util.ArrayList;
-
-
+import java.util.HashMap;
 
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
@@ -29,7 +28,7 @@ public interface GoodsService {
 	ArrayList<Goods> selectCategoryList(PageInfo pi, String goodsCategory);
 	
 	// 게시글 작성하기
-	int insertGoods(Goods g, Board b, BoardImage bi);
+	int insertGoods(Board b, ArrayList<BoardImage> list, Goods g);
 	
 	// 게시글 조회수 증가
 	int increaseCount(int boardNo);
@@ -38,10 +37,10 @@ public interface GoodsService {
 	Goods selectGoods(int boardNo);
 	
 	// 게시글 검색결과 개수 조회
-	int searchGoodsCount();
+	int searchGoodsCount(HashMap map);
 	
 	// 게시글 검색결과 리스트 조회
-	ArrayList<Goods> searchGoods(PageInfo pi, String condition, String keyword);
+	ArrayList<Goods> searchGoods(HashMap map , PageInfo pi );
 	
 	// 게시글 수정하기
 	int updateGoods(Goods g);

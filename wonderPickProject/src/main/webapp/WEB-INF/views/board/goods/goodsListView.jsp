@@ -22,11 +22,18 @@
            
         }
         
-        .goodsList1 , .categoryList{
+        .goodsList1{
             border: 1px solid black;
             width: 900px;
             margin-left:50px;
             
+        }
+        .categoryList{
+         border: 1px solid black;
+            width: 900px;
+            margin-left:50px;
+            
+        
         }
         .all_area{
             width: 1300px;
@@ -108,17 +115,17 @@
                 <td><a href="categorylist.go?goodsCategory=FASHION&cPage=1">패션</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${g.goodsCategory}&cPage=1">주방</a></td>
+                <td><a href="categorylist.go?goodsCategory=KITCHEN&cPage=1">주방</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${g.goodsCategory}&cPage=1">인테리어</a></td>
+                <td><a href="categorylist.go?goodsCategory=INTERIOR&cPage=1">인테리어</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${g.goodsCategory}&cPage=1">문구</a></td>
+                <td><a href="categorylist.go?goodsCategory=STATIONERY&cPage=1">문구</a></td>
             </tr>
             <tr>
             </tr>
-                <td><a href="categorylist.go?goodsCategory=${g.goodsCategory}&cPage=1">기타</a></td>
+                <td><a href="categorylist.go?goodsCategory=ETC&cPage=1">기타</a></td>
             </tr>
         </table>
 
@@ -140,7 +147,6 @@
         <form action="search.go" method="get" align="center">
         <input type="hidden" name="currentPage" value="1">
          <select name="condition" >
-            <option value="whole">전체</option>
             <option value="nickname">작가명</option>
             <option value="boardTitle">제목순</option>
         </select>
@@ -164,34 +170,14 @@
         
         <script>
         
-        function option(num){
-        	num = $('#option').val();
-        };
-        $.ajax({
-        	url : 'list.go?cPage=1',
-        	data : num ,
-        	type :'get',
-        	success : function(result){
-        		for(var i = 0 ; i< result.length; i++){
-        			
-        		}
-        	}
-        		
-        		
-        		
-        	},
-        	error : () => {
-        		console.log('실패');
-        	}
-        		
-        });
+      
         </script>
 
         </div>
         <br><br><br>
 
         <!-- 전체리스트 -->
-        <div class="goodsList1"  id="goods" style="width: 900px;" align="center">
+        <div class="goodsList1"  id="goods" style="width: 900px; margin-left: 500px; margin-top:100px;"  align="center">
           <c:choose>  
             <c:when test="${not empty list}">
               <c:forEach items="${list}" var="g">
