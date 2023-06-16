@@ -422,29 +422,29 @@
                     let requestStr = requestArr.join(",");
                     let priceStr = priceArr.join(",");
                     
-                    console.log(options)
-                    console.log(requestStr);
-                    console.log(priceStr);
-                    // let f = document.createElement('form');
+                    let f = document.createElement('form');
                     
-                    // let requestInput = document.createElement('input');
-                    // requestInput.setAttribute('tyep', 'hidden');
-                    // requestInput.setAttribute('name', 'addPrices');
-                    // requestInput.setAttribute('value', requestStr);
+                    let requestInput = document.createElement('input');
+                    requestInput.setAttribute('tyep', 'hidden');
+                    requestInput.setAttribute('name', 'addPrices');
+                    requestInput.setAttribute('value', requestStr);
                     
-                    // let priceInput = document.createElement('input');
-                    // priceInput.setAttribute('type', 'hidden');
-                    // priceInput.setAttribute('name', 'request');
-                    // priceInput.setAttribute('value', priceStr);
-
-                    // f.append(requestStr)
-                    // f.append(priceStr);
-                    // f.setAttribute('method', 'post');
-                    // f.setAttribute('action', 'chating.co');
-
-                    // let btnRequest = document.getElementById('btnRequest');
-                    // btnRequest.appendChild(f);
-                    // f.submit();
+                    let priceInput = document.createElement('input');
+                    priceInput.setAttribute('type', 'hidden');
+                    priceInput.setAttribute('name', 'request');
+                    priceInput.setAttribute('value', priceStr);
+                    
+                    f.append(requestStr)
+                    f.append(priceStr);
+                    f.setAttribute('method', 'post');
+                    f.setAttribute('action', 'chating.co');
+                    
+                    let btnRequest = document.getElementById('btnRequest');
+                    btnRequest.appendChild(f);
+                    f.submit();
+                    // console.log(options)
+                    // console.log(requestStr);
+                    // console.log(priceStr);
 
                     // for(let option of options){
                     //     if(option.text != '==='){
