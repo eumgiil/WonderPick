@@ -326,10 +326,8 @@
 	                            <select class="select" onchange="choice();" style="width:70%;">
 	                            	<option value="0">===</option>
 									<c:forEach items="${ option.detailOption }" var="detail">
-										<option value="${ detail.price }" align="center" >
-											 ${ detail.detail }  
-											&nbsp;&nbsp;&nbsp;&nbsp;
-											 ${ detail.price }원 
+										<option  value="${ detail.price }" align="center" >
+											${ detail.detail }&nbsp;&nbsp;&nbsp;&nbsp;${ detail.price }원 
 										</option>
 									</c:forEach>
 	                            </select>
@@ -341,13 +339,12 @@
             </div>
             <br><br>
 
-
                                                         <!-- 굿즈옵션 -->
             <div class="">
                 <h3 class="op_title width">굿즈 옵션</h3>
             </div>
             <div class="">
-                <table class="width">
+                <!-- <table class="width">
                     <tr>
                         <td>제품</td>
                         <td class="t_align_right">
@@ -388,7 +385,7 @@
                             </select>
                         </td>
                     </tr>
-                </table>
+                </table> -->
             </div>
             <hr><br>
 
@@ -402,9 +399,67 @@
             </div>
             <br><hr><br>
 
-            <div class="center">
-                <button>작가에게 주문요청</button>
+            <div id="btnRequest" class="center">
+                <button onclick="toChat();">작가에게 주문요청</button>
             </div>
+
+            <script>
+
+                function toChat(){
+                    let requestArr = [];
+                    let priceArr = [];
+                    let options = document.querySelectorAll('.select > option:checked');
+                   
+                    for(var i = 0; i < options.length; i++){
+                        if(options[i].text != '==='){
+                            priceArr.push(options[i].value);
+                            requestArr.push(options[i].text.replace(options[i].value + '원', "").trim());
+                        }
+                    }
+                    let requestStr = requestArr.join(",");
+                    let priceStr = priceArr.join(",");
+                    
+                    console.log(requestStr);
+                    console.log(priceStr);
+                    let f = document.createElement('form');
+                    
+                    let requestInput = document.createElement('input');
+                    requestInput.setAttribute('tyep', 'hidden');
+                    requestInput.setAttribute('name', 'addPrices');
+                    requestInput.setAttribute('value', requestStr);
+                    
+                    let priceInput = document.createElement('input');
+                    priceInput.setAttribute('type', 'hidden');
+                    priceInput.setAttribute('name', 'request');
+                    priceInput.setAttribute('value', priceStr);
+
+                    f.append(requestStr)
+                    f.append(priceStr);
+                    f.setAttribute('method', 'post');
+                    f.setAttribute('action', '');
+
+                    let btnRequest = document.getElementById('btnRequest');
+                    btnRequest.appendChild(f);
+                    f.submit();
+
+
+
+
+                    // for(let option of options){
+                    //     if(option.text != '==='){
+                    //         console.log("asd")
+                    //     }
+                    // }
+                    // for(let option in options){
+                    //     if(option.text != '==='){
+                    //         console.log("asd")
+                    //     }
+                    // }
+
+                }
+
+
+            </script>
 
         </div>
 <!-- 오른쪽 정보 끝 -->
@@ -452,6 +507,7 @@
             let price = document.getElementById('totalPrice');
             price.innerHTML = number;
 		}
+
         
 
 
