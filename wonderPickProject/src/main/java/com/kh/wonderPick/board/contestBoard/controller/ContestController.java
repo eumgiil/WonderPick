@@ -203,12 +203,21 @@ public class ContestController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="insertVote.ct", produces="application/json; charset=UTF-8")
-	public String insertVoteLike(int boardNo, int memberNo, Contest contest) {
+	@RequestMapping(value="updateVoteLike.ct", produces="application/json; charset=UTF-8")
+	public String updateVoteLike(int boardNo, int memberNo, Contest contest) {
+		
+		System.out.println(memberNo);
+		
+		
+		contest.setBoardNo(boardNo);
+		contest.setMemberNo(memberNo);
+		
+		
+		System.out.println(contest);
 		
 		
 		
-		return new Gson().toJson(contestService.insertVoteLike(boardNo));
+		return new Gson().toJson(contestService.updateVoteLike(contest));
 	}
 	
 	

@@ -453,10 +453,7 @@
                                     let clickTitleBoardNo = e.currentTarget.children[0].value;
                                     location.href = 'contestDetail.ct?boardNo=' + clickTitleBoardNo;
                                 }
-
                             }))
-
-
                 },
                 error : function(){
                     alert('조회 실패입니디')

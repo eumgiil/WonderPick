@@ -113,14 +113,14 @@
             </div>
 
             <div id="heart_area">
-                <c:choose>
+                <!-- <c:choose>
                     <c:when test="${ b.get(0).memberNo != 0 and b.get(0).memberNo != null }" >
-                        <span class="vote_heart" onclick="onHeart();">♥</span>
+                        <span class="vote_heart">♥</span>
                     </c:when>
                     <c:otherwise>
-                        <span class="vote_heart" onclick="offHeart();">♡</span>
+                        <span class="vote_heart">♡</span>
                     </c:otherwise>
-                </c:choose>
+                </c:choose> -->
 
                 <span id="vote_count">투표수 자리</span>
             </div>
@@ -139,7 +139,7 @@
    <script>
 
         $(function(){
-            selectVoteLike();
+           selectVoteLike();
         });
 
         // selectVote
@@ -156,21 +156,18 @@
                     $('#vote_count').html(result)
 
 
-                    $('.vote_heart').one("click", function(){
-                        if($('.vote_heart').html() == '♥'){
-                            confirm('투표를 취소하시겠습니까?')
-                            deleteVote();
-                        }
-                        else if($('.vote_heart').html() == '♡'){
-                            confirm('투표를 진행하면 중복투표는 불가능합니다. 진행하시겠습니까? ')
-                            insertVote();
-                        }
-                    })
+                    // $('.vote_heart').one("click", function(){
+                    //     if($('.vote_heart').html() == '♥'){
+                    //         confirm('투표를 취소하시겠습니까?')
+                    //         deleteVote();
+                    //     }
+                    //     else if($('.vote_heart').html() == '♡'){
+                    //         confirm('투표를 진행하면 중복투표는 불가능합니다. 진행하시겠습니까? ')
+                    //         updateVote();
+                    //     }
+                    // })
 
-                    // var onHeart = 
-                    // var offHeart = 
-
-                    // if()
+                   
                 },
                 error : function(){
                     alert('selectVoteLike error!!!!')
@@ -178,24 +175,42 @@
             });
         };
 
-        // insertVote
-        function insertVote(){
+        // updateVote
+        function updateVote(){
             $.ajax({
-                url : 'insertVote.ct',
+                url : 'updateVoteLike.ct',
                 data : {
                     boardNo : ${ b.get(0).boardNo },
                     memberNo : ${ sessionScope.loginMember.memberNo }
                 },
                 success : function(result){
-                    alert('insertVote success!!')
+                    alert('updateVote success!!')
+                    $('.vote_heart').html('♥');
+                    selectVoteLike();
                 },
                 error : function(){
-                    alert('insertVote error !!!!')
+                    alert('updateVote error !!!!')
                 }
             });
         };
 
         // deleteVote
+        function deleteVote(){
+            $.ajax({
+                url : 'deleteVote.ct',
+                data : {
+                    boardNo : ${ b.get(0).boardNo }
+                },
+                success : function(){
+                    alert('delete success!!!!')
+                    $('.vote_heart').html('♡');
+                    selectVoteLike();
+
+                }
+            })
+        }
+
+
 
     
 
