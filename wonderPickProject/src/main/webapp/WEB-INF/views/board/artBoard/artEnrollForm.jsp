@@ -60,6 +60,14 @@
 
 
         <form id="form" method="post" enctype="multipart/form-data">
+
+            <div style="display:none;" id="file-area">
+		        <input type="file" id="file1" name="upFile" onchange="loadImg(this, 1);" required>
+		        <input type="file" id="file2" name="upFile" onchange="loadImg(this, 2);">
+		        <input type="file" id="file3" name="upFile" onchange="loadImg(this, 3);">
+		        <input type="file" id="file4" name="upFile" onchange="loadImg(this, 4);">
+	    	</div>
+
 	        <table id="art_table" align="center">
 	            <tbody>
 	                <tr>
@@ -98,70 +106,16 @@
 	                    <td><img id="contentImg2" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt=""></td>
 	                    <td><img id="contentImg3" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt=""></td>
 	                </tr>
-
-
-
-
-
-
-
-
-
-                    
-
 	                <tr>
 	                    <th><h5 class="sub_title">상품설명</h5></th>
 	                    <td colspan="3">
-                            <input type="file" id="explaneFile" name="explaneFile" onchange="explane(this);">
+                            <input type="file" id="explaneFile" name="upFile" onchange="explane(this);">
 
 	                    	<div name="explane" id="explane" contentEditable='true' onkeyup="deleteImg(event)" onblur="loseFocus(this)"></div>
 
                             <input type="hidden" id="boardContent" name="boardContent">
 	                    </td>
 	                </tr>
-
-                    <script>
-                        function loseFocus(e){
-                            let boardContent = document.getElementById('boardContent');  // div 값을 담을 type:hidden의 input태그
-                            boardContent.innerHTML = e.innerHTML;
-                            let nodes = boardContent.childNodes;
-                            // console.dir(boardContent.childNodes);
-                            // console.log(boardContent.childNodes[0].nodeName);
-                            let list = [];
-                            for(var i = 0; i < nodes.length; i++){
-                                if(nodes[i].nodeName == '#text'){
-                                    let data = nodes[i].data;
-                                    list.push({'type' : 'text'
-                                              ,'data' : data });
-                                } else {
-                                    let data = nodes[i].src;
-                                    list.push({'type' : 'img'
-                                              ,'data' : data});
-                                }
-                            }
-                            boardContent.value = JSON.stringify(list);
-
-                            // let json = {'json' : list};
-                            // console.log(json);
-                            // boardContent.value = JSON.stringify(json);
-                            
-
-                            
-                            
-                            
-                            
-                        }   
-                    </script>
-
-
-
-
-
-
-
-
-
-	                
 	                <tr>
 	                    <th><h5 class="sub_title">파일유형</h5></th>
 	                    <td><input type="text" name="fileType" maxlength="5" placeholder="영어로 작성" required></td>
@@ -201,14 +155,14 @@
 	        <br><br>
 	
 	        <table align="center">
-	            <tr>
+	            <!-- <tr>
 	                <th colspan="5">
 	                    <hr class="line">
 	                </th>
-	            </tr>
+	            </tr> -->
 	
 	            <!-- 옵션 -->
-	            <tr>
+	            <!-- <tr>
 	                <th colspan="5">
 	                    <h5 class="sub_title">굿즈 옵션</h5>
 	                </th>
@@ -232,7 +186,7 @@
 	            <tr>
 	                <th><h5 class="sub_title">주방</h5></th>
 	                <td colspan="3"><input type="text" name="" style="width:100%;"></td>
-	            </tr>
+	            </tr> -->
 	            <!-- 끝 옵션 -->
 	            <tr>
 	                <td colspan="5"><hr class="line"></td>
@@ -251,12 +205,7 @@
             
             
             
-		    <div style="display:none;" id="file-area">
-		        <input type="file" id="file1" name="upFile" onchange="loadImg(this, 1);" required>
-		        <input type="file" id="file2" name="upFile" onchange="loadImg(this, 2);">
-		        <input type="file" id="file3" name="upFile" onchange="loadImg(this, 3);">
-		        <input type="file" id="file4" name="upFile" onchange="loadImg(this, 4);">
-	    	</div>
+		    
 	    	
 	    </form>
 	    
@@ -366,8 +315,6 @@
             form.submit();
         }
 
-        
-
         /* 상세설명 이미지 담을 수 있는 메소드 */
         function explane(inputFile){
             if(inputFile.files.length == 1){
@@ -398,7 +345,26 @@
             }
         }
 
-        
+        function loseFocus(e){
+            let boardContent = document.getElementById('boardContent');  // div 값을 담을 type:hidden의 input태그
+            boardContent.innerHTML = e.innerHTML;
+            let nodes = boardContent.childNodes;
+            // console.dir(boardContent.childNodes);
+            // console.log(boardContent.childNodes[0].nodeName);
+            let list = [];
+            for(var i = 0; i < nodes.length; i++){
+                if(nodes[i].nodeName == '#text'){
+                    let data = nodes[i].data;
+                    list.push({'type' : 'text'
+                                ,'data' : data });
+                } else {
+                    let data = nodes[i].src;
+                    list.push({'type' : 'img'
+                                ,'data' : data});
+                }
+            }
+            boardContent.value = JSON.stringify(list);
+        }   
 
 
 

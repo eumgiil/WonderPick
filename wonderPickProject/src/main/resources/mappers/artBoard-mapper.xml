@@ -25,6 +25,18 @@
 		<result column="CATEGORY" property="category" />
 		<result column="PRICE" property="price" />
 		<collection property="board" resultMap="board" />
+		<collection property="member" resultMap="member" />
+		<collection property="memberImage" resultMap="memberImage" />
+	</resultMap>
+	
+	<resultMap id="member" type="member">
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="NICKNAME" property="nickName" />
+	</resultMap>
+	
+	<resultMap id="memberImage" type="memberImage">
+		<result column="IMG_NO" property="imgNo" />
+		<result column="MEMBER_MODIFY_NAME" property="memberModifyName" />
 	</resultMap>
 	
 	
@@ -34,6 +46,7 @@
 		<result column="main_option" property="mainOp" />
 		<collection property="detailOption" resultMap="detailOption" />
 	</resultMap>
+	
 	<resultMap id="detailOption" type="detailOption">
 		<result column="option_no" property="optionNo" />
 		<result column="DETAIL" property="detail" />
@@ -67,6 +80,7 @@
 		<result column="PRICE" property="price" />
 		<result column="STAR" property="star" />
 		<result column="MODIFY_NAME" property="modifyName" />
+		<result column="MEMBER_MODIFY_NAME" property="memberModifyName" />
 	</resultMap>
 
 	<select id="selectArtListCount" resultType="_int">
@@ -88,22 +102,25 @@
 		      ,m.nickname
 		      ,AVG(NVL(r.star, 0))
 		      ,NVL(ab.price, 0) price
+		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/boardUpfiles/artBoardFiles/2023061222534502.jpg') MEMBER_MODIFY_NAME
 		  from
 		       art_board ab
 		  join
 		       board b on(b.board_no = ab.board_no)
-		  left join
+		  join
 		       board_image bi on(bi.board_no = b.board_no)
 		  join
 		       member m on(b.member_no = m.member_no)
 		  left join
+		       member_image mi on(mi.member_no = b.member_no)
+		  left join
 		       review r on(b.board_no = r.board_no)
 		 where
 		       b.status = 'Y'
-		   <!-- and
-		       bi.file_level = '1' -->
+		   and
+		       bi.file_level = '1'
 		 group by
-		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name
+		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name, mi.MEMBER_MODIFY_NAME
 		 order by
 		       board_no desc
 	</select>
@@ -223,26 +240,32 @@
 
 	<select id="selectArtBoard" parameterType="_int" resultMap="artBoard">
 		select
-			   member_no
-			  ,board_title
-			  ,board_content
-			  ,create_date
-			  ,board_count
-			  ,file_type
-			  ,dpi
-			  ,default_size
-			  ,modify_count
-			  ,workday
-			  ,category
-			  ,price
+		       b.member_no
+		      ,nickname
+		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/boardUpfiles/artBoardFiles/2023061222534502.jpg') MEMBER_MODIFY_NAME
+		      ,board_title
+		      ,board_content
+		      ,create_date
+		      ,board_count
+		      ,file_type
+		      ,dpi
+		      ,default_size
+		      ,modify_count
+		      ,workday
+		      ,category
+		      ,price
 		  from
-		  	   board b
+		       art_board ab
 		  join
-		  	   art_board using(board_no)
+		       board b using(board_no)
+		  join
+		       member m on(b.member_no = m.member_no)
+		  left join
+		       member_image mi on(mi.member_no = m.member_no)
 		 where
-		 	   board_no = #{ bno }
+		       board_no = #{ bno }
 		   and
-		 	   status = 'Y'
+		       b.status = 'Y'
 	</select>
 	
 	<select id="selectOptionList" parameterType="_int" resultMap="option">

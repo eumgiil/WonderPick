@@ -2,6 +2,7 @@ package com.kh.wonderPick.board.contestBoard.model.service;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonElement;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
@@ -31,7 +32,10 @@ public interface ContestService {
 
 	ArrayList<Contest> selectWinnerList();
 
-	Contest selectVoteLike(Contest contest);
+	int selectVoteLike(int boardNo);
+
+	int updateVoteLike(Contest contest);
+
 
 	
 	

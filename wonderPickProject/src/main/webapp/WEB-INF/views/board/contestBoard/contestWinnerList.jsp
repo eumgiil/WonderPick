@@ -131,7 +131,7 @@
                                     </div>
                                 </td>
                                 <td>${ list.get(0).nickName }</td>
-                                <td>${ list.get(0).voteCount }</td>
+                                <td>투표수 자리</td>
                             </tr>
                             <tr>
                                 <td colspan="3">
@@ -178,7 +178,7 @@
                                     </div>
                                 </td>
                                 <td>${ list.nickName }</td>
-                                <td>${ list.voteCount }</td>
+                                <td>투표수 자리</td>
                             </tr>
                             <tr>
                                 <td colspan="3">
@@ -200,13 +200,8 @@
                     <div class="selectList">
     
                     </div>
-                  
                    
                 </div>
-
-
-
-
 
             </div>
 

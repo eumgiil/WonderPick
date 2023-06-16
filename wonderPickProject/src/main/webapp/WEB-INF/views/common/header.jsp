@@ -34,7 +34,7 @@
             <div id="mainMenuBar" class="clear">
                 <ul id="mainMenu" class="clear">
                     <li class="mainCategory">
-                        <a href="#"><span class="material-symbols-outlined">menu</span> 카테고리</a>
+                        <a href="artList.bo"><span class="material-symbols-outlined">menu</span> 카테고리</a>
                             <ul class="detailCategory">
                                 <li><a href="artList.bo">캐릭터일러스트</a></li>
                                 <li><a href="#">일러스트</a> </li>
@@ -151,8 +151,8 @@
 		                <form action="login.me" method="post">
 		                    <!-- Modal body -->
 		                    <div class="modal-body" id="loginModal-body">
-		                        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="아이디를 입력해주세요." id="memberId" name="memberId"> <br>
-		                        <input type="password" class="form-control mb-2 mr-sm-2" placeholder="비밀번호를 입력해주세요." id="memberPwd" name="memberPwd">
+		                        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="아이디를 입력해주세요." id="memberId" name="memberId" required> <br>
+		                        <input type="password" class="form-control mb-2 mr-sm-2" placeholder="비밀번호를 입력해주세요." id="memberPwd" name="memberPwd" required>
 		                    </div>
 		                    <!-- Modal footer -->  
 		                    <div class="modal-footer" id="loginModal-footer">

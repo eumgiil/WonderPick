@@ -27,6 +27,9 @@ public class ContestDao {
 	public int insertPrice(SqlSessionTemplate sqlSession, int price) {
 		return sqlSession.insert("contestBoardMapper.insertPrice", price);
 	}
+	public int insertVote(SqlSessionTemplate sqlSession, Board board) {
+		return sqlSession.insert("contestBoardMapper.insertVote", board);
+	}
 
 	public ArrayList<Contest> selectVotePage(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectVotePage");
@@ -48,9 +51,16 @@ public class ContestDao {
 		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectWinnerList");
 	}
 
-	public Contest selectVoteLike(SqlSessionTemplate sqlSession, Contest contest) {
-		//return sqlSession.select;
+	public int selectVoteLike(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("contestBoardMapper.selectVoteLike", boardNo);
 	}
+
+	public int updateVoteLike(SqlSessionTemplate sqlSession, Contest contest) {
+		return sqlSession.update("contestBoardMapper.updateVoteLike", contest);
+	}
+
+	
+
 
 
 

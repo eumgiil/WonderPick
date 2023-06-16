@@ -193,16 +193,31 @@ public class ContestController {
 		return "board/contestBoard/contestWinnerList";
 	}
 	
-	@RequestMapping("selectVoteLike.ct")
-	public String selectVoteLike(int boardNo, int memberNo, Contest contest) {
+	@ResponseBody
+	@RequestMapping(value="selectVoteLike.ct", produces="application/json; charset=UTF-8")
+	public String selectVoteLike(int boardNo) {
 		
-		//System.out.println(boardNo);
+		System.out.println(contestService.selectVoteLike(boardNo));
+		
+		return new Gson().toJson(contestService.selectVoteLike(boardNo));
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="updateVoteLike.ct", produces="application/json; charset=UTF-8")
+	public String updateVoteLike(int boardNo, int memberNo, Contest contest) {
+		
+		System.out.println(memberNo);
+		
 		
 		contest.setBoardNo(boardNo);
 		contest.setMemberNo(memberNo);
 		
-		contestService.selectVoteLike(contest);
-		return null;
+		
+		System.out.println(contest);
+		
+		
+		
+		return new Gson().toJson(contestService.updateVoteLike(contest));
 	}
 	
 	

@@ -113,62 +113,104 @@
             </div>
 
             <div id="heart_area">
-                <c:choose>
+                <!-- <c:choose>
                     <c:when test="${ b.get(0).memberNo != 0 and b.get(0).memberNo != null }" >
                         <span class="vote_heart">♥</span>
                     </c:when>
                     <c:otherwise>
                         <span class="vote_heart">♡</span>
                     </c:otherwise>
-                </c:choose>
+                </c:choose> -->
 
-                <span id="vote_count">${ b.get(0).voteCount }</span>
+                <span id="vote_count">투표수 자리</span>
             </div>
     
-           
-    
             <div id="image_area">
-    
-                
-
                 <c:forEach items="${ b }" var="b">
 
                     <img src="${ b.filePath }" alt="" class="image">
 
                 </c:forEach>
-
-
-
-          
             </div>
-
         </div>
-       
-       
-
-
     </div>
    </div>
 
-
-
    <script>
 
-    $(function(){
-        $.ajax({
-            url : 'selectVoteLike.ct',
-            data : {
-                boardNo : ${ b.get(0).boardNo },
-               
-            },
-            success : function(){
-                $('#vote_heart').html('♡');
-                $('#vote_count').html();
-
-
-            }
+        $(function(){
+           selectVoteLike();
         });
-    });
+
+        // selectVote
+        function selectVoteLike(){
+            $.ajax({
+                url : 'selectVoteLike.ct',
+                data : {
+                    boardNo : ${ b.get(0).boardNo }
+                },
+                success : function(result){
+                    alert('selectVoteLike success!!')
+                    console.log(result)
+                    console.log($('.vote_heart').html())
+                    $('#vote_count').html(result)
+
+
+                    // $('.vote_heart').one("click", function(){
+                    //     if($('.vote_heart').html() == '♥'){
+                    //         confirm('투표를 취소하시겠습니까?')
+                    //         deleteVote();
+                    //     }
+                    //     else if($('.vote_heart').html() == '♡'){
+                    //         confirm('투표를 진행하면 중복투표는 불가능합니다. 진행하시겠습니까? ')
+                    //         updateVote();
+                    //     }
+                    // })
+
+                   
+                },
+                error : function(){
+                    alert('selectVoteLike error!!!!')
+                }
+            });
+        };
+
+        // updateVote
+        function updateVote(){
+            $.ajax({
+                url : 'updateVoteLike.ct',
+                data : {
+                    boardNo : ${ b.get(0).boardNo },
+                    memberNo : ${ sessionScope.loginMember.memberNo }
+                },
+                success : function(result){
+                    alert('updateVote success!!')
+                    $('.vote_heart').html('♥');
+                    selectVoteLike();
+                },
+                error : function(){
+                    alert('updateVote error !!!!')
+                }
+            });
+        };
+
+        // deleteVote
+        function deleteVote(){
+            $.ajax({
+                url : 'deleteVote.ct',
+                data : {
+                    boardNo : ${ b.get(0).boardNo }
+                },
+                success : function(){
+                    alert('delete success!!!!')
+                    $('.vote_heart').html('♡');
+                    selectVoteLike();
+
+                }
+            })
+        }
+
+
 
     
 

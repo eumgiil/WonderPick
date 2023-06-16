@@ -42,10 +42,12 @@ public class ContestServiceImpl implements ContestService {
 		}
 		
 	    int result3 = contestDao.insertPrice(sqlSession, price);
+	    
+	    int result4 = contestDao.insertVote(sqlSession, board);
 		
 		
 		
-		return (result1 * result2 * result3);
+		return (result1 * result2 * result3 * result4);
 		
 	}
 
@@ -75,9 +77,15 @@ public class ContestServiceImpl implements ContestService {
 	}
 
 	@Override
-	public Contest selectVoteLike(Contest contest) {
-		return contestDao.selectVoteLike(sqlSession, contest);
+	public int selectVoteLike(int boardNo) {
+		return contestDao.selectVoteLike(sqlSession, boardNo);
 	}
+
+	@Override
+	public int updateVoteLike(Contest contest) {
+		return contestDao.updateVoteLike(sqlSession, contest);
+	}
+
 
 
 }

@@ -100,11 +100,11 @@
 			                    <img class="detail_img" src="${img.modifyName}" alt="">
 			                </div>
 	            		</c:when>
-	            		<c:otherwise>
+	            		<c:when test="${ img.fileLevel eq 2 }">
 	            			<div class="list">
 			                    <img class="detail_img" src="${img.modifyName}" alt="">
 			                </div>
-	            		</c:otherwise>
+	            		</c:when>
 	            	</c:choose>
             	</c:forEach>
             </div>
@@ -127,26 +127,13 @@
             </div>
             <br><br>
 
-
-
             <div>
                 <h3>[ 상세 설명 ]</h3>
             </div>
             <br><br><br>
             
-            <div id="explain">
-                ${ artBoard.board.boardContent }
-            </div>
-
-            
-
-
-
-
-
-
-
-
+            <!-- 설명이 들어갈 div -->
+            <div id="explain"></div>
 
             <br><br><br>
 
@@ -189,12 +176,6 @@
                     <tr>
                         <td class="h_10px">내용</td>
                     </tr>
-
-                    <!--  반복시 hr 태그 추가되도록
-                    <tr>
-                        <td colspan="2"><hr style="width:200px;"></td>
-                    </tr>
-                    -->
                 </table>
             </div>
 
@@ -263,14 +244,18 @@
 
 
 
-<!-- 오른쪽 정보 -->
+    <!-- 오른쪽 정보 -->
         <div class="artist" style="margin-left:10px;">
                                                         <!-- 작가 작품 정보 -->
             <div>
                 <table class="width">
                     <tr>
                         <th style="font-size: 35px;">❤</th>
-                        <td class="t_align_right"><button>수정</button></td>
+                        <td class="t_align_right">
+                            <c:if test="${member.memberNo eq artBoard.board.boardNo}">
+                                <button>수정</button>
+                            </c:if>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="2" style="font-size: 25px; font-weight:bold;">${artBoard.board.boardTitle}</td>
@@ -283,8 +268,8 @@
             <div>
                 <table class="width">
                     <tr>
-                        <td rowspan="2" style="width:100px;"><img class="detail_img" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif" alt=""></td>
-                        <td style="font-size: 30px;">작가명</td>
+                        <td rowspan="2" style="width:100px;"><img class="detail_img" src="${artboard.memberImage.memberModifyName}" alt=""></td>
+                        <td style="font-size: 30px;">${artBoard.member.nickName}</td>
                     </tr>
                     <tr>
                         <td style="font-size: 20px;">★★★★☆</td>
@@ -424,35 +409,39 @@
         </div>
 <!-- 오른쪽 정보 끝 -->
         
- 
-
-
-
-
-
-
-
-
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 
 
     <script>
+        /* 상세설명 div */
+        window.onload = () => {
+            let boardContent = JSON.parse('${ artBoard.board.boardContent }');
+            let explain = document.getElementById('explain');
+            for(var i = 0; i < boardContent.length; i++){
+                if(boardContent[i].type == 'text'){
+                    let p = document.createElement('p');
+                    p.innerHTML = boardContent[i].data;
+                    explain.append(p)
+                }
+                else{
+                    let explainImg = document.createElement('img');
+                    explainImg.setAttribute("src", boardContent[i].data);
+                    explainImg.setAttribute("width", '80%');
+                    explain.append(explainImg);
+                }
+            }
+        }
+        $(window).on('load', function(){
+            $('#character_illustration').css('color', '#FF8399')
+        });
+
         // 클릭 시 해당 글 위치로 이동
         function move(name){
             var location = document.getElementById(name).offsetTop;
             window.scrollTo({top:location - 200, behavior:"smooth"});
         }
-
-        
-		window.onload = function(){
-			//console.log('${artBoard}');
-			//console.log('${boardImage}');
-			//console.log('${reviewList}');
-			//console.log('${optionList}');
-			//console.log('${optionList.size()}');
-		}
 		
 		function choice(){
 			let number = parseInt('${ artBoard.price }');
