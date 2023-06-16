@@ -371,7 +371,6 @@
                 let clickImageBoardNo = e.currentTarget.children[1].value;
                 console.log(clickImageBoardNo);
                 location.href = 'contestDetail.ct?boardNo=' + clickImageBoardNo;
-               //location.href = '#exampleModalToggle';
             }else{
                 let clickTitleBoardNo = e.currentTarget.children[0].value;
                 console.log(clickTitleBoardNo);

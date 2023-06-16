@@ -32,25 +32,10 @@ public interface ContestService {
 
 	ArrayList<Contest> selectWinnerList();
 
-	int selectVoteLike(int boardNo);
+	ArrayList<Contest> selectVoteLike(int boardNo);
 
 	int updateVoteLike(Contest contest);
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	// 페이징처리 
 	
