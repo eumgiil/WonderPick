@@ -408,7 +408,10 @@
                 function toChat(){
                     let requestArr = [];
                     let priceArr = [];
-                    let options = document.querySelectorAll('.select > option:checked');
+                    
+                    // querySelectorAll로 잡으면 type면서도 충돌이 일어날 가능성이 높음
+                    // let options = document.querySelectorAll('.select > option:checked');
+                    let options = $('.select > option:checked');
                    
                     for(var i = 0; i < options.length; i++){
                         if(options[i].text != '==='){
@@ -419,39 +422,38 @@
                     let requestStr = requestArr.join(",");
                     let priceStr = priceArr.join(",");
                     
+                    console.log(options)
                     console.log(requestStr);
                     console.log(priceStr);
-                    let f = document.createElement('form');
+                    // let f = document.createElement('form');
                     
-                    let requestInput = document.createElement('input');
-                    requestInput.setAttribute('tyep', 'hidden');
-                    requestInput.setAttribute('name', 'addPrices');
-                    requestInput.setAttribute('value', requestStr);
+                    // let requestInput = document.createElement('input');
+                    // requestInput.setAttribute('tyep', 'hidden');
+                    // requestInput.setAttribute('name', 'addPrices');
+                    // requestInput.setAttribute('value', requestStr);
                     
-                    let priceInput = document.createElement('input');
-                    priceInput.setAttribute('type', 'hidden');
-                    priceInput.setAttribute('name', 'request');
-                    priceInput.setAttribute('value', priceStr);
+                    // let priceInput = document.createElement('input');
+                    // priceInput.setAttribute('type', 'hidden');
+                    // priceInput.setAttribute('name', 'request');
+                    // priceInput.setAttribute('value', priceStr);
 
-                    f.append(requestStr)
-                    f.append(priceStr);
-                    f.setAttribute('method', 'post');
-                    f.setAttribute('action', 'chating.co');
+                    // f.append(requestStr)
+                    // f.append(priceStr);
+                    // f.setAttribute('method', 'post');
+                    // f.setAttribute('action', 'chating.co');
 
-                    let btnRequest = document.getElementById('btnRequest');
-                    btnRequest.appendChild(f);
-                    f.submit();
-
-
-
+                    // let btnRequest = document.getElementById('btnRequest');
+                    // btnRequest.appendChild(f);
+                    // f.submit();
 
                     // for(let option of options){
                     //     if(option.text != '==='){
                     //         console.log("asd")
                     //     }
                     // }
-                    // for(let option in options){
-                    //     if(option.text != '==='){
+                    // for(let option2 in options){
+                    //     console.log(option2);
+                    //     if(option2.text != '==='){
                     //         console.log("asd")
                     //     }
                     // }
