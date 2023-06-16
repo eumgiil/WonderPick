@@ -436,7 +436,7 @@
                     f.append(requestStr)
                     f.append(priceStr);
                     f.setAttribute('method', 'post');
-                    f.setAttribute('action', '');
+                    f.setAttribute('action', 'chating.co');
 
                     let btnRequest = document.getElementById('btnRequest');
                     btnRequest.appendChild(f);
