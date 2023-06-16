@@ -131,7 +131,7 @@
             <br><br><br>
 
             <div>
-                여기는 설명 사진하고 글 ~~~
+                ${g.boardContent }
             </div>
 
 
@@ -459,7 +459,7 @@
                     </tr>
                     <tr>
                         <td>작업기간</td>
-                        <td class="t_align_right">${g.workday }</td>
+                        <td class="t_align_right">${g.workday }일</td>
                     </tr>
                 </table>
             </div>

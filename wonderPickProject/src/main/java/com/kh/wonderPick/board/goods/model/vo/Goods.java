@@ -19,7 +19,10 @@ public class Goods extends Board{
 	private String addInfo; //ADD_INFO	VARCHAR2(1000 BYTE)
 	private String nickName;
 	private String originName;
+	private String modifyName;
 	private int goodsNo;
+	private int fileLevel;
+	private String filePath;
 	
 	
 	

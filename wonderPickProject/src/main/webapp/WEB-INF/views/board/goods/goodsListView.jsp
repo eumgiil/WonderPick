@@ -25,16 +25,9 @@
         .goodsList1{
             border: 1px solid black;
             width: 900px;
-            margin-left:50px;
             
         }
-        .categoryList{
-         border: 1px solid black;
-            width: 900px;
-            margin-left:50px;
-            
         
-        }
         .all_area{
             width: 1300px;
         }
@@ -72,13 +65,15 @@
         }
         #searchGoods{
          float : left;
-         margin-left : 500px;
+         margin-left:50px;
+         
         }
         .pagingArea{
         margin-left : 450px;
         }
         .category{
             float: left;
+            width:400px;
             margin-left: 5%;
             margin-top: 10%;
             height: 500px;
@@ -97,6 +92,10 @@
         .category_option{
             height: 300px;
             width: 100%;
+        }
+        .top{
+        margin-left : 10px;
+        width: 700px;
         }
         
         
@@ -143,10 +142,11 @@
         <h2 align="center" style="color: rgb(255, 131, 153);">굿즈</h2>
         <hr style="width: 600px; border: 1px solid gray;">
         <h6>n개의 상품이 있습니다.</h6>
+   <div class="top" align="center" style="float : left;">
    <div id="searchGoods" >
         <form action="search.go" method="get" align="center">
         <input type="hidden" name="currentPage" value="1">
-         <select name="condition" >
+         <select name="condition" style="width:100px; height:35px;" >
             <option value="nickname">작가명</option>
             <option value="boardTitle">제목순</option>
         </select>
@@ -162,19 +162,21 @@
    </script>
    
    </c:if>
-        <select name="option" id="option">
+   <div class="option" >
+        <select name="option" id="option" >
             <option value="popularity" onclick="option(1)">인기순</option>
             <option value="lowPrice" onclick="option(2)">가격 낮은 순</option>
             <option value="latest" onclick="option(3)">최신 등록순</option>
         </select>
-        
+   </div>     
+   </div>
         <script>
         
       
         </script>
 
         </div>
-        <br><br><br>
+        <br><br><br><br>
 
         <!-- 전체리스트 -->
         <div class="goodsList1"  id="goods" style="width: 900px; margin-left: 500px; margin-top:100px;"  align="center">
@@ -182,7 +184,7 @@
             <c:when test="${not empty list}">
               <c:forEach items="${list}" var="g">
                   <div class="goodsList2" style="display:inline-block;">
-                    <img src="resources/boardUpfiles/goodsFiles/b61adf9a35bba64590b9bc1d10734d93.jpg" alt=""  width="250" ><br>
+                    <img src="${ g.fileLevel == 1 }" alt=""  width="250" style="border:1px solid black; width:250px; height:250px;"  ><br>
                     <table id="goodsInfo"  id="goods" width="250">
 	                    <tr>
 	                        <td>${g.nickName}</td>

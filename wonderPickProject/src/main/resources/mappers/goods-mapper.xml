@@ -11,11 +11,14 @@
   	<result column="board_title" property="boardTitle" />
   	<result column="board_content" property="boardContent" />
   	<result column="member_no" property="memberNo" />
+  	<result column="create_date" property="createDate" />
+  	<result column="board_count" property="boardCount" />
+  	<result column="nickname" property="nickName" />
+  	<result column="modify_name" property="modifyName" />
+  	<result column="file_level" property="fileLevel" />
   	
   	
-  	
-  	
-  	
+  	<result column="goods_no" property="goodsNo" />
   	<result column="price" property="price" />
   	<result column="draft" property="draft" />
   	<result column="modify_count" property="modifyCount" />
@@ -28,10 +31,10 @@
   	
   	
   	
-  	<result column="create_date" property="createDate" />
-  	<result column="board_count" property="boardCount" />
-  	<result column="nickname" property="nickName" />
-  	<result column="goods_no" property="goodsNo" />
+  	
+  	
+  	
+  	
   </resultMap>
   
   
@@ -67,7 +70,8 @@ select
        board_count,
        to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
        price,
-       origin_name
+       modify_name,
+       file_level
   from 
        board b
  join 
@@ -138,22 +142,22 @@ order by
           #{memberNo},
           #{boardTitle},
           #{boardContent},
-          sysdate,
+          SYSDATE,
           'Y',
           'G'
           )
   </insert>
   
-  <insert id="insertGoods" parameterType="_int">
+  <insert id="insertGoods" parameterType="goods">
   insert
   into 
       goods
       (
-      goods_no,
+      board_no,
       price,
       draft,
       modify_count,
-      workday,
+      WORKDAY,
       add_draft,
       add_modify,
       goods_category
@@ -173,9 +177,9 @@ order by
   <insert id="insertBoardImage" parameterType="boardImage">
   insert 
     into
-        boardImage
+        BOARD_IMAGE
       (
-      board_image_no,
+      BOARD_IMG_NO,
       board_no,
       origin_name,
       modify_name,
@@ -189,7 +193,7 @@ order by
    seq_board_no.currval,
    #{originName},
    #{modifyName},
-   sysdate,
+   SYSDATE,
    #{fileLevel},
    #{filePath}
    

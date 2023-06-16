@@ -27,7 +27,8 @@
         <br>
 
         <form action="insert.go" method="post" enctype="multipart/form-data">
-        <table width="00px" style="text-align: center; " align="center" >
+        <table  style="text-align: center; " align="center" >
+        <input type="hidden" value="${loginMember.memberNo }" name="memberNo">
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">판매자</h5></td>
                 <td colspan="3" style="float: left; margin-left : 30%; font-weight:bold; font-size : 20px;">${loginMember.nickName }</td>
@@ -35,7 +36,7 @@
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">카테고리</h5></td>
                 <td style="float: left; margin-left: 80px;">
-                    <select name="goodsCategory" id="" required>
+                    <select name="goodsCategory" id="goodsCategory" required>
                         <option value="FASHION">패션</option>
                         <option value="STATIONERY">문구</option>
                         <option value="KITCHEN">주방</option>

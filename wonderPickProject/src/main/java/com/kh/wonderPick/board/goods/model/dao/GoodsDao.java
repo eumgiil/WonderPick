@@ -58,8 +58,6 @@ public class GoodsDao {
 		
 	}
 	
-	
-	
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("goodsMapper.insertBoard", b);
 	}
