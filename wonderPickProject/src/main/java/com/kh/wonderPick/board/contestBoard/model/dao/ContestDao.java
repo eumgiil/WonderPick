@@ -55,8 +55,8 @@ public class ContestDao {
 		return sqlSession.selectOne("contestBoardMapper.selectVoteLike", boardNo);
 	}
 
-	public int insertVoteLike(SqlSessionTemplate sqlSession, int boardNo) {
-		return sqlSession.insert("contestBoardMapper.insertVoteLike", boardNo);
+	public int updateVoteLike(SqlSessionTemplate sqlSession, Contest contest) {
+		return sqlSession.update("contestBoardMapper.updateVoteLike", contest);
 	}
 
 	

@@ -34,7 +34,7 @@ public interface ContestService {
 
 	int selectVoteLike(int boardNo);
 
-	int insertVoteLike(int boardNo);
+	int updateVoteLike(Contest contest);
 
 
 	

@@ -317,34 +317,32 @@
 		</select>
 		
 		<select id="selectVoteLike" resultType="_int">
+		
 			SELECT
-			         NVL(MEMBER_NO, 0)
-			        ,NVL(SUM(VOTE_STATUS), 0)
+			         VOTE.MEMBER_NO AS MEMBER_NO
+			        ,SUM(VOTE_STATUS) AS VOTE_STATUS
 			  FROM 
 			        VOTE
 			 WHERE
-			        BOARD_NO = #{ boardNo }
+			        BOARD_NO = ${ boardNo }
+                    
 			GROUP BY
 			        MEMBER_NO
+			        
 		</select>
 		
-		<insert id="insertVoteLike" parameterType="contest">
-			INSERT
-			 INTO 
-			 		VOTE
-			 		(
-			 		 MEMBER_NO
-			 		,BOARD_NO
-			 		,VOTE_STATUS
-			 		)
-			 
-			 VALUES
-			 		(
-			 		 #{ memberNo }
-			 		,#{ boardNo } 
-			 		,1
-			 		)
-		</insert> 
+		<update id="insertVoteLike" parameterType="contest">
+		
+			UPDATE 
+				   VOTE 
+			   SET 
+				   VOTE_STATUS = VOTE_STATUS + 1
+			 WHERE 
+			 	   MEMBER_NO = #{ memnerNo }
+			   AND 
+			   	   BOARD_NO =  #{ boardNo }
+			   	   
+		</update> 
 
 		
 	</mapper>
