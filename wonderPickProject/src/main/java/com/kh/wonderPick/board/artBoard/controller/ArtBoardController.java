@@ -45,12 +45,11 @@ public class ArtBoardController {
 	
 	
 	@RequestMapping("artList.bo")
-	public ModelAndView selectArtList(ModelAndView mv, @RequestParam(value="cPage", defaultValue="1") int currentPage) {
+	public ModelAndView selectArtList(ModelAndView mv, @RequestParam(value="cPage", defaultValue="1") int currentPage, String category) {
 		
 		// 페이징 처리 등 해야함
-		PageInfo pi = Pagination.getPageInfo(artService.selectArtListCount(), currentPage, 12, 10);
-		System.out.println(artService.selectArtList(pi));
-		mv.addObject("pi", pi).addObject("list", artService.selectArtList(pi)).setViewName("board/artBoard/artListView");
+		PageInfo pi = Pagination.getPageInfo(artService.selectArtListCount(category), currentPage, 12, 10);
+		mv.addObject("pi", pi).addObject("list", artService.selectArtList(pi, category)).setViewName("board/artBoard/artListView");
 		return mv;
 	}
 	
@@ -114,7 +113,7 @@ public class ArtBoardController {
 		} else {
 			model.addAttribute("alertMsg", "업로드 실패");
 		}
-		return "redirect:artList.bo";
+		return "redirect:artList.bo?category=CI";
 	}
 	
 	@RequestMapping(value="artDetail.bo")

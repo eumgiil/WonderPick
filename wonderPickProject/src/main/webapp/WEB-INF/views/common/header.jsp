@@ -36,12 +36,12 @@
                     <li class="mainCategory">
                         <a href="artList.bo"><span class="material-symbols-outlined">menu</span> 카테고리</a>
                             <ul class="detailCategory">
-                                <li><a href="artList.bo">캐릭터일러스트</a></li>
-                                <li><a href="#">일러스트</a> </li>
-                                <li><a href="#">버츄얼</a></li>
-                                <li><a href="#">디자인</a></li>
-                                <li><a href="#">웹툰</a></li>
-                                <li><a href="#">기타</a></li>
+                                <li><a href="artList.bo?category=CI">캐릭터일러스트</a></li>
+                                <li><a href="artList.bo?category=I">일러스트</a> </li>
+                                <li><a href="artList.bo?category=V">버츄얼</a></li>
+                                <li><a href="artList.bo?category=D">디자인</a></li>
+                                <li><a href="artList.bo?category=W">웹툰</a></li>
+                                <li><a href="artList.bo?category=E">기타</a></li>
                             </ul>
                     </li>
                     <li class="mainCategory"><a href="#">그림의뢰</a></li>
