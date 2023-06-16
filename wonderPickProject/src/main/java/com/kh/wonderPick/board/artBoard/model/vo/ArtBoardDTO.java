@@ -11,5 +11,6 @@ public class ArtBoardDTO {
 	private int price;
 	private int star;
 	private String modifyName;
+	private String memberModifyName;
 	
 }

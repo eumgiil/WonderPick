@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import lombok.Data;
 
+
 @Data
 public class Member {
 	private int memberNo;
@@ -20,4 +21,6 @@ public class Member {
 	private String status;
 	private Date enrollDate;
 	private Date modifyDate;
+	private String profileImg;
+	private String profilePath;
 }

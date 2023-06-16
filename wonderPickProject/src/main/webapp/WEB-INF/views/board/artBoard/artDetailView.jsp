@@ -244,7 +244,7 @@
 
 
 
-<!-- 오른쪽 정보 -->
+    <!-- 오른쪽 정보 -->
         <div class="artist" style="margin-left:10px;">
                                                         <!-- 작가 작품 정보 -->
             <div>
@@ -268,8 +268,8 @@
             <div>
                 <table class="width">
                     <tr>
-                        <td rowspan="2" style="width:100px;"><img class="detail_img" src="${artboard.memberImg.memberModifyName}" alt=""></td>
-                        <td style="font-size: 30px;">${artBoard.member.nickname}</td>
+                        <td rowspan="2" style="width:100px;"><img class="detail_img" src="${artboard.memberImage.memberModifyName}" alt=""></td>
+                        <td style="font-size: 30px;">${artBoard.member.nickName}</td>
                     </tr>
                     <tr>
                         <td style="font-size: 20px;">★★★★☆</td>
@@ -409,15 +409,6 @@
         </div>
 <!-- 오른쪽 정보 끝 -->
         
- 
-
-
-
-
-
-
-
-
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
@@ -442,6 +433,9 @@
                 }
             }
         }
+        $(window).on('load', function(){
+            $('#character_illustration').css('color', '#FF8399')
+        });
 
         // 클릭 시 해당 글 위치로 이동
         function move(name){
