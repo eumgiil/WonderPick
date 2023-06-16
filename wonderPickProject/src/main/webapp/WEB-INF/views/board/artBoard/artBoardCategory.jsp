@@ -49,7 +49,7 @@
             <tr>
                 <label>
                     <td>
-                        <a href="artList.bo">
+                        <a href="artList.bo?category=CI">
                             <div id="character_illustration">캐릭터일러스트</div>
                         </a>
                     </td>
@@ -58,7 +58,7 @@
             <tr>
                 <label>
                     <td>
-                        <a href="#">
+                        <a href="artList.bo?category=I">
                             <div id="illustration">일러스트</div>
                         </a>
                     </td>
@@ -67,7 +67,7 @@
             <tr>
                 <label>
                     <td>
-                        <a href="#">
+                        <a href="artList.bo?category=V">
                             <div id="virtual">버츄얼</div>
                         </a>
                     </td>
@@ -76,7 +76,7 @@
             <tr>
                 <label>
                     <td>
-                        <a href="#">
+                        <a href="artList.bo?category=D">
                             <div id="design">디자인</div>
                         </a>
                     </td>
@@ -85,7 +85,7 @@
             <tr>
                 <label>
                     <td>
-                        <a href="">
+                        <a href="artList.bo?category=W">
                             <div id="webtoon">웹툰</div>
                         </a>
                     </td>
@@ -94,7 +94,7 @@
             <tr>
                 <label>
                     <td>
-                        <a href="">
+                        <a href="artList.bo?category=E">
                             <div id="etc">기타</div>
                         </a>
                     </td>

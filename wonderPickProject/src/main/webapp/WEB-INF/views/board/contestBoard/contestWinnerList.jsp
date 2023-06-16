@@ -223,6 +223,30 @@
         function winnerPage(){
             location.href = 'contestWinnerList.ct';
         }
+
+
+         // 클릭 시 해당 게시물 이동
+        var movePage = document.querySelectorAll('.movePage');
+
+
+        movePage.forEach( i => i.addEventListener('click', e => {
+
+        //console.log(document.getElementById('modal_1').href)
+        //document.getElementById('modal_1').href ='#exampleModalToggle';
+
+            if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
+                let clickImageBoardNo = e.currentTarget.children[1].value;
+                console.log(clickImageBoardNo);
+                location.href = 'contestPayment.ct?boardNo=' + clickImageBoardNo;
+            }else{
+                let clickTitleBoardNo = e.currentTarget.children[0].value;
+                console.log(clickTitleBoardNo);
+                location.href = 'contestPayment.ct?boardNo=' + clickTitleBoardNo;
+            }
+
+        }))
+
+
     </script>
 
 

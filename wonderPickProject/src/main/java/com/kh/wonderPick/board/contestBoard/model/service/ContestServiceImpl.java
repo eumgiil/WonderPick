@@ -77,7 +77,7 @@ public class ContestServiceImpl implements ContestService {
 	}
 
 	@Override
-	public int selectVoteLike(int boardNo) {
+	public ArrayList<Contest> selectVoteLike(int boardNo) {
 		return contestDao.selectVoteLike(sqlSession, boardNo);
 	}
 

@@ -57,7 +57,12 @@
     #body_area{
         margin: auto;
     }
-   
+    #buy_btn{
+        width: 100%;
+        height: 50px;
+        color: white;
+        background-color: pink;
+    }
 </style>
 </head>
 <body>
@@ -69,58 +74,64 @@
     <div id="main_area">
 
         <div id="header_area">
-            <table border="1" id="header_table">
-                <tr>
-                    <td rowspan="4">
-                        <div>
-                            <img src="${ b.get(0).filePath }" alt="" id="thumbnail_image">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span>
-                            <h1>
-                                ${ b.get(0).boardTitle }
-                            </h1>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span>
-                            닉네임 :${ b.get(0).nickName }
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span>
-                            <h3>
-                                등록자 희망 판매가 : ${ b.get(0).price } 
-                            </h3>
-                        </span>
-                    </td>
-                </tr>
-            </table>
+                <table border="1" id="header_table">
+                    <tr>
+                        <td rowspan="4">
+                            <div>
+                                <img src="${ b.get(0).filePath }" alt="" id="thumbnail_image">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>
+                                <h1>
+                                    ${ b.get(0).boardTitle }
+                                </h1>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>
+                                닉네임 :${ b.get(0).nickName }
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>
+                                <h3>
+                                    등록자 희망 판매가 : ${ b.get(0).price } 
+                                </h3>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <button id="buy_btn" onclick="kakaoPay();">구매하기</button>
+                        </td>
+                    </tr>
+                </table>
         </div>
 
         <div id="body_area" align="center">
 
-            ${ b }
             <div>
                 ${ b.get(0).boardContent }
             </div>
 
             <div id="heart_area">
-                <!-- <c:choose>
+                <c:choose>
                     <c:when test="${ b.get(0).memberNo != 0 and b.get(0).memberNo != null }" >
                         <span class="vote_heart">♥</span>
                     </c:when>
                     <c:otherwise>
                         <span class="vote_heart">♡</span>
                     </c:otherwise>
-                </c:choose> -->
+                </c:choose> 
 
                 <span id="vote_count">투표수 자리</span>
             </div>
@@ -150,10 +161,10 @@
                     boardNo : ${ b.get(0).boardNo }
                 },
                 success : function(result){
-                    alert('selectVoteLike success!!')
+                    //alert('selectVoteLike success!!')
                     console.log(result)
                     console.log($('.vote_heart').html())
-                    $('#vote_count').html(result)
+                    //$('#vote_count').html(result)
 
 
                     // $('.vote_heart').one("click", function(){
@@ -180,8 +191,7 @@
             $.ajax({
                 url : 'updateVoteLike.ct',
                 data : {
-                    boardNo : ${ b.get(0).boardNo },
-                    memberNo : ${ sessionScope.loginMember.memberNo }
+                    boardNo : ${ b.get(0).boardNo }
                 },
                 success : function(result){
                     alert('updateVote success!!')
@@ -212,6 +222,25 @@
 
 
 
+        // 결제 카카오 스크립트
+
+        function kakaoPay() {
+
+           let boardTitle = '${ b.get(0).boardTitle }'
+           let price = ${ b.get(0).price } 
+            
+            $.ajax({
+                url : 'kakaoPay.ko',
+                data : {
+                    item_name : boardTitle,
+                    quantity : 1,
+                    total_amount : price 
+                },
+                success : function(data) {
+                    window.open(data.next_redirect_pc_url);
+                }
+            });
+        }
     
 
    </script>

@@ -11,9 +11,9 @@ import com.kh.wonderPick.common.model.vo.PageInfo;
 
 public interface ArtBoardService {
 
-	int selectArtListCount();
+	int selectArtListCount(String category);
 	
-	ArrayList<ArtBoardDTO> selectArtList(PageInfo pi);
+	ArrayList<ArtBoardDTO> selectArtList(PageInfo pi, String category);
 	
 	int insertArtBoard(Board board, ArtBoard artBoard, ArrayList<Option> list, ArrayList<BoardImage> files);
 	

@@ -197,7 +197,9 @@ public class ContestController {
 	@RequestMapping(value="selectVoteLike.ct", produces="application/json; charset=UTF-8")
 	public String selectVoteLike(int boardNo) {
 		
-		System.out.println(contestService.selectVoteLike(boardNo));
+			System.out.println(boardNo);
+		
+			System.out.println(contestService.selectVoteLike(boardNo));
 		
 		return new Gson().toJson(contestService.selectVoteLike(boardNo));
 	}
@@ -206,21 +208,19 @@ public class ContestController {
 	@RequestMapping(value="updateVoteLike.ct", produces="application/json; charset=UTF-8")
 	public String updateVoteLike(int boardNo, int memberNo, Contest contest) {
 		
-		System.out.println(memberNo);
+		//System.out.println(memberNo);
 		
 		
 		contest.setBoardNo(boardNo);
 		contest.setMemberNo(memberNo);
 		
 		
-		System.out.println(contest);
+		//System.out.println(contest);
 		
 		
 		
 		return new Gson().toJson(contestService.updateVoteLike(contest));
 	}
-	
-	
 	
 }
 

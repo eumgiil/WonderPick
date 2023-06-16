@@ -144,7 +144,29 @@
                     </c:otherwise>
                 </c:choose>
             </div> <!-- 전체 div 끝 -->
-        </div>
+
+            <!-- paging -->
+            <div id="pagingArea">
+                <ul>
+                    <li>asd</li>
+
+                    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+                        <li><a href=""></a> </li>
+                    </c:forEach>
+
+                    <li></li>
+                </ul>
+
+
+            </div>
+
+
+
+
+
+
+
+        </div><!-- topOuter -->
 
 
 

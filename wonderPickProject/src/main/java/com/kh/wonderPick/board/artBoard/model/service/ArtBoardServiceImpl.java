@@ -29,13 +29,13 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	
 	
 	@Override
-	public int selectArtListCount() {
-		return artDao.selectArtListCount(sqlSession);
+	public int selectArtListCount(String category) {
+		return artDao.selectArtListCount(sqlSession, category);
 	}
 	
 	@Override
-	public ArrayList<ArtBoardDTO> selectArtList(PageInfo pi) {
-		return artDao.selectArtList(sqlSession, pi);
+	public ArrayList<ArtBoardDTO> selectArtList(PageInfo pi, String category) {
+		return artDao.selectArtList(sqlSession, pi, category);
 	}
 
 

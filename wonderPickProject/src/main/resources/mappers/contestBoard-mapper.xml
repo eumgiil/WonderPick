@@ -316,7 +316,7 @@
 			                
 		</select>
 		
-		<select id="selectVoteLike" resultType="_int">
+		<select id="selectVoteLike" resultType="contest">
 		
 			SELECT
 			         VOTE.MEMBER_NO AS MEMBER_NO
