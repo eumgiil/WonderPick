@@ -147,6 +147,7 @@ public class ArtBoardController {
 		  .addObject("optionList", optionList)
 		  .addObject("boardImage", boardImage)
 		  .addObject("reviewList", reviewList)
+		  .addObject("bno",bno)
 //		  .addObject("replyList", replyList)
 		  .setViewName("board/artBoard/artDetailView");
 		return mv;
