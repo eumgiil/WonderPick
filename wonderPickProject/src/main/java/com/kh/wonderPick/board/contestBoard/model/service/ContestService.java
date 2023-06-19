@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.gson.JsonElement;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
 
 public interface ContestService {
@@ -32,9 +33,11 @@ public interface ContestService {
 
 	ArrayList<Contest> selectWinnerList();
 
-	ArrayList<Contest> selectVoteLike(int boardNo);
+	ArrayList<Heart> selectVoteLike(int boardNo);
 
-	int updateVoteLike(Contest contest);
+	int insertVoteHeart(Heart heart);
+
+	int deleteVoteHeart(Heart heart);
 
 	
 	// 페이징처리 

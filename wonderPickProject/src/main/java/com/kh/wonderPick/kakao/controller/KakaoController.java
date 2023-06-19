@@ -78,6 +78,8 @@ public class KakaoController {
 
    @RequestMapping("success")
    public ModelAndView kakaoPayApprove(String pg_token, ModelAndView mv) throws IOException {
+	   
+	  System.out.println("hihi");
       URL url = new URL("https://kapi.kakao.com/v1/payment/approve");
 
       HttpURLConnection connectServer = (HttpURLConnection) url.openConnection(); 
