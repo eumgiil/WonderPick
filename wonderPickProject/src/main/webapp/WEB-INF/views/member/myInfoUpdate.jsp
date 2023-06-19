@@ -16,7 +16,7 @@
             <div id="rightMainContent">
             	<form enctype="multipart/form-data" action="updateProfile.me" method="post">
 	                <div id="rightProfile">
-	                    <img src="resources/memberUpfiles/basicProfile.jpg">
+	                    <img src="${sessionScope.loginMember.profilePath }/${sessionScope.loginMember.profileImg}">
 	                    <button type="submit">프로필 변경</button>
 	                </div>
             	</form>

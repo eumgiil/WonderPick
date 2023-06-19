@@ -43,6 +43,10 @@ public class MemberController {
 							HttpSession session) {
 		Member loginMember = memberService.loginMember(m);
 		if(loginMember != null && bcryptPasswordEncoder.matches(m.getMemberPwd(), loginMember.getMemberPwd())) {
+			if(loginMember.getProfileImg() == null && loginMember.getProfilePath() == null) {
+				loginMember.setProfileImg("basicProfile.jpg");
+				loginMember.setProfilePath("resources/memberUpfiles");
+			}
 			session.setAttribute("loginMember", loginMember);
 			return "redirect:/";
 		} else {
@@ -120,7 +124,6 @@ public class MemberController {
 		String encPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 		m.setMemberPwd(encPwd);
 		if(memberService.signUpMember(m)>0) {
-			memberService.insertProfile(m);
 			session.setAttribute("alertMsg", "회원가입을 축하합니다!");
 			return "redirect:/";
 		} else {

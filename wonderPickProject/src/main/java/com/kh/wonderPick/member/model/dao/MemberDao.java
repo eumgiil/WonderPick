@@ -23,4 +23,5 @@ public class MemberDao {
 	public int signUpMember(Member m, SqlSessionTemplate sqlSession) {
 		return sqlSession.insert("memberMapper.signUpMember", m);
 	}
+	
 }
