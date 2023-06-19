@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.wonderPick.chatting.model.vo.AddPriceAndReason;
 import com.kh.wonderPick.chatting.model.vo.BeforeReadChatings;
 import com.kh.wonderPick.chatting.model.vo.Chating;
+import com.kh.wonderPick.member.model.vo.Member;
 
 @Repository
 public class ChatingDao {
@@ -14,11 +16,6 @@ public class ChatingDao {
 	public int createRoom(SqlSessionTemplate sqlSession, Chating c) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("chatingMapper.createRoom", c);
-	}
-
-	public ArrayList<Chating> selectAllRoom(SqlSessionTemplate sqlSession) {
-		// TODO Auto-generated method stub
-		return (ArrayList)sqlSession.selectList("chatingMapper.selectAllRoom");
 	}
 
 	public Chating selectRoomName(SqlSessionTemplate sqlSession, Chating c) {
@@ -49,6 +46,26 @@ public class ChatingDao {
 	public int countReadYetChatings(SqlSessionTemplate sqlSession, Chating roomName) {
 		// TODO Auto-generated method stub
 		return sqlSession.delete("chatingMapper.countReadYetChatings",roomName);
+	}
+
+	public ArrayList<Chating> selectAllRoom(SqlSessionTemplate sqlSession, Chating roomListSearch) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("chatingMapper.selectAllRoom",roomListSearch);
+	}
+
+	public int insertReasonPrice(SqlSessionTemplate sqlSession, ArrayList<AddPriceAndReason> list) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("chatingMapper.insertReasonPrice",list);
+	}
+
+	public ArrayList<AddPriceAndReason> selectCondition(SqlSessionTemplate sqlSession, int boardNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("chatingMapper.selectCondition",boardNo);
+	}
+
+	public Member selectartistNick(SqlSessionTemplate sqlSession, int artistNickName) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("chatingMapper.selectartistNick",artistNickName);
 	}
 
 }

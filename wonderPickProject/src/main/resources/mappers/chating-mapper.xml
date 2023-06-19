@@ -5,10 +5,8 @@
 <mapper namespace="chatingMapper">
 	<resultMap type="chating" id="chatingResultSet">
  		<result column="ROOM_NAME" property="roomName"/>
- 		<result column="CHATING_FILE" property="chatingFile"/>
- 		<result column="ARTIST_NICKNAME" property="artistNickName"/>
- 		<result column="MEMBER_NICKNAME" property="membertNickName"/>
- 		<result column="CHAT_CHECK" property="chatCheck"/>
+ 		<result column="ARTIST_NO" property="artistNo"/>
+ 		<result column="MEMBER_NO" property="memberNo"/>
  	</resultMap>
  	
  	<resultMap type="beforeReadChatings" id="brcResultSet">
@@ -16,8 +14,44 @@
  		<result column="TO_MEMBER" property="toMember"/>
  		<result column="CONTENT" property="content"/>
  		<result column="ENROLL_DATE" property="enrollDate"/>
- 		<result column="READ_CHECK" property="ReadCheck"/>
+ 		<result column="READ_CHECK" property="readCheck"/>
  	</resultMap>
+ 	
+ 	<resultMap type="apar" id="aparResultSet">
+ 		<result column="OPTION_NO" property="optionNo"/>
+ 		<result column="BOARD_NO" property="boardNo"/>
+ 		<result column="ADD_PRICES" property="addPrices"/>
+ 		<result column="REQUEST" property="request"/>
+ 	</resultMap>
+ 	
+ 	<resultMap id="memberResultSet" type="member">
+		<result column="member_no" property="memberNo" />
+		<result column="member_grade" property="memberGrade" />
+		<result column="member_id" property="memberId" />
+		<result column="member_pwd" property="memberPwd" />
+		<result column="member_name" property="memberName" />
+		<result column="NICKNAME" property="nickName" />
+		<result column="phone" property="phone" />
+		<result column="email" property="email" />
+		<result column="address" property="address" />
+		<result column="pay_account" property="payAccount" />
+		<result column="email_agree" property="emailAgree" />
+		<result column="status" property="status" />
+		<result column="enroll_date" property="enrollDate" />
+		<result column="modify_date" property="modifyDate" />
+	</resultMap>
+	
+ 	<select id="selectartistNick" parameterType="_int" resultMap="memberResultSet">
+ 		select
+ 			nickname,member_no
+		from
+			member
+		where
+			member_no = (select member_no
+                    	 from board
+                    	 where board_no = #{boardNo})
+ 			
+ 	</select>
  	
 	<insert id="createRoom" parameterType="chating">
 		INSERT
@@ -25,16 +59,25 @@
 		CHATING
 		(
 		ROOM_NAME,
-		ARTIST_NICKNAME,
-		MEMBER_NICKNAME
+		ARTIST_NO,
+		MEMBER_NO
 		)
 		 VALUES
 		(
 		#{roomName},
-		#{artistNickName},
-		#{membertNickName}
+		#{artistNo},
+		#{memberNo}
 		)
 	</insert>
+	
+	<select id="selectAllRoom" resultMap="chatingResultSet" parameterType="chating">
+		select
+			*
+		from
+			chating
+		where 
+			ROOM_NAME LIKE #{membertNickName}
+	</select>
 	
 	<select id="selectRoomName" resultMap="chatingResultSet" parameterType="chating">
 		select
@@ -42,9 +85,9 @@
 		from
 			chating
 		where 
-			ARTIST_NICKNAME = #{membertNickName}
-		or
-			MEMBER_NICKNAME = #{membertNickName}
+			ROOM_NAME LIKE #{membertNickName}
+		and
+			ROOM_NAME LIKE #{artistNickName}
 	</select>
 	
 	<select id="checkRoomExisted" resultMap="chatingResultSet" parameterType="chating">
@@ -54,9 +97,9 @@
 		from 
 			chating
 		where
-		    (ARTIST_NICKNAME =  #{membertNickName} and MEMBER_NICKNAME =  #{artistNickName})
+		    (ARTIST_NO =  #{memberNo} and MEMBER_NO =  #{artistNo})
 		or
-		    (ARTIST_NICKNAME =  #{artistNickName} and MEMBER_NICKNAME =  #{membertNickName})
+		    (ARTIST_NO =  #{artistNo} and MEMBER_NO =  #{memberNo})
 	</select>
 	
 	<insert id="insertreadYetChatings">
@@ -80,14 +123,16 @@
 			#{toMember},
 			#{content},
 			#{enrollDate},
-			default
+			#{readCheck}
 			)
 	</insert>
 	
 	<select id="selectreadYetChatings" parameterType="chating" resultMap="brcResultSet">
 		select
 			content,
-			READ_CHECK
+			READ_CHECK,
+			FROM_MEMBER,
+			TO_MEMBER
 		from
 			BEFORE_READ_CHATINGS
 		where
@@ -98,11 +143,11 @@
 			ENROLL_DATE ASC
 	</select>
 	
-	<update id="countReadYetChatings" parameterType="string">
+	<update id="countReadYetChatings" parameterType="chating">
 		update
 			BEFORE_READ_CHATINGS
 		set
-			READ_CHECK = READ_CHECK-1
+			READ_CHECK = #{membertNickName}
 		where
 			ROOM_NAME = #{roomName}
 	</update>
@@ -114,4 +159,36 @@
 		where
 			ROOM_NAME = #{roomName}
 	</delete>
+	
+	<update id="insertReasonPrice" parameterType="apar">
+		<foreach collection="list" item="apar" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+			INTO
+			ADD_PRICE_AND_REASON
+			(
+			OPTION_NO,
+			BOARD_NO,
+			ADD_PRICES,
+			REQUEST
+			)
+			 VALUES
+			(
+			FUN_SEQ_ADDOPTION,
+			#{apar.boardNo},
+			#{apar.addPrices},
+			#{apar.request}
+			)
+		</foreach>
+	</update>
+	
+	<select id="selectCondition" parameterType="_int" resultMap="aparResultSet">
+		SELECT
+			OPTION_NO,
+			BOARD_NO,
+			ADD_PRICES,
+			REQUEST
+		FROM
+			ADD_PRICE_AND_REASON
+		WHERE
+			BOARD_NO=#{boardNo}
+	</select>
 </mapper>
