@@ -198,7 +198,7 @@ public class ContestController {
 	@RequestMapping(value="selectVoteLike.ct", produces="application/json; charset=UTF-8")
 	public String selectVoteLike(int boardNo) {
 		
-		System.out.println("hihi :" +  boardNo);
+		System.out.println("hihi55 :" +  boardNo);
 		
 		return new Gson().toJson(contestService.selectVoteLike(boardNo));
 	}
@@ -219,6 +219,15 @@ public class ContestController {
 		heart.setBoardNo(boardNo);
 		heart.setMemberNo(memberNo);
 		return new Gson().toJson(contestService.deleteVoteHeart(heart));
+	}
+	//@ResponseBody
+	//@RequestMapping(value="searchAutoComplet", produces="application/json; charset=UTF-8")
+	@RequestMapping("searchAutoComplet")
+	public String searchAutoComplet(String searchValue) {
+		
+		System.out.println(searchValue);
+		
+		return new Gson().toJson(contestService.searchAutoComplet(searchValue));
 	}
 	
 }

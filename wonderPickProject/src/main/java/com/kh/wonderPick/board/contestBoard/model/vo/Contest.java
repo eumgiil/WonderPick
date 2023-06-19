@@ -18,7 +18,7 @@ public class Contest extends Board{
 	
 	// 멤버추가
 	private String nickName;
-	private String memberModifyName;
+	private String memberFilePath;
 	private String modifyName;
 	private Date uploadDate;
 	

@@ -104,8 +104,6 @@
                             document.getElementById('search_list_area').style.display = 'block';
                         })
                 
-                
-                
                         // 다른부분 누르면 다시 들어가는 부분: 일단 되는데 여기 다시 생각해보기
                         document.addEventListener('mouseup',function(e){
                         var list = document.getElementById('search_list_area');
@@ -123,6 +121,42 @@
                             $('#search_list_area').css("display","none");
                             }
                         });
+
+                        document.getElementById('search_input').addEventListener('keyup', function(){
+
+                           // console.log(document.getElementById('search_input').value);
+
+                            var search = new XMLHttpRequest;
+
+                           const searchElement = document.getElementById('search_input');
+                           const searchValue = searchElement.value;
+
+                           searchElement.value='';
+
+                           search.onreadystatechange = () => {
+                            if(search.readyState === XMLHttpRequest.DONE){
+                                if(search.status === 200){
+
+                                    let result = httpRequset.response;
+
+                                    console.log('되는거야 뭐야?')
+                                };
+                            };
+                           };
+
+                           search.open('POST', 'searchAutoComplet?searchValue=' + searchValue );
+                           search.responseType = 'json';
+                           search.send();
+
+                        });
+
+                        
+
+
+
+
+
+
                     </script>
                 <ul id="memberMenu" class="clear">
                 	<c:choose>

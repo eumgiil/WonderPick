@@ -243,6 +243,7 @@
                 <img src="resources/boardUpfiles/contestFiles/new3.png" id="refresh">
             </div>
             <div id="voteList_area" align="center">
+                ${ list }
                 <c:forEach  items="${ list }" var="list">
                 <table border="1" class="contest_table">
                     <tbody>
@@ -288,11 +289,8 @@
                         
                     </table>
                 </c:forEach>
-
                 <hr>
-                ${ list }
                 <div class="selectList">
-
                 </div>
               
                
@@ -445,110 +443,7 @@
         }
 
       
-        /////sa=d==================== 투표표표 ===================
-
-        $(function(){
-           //selectVoteLike();
-        });
-  
-
-        // selectVote
-        function selectVoteLike(){
-            $.ajax({
-                url : 'selectVoteLike.ct',
-                data : {
-                    boardNo : 0
-                },
-                success : function(result){
-
-                    console.log(result);
-
-                    // if(result.length == 0){
-                    //     $('#vote_heart').html('♡');
-                    // }
-
-                    // $('#vote_count').html(result.length)
-
-                    
-                    // for(let i in result){
-                    //     let loginMember = '${ sessionScope.loginMember.memberNo }';
-                    //     if(loginMember == result[i].memberNo){
-                    //         $('#vote_heart').html('♥'); 
-                    //     }else{
-                    //         $('#vote_heart').html('♡');
-                    //     }
-                    // }
-
-                    
-
-
-                    // $('#vote_heart').one("click",function(){
-                    //     if($('#vote_heart').html() == '♥'){
-
-                    //         let confirmResult2 = confirm('투표를 취소하시겠습니까?');
-                    //         if(confirmResult2 == true){
-                    //             deleteVote();
-                    //         }
-                    //     }
-                    //     else if($('#vote_heart').html() == '♡'){
-                    //         let confirmResult = confirm('투표를 진행하면 중복투표는 불가능합니다. 진행하시겠습니까?');
-
-                    //         if(confirmResult == true){
-                    //             insertVote();
-                    //         }else{
-                                
-                    //         }
-                            
-                    //     }
-                    // })
-
-                   
-                },
-                error : function(){
-                    alert('selectVoteLike error!!!!')
-                }
-            });
-        };
    
-
-        // insertVoteHeart
-        function insertVote(){
-            $.ajax({
-                url : 'insertVoteHeart.ct',
-                data : {
-                    boardNo : ${ b.get(0).boardNo },
-                    memberNo : ${ sessionScope.loginMember.memberNo }
-                },
-                success : function(result){
-
-                    var boardTitle = '[ ' + '${ b.get(0).boardTitle }' + ' ]'
-                    
-                    alert(boardTitle + ' 이모티콘에 투표하셨습니다!!')
-                    selectVoteLike();
-                },
-                error : function(){
-                    alert('updateVote error !!!!')
-                }
-            });
-        };
-
-        // deleteVoteHeart
-        function deleteVote(){
-            $.ajax({
-                url : 'deleteVoteHeart.ct',
-                data : {
-                    boardNo : ${ b.get(0).boardNo },
-                    memberNo :${ sessionScope.loginMember.memberNo }
-                },
-                success : function(result){
-                    console.log('????');
-                    selectVoteLike();
-                },
-                error : function(){
-                    alert('delete error !!!!')
-                }
-            })
-        }
 
 
 

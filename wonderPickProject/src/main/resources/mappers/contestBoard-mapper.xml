@@ -15,7 +15,6 @@
 			
 			<result column="NICKNAME" property="nickName"/>
 			
-			<result column="MEMBER_MODIFY_NAME" property="memberModifyName"/>
 			<result column="MODIFY_NAME" property="modifyName"/>
 			<result column="UPLOAD_DATE" property="uploadDate"/> 
 			
@@ -43,15 +42,21 @@
 			<result column="MEMBER_NO" property="memberNo"/>
 		</resultMap>
 		
+		<resultMap id="searchResultSet" type="search">
+			<result column="SEARCH_NO" property="searchNo"/>
+			<result column="MEMBER_NO" property="memberNo" />
+			<result column="SEARCH_CONTENT" property="searchContent" />
+			<result column="SEARCH_DATE" property="searchDate" />
+		</resultMap>
+		
 		<select id="selectTop10" resultMap="contestBoardResultSet">
 			SELECT  *
 		        FROM(   SELECT
 		                     BOARD.BOARD_TITLE    
 		                    ,MEMBER.NICKNAME      
-		                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME    
 		                    ,BOARD_IMAGE.MODIFY_NAME   
 		                    ,BOARD_IMAGE.UPLOAD_DATE    
-		                    ,FILE_PATH
+		                     FILE_PATH
 		          FROM 
 		                 BOARD
 		        LEFT JOIN
@@ -173,7 +178,6 @@
 			        			 BOARD.BOARD_NO
 			                    ,BOARD.BOARD_TITLE    
 			                    ,MEMBER.NICKNAME      
-			                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 			                    ,BOARD_IMAGE.MODIFY_NAME    
 			                    ,BOARD_IMAGE.UPLOAD_DATE               
 			                    ,FILE_PATH
@@ -212,7 +216,6 @@
 					        			 BOARD.BOARD_NO
 					                    ,BOARD.BOARD_TITLE    
 					                    ,MEMBER.NICKNAME      
-					                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 					                    ,BOARD_IMAGE.MODIFY_NAME    
 					                    ,BOARD_IMAGE.UPLOAD_DATE               
 					                    ,FILE_PATH
@@ -261,7 +264,6 @@
 		                    ,BOARD.BOARD_TITLE
 		                    ,BOARD_CONTENT
 		                    ,MEMBER.NICKNAME      
-		                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 		                    ,BOARD_IMAGE.MODIFY_NAME    
 		                    ,BOARD_IMAGE.UPLOAD_DATE 
 		                    ,BOARD_COUNT
@@ -296,7 +298,6 @@
 			        			 BOARD.BOARD_NO
 			                    ,BOARD.BOARD_TITLE    
 			                    ,MEMBER.NICKNAME      
-			                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 			                    ,BOARD_IMAGE.MODIFY_NAME    
 			                    ,BOARD_IMAGE.UPLOAD_DATE               
 			                    ,FILE_PATH
@@ -368,6 +369,9 @@
 			    
 		</delete>
 
+	<select id="searchAutoComplet" resultMap="searchResultSet">
+		
+	</select>
 		
 	</mapper>
 	
