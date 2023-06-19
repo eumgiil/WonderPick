@@ -44,7 +44,7 @@
         margin: auto;
     }
   
-    .vote_heart{
+    #vote_heart{
         color: red;
         font-size: 80px;
     }
@@ -124,16 +124,8 @@
             </div>
 
             <div id="heart_area">
-                <c:choose>
-                    <c:when test="${ b.get(0).memberNo != 0 and b.get(0).memberNo != null }" >
-                        <span class="vote_heart">♥</span>
-                    </c:when>
-                    <c:otherwise>
-                        <span class="vote_heart">♡</span>
-                    </c:otherwise>
-                </c:choose> 
-
-                <span id="vote_count">투표수 자리</span>
+                <span id="vote_heart"></span>
+                <span id="vote_count"></span>
             </div>
     
             <div id="image_area">
@@ -161,22 +153,47 @@
                     boardNo : ${ b.get(0).boardNo }
                 },
                 success : function(result){
-                    //alert('selectVoteLike success!!')
+
                     console.log(result)
-                    console.log($('.vote_heart').html())
-                    //$('#vote_count').html(result)
+
+                    if(result.length == 0){
+                        $('#vote_heart').html('♡');
+                    }
+
+                    $('#vote_count').html(result.length)
+
+                    
+                    for(let i in result){
+                        let loginMember = '${ sessionScope.loginMember.memberNo }';
+                        if(loginMember == result[i].memberNo){
+                            $('#vote_heart').html('♥'); 
+                        }else{
+                            $('#vote_heart').html('♡');
+                        }
+                    }
+
+                    
 
 
-                    // $('.vote_heart').one("click", function(){
-                    //     if($('.vote_heart').html() == '♥'){
-                    //         confirm('투표를 취소하시겠습니까?')
-                    //         deleteVote();
-                    //     }
-                    //     else if($('.vote_heart').html() == '♡'){
-                    //         confirm('투표를 진행하면 중복투표는 불가능합니다. 진행하시겠습니까? ')
-                    //         updateVote();
-                    //     }
-                    // })
+                    $('#vote_heart').one("click",function(){
+                        if($('#vote_heart').html() == '♥'){
+
+                            let confirmResult2 = confirm('투표를 취소하시겠습니까?');
+                            if(confirmResult2 == true){
+                                deleteVote();
+                            }
+                        }
+                        else if($('#vote_heart').html() == '♡'){
+                            let confirmResult = confirm('투표를 진행하면 중복투표는 불가능합니다. 진행하시겠습니까?');
+
+                            if(confirmResult == true){
+                                insertVote();
+                            }else{
+                                
+                            }
+                            
+                        }
+                    })
 
                    
                 },
@@ -186,16 +203,19 @@
             });
         };
 
-        // updateVote
-        function updateVote(){
+        // insertVoteHeart
+        function insertVote(){
             $.ajax({
-                url : 'updateVoteLike.ct',
+                url : 'insertVoteHeart.ct',
                 data : {
-                    boardNo : ${ b.get(0).boardNo }
+                    boardNo : ${ b.get(0).boardNo },
+                    memberNo : ${ sessionScope.loginMember.memberNo }
                 },
                 success : function(result){
-                    alert('updateVote success!!')
-                    $('.vote_heart').html('♥');
+
+                    var boardTitle = '[ ' + '${ b.get(0).boardTitle }' + ' ]'
+                    
+                    alert(boardTitle + ' 이모티콘에 투표하셨습니다!!')
                     selectVoteLike();
                 },
                 error : function(){
@@ -204,18 +224,20 @@
             });
         };
 
-        // deleteVote
+        // deleteVoteHeart
         function deleteVote(){
             $.ajax({
-                url : 'deleteVote.ct',
+                url : 'deleteVoteHeart.ct',
                 data : {
-                    boardNo : ${ b.get(0).boardNo }
+                    boardNo : ${ b.get(0).boardNo },
+                    memberNo :${ sessionScope.loginMember.memberNo }
                 },
-                success : function(){
-                    alert('delete success!!!!')
-                    $('.vote_heart').html('♡');
+                success : function(result){
+                    console.log('????');
                     selectVoteLike();
-
+                },
+                error : function(){
+                    alert('delete error !!!!')
                 }
             })
         }

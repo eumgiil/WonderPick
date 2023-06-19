@@ -290,7 +290,7 @@
                 </c:forEach>
 
                 <hr>
-                
+                ${ list }
                 <div class="selectList">
 
                 </div>
@@ -300,34 +300,6 @@
             <div id="puls_btn">
                 <img src="resources/boardUpfiles/contestFiles/plus.webp" alt="" id="puls_btn_image">
             </div>
-
-
-
-
-            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                    Show a second modal and hide this one with the button below.
-                    </div>
-                    <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
-                    </div>
-                </div>
-                </div>
-            </div>
-            
-        <a id="modal_1" class="btn btn-primary" data-bs-toggle="modal" href="" role="button">Open first modal</a>
-
-
-
-
-
-
 
 
         </div>        
@@ -379,6 +351,7 @@
 
         }))
 
+        let value = "";
         // 플러스버튼 더보기 
         document.getElementById('puls_btn').addEventListener('click', function(){
             $.ajax({
@@ -387,9 +360,9 @@
                     checkNumber : $('.contest_table').length
                 },
                 success : function(result){
-                    console.log(result.nickName);
+                    console.log($('.contest_table').length);
 
-                        let value = "";
+                        //let value = "";
                     for(let i in result){
                         
                         value += 
@@ -460,6 +433,8 @@
             });
         });
 
+        
+
 
         function votePage(){
             location.href = 'selectVotePage.ct';
@@ -470,10 +445,123 @@
         }
 
       
-        
+        /////sa=d==================== 투표표표 ===================
+
+        $(function(){
+           //selectVoteLike();
+        });
+  
+
+        // selectVote
+        function selectVoteLike(){
+            $.ajax({
+                url : 'selectVoteLike.ct',
+                data : {
+                    boardNo : 0
+                },
+                success : function(result){
+
+                    console.log(result);
+
+                    // if(result.length == 0){
+                    //     $('#vote_heart').html('♡');
+                    // }
+
+                    // $('#vote_count').html(result.length)
+
+                    
+                    // for(let i in result){
+                    //     let loginMember = '${ sessionScope.loginMember.memberNo }';
+                    //     if(loginMember == result[i].memberNo){
+                    //         $('#vote_heart').html('♥'); 
+                    //     }else{
+                    //         $('#vote_heart').html('♡');
+                    //     }
+                    // }
+
+                    
+
+
+                    // $('#vote_heart').one("click",function(){
+                    //     if($('#vote_heart').html() == '♥'){
+
+                    //         let confirmResult2 = confirm('투표를 취소하시겠습니까?');
+                    //         if(confirmResult2 == true){
+                    //             deleteVote();
+                    //         }
+                    //     }
+                    //     else if($('#vote_heart').html() == '♡'){
+                    //         let confirmResult = confirm('투표를 진행하면 중복투표는 불가능합니다. 진행하시겠습니까?');
+
+                    //         if(confirmResult == true){
+                    //             insertVote();
+                    //         }else{
+                                
+                    //         }
+                            
+                    //     }
+                    // })
+
+                   
+                },
+                error : function(){
+                    alert('selectVoteLike error!!!!')
+                }
+            });
+        };
+   
+
+        // insertVoteHeart
+        function insertVote(){
+            $.ajax({
+                url : 'insertVoteHeart.ct',
+                data : {
+                    boardNo : ${ b.get(0).boardNo },
+                    memberNo : ${ sessionScope.loginMember.memberNo }
+                },
+                success : function(result){
+
+                    var boardTitle = '[ ' + '${ b.get(0).boardTitle }' + ' ]'
+                    
+                    alert(boardTitle + ' 이모티콘에 투표하셨습니다!!')
+                    selectVoteLike();
+                },
+                error : function(){
+                    alert('updateVote error !!!!')
+                }
+            });
+        };
+
+        // deleteVoteHeart
+        function deleteVote(){
+            $.ajax({
+                url : 'deleteVoteHeart.ct',
+                data : {
+                    boardNo : ${ b.get(0).boardNo },
+                    memberNo :${ sessionScope.loginMember.memberNo }
+                },
+                success : function(result){
+                    console.log('????');
+                    selectVoteLike();
+                },
+                error : function(){
+                    alert('delete error !!!!')
+                }
+            })
+        }
+
+
+
+
+
+
+
+
+
+
 
     </script>
 
 
 </body>
-</html>-
+</html>
