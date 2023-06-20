@@ -69,6 +69,10 @@ public class ContestDao {
 		return (ArrayList)sqlSession.selectList("contestBoardMapper.searchAutoComplet", searchValue);
 	}
 
+	public ArrayList<Contest> searchResult(SqlSessionTemplate sqlSession, String search) {
+		return (ArrayList)sqlSession.selectList("contestBoardMapper.searchResult", search);
+	}
+
 	
 
 

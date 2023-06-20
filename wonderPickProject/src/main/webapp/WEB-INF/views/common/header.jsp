@@ -58,7 +58,7 @@
                 </ul>
                 <!-- 검색 시작 -->
                 <div class="search_area">
-                    <form action="#" method="get">
+                    <form action="searchResult.ct" method="get">
                         <div id="search_main">
                             <input type="text" placeholder="검색어를 입력해주세요" name="search" id="search_input" onkeyup="searchAutoComplet();" >
                             <button type="submit"><span class="material-symbols-outlined"> search</span></button>
@@ -79,9 +79,7 @@
                                 최근 검색어가 없습니다.
                             </div>
                             <div >
-                                <ul id="search_auto">
-                                    <li>여기는 자동완성 list</li>
-                                </ul>
+                                <ul id="search_auto"></ul>
                             </div>
                         </div>
                     </form>
@@ -116,7 +114,6 @@
                             }
                         });
 
-
                         // 검색어 자동완성
 
                         function searchAutoComplet(){
@@ -127,61 +124,38 @@
                             var searchValue = searchElement.value;
                             var searchLength = searchValue.length
                             
+                            // 스페이스바 막기
                             if(searchLength == 1 && searchValue == ' '){
                                 document.getElementById('search_input').value = '';
                             }
                             
-                            
-                            
-                            
-                           
-                                
                             httpRequest.onreadystatechange = () => {
                                 
                                 if(httpRequest.readyState === XMLHttpRequest.DONE){
                                     if(httpRequest.status === 200){
-    
+
                                         let result = httpRequest.response;
-    
-                                        console.log('검색결과' + result)
-    
-                                        if(result == ''){
-                                            console.log('검색결과 없음')
+                                        var list = document.getElementById('search_auto');
+                                        
+                                        if(result == 0){
+                                           list.replaceChildren();
                                         }else{
-                                            console.log(document.getElementById('search_auto').innerHTML)
-
-                                            console.log(result)
-
                                             var value = '';
+
                                             for(var i in result){
                                                 let li = document.createElement('li');
                                                 li.append(result[i].searchContent);
-                                                document.getElementById('search_auto').append(li);
-
+                                                list.append(li);
                                             }
-
-
-
-                                            //let searchList = document.getElementById('search_auto').innerHTML;
-
-                                            
                                         }
-    
                                     };
                                 };
                                };
-    
     
                                httpRequest.open('POST', 'searchAutoComplet?searchValue=' + searchValue );
                                httpRequest.responseType = 'json';
                                httpRequest.send();
                            }
-
-
-                        
-
-
-
 
 
 

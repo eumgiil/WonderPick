@@ -98,6 +98,11 @@ public class ContestServiceImpl implements ContestService {
 		return contestDao.searchAutoComplet(sqlSession, searchValue);
 	}
 
+	@Override
+	public ArrayList<Contest> searchResult(String search) {
+		return contestDao.searchResult(sqlSession, search);
+	}
+
 
 
 }
