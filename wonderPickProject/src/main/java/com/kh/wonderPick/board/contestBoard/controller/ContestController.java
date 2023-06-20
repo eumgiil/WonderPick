@@ -221,21 +221,7 @@ public class ContestController {
 		heart.setMemberNo(memberNo);
 		return new Gson().toJson(contestService.deleteVoteHeart(heart));
 	}
-	@ResponseBody
-	@RequestMapping(value="searchAutoComplet", produces="application/json; charset=UTF-8")
-	public String searchAutoComplet(String searchValue) {
 	
-		
-		if(searchValue.equals("")) {
-			
-			ArrayList<Search> list = contestService.searchAutoComplet(searchValue);
-			return new Gson().toJson(list);
-		}
-		
-		
-		
-		
-	}
 	
 }
 

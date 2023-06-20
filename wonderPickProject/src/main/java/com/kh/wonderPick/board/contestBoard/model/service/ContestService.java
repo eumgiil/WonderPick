@@ -7,6 +7,7 @@ import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
 import com.kh.wonderPick.board.contestBoard.model.vo.Search;
+import com.kh.wonderPick.board.goods.model.vo.Goods;
 
 public interface ContestService {
 
@@ -39,7 +40,6 @@ public interface ContestService {
 
 	int deleteVoteHeart(Heart heart);
 
-	ArrayList<Search> searchAutoComplet(String searchValue);
 
 	
 	// 페이징처리 

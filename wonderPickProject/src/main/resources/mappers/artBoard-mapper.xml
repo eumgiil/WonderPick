@@ -81,24 +81,45 @@
 		<result column="STAR" property="star" />
 		<result column="MODIFY_NAME" property="modifyName" />
 		<result column="MEMBER_MODIFY_NAME" property="memberModifyName" />
+		<result column="CATEGORY" property="category" />
 	</resultMap>
 
-	<select id="selectArtListCount" resultType="_int" parameterType="string">
+	<select id="selectArtListCount" resultType="_int" parameterType="searchArt">
 		select
 		       count(*)
 		  from
 		       board b
 		  join
-		  	   art_board ab on(b.board_no = ab.board_no) 
+		       art_board ab on(b.board_no = ab.board_no)
+		  join
+		       member m on(m.member_no = b.member_no)
 		 where
-		 	   board_type = 'D'
+		       board_type = 'D'
 		   and
-		 	   status = 'Y'
+		       b.status = 'Y'
+ 	   		<if test="category != null and category != ''">
 		   and
 		   	   ab.category = #{ category }
+ 	   		</if>
+	 	   	<if test="null != search and search != ''">
+	 	   and
+		   		<choose>
+					<when test="search == 'artist'">
+						m.nickname like '%'||#{ keyword }||'%'
+					</when>
+					<when test="search == 'name'">
+						b.board_title like '%'||#{ keyword }||'%'
+					</when>
+					<when test="search == 'all'">
+						m.nickname like '%'||#{ keyword }||'%'
+						or
+						b.board_title like '%'||#{ keyword }||'%'
+					</when>
+				</choose>
+			</if>
 	</select>
 	
-	<select id="selectArtList" resultMap="artBoardDTO" parameterType="string">
+	<select id="selectArtList" resultMap="artBoardDTO" parameterType="searchArt">
 		select
 		       ab.board_no
 		      ,b.board_title
@@ -106,7 +127,7 @@
 		      ,m.nickname
 		      ,AVG(NVL(r.star, 0))
 		      ,NVL(ab.price, 0) price
-		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/boardUpfiles/artBoardFiles/2023061222534502.jpg') MEMBER_MODIFY_NAME
+		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/memberUpfiles/basicProfile.jpg') MEMBER_MODIFY_NAME
 		  	  ,ab.category 
 		  from
 		       art_board ab
@@ -124,8 +145,28 @@
 		       b.status = 'Y'
 		   and
 		       bi.file_level = '1'
+ 	   		<if test="category != null and category != ''">
 		   and
 		       ab.category = #{ category }
+	       </if>
+	       <if test="null != search and search != ''">
+			and
+			<choose>
+				<when test="search == 'artist'">
+					m.nickname like '%'||#{ keyword }||'%'
+				</when>
+				<when test="search == 'name'">
+					b.board_title like '%'||#{ keyword }||'%'
+				</when>
+				<when test="search == 'all'">
+					(
+					m.nickname like '%'||#{ keyword }||'%'
+					or
+					b.board_title like '%'||#{ keyword }||'%'
+					)
+				</when>
+			</choose>
+		</if>
 		 group by
 		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name, mi.MEMBER_MODIFY_NAME, ab.category
 		 order by
@@ -249,7 +290,7 @@
 		select
 		       b.member_no
 		      ,nickname
-		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/boardUpfiles/artBoardFiles/2023061222534502.jpg') MEMBER_MODIFY_NAME
+		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/memberUpfiles/basicProfile.jpg') MEMBER_MODIFY_NAME
 		      ,board_title
 		      ,board_content
 		      ,create_date
@@ -305,6 +346,83 @@
 		  	   board_no = #{ bno }
 	</select>
 
+	<!-- 검색 -->
+	<!-- <select id="selectSearchListCount" resultType="_int" parameterType="searchArt">
+		select
+		       count(*)
+		  from
+		       board b
+		  join
+		       art_board ab on(b.board_no = ab.board_no)
+		  join
+		       member m on(m.member_no = b.member_no)
+		 where
+		       board_type = 'D'
+		   and
+		       b.status = 'Y'
+		   and
+		<choose>
+			<when test="search == 'artist'">
+				m.nickname like '%'||#{ keyword }||'%'
+			</when>
+			<when test="search == 'name'">
+				b.board_title like '%'||#{ keyword }||'%'
+			</when>
+			<when test="search == 'all'">
+				m.nickname like '%'||#{ keyword }||'%'
+				or
+				b.board_title like '%'||#{ keyword }||'%'
+			</when>
+		</choose>
+	</select>
+	
+	<select id="selectSearchList" resultMap="artBoardDTO" parameterType="searchArt">
+		select
+		       ab.board_no
+		      ,b.board_title
+		      ,NVL(bi.modify_name, 'resources/boardUpfiles/artBoardFiles/2023061222534502.jpg') modify_name
+		      ,m.nickname
+		      ,AVG(NVL(r.star, 0))
+		      ,NVL(ab.price, 0) price
+		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/memberUpfiles/basicProfile.jpg') MEMBER_MODIFY_NAME
+		  	  ,ab.category 
+		  from
+		       art_board ab
+		  join
+		       board b on(b.board_no = ab.board_no)
+		  join
+		       board_image bi on(bi.board_no = b.board_no)
+		  join
+		       member m on(b.member_no = m.member_no)
+		  left join
+		       member_image mi on(mi.member_no = b.member_no)
+		  left join
+		       review r on(b.board_no = r.board_no)
+		 where
+		       b.status = 'Y'
+		   and
+		       bi.file_level = '1'
+		   and
+		<choose>
+			<when test="search == 'artist'">
+				m.nickname like '%'||#{ keyword }||'%'
+			</when>
+			<when test="search == 'name'">
+				b.board_title like '%'||#{ keyword }||'%'
+			</when>
+			<when test="search == 'all'">
+				(
+				m.nickname like '%'||#{ keyword }||'%'
+				or
+				b.board_title like '%'||#{ keyword }||'%'
+				)
+			</when>
+		</choose>
+		 group by
+		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name, mi.MEMBER_MODIFY_NAME, ab.category
+		 order by
+		       board_no desc
+	</select> -->
 
 
 
