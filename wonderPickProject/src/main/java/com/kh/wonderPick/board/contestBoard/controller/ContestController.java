@@ -18,8 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.contestBoard.model.service.ContestService;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
+import com.kh.wonderPick.board.contestBoard.model.vo.Search;
 
 @Controller
 public class ContestController {
@@ -197,38 +199,45 @@ public class ContestController {
 	@RequestMapping(value="selectVoteLike.ct", produces="application/json; charset=UTF-8")
 	public String selectVoteLike(int boardNo) {
 		
-			System.out.println(boardNo);
-		
-			System.out.println(contestService.selectVoteLike(boardNo));
+		System.out.println("hihi55 :" +  boardNo);
 		
 		return new Gson().toJson(contestService.selectVoteLike(boardNo));
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="updateVoteLike.ct", produces="application/json; charset=UTF-8")
-	public String updateVoteLike(int boardNo, int memberNo, Contest contest) {
+	@RequestMapping(value="insertVoteHeart.ct", produces="application/json; charset=UTF-8")
+	public String updateVoteLike(int boardNo, int memberNo, Heart heart) {
+			heart.setBoardNo(boardNo);
+			heart.setMemberNo(memberNo);
+		return new Gson().toJson(contestService.insertVoteHeart(heart));
+	}
+	@ResponseBody
+	@RequestMapping(value="deleteVoteHeart.ct", produces="application/json; charset=UTF-8")
+	public String deleteVoteHeart(int boardNo, int memberNo, Heart heart) {
 		
-		//System.out.println(memberNo);
+		System.out.println(boardNo);
+		
+		heart.setBoardNo(boardNo);
+		heart.setMemberNo(memberNo);
+		return new Gson().toJson(contestService.deleteVoteHeart(heart));
+	}
+	@ResponseBody
+	@RequestMapping(value="searchAutoComplet", produces="application/json; charset=UTF-8")
+	public String searchAutoComplet(String searchValue) {
+	
+		
+		if(searchValue.equals("")) {
+			
+			ArrayList<Search> list = contestService.searchAutoComplet(searchValue);
+			return new Gson().toJson(list);
+		}
 		
 		
-		contest.setBoardNo(boardNo);
-		contest.setMemberNo(memberNo);
 		
 		
-		//System.out.println(contest);
-		
-		
-		
-		return new Gson().toJson(contestService.updateVoteLike(contest));
 	}
 	
 }
-
-
-
-
-
-
 
 
 

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
+import com.kh.wonderPick.board.contestBoard.model.vo.Search;
 
 @Repository
 public class ContestDao {
@@ -51,12 +53,20 @@ public class ContestDao {
 		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectWinnerList");
 	}
 
-	public ArrayList<Contest> selectVoteLike(SqlSessionTemplate sqlSession, int boardNo) {
+	public ArrayList<Heart> selectVoteLike(SqlSessionTemplate sqlSession, int boardNo) {
 		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectVoteLike", boardNo);
 	}
 
-	public int updateVoteLike(SqlSessionTemplate sqlSession, Contest contest) {
-		return sqlSession.update("contestBoardMapper.updateVoteLike", contest);
+	public int insertVoteHeart(SqlSessionTemplate sqlSession, Heart heart) {
+		return sqlSession.insert("contestBoardMapper.insertVoteHeart", heart);
+	}
+
+	public int deleteVoteHeart(SqlSessionTemplate sqlSession, Heart heart) {
+		return sqlSession.delete("contestBoardMapper.deleteVoteHeart", heart);
+	}
+
+	public ArrayList<Search> searchAutoComplet(SqlSessionTemplate sqlSession, String searchValue) {
+		return (ArrayList)sqlSession.selectList("contestBoardMapper.searchAutoComplet", searchValue);
 	}
 
 	

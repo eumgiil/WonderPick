@@ -35,6 +35,4 @@ public class MemberServiceImpl implements MemberService {
 	public int signUpMember(Member m) {
 		return memberDao.signUpMember(m, sqlSession);
 	}
-	
-	
 }

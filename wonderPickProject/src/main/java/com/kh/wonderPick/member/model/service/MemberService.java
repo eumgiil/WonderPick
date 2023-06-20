@@ -11,4 +11,5 @@ public interface MemberService {
 	public int nickCheckMember(String checkNick);
 	
 	public int signUpMember(Member m);
+
 }
