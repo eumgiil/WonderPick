@@ -17,9 +17,27 @@
             	<form enctype="multipart/form-data" action="updateProfile.me" method="post">
 	                <div id="rightProfile">
 	                    <img src="${sessionScope.loginMember.profilePath }/${sessionScope.loginMember.profileImg}">
-	                    <button type="submit">프로필 변경</button>
+	                    <button type="submit" id="profileBtn" >
+	                    	<label for="fileInput" id="fileLabel">프로필 변경
+	                    		<input id="fileInput" type="file" style="display:none;">
+	                    	</label>
+                    	</button>
 	                </div>
             	</form>
+            	<script>
+            		$('#profileBtn').on('click', function(){
+            			$('#fileInput').click();
+            			$('#fileInput').on('change', function(){
+                			console.log(this.files);
+                			if(this.files.length == 1){
+                				return true;
+                			} else {
+                				return false;
+                			}
+                		});
+            			return false;
+            		});
+            	</script>
                 <form action="updateInfo.me" method="post">
 	                <div id="rightInfo">
 	                    <label>아이디</label><br>
