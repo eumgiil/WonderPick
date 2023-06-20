@@ -14,6 +14,7 @@
 		
 		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Board" alias="board" />
 		<typeAlias type="com.kh.wonderPick.board.artBoard.model.vo.ArtBoard" alias="artBoard" />
+		<typeAlias type="com.kh.wonderPick.board.artBoard.model.vo.SearchArt" alias="searchArt" />
 		<typeAlias type="com.kh.wonderPick.board.artBoard.model.vo.Option" alias="option" />
 		<typeAlias type="com.kh.wonderPick.board.artBoard.model.vo.DetailOption" alias="detailOption" />
 		<typeAlias type="com.kh.wonderPick.board.goods.model.vo.Goods" alias="goods" />
