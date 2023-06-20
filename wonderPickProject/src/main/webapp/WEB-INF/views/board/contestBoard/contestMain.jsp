@@ -226,8 +226,8 @@
                                     <tr>
                                         <td class="table_profile_img">
                                             <div align="center">
-                                                <img src="/" class="profile_img">
-                                                ${ list.memberModifyName }
+                                                <img src="${sessionScope.loginMember.profilePath }/${sessionScope.loginMember.profileImg}" class="profile_img">
+                                                <img src="${ list.memberFilePath }" class="profile_img">
                                             </div>
                                         </td>
                                         <td>${ list.nickName }</td>

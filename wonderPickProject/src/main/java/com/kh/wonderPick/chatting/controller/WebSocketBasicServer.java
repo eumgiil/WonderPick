@@ -1,7 +1,6 @@
 package com.kh.wonderPick.chatting.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,25 +26,11 @@ public class WebSocketBasicServer extends TextWebSocketHandler{
 		System.out.println(session);
 
 		System.out.println("접속성공");
-
+		
+		WebSocketSession remover = null;
+		
 		users.add(session);
-		/*String sessionId;
-		Iterator iterator = users.iterator();
-		while(iterator.hasNext()) {
-			if((WebSocketSession)iterator.next()==session) {
-				sessionId = getId(session);
-				System.out.println(sessionId);
-				if(!"".equals(sessionId)) {
-					//httpSession에서 nickname 끌어와서 방 조화할거임
-					Chating c = new Chating();
-					c.setMembertNickName(((Member)httpSession.get("loginUser")).getNickName());
-					ArrayList<Chating> roomNameList = chatingService.selectRoomName(c);
-					memberRoomList.put(sessionId, roomNameList);
-					System.out.println("loginUser성공");
-				}
-			}
-		}*/
-
+		
 		System.out.println(users);
 
 		System.out.println("접속 인원 : "+users.size());
@@ -68,29 +53,36 @@ public class WebSocketBasicServer extends TextWebSocketHandler{
 		// TODO Auto-generated method stub
 
 		String[] recieveMsg  = message.getPayload().split(",");
-		System.out.println("recieveMsg.length : "+recieveMsg.length);
-
+		System.out.println("msg : "+message.getPayload());
 		if(recieveMsg[0].equals("getin")) {//소켓 접속시 처음으로 보낸 메세지일 뗴 getin,채팅방이름 이렇게 있음
-			int loginStatus = 0;
-			for(String key :roomInMap.keySet()) {
-				if(key.equals(recieveMsg[1])) {
-					ArrayList<WebSocketSession> list = ((ArrayList<WebSocketSession>)roomInMap.get(key));
+			//방명을 키로한 리스트에 추가하는 작업
+			ArrayList<WebSocketSession> list = new ArrayList<WebSocketSession>();
+			
+			for(String key : roomInMap.keySet()) {
+				if(key.equals(recieveMsg[1])) {//들어가고자하는 방이 있다면
+					list = ((ArrayList<WebSocketSession>)roomInMap.get(key));
 					list.add(session);
-					roomInMap.put(key,list);
-					loginStatus++;
-					for(WebSocketSession user :list) {
-						TextMessage getinMessage = new TextMessage("someoneIn");
-						user.sendMessage(getinMessage);
-					}
 				}
 			}
-			if(loginStatus==0) {
-				ArrayList<WebSocketSession> list = new  ArrayList<WebSocketSession>();
+			
+			if(list.isEmpty()) {
 				list.add(session);
-				roomInMap.put(recieveMsg[1],list);
-				loginStatus++;
+				roomInMap.put(recieveMsg[1], list);
+			}else {
+				roomInMap.put(recieveMsg[1], list);
 			}
-		}else {//단순 대화일 때
+			
+			
+			for(WebSocketSession user : (ArrayList<WebSocketSession>)roomInMap.get(recieveMsg[1])) {
+				TextMessage getInReadMessage = new TextMessage("someoneIn,"+recieveMsg[2]);
+				user.sendMessage(getInReadMessage);
+			}
+			
+			//방이 존재	하면 value인 리스트에 session추가
+			//방이 존재하지 않는다면 방명과 value추가
+			
+		}else {//단순 대화일 때 프로토콜 만들어줘야함
+			System.out.println(roomInMap);
 			for(String key :roomInMap.keySet()) {
 				if(key.equals(recieveMsg[0])) {
 					ArrayList<WebSocketSession> list = ((ArrayList<WebSocketSession>)roomInMap.get(key));
@@ -107,72 +99,28 @@ public class WebSocketBasicServer extends TextWebSocketHandler{
 					}
 				}
 			}
+			
+			
+			 
 		}
-		/*if(recieveMsg.length==3) {
-			//ArrayList<Chating> loginUserRooms = memberRoomList.get(recieveMsg[0]);
-			//System.out.println(loginUserRooms);
-			//ArrayList<Chating> otherUserRooms = memberRoomList.get(recieveMsg[1]);
-			//System.out.println(otherUserRooms);
-			TextMessage newMessage = new TextMessage(recieveMsg[2]);
-
-			Date nowDate = new Date();
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd a HH:mm:ss");
-			//for(Chating room : loginUserRooms) {
-			//for(Chating room2 : otherUserRooms) {
-			//if(room.getRoomName().equals(room2.getRoomName())) {//같은 방을 같고 있을때 키값을 가져와야함
-			System.out.println("users : "+users);
-			for(WebSocketSession user :users) {System.out.println("id : "+getId(user));
-				if(getId(user).equals(recieveMsg[1])) {
-					reciever=user;
-				}
-				if(getId(user).equals(recieveMsg[0]) || getId(user).equals(recieveMsg[1])) {
-					System.out.println(reciever);
-					if((reciever==null)) {
-						BeforeReadChatings brc = new BeforeReadChatings();
-						brc.setFromMember(recieveMsg[0]);
-						brc.setToMember(recieveMsg[1]);
-						brc.setContent(recieveMsg[2]);
-						brc.setEnrollDate(simpleDateFormat.format(nowDate));
-						chatingService.insertreadYetChatings(brc);
-						if(getId(user).equals(recieveMsg[0])) {
-							TextMessage notReadMessage = new TextMessage(recieveMsg[2]);
-							user.sendMessage(notReadMessage);
-						}
-					}else {
-						user.sendMessage(newMessage);
-					}
-				}
-			}
-			//}
-			//}
-			//}
-		}
-			for(WebSocketSession user :users) {
-				if(getId(user).equals(recieveMsg[3]) ) {
-					System.out.println("접속 getId: "+getId(user));
-					System.out.println("접속 recieveMsg: "+recieveMsg[1]);
-					TextMessage notReadMessage = new TextMessage(recieveMsg[1]);
-					user.sendMessage(notReadMessage);
-				}
-			}*/
-
-
-
 	}
 
 	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
 		// TODO Auto-generated method stub
 		for(String key :roomInMap.keySet()) {
 			ArrayList<WebSocketSession> list = ((ArrayList<WebSocketSession>)roomInMap.get(key));
+			ArrayList<WebSocketSession> removed = new ArrayList<WebSocketSession>();
+			
 			switch (list.size()) {
 			case 2:
-				for(WebSocketSession user : list) {
+				for(WebSocketSession user : list) {// ConcurrentModificationException 발생 
 					if(user==session) {
-						list.remove(user);
-						roomInMap.put(key, list);
+						removed.add(user);
 					}
 				}
+				list.removeAll(removed);
+				roomInMap.put(key, list);
 				break;
 			case 1:
 				roomInMap.remove(key);
@@ -180,8 +128,26 @@ public class WebSocketBasicServer extends TextWebSocketHandler{
 			}
 
 			users.remove(session);
-			//memberRoomList.remove(getId(user));
-			System.out.println("종료");
+			System.out.println("종료"+status);
 		}
 	}
+	
+	
+	public Map<String,ArrayList<WebSocketSession>> changeRoom(String roomName, String myName) {
+		for(String key : roomInMap.keySet()) {
+			if(key.equals(roomName)) {
+				ArrayList<WebSocketSession> list = (ArrayList<WebSocketSession>)roomInMap.get(key);
+				ArrayList<WebSocketSession> removed = new ArrayList<WebSocketSession>();
+				for(WebSocketSession user : list) {
+					if(getId(user).equals(myName)) {
+						removed.add(user);
+					}
+				}
+				list.removeAll(removed);
+				roomInMap.put(key, list);
+			}
+		}
+		return roomInMap;
+	}
+	
 }

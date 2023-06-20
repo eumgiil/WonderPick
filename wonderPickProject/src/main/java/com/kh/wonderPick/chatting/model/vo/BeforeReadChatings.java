@@ -1,6 +1,5 @@
 package com.kh.wonderPick.chatting.model.vo;
 
-import java.util.Date;
 
 import lombok.Data;
 
@@ -11,5 +10,5 @@ public class BeforeReadChatings {
 	private String toMember;
 	private String content;
 	private String enrollDate;
-	private int ReadCheck;
+	private String readCheck;
 }

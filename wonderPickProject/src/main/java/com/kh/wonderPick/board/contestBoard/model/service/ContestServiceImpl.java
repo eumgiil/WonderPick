@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.contestBoard.model.dao.ContestDao;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
+import com.kh.wonderPick.board.contestBoard.model.vo.Search;
 
 @Service
 public class ContestServiceImpl implements ContestService {
@@ -77,13 +79,23 @@ public class ContestServiceImpl implements ContestService {
 	}
 
 	@Override
-	public int selectVoteLike(int boardNo) {
+	public ArrayList<Heart> selectVoteLike(int boardNo) {
 		return contestDao.selectVoteLike(sqlSession, boardNo);
 	}
 
 	@Override
-	public int updateVoteLike(Contest contest) {
-		return contestDao.updateVoteLike(sqlSession, contest);
+	public int insertVoteHeart(Heart heart) {
+		return contestDao.insertVoteHeart(sqlSession, heart);
+	}
+
+	@Override
+	public int deleteVoteHeart(Heart heart) {
+		return contestDao.deleteVoteHeart(sqlSession, heart);
+	}
+
+	@Override
+	public ArrayList<Search> searchAutoComplet(String searchValue) {
+		return contestDao.searchAutoComplet(sqlSession, searchValue);
 	}
 
 

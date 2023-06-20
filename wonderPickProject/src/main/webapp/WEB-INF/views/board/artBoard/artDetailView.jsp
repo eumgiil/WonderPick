@@ -400,7 +400,11 @@
             <br><hr><br>
 
             <div id="btnRequest" class="center">
-                <button onclick="toChat();">작가에게 주문요청</button>
+            	<form action="chating.co">
+            		<input type="hidden" name="boardNo" value="${ bno }">
+            		<button>작가에게 주문요청</button>
+            	</form>
+                
             </div>
 
             <script>
@@ -425,20 +429,31 @@
                     
                     // let f = document.createElement('form');
                     
-                    // let requestInput = document.createElement('input');
-                    // requestInput.setAttribute('tyep', 'hidden');
-                    // requestInput.setAttribute('name', 'addPrices');
-                    // requestInput.setAttribute('value', requestStr);
+                    
+                    /* 여기는 옵션을 db에 넣는 기능 insertReasonPrice.co맵핑값으로 ajax요청 후 성공시 chating.co를 불러야함 */
+                    /*
+                    let requestInput = document.createElement('input');
+                    requestInput.setAttribute('tyep', 'hidden');
+                    requestInput.setAttribute('name', 'addPrices');
+                    requestInput.setAttribute('value', requestStr);
                     
                     // let priceInput = document.createElement('input');
                     // priceInput.setAttribute('type', 'hidden');
                     // priceInput.setAttribute('name', 'request');
                     // priceInput.setAttribute('value', priceStr);
                     
-                    // f.append(requestStr)
-                    // f.append(priceStr);
-                    // f.setAttribute('method', 'post');
-                    // f.setAttribute('action', 'chating.co');
+                    f.append(requestStr)
+                    f.append(priceStr);
+                    f.setAttribute('method', 'post');
+                    f.setAttribute('action', 'insertReasonPrice.co');*/
+                    
+                    let requestInput = document.createElement('input');
+                    requestInput.setAttribute('tyep', 'hidden');
+                    requestInput.setAttribute('name', 'boardNo');
+                    requestInput.setAttribute('value', '${ bno }');
+                    
+                    f.setAttribute('method', 'get');
+                    f.setAttribute('action', 'chating.co');
                     
                     // let btnRequest = document.getElementById('btnRequest');
                     // btnRequest.appendChild(f);
