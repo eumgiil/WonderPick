@@ -41,6 +41,8 @@ public interface ContestService {
 
 	ArrayList<Search> searchAutoComplet(String searchValue);
 
+	ArrayList<Contest> searchResult(String search);
+
 	
 	// 페이징처리 
 	

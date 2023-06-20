@@ -21,6 +21,7 @@ import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.contestBoard.model.service.ContestService;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
+import com.kh.wonderPick.board.contestBoard.model.vo.Search;
 
 @Controller
 public class ContestController {
@@ -220,14 +221,33 @@ public class ContestController {
 		heart.setMemberNo(memberNo);
 		return new Gson().toJson(contestService.deleteVoteHeart(heart));
 	}
-	//@ResponseBody
-	//@RequestMapping(value="searchAutoComplet", produces="application/json; charset=UTF-8")
-	@RequestMapping("searchAutoComplet")
+	@ResponseBody
+	@RequestMapping(value="searchAutoComplet", produces="application/json; charset=UTF-8")
 	public String searchAutoComplet(String searchValue) {
 		
-		System.out.println(searchValue);
+		if(searchValue.equals("")) {
+			int gap = 0;
+			return new Gson().toJson(gap);
+			
+		}else {
+			ArrayList<Search> list = contestService.searchAutoComplet(searchValue);
+			if(list.isEmpty()){
+				int empty = 0;
+				return new Gson().toJson(empty);
+			}else {
+				return new Gson().toJson(list);
+			}
+		}
 		
-		return new Gson().toJson(contestService.searchAutoComplet(searchValue));
+	}
+	@RequestMapping("searchResult.ct")
+	public String searchResult(String search) {
+		
+		System.out.println(search);
+		
+		//contestService.searchResult(search);
+		
+		return "board/contestBoard/searchResult";
 	}
 	
 }
