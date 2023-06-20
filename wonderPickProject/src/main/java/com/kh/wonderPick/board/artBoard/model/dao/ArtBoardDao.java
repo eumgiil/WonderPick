@@ -11,6 +11,7 @@ import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO;
 import com.kh.wonderPick.board.artBoard.model.vo.DetailOption;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
+import com.kh.wonderPick.board.artBoard.model.vo.SearchArt;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.common.model.vo.PageInfo;
@@ -18,16 +19,23 @@ import com.kh.wonderPick.common.model.vo.PageInfo;
 @Repository
 public class ArtBoardDao {
 	
-	public int selectArtListCount(SqlSessionTemplate sqlSession, String category) {
-		return sqlSession.selectOne("artBoardMapper.selectArtListCount", category);
+	public int selectArtListCount(SqlSessionTemplate sqlSession, SearchArt searchArt) {
+		return sqlSession.selectOne("artBoardMapper.selectArtListCount", searchArt);
 	}
+//	public int selectSearchListCount(SqlSessionTemplate sqlSession, SearchArt searchArt) {
+//		return sqlSession.selectOne("artBoardMapper.selectSearchListCount", searchArt);
+//	}
 	
-	public ArrayList<ArtBoardDTO> selectArtList(SqlSessionTemplate sqlSession, PageInfo pi, String category){
+	public ArrayList<ArtBoardDTO> selectArtList(SqlSessionTemplate sqlSession, PageInfo pi, SearchArt searchArt){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		// 페이징처리 해야함. offset도 해야함
-		return (ArrayList)sqlSession.selectList("artBoardMapper.selectArtList", category, rowBounds);
+		return (ArrayList)sqlSession.selectList("artBoardMapper.selectArtList", searchArt, rowBounds);
 	}
+//	public ArrayList<ArtBoardDTO> selectSearchList(SqlSessionTemplate sqlSession, PageInfo pi, SearchArt searchArt){
+//		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+//		return (ArrayList)sqlSession.selectList("artBoardMapper.selectSearchList", searchArt, rowBounds);
+//	}
 	
 	public int insertBoard(SqlSessionTemplate sqlSession, Board board) {
 		return sqlSession.insert("artBoardMapper.insertBoard", board);

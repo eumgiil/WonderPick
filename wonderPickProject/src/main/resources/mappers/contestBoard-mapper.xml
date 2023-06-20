@@ -369,10 +369,6 @@
 			    
 		</delete>
 
-	<select id="searchAutoComplet" resultMap="searchResultSet">
-		
-	</select>
-		
 	</mapper>
 	
 	

@@ -65,10 +65,7 @@ public class ContestDao {
 		return sqlSession.delete("contestBoardMapper.deleteVoteHeart", heart);
 	}
 
-	public ArrayList<Search> searchAutoComplet(SqlSessionTemplate sqlSession, String searchValue) {
-		return (ArrayList)sqlSession.selectList("contestBoardMapper.searchAutoComplet", searchValue);
-	}
-
+	
 	
 
 

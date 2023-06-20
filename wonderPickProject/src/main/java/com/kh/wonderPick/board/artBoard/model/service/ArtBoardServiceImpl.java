@@ -12,6 +12,7 @@ import com.kh.wonderPick.board.artBoard.model.dao.ArtBoardDao;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
+import com.kh.wonderPick.board.artBoard.model.vo.SearchArt;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.common.model.vo.PageInfo;
@@ -29,13 +30,22 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	
 	
 	@Override
-	public int selectArtListCount(String category) {
-		return artDao.selectArtListCount(sqlSession, category);
+	public int selectArtListCount(SearchArt searchArt) {
+		return artDao.selectArtListCount(sqlSession, searchArt);
 	}
+//	@Override
+//	public int selectSearchListCount(SearchArt searchArt) {
+//		return artDao.selectSearchListCount(sqlSession, searchArt);
+//	}
+//	@Override
+//	public ArrayList<ArtBoardDTO> selectSearchList(PageInfo pi, SearchArt searchArt) {
+//		return artDao.selectSearchList(sqlSession, pi, searchArt);
+//	}
+
 	
 	@Override
-	public ArrayList<ArtBoardDTO> selectArtList(PageInfo pi, String category) {
-		return artDao.selectArtList(sqlSession, pi, category);
+	public ArrayList<ArtBoardDTO> selectArtList(PageInfo pi, SearchArt searchArt) {
+		return artDao.selectArtList(sqlSession, pi, searchArt);
 	}
 
 
@@ -71,7 +81,9 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	public ArrayList<BoardImage> selectBoardImage(int bno) {
 		return artDao.selectBoardImage(sqlSession, bno);
 	}
+	
 
+	
 
 
 	

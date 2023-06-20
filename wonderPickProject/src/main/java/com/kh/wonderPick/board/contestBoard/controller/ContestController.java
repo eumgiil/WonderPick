@@ -21,6 +21,7 @@ import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.contestBoard.model.service.ContestService;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
+import com.kh.wonderPick.board.contestBoard.model.vo.Search;
 
 @Controller
 public class ContestController {
@@ -220,15 +221,7 @@ public class ContestController {
 		heart.setMemberNo(memberNo);
 		return new Gson().toJson(contestService.deleteVoteHeart(heart));
 	}
-	//@ResponseBody
-	//@RequestMapping(value="searchAutoComplet", produces="application/json; charset=UTF-8")
-	@RequestMapping("searchAutoComplet")
-	public String searchAutoComplet(String searchValue) {
-		
-		System.out.println(searchValue);
-		
-		return new Gson().toJson(contestService.searchAutoComplet(searchValue));
-	}
+	
 	
 }
 
