@@ -52,6 +52,7 @@
 		<mapper resource="/mappers/chating-mapper.xml" />
 		<mapper resource="/mappers/review-mapper.xml" />
 		<mapper resource="/mappers/reply-mapper.xml" />
+		<mapper resource="/mappers/search-mapper.xml" />
 	</mappers>	
 	
 	

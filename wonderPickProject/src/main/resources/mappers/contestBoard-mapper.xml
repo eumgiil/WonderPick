@@ -369,24 +369,6 @@
 			    
 		</delete>
 
-	<select id="searchAutoComplet" resultMap="searchResultSet">
-	
-			                  
-		SELECT 
-		        SEARCH_NO
-		       ,SEARCH_CONTENT
-		       ,SEARCH_DATE
-		       
-		  FROM 
-		        AUTO_SEARCH
-		WHERE
-		        SEARCH_CONTENT LIKE '%' || '${ searchValue }' || '%'
-		ORDER
-		  BY
-		        SEARCH_CONTENT
-		
-	</select>
-		
 	</mapper>
 	
 	

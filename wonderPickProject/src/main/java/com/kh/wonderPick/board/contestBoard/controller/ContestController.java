@@ -221,34 +221,7 @@ public class ContestController {
 		heart.setMemberNo(memberNo);
 		return new Gson().toJson(contestService.deleteVoteHeart(heart));
 	}
-	@ResponseBody
-	@RequestMapping(value="searchAutoComplet", produces="application/json; charset=UTF-8")
-	public String searchAutoComplet(String searchValue) {
-		
-		if(searchValue.equals("")) {
-			int gap = 0;
-			return new Gson().toJson(gap);
-			
-		}else {
-			ArrayList<Search> list = contestService.searchAutoComplet(searchValue);
-			if(list.isEmpty()){
-				int empty = 0;
-				return new Gson().toJson(empty);
-			}else {
-				return new Gson().toJson(list);
-			}
-		}
-		
-	}
-	@RequestMapping("searchResult.ct")
-	public String searchResult(String search) {
-		
-		System.out.println(search);
-		
-		//contestService.searchResult(search);
-		
-		return "board/contestBoard/searchResult";
-	}
+	
 	
 }
 
