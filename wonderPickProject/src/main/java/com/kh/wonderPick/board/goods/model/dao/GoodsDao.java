@@ -74,7 +74,10 @@ public class GoodsDao {
 	public Goods selectGoods(SqlSessionTemplate sqlSession , int boardNo) {
 		return sqlSession.selectOne("goodsMapper.selectGoods", boardNo);
 	}
-	
+	public ArrayList<BoardImage> selectBoardImage(SqlSessionTemplate sqlSession, int boardNo) {
+		System.out.println("안뇽 나는 보드이미지 뎨요");
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectBoardImage", boardNo);
+	}
 	/*
 	public int selectReviewCount(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.selectOne("goodsMapper.selectReviewCount", boardNo);
@@ -101,7 +104,7 @@ public class GoodsDao {
 	
 	//대댓글
 	public ArrayList<Re_Reply> selectReReplyList(SqlSessionTemplate sqlSession, int replyNo){
-		return (ArrayList)sqlSession.selectList("goodsMapper.selectReReplyLiST", replyNo);
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectReReplyList", replyNo);
 	}
 	public int insertReReply(SqlSessionTemplate sqlSession, Re_Reply re) {
 		return sqlSession.insert("goodsMapper.insertReReply", re);
@@ -111,5 +114,10 @@ public class GoodsDao {
 	public ArrayList<Heart> selectHeartList(SqlSessionTemplate sqlSession, int memberNo ){
 		return (ArrayList)sqlSession.selectList("goodsMapper.selectHeartList", memberNo );
 		
+	}
+	
+	// 댓글 삭제
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.delete("goodsMapper.deleteReply", replyNo);
 	}
 }

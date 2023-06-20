@@ -36,6 +36,9 @@ public interface GoodsService {
 	// 게시글 상세조회
 	Goods selectGoods(int boardNo);
 	
+	// 게시글별 이미지 조회
+	ArrayList<BoardImage> selectBoardImage(int boardNo);
+	
 	// 게시글 검색결과 개수 조회
 	int searchGoodsCount(HashMap map);
 	
@@ -70,7 +73,8 @@ public interface GoodsService {
 	ArrayList<Heart> selectHeartList(int memberNo);
 	
 	
-	
+	// 댓글 삭제
+	int deleteReply(int replyNo);
 	
 	
 

@@ -184,7 +184,9 @@
             <c:when test="${not empty list}">
               <c:forEach items="${list}" var="g">
                   <div class="goodsList2" style="display:inline-block;">
-                    <img src="${ g.fileLevel == 1 }" alt=""  width="250" style="border:1px solid black; width:250px; height:250px;"  ><br>
+                  <c:if test="${g.fileLevel eq 1 }">
+                    <img src="${ g.originName }" alt=""  width="250" style="border:1px solid black; width:250px; height:250px;"  ><br>
+                    </c:if>
                     <table id="goodsInfo"  id="goods" width="250">
 	                    <tr>
 	                        <td>${g.nickName}</td>

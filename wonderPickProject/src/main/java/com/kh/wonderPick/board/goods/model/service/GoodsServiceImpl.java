@@ -83,6 +83,10 @@ public class GoodsServiceImpl implements GoodsService {
 	public Goods selectGoods(int boardNo) {
 		return goodsDao.selectGoods(sqlSession, boardNo);
 	}
+	@Override
+	public ArrayList<BoardImage> selectBoardImage(int boardNo) {
+		return goodsDao.selectBoardImage(sqlSession, boardNo);
+	}
 	/*
 	@Override
 	public int selectReviewCount(int boardNo) {
@@ -132,6 +136,11 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public ArrayList<Heart> selectHeartList(int memberNo ){
 		return goodsDao.selectHeartList(sqlSession, memberNo);
+	}
+	
+	@Override
+	public int deleteReply(int replyNo) {
+		return goodsDao.deleteReply(sqlSession, replyNo);
 	}
 
 	
