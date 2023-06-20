@@ -20,6 +20,7 @@ import com.kh.wonderPick.board.artBoard.model.service.ArtBoardService;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
 import com.kh.wonderPick.board.artBoard.model.vo.DetailOption;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
+import com.kh.wonderPick.board.artBoard.model.vo.SearchArt;
 import com.kh.wonderPick.board.boardCommon.controller.BoardController;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
@@ -45,11 +46,27 @@ public class ArtBoardController {
 	
 	
 	@RequestMapping("artList.bo")
-	public ModelAndView selectArtList(ModelAndView mv, @RequestParam(value="cPage", defaultValue="1") int currentPage, String category) {
+	public ModelAndView selectArtList(ModelAndView mv, @RequestParam(value="cPage", defaultValue="1") int currentPage, SearchArt searchArt) {
+		System.out.println(searchArt);
+		PageInfo pi;
 		
-		// 페이징 처리 등 해야함
-		PageInfo pi = Pagination.getPageInfo(artService.selectArtListCount(category), currentPage, 12, 10);
-		mv.addObject("pi", pi).addObject("list", artService.selectArtList(pi, category)).setViewName("board/artBoard/artListView");
+//		if(null != searchArt.getSearch() && searchArt.getSearch() != "") {
+//			pi = Pagination.getPageInfo(artService.selectSearchListCount(searchArt), currentPage, 12, 10);
+//			mv.addObject("pi", pi)
+//			  .addObject("list", artService.selectSearchList(pi, searchArt))
+//			  .addObject("searchArt", searchArt)
+//			  .addObject("category", category)
+//			  .setViewName("board/artBoard/artListView");
+//		} else {
+			pi = Pagination.getPageInfo(artService.selectArtListCount(searchArt), currentPage, 12, 10);
+			mv.addObject("pi", pi)
+			  .addObject("list", artService.selectArtList(pi, searchArt))
+			  .addObject("searchArt", searchArt)
+//			  .addObject("category", category)
+			  .setViewName("board/artBoard/artListView");
+//		}
+		System.out.println("pi : " + pi);
+		System.out.println("list : " + artService.selectArtList(pi, searchArt));
 		return mv;
 	}
 	
@@ -118,15 +135,7 @@ public class ArtBoardController {
 	
 	@RequestMapping(value="artDetail.bo")
 	public ModelAndView artDetail(ModelAndView mv, int bno) {
-//		board 완
-//		artBoard 완료
-		
-//		boardImage 완료
-		
-//		member artBoard에 넣음 
-//		memberImage artBoard에 넣음 
-		
-//		review 완료
+
 		
 //		reply
 //		re_reply
@@ -152,6 +161,17 @@ public class ArtBoardController {
 		  .setViewName("board/artBoard/artDetailView");
 		return mv;
 	}
+	
+//	@RequestMapping("searchForm.at")
+//	public ModelAndView searchForm(@RequestParam(value="cPage", defaultValue="1") int currentPage, ModelAndView mv, SearchArt searchArt){
+//		System.out.println("search : " + searchArt.getSearch());
+//		System.out.println("searchArt : " + searchArt.getKeyword());
+//		System.out.println(artService.selectSearchListCount(searchArt));
+//		PageInfo pi = Pagination.getPageInfo(artService.selectSearchListCount(searchArt), currentPage, 12, 10);
+//		System.out.println(artService.selectSearchList(pi, searchArt).size());
+//		mv.addObject("pi", pi).addObject("list", artService.selectSearchList(pi, searchArt)).setViewName("board/artBoard/artListView");
+//		return mv;
+//	}
 	
 	
 	
