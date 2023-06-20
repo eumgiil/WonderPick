@@ -410,41 +410,44 @@
                     let priceArr = [];
                     
                     // querySelectorAll로 잡으면 type면서도 충돌이 일어날 가능성이 높음
-                    // let options = document.querySelectorAll('.select > option:checked');
-                    let options = $('.select > option:checked');
-                   
-                    for(var i = 0; i < options.length; i++){
-                        if(options[i].text != '==='){
-                            priceArr.push(options[i].value);
-                            requestArr.push(options[i].text.replace(options[i].value + '원', "").trim());
+                    let optionSelect = document.getElementsByClassName('select');
+                    // console.log(optionSelect);
+                    for(var i = 0; i < optionSelect.length; i++){
+                        let option = optionSelect[i].options[optionSelect[i].selectedIndex];
+                        // console.dir(option);
+                        if(option.text != '==='){
+                            priceArr.push(option.value);
+                            requestArr.push(option.text.replace(option.value + '원', "").trim());
                         }
                     }
                     let requestStr = requestArr.join(",");
                     let priceStr = priceArr.join(",");
                     
-                    let f = document.createElement('form');
+                    // let f = document.createElement('form');
                     
-                    let requestInput = document.createElement('input');
-                    requestInput.setAttribute('tyep', 'hidden');
-                    requestInput.setAttribute('name', 'addPrices');
-                    requestInput.setAttribute('value', requestStr);
+                    // let requestInput = document.createElement('input');
+                    // requestInput.setAttribute('tyep', 'hidden');
+                    // requestInput.setAttribute('name', 'addPrices');
+                    // requestInput.setAttribute('value', requestStr);
                     
-                    let priceInput = document.createElement('input');
-                    priceInput.setAttribute('type', 'hidden');
-                    priceInput.setAttribute('name', 'request');
-                    priceInput.setAttribute('value', priceStr);
+                    // let priceInput = document.createElement('input');
+                    // priceInput.setAttribute('type', 'hidden');
+                    // priceInput.setAttribute('name', 'request');
+                    // priceInput.setAttribute('value', priceStr);
                     
-                    f.append(requestStr)
-                    f.append(priceStr);
-                    f.setAttribute('method', 'post');
-                    f.setAttribute('action', 'chating.co');
+                    // f.append(requestStr)
+                    // f.append(priceStr);
+                    // f.setAttribute('method', 'post');
+                    // f.setAttribute('action', 'chating.co');
                     
-                    let btnRequest = document.getElementById('btnRequest');
-                    btnRequest.appendChild(f);
-                    f.submit();
-                    // console.log(options)
-                    // console.log(requestStr);
-                    // console.log(priceStr);
+                    // let btnRequest = document.getElementById('btnRequest');
+                    // btnRequest.appendChild(f);
+                    // f.submit();
+
+
+                    
+                    console.log(requestStr);
+                    console.log(priceStr);
 
                     // for(let option of options){
                     //     if(option.text != '==='){
@@ -457,6 +460,7 @@
                     //         console.log("asd")
                     //     }
                     // }
+
 
                 }
 
