@@ -70,12 +70,11 @@ public class GoodsController {
 	@RequestMapping("detail.go")
 	public ModelAndView selectGoods(ModelAndView mv, int boardNo,   HttpSession session) {
 		
-		ArrayList<BoardImage> bi =  goodsService.selectBoardImage(boardNo);
 		
 		if(goodsService.increaseCount(boardNo)>0) {
 			mv.addObject("g", goodsService.selectGoods(boardNo));
-			mv.addObject("bi", bi);
-			System.out.println(bi);
+			mv.addObject("bi", goodsService.selectBoardImage(boardNo));
+			System.out.println(goodsService.selectBoardImage(boardNo));
 			mv.addObject("reviewList", goodsService.selectReviewList(boardNo));
 			mv.addObject("replyList", goodsService.selectReplyList(boardNo));
 			mv.setViewName("board/goods/goodsDetailView");

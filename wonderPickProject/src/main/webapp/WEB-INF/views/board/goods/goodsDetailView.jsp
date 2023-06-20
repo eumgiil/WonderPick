@@ -24,6 +24,7 @@
         }        
         .detail_img{
             width: 100%;
+             display: inline-block;
         }
         .artist{
             display: inline-block;
@@ -107,7 +108,9 @@
             height: 300px;
             width: 100%;
         }
-        
+        #filelevel2{
+          display: inline-block;
+        }
         
     </style>
 </head>
@@ -161,7 +164,7 @@
 			            	 </c:if>
 			            	<c:if test="${ bi.fileLevel eq 2 }"> 
 				            	<tr>
-					            	<td><img class="detail_img" src="${bi.originName}" alt=""></td>
+					            	<td><img class="detail_img" id="filelevel2" src="${bi.originName}" alt=""></td>
 				            	</tr>
 				            </c:if>	
 				            </table>
@@ -404,7 +407,7 @@
 	        					   +'</td>'
 	        					   +'<td width="75%" style="padding-left:10px;">' + replyList[i].nickname + '</td>'
 	        					   +'<td width="10%" rowspan="2">'
-	        					   + '<c:if test="${loginMember.memberNo}== replyList[i].memberNo"  >'
+	        					   + '<c:if test="' +${loginMember.memberNo eq replyList[i].memberNo} + '"  >'
 	        					   +'<a href="deleteReply.go" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>'
 	        					   + '</c:if>'
 	        					   +'<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
@@ -532,24 +535,24 @@
 		                    <tr>
 		                        <td width="50%">추가시안횟수</td>
 		                        <td class="t_align_right" style="float:right;" width="100%">
-		                            <input type="number" style="width: 100px; " id="addDraft" >회
+		                            <input type="number" min="0" style="width: 100px; " id="addDraft" >회
 		                       </td>
 		                    </tr>
 		                    <tr>
 		                        <td>추가수정횟수</td>
 		                        <td class="t_align_right">
-		                            <input type="number" style="width: 100px;" id="addModify" >회
+		                            <input type="number" min="0" style="width: 100px;" id="addModify" >회
 		                        </td>
 		                    </tr>
 		                    <tr>
 		                        <td>주문수량</td>
 		                        <td class="t_align_right">
-		                            <input type="number" style="width: 100px;" id="amount" >개
+		                            <input type="number" min="1" style="width: 100px;" id="amount" >개
 		                        </td>
 		                    </tr>
 		                    <tr>
 		                        <td class="op_subTitle" style="font-size:20px; font-weight: bolder;" class="num">결제금액</td>
-		                        <td class="t_align_right" id="totalPrice" onchange="choice();"> ${g.price} 원</td>
+		                        <td class="t_align_right" min="${g.price}" id="totalPrice" onchange="choice();"> ${g.price} 원</td>
 		                    </tr>
 		                    <tr><td colspan="2"><hr></tr>
 		                    <tr>
@@ -571,12 +574,12 @@
             
             <script>
             function choice(){
-            	let addDraft = parseInt('${g.addDraft}') * $('#addDraft').val();
-            	let addModify = parseInt('${g.addModify}') * $('#addModify').val();
+            	let addDraft = (${g.addDraft} * $('#addDraft').val());
+            	let addModify = (${g.addModify} * $('#addModify').val());
             	let amount = $('#amount').val();
-            	let price = parseInt('${g.price}');
+            	let price = ${g.price};
             	
-            	let number = (( addDraft + addModify + price) * amount);
+            	let number = ( addDraft + addModify + (price * amount));
             	console.log(number);
             	
             	let totalPrice = document.getElementById('totalPrice');

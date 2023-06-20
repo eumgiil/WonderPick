@@ -64,7 +64,7 @@
             </tr>
             
             <c:choose>
-            <c:when test="${bi.fileLevel.   }">
+            <c:when test="${bi.fileLevel eq 2 }">
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상세이미지</h5></td>
                 <td><img id="contentImg1" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200" value=""></td>
