@@ -153,4 +153,9 @@ public class MemberController {
 	public void updateInfoMember(Member m) {
 		System.out.println(m);
 	}
+	
+	@RequestMapping("updateProfile.me")
+	public void updateProfileMember(Member m) {
+		
+	}
 }
