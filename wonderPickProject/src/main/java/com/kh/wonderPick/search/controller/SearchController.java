@@ -23,6 +23,10 @@ public class SearchController {
 		@RequestMapping(value="searchAutoComplet", produces="application/json; charset=UTF-8")
 		public String searchAutoComplet(String searchValue) {
 			
+			
+			System.out.println(searchValue);
+			
+			
 			if(searchValue.equals("")) {
 				int gap = 0;
 				return new Gson().toJson(gap);
@@ -56,6 +60,13 @@ public class SearchController {
 			System.out.println(keyword);
 			
 			return new Gson().toJson(searchService.searchGoodsResult(keyword));
+		}
+		
+		@ResponseBody
+		@RequestMapping(value="searchContestResult.ct", produces="application/json; charset=UTF-8")
+		public String searchContestResult(String keyword) {
+			
+			return new Gson().toJson(searchService.searchContestResult(keyword));
 		}
 
 

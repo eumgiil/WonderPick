@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
 import com.kh.wonderPick.board.contestBoard.model.vo.Search;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
@@ -29,13 +30,18 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public ArrayList<Contest> searchArtResult(String keyword) {
+	public ArrayList<ArtBoardDTO> searchArtResult(String keyword) {
 		return searchDao.searchArtResult(sqlSession, keyword);
 	}
 
 	@Override
 	public ArrayList<Goods> searchGoodsResult(String keyword) {
 		return searchDao.searchGoodsResult(sqlSession, keyword);
+	}
+
+	@Override
+	public ArrayList<Contest> searchContestResult(String keyword) {
+		return searchDao.searchContestResult(sqlSession, keyword);
 	}
 
 }

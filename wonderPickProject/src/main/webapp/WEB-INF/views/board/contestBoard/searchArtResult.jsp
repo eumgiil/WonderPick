@@ -79,17 +79,24 @@
             </div>
         <div id="contents">
             <div id="wrap_tab">
-                <ul class="list_tab">
-                    <li>
-                        <a href="#"><span  class="on">그림</span></a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="on" onclick="searchGoodsResult();">굿즈</span></a>
-                    </li>
-                    <li>
-                        <a href="searchContestResult.ct"><span class="on">이모티콘 공모전</span></a>
-                    </li>
-                </ul>
+                <form action="" method="GET">
+                    <ul class="list_tab">
+                        <li>
+                            <a href="#"><span  class="on">그림</span></a>
+                            <button type="submit">그림</button>
+                        </li>
+                        <li>
+                            <a href="#"><span class="on" onclick="searchGoodsResult();">굿즈</span></a>
+                            <button type="submit">굿즈</button>
+                            <input type="hidden" name="keyword" value="${ keyword }">
+                        </li>
+                        <li>
+                            <a href="searchContestResult.ct"><span class="on">이모티콘 공모전</span></a>
+                            <button type="submit">이모티콘 공모전</button>
+                            <input type="hidden" name="keyword" value="${ keyword }">
+                        </li>
+                    </ul>
+                </form>
             </div> <!-- end wrap_tab -->
         </div> <!-- end contents -->
 
@@ -145,7 +152,7 @@
                                             <div class="table_title">
                                                 <a href="#" class="movePage" id="boardTitle">
                                                     <input type="hidden" value="${ list.boardNo }">
-                                                    ${ list.boardTitle }
+                                                    <p id="djarldlf">${ list.boardTitle }</p>
                                                 </a>
                                             </div>
                                         </th>
@@ -193,10 +200,12 @@
 
             $.ajax({
                 url : 'searchGoodsResult.ct',
-                data : keyword : ${ keyword },
+                data :{
+                    keyword : '${ keyword }'
+                },
                 success : result => {
 
-
+                    console.log(result);
 
                 },
                 error : () => {

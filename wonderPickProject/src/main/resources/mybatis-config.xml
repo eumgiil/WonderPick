@@ -22,6 +22,7 @@
 		<typeAlias type="com.kh.wonderPick.board.contestBoard.model.vo.Contest" alias="contest"/>
 		<typeAlias type="com.kh.wonderPick.board.contestBoard.model.vo.Vote" alias="vote"/>
 		<typeAlias type="com.kh.wonderPick.board.contestBoard.model.vo.Search" alias="search"/>
+		
 		<typeAlias type="com.kh.wonderPick.board.review.model.vo.Review" alias="review" />
 		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Reply" alias="reply" />
 		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply" alias="reReply" />

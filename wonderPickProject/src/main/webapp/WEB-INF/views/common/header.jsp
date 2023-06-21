@@ -58,7 +58,7 @@
                 </ul>
                 <!-- 검색 시작 -->
                 <div class="search_area">
-                    <form action="searchContestResult.ct" method="get">
+                    <form action="searchArtResult.ct" method="get">
                         <div id="search_main">
                             <input type="text" placeholder="검색어를 입력해주세요" name="keyword" id="search_input" onkeyup="searchAutoComplet();" >
                             <button type="submit"><span class="material-symbols-outlined"> search</span></button>

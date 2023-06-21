@@ -50,9 +50,43 @@
 		</resultMap>
 		
 		
+		<resultMap id="artBoardDTO" type="com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO">
+			<result column="BOARD_NO" property="boardNo" />
+			<result column="BOARD_TITLE" property="boardTitle" />
+			<result column="NICKNAME" property="nickname" />
+			<result column="PRICE" property="price" />
+			<result column="STAR" property="star" />
+			<result column="MODIFY_NAME" property="modifyName" />
+			<result column="MEMBER_MODIFY_NAME" property="memberModifyName" />
+			<result column="CATEGORY" property="category" />
+		</resultMap>
 		
 		
-		<select id="searchAutoComplet" resultMap="searchResultSet">
+		
+		 <resultMap id="goodsResultSet" type="goods">
+		  	<result column="board_no" property="boardNo" />
+		  	<result column="price" property="price" />
+		  	<result column="draft" property="draft" />
+		  	<result column="modify_count" property="modifyCount" />
+		  	<result column="workday" property="workday" />
+		  	<result column="add_draft" property="addDraft" />
+		  	<result column="add_modify" property="addModify" />
+		  	<result column="amount" property="amount" />
+		  	<result column="goods_category" property="goodsCategory" />
+		  	<result column="add_info" property="addInfo" />
+		  	<result column="member_no" property="memberNo" />
+		  	<result column="board_title" property="boardTitle" />
+		  	<result column="board_content" property="boardContent" />
+		  	<result column="create_date" property="createDate" />
+		  	<result column="board_count" property="boardCount" />
+		  	<result column="nickname" property="nickName" />
+		  	<result column="goods_no" property="goodsNo" />
+		  </resultMap>
+			
+		
+		
+		
+		<select id="searchAutoComplet" resultMap="searchResultSet" parameterType="string">
 		
 				                  
 			SELECT 
@@ -63,15 +97,79 @@
 			  FROM 
 			        AUTO_SEARCH
 			WHERE
-			        SEARCH_CONTENT LIKE '%' || '${ searchValue }' || '%'
+			        SEARCH_CONTENT LIKE '%' || #{ searchValue } || '%'
 			ORDER
 			  BY
 			        SEARCH_CONTENT
 			
 		</select>
 		
-		<select id="searchArtResult" resultMap="contestBoardResultSet">
+		<select id="searchArtResult" resultMap="contestBoardResultSet" parameterType="string"> 
+		select
+		       ab.board_no
+		      ,b.board_title
+		      ,NVL(bi.modify_name, 'resources/boardUpfiles/artBoardFiles/2023061222534502.jpg') modify_name
+		      ,m.nickname
+		      ,AVG(NVL(r.star, 0))
+		      ,NVL(ab.price, 0) price
+		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/boardUpfiles/artBoardFiles/2023061222534502.jpg') MEMBER_MODIFY_NAME
+		  	  ,ab.category 
+		  from
+		       art_board ab
+		  join
+		       board b on(b.board_no = ab.board_no)
+		  join
+		       board_image bi on(bi.board_no = b.board_no)
+		  join
+		       member m on(b.member_no = m.member_no)
+		  left join
+		       member_image mi on(mi.member_no = b.member_no)
+		  left join
+		       review r on(b.board_no = r.board_no)
+		 where
+		       b.status = 'Y'
+		   and
+		       bi.file_level = '1'
+		  
+           and
+               BOARD_TITLE LIKE '%' || #{ keyword } || '%'
+		 group by
+		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name, mi.MEMBER_MODIFY_NAME, ab.category
+		 order by
+		       board_no desc
+			
+		</select>
 		
+		<select id="searchGoodsResult" resultMap="goodsResultSet" parameterType="string">
+		
+		
+			 select
+			       board_no, 
+			       board_title, 
+			       nickname, 
+			       board_count,
+			       to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
+			       price,
+			       origin_name
+			  from 
+			       board b
+			 join 
+			      member using (member_no)
+			 join 
+			 	 board_image using (board_no)
+			 join goods using (board_no )
+			 where
+			     b.status = 'Y'
+			and 
+			    board_type ='G'
+			and
+			         BOARD_TITLE LIKE '%' || #{ keyword } || '%'
+			order by
+			      board_no asc
+		
+		</select>
+		<select id="searchContestResult" resultMap="contestBoardResultSet" parameterType="string">
+			
 			SELECT  *
 			        FROM(   SELECT
 			        			 BOARD.BOARD_NO
@@ -101,16 +199,14 @@
 			          AND
 			          		WINNER = 0
                       AND 
-                            BOARD_TITLE LIKE '%' || '${ keyword }' || '%'
+                            BOARD_TITLE LIKE '%' || '#{ keyword }' || '%'
                         
 			        ORDER
 			           BY   
 			                UPLOAD_DATE DESC)
-			WHERE ROWNUM BETWEEN 1 AND 5
-			
+			WHERE ROWNUM BETWEEN 1 AND 5        
 		</select>
-		
-		<select id="searchGoodsResult" 
+		 
 		
 			
 	</mapper>
