@@ -1,6 +1,7 @@
 package com.kh.wonderPick.board.goods.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -22,7 +23,7 @@ public class GoodsDao {
 		return sqlSession.selectOne("goodsMapper.selectListCount");
 	}
 	
-	
+	// 굿즈리스트 전체 페이지
 	public ArrayList<Goods> selectGoodsList(SqlSessionTemplate sqlSession, PageInfo pi){
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		
@@ -34,14 +35,28 @@ public class GoodsDao {
 		return sqlSession.selectOne("goodsMapper.selectCategoryListCount", goodsCategory);
 	}
 	
+	// 카테고리별 굿즈리스트 페이지
 	public ArrayList<Goods> selectCategoryList(SqlSessionTemplate sqlSession, PageInfo pi, String goodsCategory){
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+	     
 		
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("goodsMapper.selectCategoryList", null , rowBounds);
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectCategoryList", goodsCategory , rowBounds);
 	}
 	
-	
+	// 검색결과 개수 조회
+	public int searchGoodsCount(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.selectOne("goodsMapper.searchGoodsCount", map);
+	}
+
+	// 검색결과 리스트 조회
+	public ArrayList<Goods> searchGoods(SqlSessionTemplate sqlSession, HashMap map, PageInfo pi ){
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		System.out.println("안뇽 나는 DAO~헷");
+		return (ArrayList)sqlSession.selectList("goodsMapper.searchGoods",map, rowBounds );
+		
+	}
 	
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("goodsMapper.insertBoard", b);
@@ -59,7 +74,10 @@ public class GoodsDao {
 	public Goods selectGoods(SqlSessionTemplate sqlSession , int boardNo) {
 		return sqlSession.selectOne("goodsMapper.selectGoods", boardNo);
 	}
-	
+	public ArrayList<BoardImage> selectBoardImage(SqlSessionTemplate sqlSession, int boardNo) {
+		System.out.println("안뇽 나는 보드이미지 뎨요");
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectBoardImage", boardNo);
+	}
 	/*
 	public int selectReviewCount(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.selectOne("goodsMapper.selectReviewCount", boardNo);
@@ -86,15 +104,20 @@ public class GoodsDao {
 	
 	//대댓글
 	public ArrayList<Re_Reply> selectReReplyList(SqlSessionTemplate sqlSession, int replyNo){
-		return (ArrayList)sqlSession.selectList("goodsMapper.selectReReplyLiST", replyNo);
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectReReplyList", replyNo);
 	}
 	public int insertReReply(SqlSessionTemplate sqlSession, Re_Reply re) {
 		return sqlSession.insert("goodsMapper.insertReReply", re);
 	}
 	
 	// 회원별 좋아요 조회
-	public ArrayList<Heart> selectHeartList(SqlSessionTemplate sqlSession, int memberNo){
-		return (ArrayList)sqlSession.selectList("goodsMapper.selectHeartList", memberNo);
+	public ArrayList<Heart> selectHeartList(SqlSessionTemplate sqlSession, int memberNo ){
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectHeartList", memberNo );
 		
+	}
+	
+	// 댓글 삭제
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.delete("goodsMapper.deleteReply", replyNo);
 	}
 }

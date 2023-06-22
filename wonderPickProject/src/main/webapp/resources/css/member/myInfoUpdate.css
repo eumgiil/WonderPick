@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
     #rightContent p{
         margin : 20px 0px 0px 0px;
         font-size : 18px;
@@ -12,8 +13,9 @@
         padding : 40px;
         border-radius: 5px;
     }
+
     #rightInfo{
-        width : 732px;
+        width : 732px;	
         display : inline-block;
     }
     #rightProfile{
@@ -42,4 +44,5 @@
     #rightInfo{
         padding-left : 40px;
     }
+    
     

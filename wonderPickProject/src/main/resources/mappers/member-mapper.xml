@@ -19,6 +19,8 @@
 		<result column="status" property="status" />
 		<result column="enroll_date" property="enrollDate" />
 		<result column="modify_date" property="modifyDate" />
+		<result column="member_origin_name" property="profileImg"/>
+		<result column="member_file_path" property="profilePath" />
 	</resultMap>
 	
 	<!-- 로그인용 쿼리문 -->
@@ -38,8 +40,13 @@
 			  ,status
 			  ,enroll_date
 			  ,modify_date
+			  ,member_origin_name
+			  ,member_file_path
 		  from
 		 	   member
+		  left 
+		  join
+       		   member_image using(member_no)
 		 where
 		 	   member_id = #{memberId}
 		   and
@@ -98,5 +105,22 @@
 			  ,default
 			  ,default			   
 			   )
+	</insert>
+	
+	<!-- 인증코드 발급용 쿼리문 -->
+	<insert id="insertSecret" parameterType="secretCode">
+		insert
+		  into
+		  	  (
+		  	  who,
+		  	  secret,
+		  	  when
+		  	  )
+		 value
+		 	  (
+		 	  #{who},
+		 	  #{secret},
+		 	  sysdate
+		 	  )
 	</insert>
 </mapper>

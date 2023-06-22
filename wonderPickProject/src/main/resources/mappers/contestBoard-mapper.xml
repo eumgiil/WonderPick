@@ -10,11 +10,11 @@
 			<result column="BOARD_NO" property="boardNo"/>
 			<result column="BOARD_TITLE" property="boardTitle"/>
 			<result column="BOARD_CONTENT" property="boardContent"/>
+			<result column="MEMBER_NO" property="memberNo"/>
 		
 			
 			<result column="NICKNAME" property="nickName"/>
 			
-			<result column="MEMBER_MODIFY_NAME" property="memberModifyName"/>
 			<result column="MODIFY_NAME" property="modifyName"/>
 			<result column="UPLOAD_DATE" property="uploadDate"/> 
 			
@@ -28,9 +28,25 @@
 			
 			<result column="PRICE" property="price" />
 			<result column="WINNER" property="winner"/>
+			
+			
+		</resultMap>
+		<resultMap id="voteResultSet" type="vote">
+			<result column="BOARD_NO" property="boardNo" />
+			<result column="MEMBER_NO" property="memberNo" />
+			<result column="VOTE_STATUS" property="voteStatus" />
+		</resultMap>
+		
+		<resultMap id="heartResultSet" type="heart">
+			<result column="BOARD_NO" property="boardNo"/>
 			<result column="MEMBER_NO" property="memberNo"/>
-			
-			
+		</resultMap>
+		
+		<resultMap id="searchResultSet" type="search">
+			<result column="SEARCH_NO" property="searchNo"/>
+			<result column="MEMBER_NO" property="memberNo" />
+			<result column="SEARCH_CONTENT" property="searchContent" />
+			<result column="SEARCH_DATE" property="searchDate" />
 		</resultMap>
 		
 		<select id="selectTop10" resultMap="contestBoardResultSet">
@@ -38,10 +54,9 @@
 		        FROM(   SELECT
 		                     BOARD.BOARD_TITLE    
 		                    ,MEMBER.NICKNAME      
-		                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME    
 		                    ,BOARD_IMAGE.MODIFY_NAME   
 		                    ,BOARD_IMAGE.UPLOAD_DATE    
-		                    ,FILE_PATH
+		                     FILE_PATH
 		          FROM 
 		                 BOARD
 		        LEFT JOIN
@@ -163,7 +178,6 @@
 			        			 BOARD.BOARD_NO
 			                    ,BOARD.BOARD_TITLE    
 			                    ,MEMBER.NICKNAME      
-			                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 			                    ,BOARD_IMAGE.MODIFY_NAME    
 			                    ,BOARD_IMAGE.UPLOAD_DATE               
 			                    ,FILE_PATH
@@ -202,7 +216,6 @@
 					        			 BOARD.BOARD_NO
 					                    ,BOARD.BOARD_TITLE    
 					                    ,MEMBER.NICKNAME      
-					                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 					                    ,BOARD_IMAGE.MODIFY_NAME    
 					                    ,BOARD_IMAGE.UPLOAD_DATE               
 					                    ,FILE_PATH
@@ -251,7 +264,6 @@
 		                    ,BOARD.BOARD_TITLE
 		                    ,BOARD_CONTENT
 		                    ,MEMBER.NICKNAME      
-		                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 		                    ,BOARD_IMAGE.MODIFY_NAME    
 		                    ,BOARD_IMAGE.UPLOAD_DATE 
 		                    ,BOARD_COUNT
@@ -286,7 +298,6 @@
 			        			 BOARD.BOARD_NO
 			                    ,BOARD.BOARD_TITLE    
 			                    ,MEMBER.NICKNAME      
-			                    ,MEMBER_IMAGE.MEMBER_MODIFY_NAME   
 			                    ,BOARD_IMAGE.MODIFY_NAME    
 			                    ,BOARD_IMAGE.UPLOAD_DATE               
 			                    ,FILE_PATH
@@ -316,35 +327,48 @@
 			                
 		</select>
 		
-		<select id="selectVoteLike" resultType="contest">
+		<select id="selectVoteLike" parameterType="_int" resultMap="heartResultSet">
 		
-			SELECT
-			         VOTE.MEMBER_NO AS MEMBER_NO
-			        ,SUM(VOTE_STATUS) AS VOTE_STATUS
-			  FROM 
-			        VOTE
-			 WHERE
-			        BOARD_NO = ${ boardNo }
-                    
-			GROUP BY
-			        MEMBER_NO
+			select   
+					 board_no 
+					,member_no 
+				from
+				        heart
+				where
+				        board_no = #{ boardNo }
 			        
 		</select>
 		
-		<update id="insertVoteLike" parameterType="contest">
-		
-			UPDATE 
-				   VOTE 
-			   SET 
-				   VOTE_STATUS = VOTE_STATUS + 1
-			 WHERE 
-			 	   MEMBER_NO = #{ memnerNo }
-			   AND 
-			   	   BOARD_NO =  #{ boardNo }
+		<insert id="insertVoteHeart" parameterType="heart">
 			   	   
-		</update> 
-
+			INSERT
+			  INTO
+			  		HEART
+			  		(
+			  		 BOARD_NO
+			  		,MEMBER_NO
+			  		)
+			 VALUES
+			 		(
+			 		 #{ boardNo }
+			 		,#{ memberNo }
+			 		)
+			   	   
+		</insert> 
 		
+		<delete id="deleteVoteHeart" parameterType="heart">
+			
+			  DELETE
+			  
+			    FROM 
+			    	  HEART
+			   WHERE 
+		    		  MEMBER_NO =  ${ memberNo }
+			     AND 
+		    		  BOARD_NO = #{ boardNo } 
+			    
+		</delete>
+
 	</mapper>
 	
 	

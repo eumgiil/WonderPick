@@ -46,14 +46,17 @@
                         <input type="text" id="phone" name="phone" placeholder="전화번호를 입력해주세요." required>
                         <div id="checkPhoneResult">- 없이 숫자만 입력해주세요.</div>
                         <br>
-                        <label>이메일</label><br>
-                        <input type="email" id="email" name="email" placeholder="이메일을 입력해주세요.">
+                        <label>* 이메일</label><br>
+                        <input type="email" id="email" name="email" placeholder="이메일을 입력해주세요." required>
+                        <button type="button" id="checkEmail">이메일 인증</button>
+                        <div id="checkEmailResult"></div>
+                        <input type="text" id="emailCode" placeholder="인증번호를 입력해주세요">
+                        <div id="checkCodeResult"></div>
                         <input type="hidden" id="memberGrade" name="memberGrade" value="${ sessionScope.memberGrade }">
                     </div>
                     <div id="signUpCheckbox">
-                        <input type="checkbox" id="ToUAgree"> 개인정보 수집/이용에 동의합니다.<br>
-                        <input type="checkbox" id="emailCheck"> 이메일 수신에 동의합니다.<br>
-                        <input type="hidden" id="emailAgree" name="emailAgree">
+                        <input type="checkbox" id="ToUAgree" required> 개인정보 수집/이용에 동의합니다.<br>
+                        <input type="checkbox" id="emailAgree" name="emailAgree"> 이메일 수신에 동의합니다.<br>
                     </div>
                     <div>
                         <button type="submit" id="submitBtn">회원가입</button>
@@ -102,15 +105,6 @@
 			const $nickInput = $('#signUpInput #nickName');
 			const $phoneInput = $('#signUpInput #phone');
 			
-			var memberId = false;
-			var memberPwd = false;
-			var memberName = false;
-			var nickName = false;
-			var phone = false;
-			var email = false;
-			
-			
-			
 			// 아이디 정규표현식 검사, 중복검사
 			$idInput.keyup(function(){	
 				var regExp = /^[a-zA-Z][a-zA-Z0-9]{4,19}$/;
@@ -126,7 +120,6 @@
 								} else {
 									$('#checkIdResult').css('color', successColor).text('멋진 아이디내요!');
 									$('#submitBtn').removeAttr('disabled');
-									memberId = true;
 								}
 							}
 						});
@@ -160,7 +153,6 @@
 					$('#checkPwdReresult').text('');
 					$('#submitBtn').removeAttr('disabled');
 					$('#checkPwdReresult').hide();
-					memberPwd = true;
 				} else{
 					$('#checkPwdReresult').css('color', errorColor ).text('비밀번호가 동일하지 않습니다.');
 					$('#submitBtn').attr('disabled', true);
@@ -212,30 +204,29 @@
 					$('#checkPhoneResult').text('');
 					$('#submitBtn').removeAttr('disabled');
 					$('#checkPhoneResult').hide();
-					phone = true;
 				} else {
 					$('#checkPhoneResult').css('color', errorColor ).text('올바른 번호를 입력해주세요.');  
 					$('#submitBtn').attr('disabled', true);
 				}
 			});
 			
-			$('#submitBtn').on('click', function(){
-				if(!$('#signUpInput #email').val() == ''){
-					email = true;
-				} else {
-					email = false;
-				}
-				
-				if(memberId && memberPwd && memberName && nickName && phone && $('#signUpCheckbox #ToUAgree').prop('checked')){
-					if($('#signUpCheckbox #emailCheck').prop('checked')){
-						$('#signUpCheckbox #emailAgree').val("Y");
-					} else {
-						$('#signUpCheckbox #emailAgree').val("N");
+			// 이메일 검사
+			$('#checkEmail').on('click', function(){
+				$.ajax({
+					url : 'emailCheck.me',
+					data : { checkEmail : $('#signUpInput #email').val()},
+					success : function(result){
+						
 					}
-					return true;
-				}else{
-					return false;
+				})
+			});
+			
+			$('#submitBtn').on('click', function(){
+				if($('#signUpCheckbox #emailAgree').prop('checked')){
+					$('#signUpCheckbox #emailAgree').attr('value', 'Y');
 				}
+				// 브라우저 console에는  값이 잘 넘어감! controller에는 값이 왜 안넘어가나??
+				// 서버 console은 값이 체크되어야 넘어가기 때문에!!
 			});
 		});
 	</script>

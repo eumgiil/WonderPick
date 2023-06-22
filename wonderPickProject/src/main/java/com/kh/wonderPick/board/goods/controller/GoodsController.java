@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,133 +39,42 @@ public class GoodsController {
 	private GoodsService goodsService;
 	
 	@RequestMapping("list.go")
-	public String selectList(@RequestParam(value="cPage", defaultValue="1")int currentPage, Model model) {
+	public String selectList(@RequestParam(value="cPage", defaultValue="1")int currentPage,  Model model) {
 		PageInfo pi = Pagination.getPageInfo(goodsService.selectListCount(), currentPage,12, 10);
+		
+		
 		
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", goodsService.selectGoodsList(pi));
 		
-		System.out.println(pi);
-		System.out.println(goodsService.selectGoodsList(pi).toString());
+		
+	
 		
 		return "board/goods/goodsListView";
 	}
 	
-	@RequestMapping("enrollForm.go")
-	public String enrollForm() {
-		return "board/goods/goodsEnrollForm";
-	}
 	@RequestMapping("categorylist.go")
-	public String selectCategoryList(@RequestParam(value="cPage", defaultValue="1")int currentPage, String goodsCategory, Model model) {
+	public ModelAndView selectCategoryList(@RequestParam(value="cPage", defaultValue="1")int currentPage, String goodsCategory, ModelAndView mv) {
 		PageInfo pi = Pagination.getPageInfo(goodsService.selectCategoryListCount(goodsCategory), currentPage,12, 10);
+		System.out.println(pi);
 		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", goodsService.selectCategoryList(pi, goodsCategory));
+		mv.addObject("pi", pi);
+		mv.addObject("list", goodsService.selectCategoryList(pi, goodsCategory));
+		mv.setViewName("board/goods/goodsCategoryListView");
 		
-		return "board/goods/goodsCategoryListView";
-		
-	}
-	/*
-	public String saveFile(MultipartFile upfile, HttpSession session) {
-		// 파일명 수정 작업 후 서버에 업로드시키기
-		String originName = upfile.getOriginalFilename();
-		
-		// 년월일시분초
-		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		
-		// 5자리 랜덤값
-		int ranNum = (int)(Math.random()* 90000 + 10000);
-		
-		//확장자
-		String ext = originName.substring(originName.lastIndexOf("."));
-				
-		String changeName = currentTime + ranNum + ext;
-		
-		// 업로드 시키고자 하는 폴더에 물리적인 경로 알아내기
-		String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/");
-		
-				
-		try {
-			upfile.transferTo(new File(savePath + changeName));
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return changeName;
-	}
-	*/
-	@RequestMapping("insert.go")
-	public String insertGoods(Goods g, Board b, BoardImage bi, MultipartFile[] upfile, HttpSession session, Model model) {
-		/*
-		for(int i=1; i<=4; i++) {
-			String key = "file" + i;
-		
-			
-			if(upfile.getOriginalFilename(key) != null) {
-				
-				
-				bi.setOriginName(upfile.getOriginalFilename(key));
-				bi.setModifyName("resources/boardUpfiles/" + saveFile(upfile, session));
-				
-				if( i == 1) {
-					bi.setFileLevel(1);
-				}else{
-					bi.setFileLevel(2);
-				}
-			}
-		}
-		*/
-		System.out.println(upfile);
-		for(MultipartFile multipartFile : upfile) {
-			// 파일명 수정 작업 후 서버에 업로드시키기("bono.png" => 2023.5.1934235345.png)
-			String originName = multipartFile.getOriginalFilename();
-			//System.out.println(originName);
-			
-			// 년월일시분초
-			String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-			
-			// 5자리 랜덤값
-			int randomNumber = (int)(Math.random() * 90000 + 10000);
-			
-			//확장자
-			//System.out.println(originName.lastIndexOf("."));
-			//String ext = originName + originName.substring(originName.lastIndexOf("."));
-			
-			String changeName = currentTime + randomNumber ;
-			
-			// 업로드 시키고자 하는 폴더에 물리적인 경로 알아내기
-			String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/");
-			
-			try {
-				multipartFile.transferTo(new File(savePath + changeName));
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-			
-			bi.setOriginName(multipartFile.getOriginalFilename());
-			bi.setModifyName("/resources/boardUpfiles/");
-			
-			System.out.println(bi.getOriginName());
-			
+		return mv;
 		
 	}
-		if(goodsService.insertGoods(g, b, bi)>0) {
-			session.setAttribute("alertMsg", "상품 등록 성공!");
-			return "board/goods/list.go?cPage=1";
-		}else {
-			model.addAttribute("errorMsg","상품등록 실패");
-			return "board/goods/list.go?cPage=1";
-		}
-		
-	}
-	
+
 	@RequestMapping("detail.go")
 	public ModelAndView selectGoods(ModelAndView mv, int boardNo,   HttpSession session) {
 		
+		
 		if(goodsService.increaseCount(boardNo)>0) {
 			mv.addObject("g", goodsService.selectGoods(boardNo));
+			mv.addObject("bi", goodsService.selectBoardImage(boardNo));
+			System.out.println(goodsService.selectBoardImage(boardNo));
 			mv.addObject("reviewList", goodsService.selectReviewList(boardNo));
 			mv.addObject("replyList", goodsService.selectReplyList(boardNo));
 			mv.setViewName("board/goods/goodsDetailView");
@@ -173,10 +84,139 @@ public class GoodsController {
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
-		
-		
-		
+			
 	}
+
+	@RequestMapping("search.go")
+	public ModelAndView searchGoods(@RequestParam(value="cPage", defaultValue="1")int currentPage,ModelAndView mv, String condition, String keyword,  HttpSession session) {
+		HashMap<String, String> map = new HashMap();
+		
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+	    System.out.println("안녕 난 컨트롤러얌~히히");
+		PageInfo pi = Pagination.getPageInfo(goodsService.searchGoodsCount(map), currentPage,12, 10);
+	    System.out.println(pi);
+		mv.addObject("pi", pi);
+		mv.addObject("list", goodsService.searchGoods(map, pi));
+		mv.setViewName("board/goods/goodsListView");
+		
+		return mv;
+	}
+	
+	@RequestMapping("enrollForm.go")
+	public String enrollForm() {
+		return "board/goods/goodsEnrollForm";
+	}
+	
+	/*
+	public String saveFile(MultipartFile thumbnailUpFile,  MultipartFile[] upfile, HttpSession session) {
+		
+		ArrayList<BoardImage>list = new ArrayList();
+		
+		// 파일명 수정 작업 후 서버에 업로드시키기
+		String originName = thumbnailUpFile.getOriginalFilename();
+		
+		// 년월일시분초
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 5자리 랜덤값
+		int randomNumber = (int)(Math.random()* 9000 + 10000);
+		
+		//확장자
+		String ext = originName.substring(originName.lastIndexOf("."));
+				
+		String changeName = currentTime + randomNumber + ext;
+		
+		// 업로드 시키고자 하는 폴더에 물리적인 경로 알아내기
+		String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/goodsFiles/");
+		
+		try {
+			thumbnailUpFile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		return changeName;
+	}
+	*/
+	
+	@RequestMapping("insert.go")
+	public String insertGoods( Board b, Goods g, MultipartFile thumbnailUpFile,  MultipartFile[] upfile, HttpSession session, Model model) {
+		
+		ArrayList<BoardImage>list = new ArrayList();
+		
+		String originName = thumbnailUpFile.getOriginalFilename();
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+		String ext = originName.substring(originName.lastIndexOf("."));
+		int randomNumber = (int)(Math.random() * 9000 + 1000);
+		String changeName = currentTime + randomNumber + ext;
+		String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/goodsFiles/");
+		try {
+			thumbnailUpFile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e1) {
+			e1.printStackTrace();
+		}
+		BoardImage boardImage =  new BoardImage();
+		boardImage.setOriginName(originName);
+		boardImage.setModifyName(b.getBoardTitle());
+		boardImage.setFileLevel(1);
+		boardImage.setFilePath("resources/boardUpfiles/goodsFiles/" + changeName);
+		
+		list.add(boardImage);
+		
+		for(MultipartFile multipartFile : upfile) {
+			if(multipartFile.getSize() != 0) {
+				
+				String originName2 = multipartFile.getOriginalFilename();
+				String currentTime2 = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+				String ext2 = originName2.substring(originName2.lastIndexOf("."));
+				int randomNumber2 = (int)(Math.random() * 9000 + 1000);
+				String changeName2 = currentTime2 + randomNumber2 + ext2;
+				String savePath2 = session.getServletContext().getRealPath("/resources/boardUpfiles/goodsFiles/");
+				
+				try {
+					multipartFile.transferTo(new File(savePath2 + changeName2));
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+				
+				boardImage =  new BoardImage();
+				boardImage.setOriginName(originName2);
+				boardImage.setModifyName(b.getBoardTitle());
+				boardImage.setFileLevel(2);
+				boardImage.setFilePath("resources/boardUpfiles/goodsFiles/" + changeName2);
+				
+				list.add(boardImage);
+				
+			}
+		}
+		
+		int result = goodsService.insertGoods(b, list , g);
+		
+		if(result > 0) {
+			
+			model.addAttribute("result", result);
+			session.setAttribute("alertMsg", "굿즈 상품 등록 성공" );
+			return "redirect:list.go?cPage=1";
+		}else {
+			model.addAttribute("errorMsg", "상품 등록 실패");
+			return "redirect:list.go?cPage=1";
+		}
+	}
+	
+	@RequestMapping("updateForm.go")
+	public ModelAndView updateForm(int boardNo, ModelAndView mv, HttpSession session) {
+		mv.addObject("g", goodsService.selectGoods(boardNo));
+		System.out.println("안녕 ㅎㅇㅎㅇㅎㅇㅎㅇ");
+		System.out.println(goodsService.selectGoods(boardNo));
+		mv.addObject("bi", goodsService.selectBoardImage(boardNo));
+		mv.setViewName("board/goods/goodsUpdateForm");
+		return mv;
+	}
+	
+	
+	 
 	
 	// 댓글
 	@ResponseBody
@@ -223,52 +263,21 @@ public class GoodsController {
 		return new Gson().toJson(goodsService.selectHeartList(memberNo));
 	}
 	
-	
-
-	@RequestMapping("updateForm.go")
-	public ModelAndView updateForm(int boardNo, ModelAndView mv) {
-		mv.addObject("g", goodsService.selectGoods(boardNo)).setViewName("board/goods/goodsUpdateForm");
-		return mv;
-	}
-	@RequestMapping("update.go")
-	public String updateGoods(@ModelAttribute Goods g, Board b, BoardImage bi,  MultipartFile[] reUpfile, HttpSession session) {
-		
-  for(MultipartFile multipartFile : reUpfile) {
-			
-			String originName = multipartFile.getOriginalFilename();
-			
-			String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-			
-			int randomNumber = (int)(Math.random() * 90000 + 10000);
-			
-			String ext = originName.substring(originName.lastIndexOf("."));
-			
-			String changeName = currentTime + randomNumber + ext;
-			
-			
-			String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/");
-			
-			try {
-				multipartFile.transferTo(new File(savePath + changeName));
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-			
-			bi.setOriginName(multipartFile.getOriginalFilename());
-			bi.setModifyName("/resources/boardUpfiles/");
-			
-			System.out.println(bi.getOriginName());
-			
-		
-	}
-		if(goodsService.insertGoods(g, b, bi)>0) {
-			session.setAttribute("alertMsg", "상품 수정 성공!");
-			return "redirect:list.go";
+	// 댓글 삭제
+	@RequestMapping("deleteReply.go")
+	public String deleteReply(int replyNo, HttpSession session) {
+		if(goodsService.deleteReply(replyNo)>0) {
+			session.setAttribute("alertMsg", "댓글 삭제 완료");
+			return "redirect:detail.go";
 		}else {
-			session.setAttribute("errorMsg","상품 수정 실패");
-			return "common/errorPage";
+			session.setAttribute("errorMsg", "댓글 삭제 실패");
+			return "redirect:detail.go";
 		}
 	}
+	
+	
+	
+
 	
 
 }

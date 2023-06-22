@@ -57,7 +57,7 @@
             text-align: left;
             margin-left:10px;
         }
-        .goodsInfo th{
+        .artInfo th{
             width:150px;
         }
         .right{
@@ -67,7 +67,22 @@
             width: 600px;
             border: 1px solid gray;
         }
-
+		#pagingArea{
+			margin:auto;
+            width:fit-content;
+            margin-top: 50px;
+            margin-bottom: 50px;
+		}
+        #pagingArea a{
+            text-decoration:none;
+            color:black;
+            font-size:20px;
+            font-weight:900;
+        }
+        .disabled{
+        	pointer-events: none;
+        }
+        
 
      
         
@@ -94,20 +109,30 @@
                 
             </div>
             <div id="searchGoods">
-                <select name="" id="option">
-                    <option value="">전체</option>
-                    <option value="">작가명</option>
-                    <option value="">제목순</option>
-                </select>
-                <input type="text" value="" name="searchGoods">
-                <button style="background-color: white; border: none;">
-                    <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-search-strong-512.png" alt="" width="40">
-                </button>
-                <select name="" id="option">
-                    <option value="">인기순</option>
-                    <option value="">가격 낮은 순</option>
-                    <option value="">최신 등록순</option>
-                </select>
+                <form action="artList.bo" method="post">
+
+                    <select name="search" id="option">
+                        <option value="all">전체</option>
+                        <option value="artist">작가명</option>
+                        <option value="name">제목순</option>
+                    </select>
+
+									<%-- 검색 --%>
+                    <input type="text" value="" name="keyword">
+
+                    <button style="background-color: white; border: none;">
+                        <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-search-strong-512.png" alt="" width="40">
+                    </button>
+
+                </form>
+
+                    <select name="" id="option">
+                        <option value="">인기순</option>
+                        <option value="">가격 낮은 순</option>
+                        <option value="">최신 등록순</option>
+                    </select>
+
+
             </div>
 
 
@@ -122,7 +147,7 @@
                         <c:forEach items="${ list }" var = "b">
                             <div class="item" onclick="location.href='artDetail.bo?bno=${ b.boardNo }'">
                                 <img class="list_img" src="${ b.modifyName }"><br>
-                                <table class="goodsInfo" width="100%">
+                                <table class="artInfo" width="100%">
                                     <tr>
                                         <th>${ b.nickname }</th>
                                         <td class="right" rowspan="2"><img class="artist_img" src="${b.memberModifyName}"></td>
@@ -147,17 +172,48 @@
 
             <!-- paging -->
             <div id="pagingArea">
-                <ul>
-                    <li>asd</li>
+                <ul class="pagination">
+                    <c:choose>
+                        <c:when test="${ pi.currentPage eq 1 }">
+                            <li class="disabled"> 
+                        </c:when>
+                        <c:otherwise>
+                        	<li>
+                        </c:otherwise>
+                    </c:choose>
+                            	<form action="artList.bo?${ searchArt.category }&cPage=${ pi.currentPage - 1 }" method="post">
+                                    <input type="hidden" name="keyword" value="${ searchArt.keyword }">
+                                    <input type="hidden" name="search" value="${ searchArt.search }">
+                                    <button>&lt;</button>
+                                </form>
+                           	</li>
 
                     <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-                        <li><a href=""></a> </li>
+                        <li>
+                        	<form action="artList.bo?category=${ searchArt.category }&cPage=${p}" method="post">
+                                <input type="hidden" name="keyword" value="${ searchArt.keyword }">
+                                <input type="hidden" name="search" value="${ searchArt.search }">
+                                <button>${p}</button>
+                            </form>
+                       	</li>
                     </c:forEach>
+                    
 
-                    <li></li>
+                    <c:choose>
+                        <c:when test="${ pi.currentPage eq pi.maxPage }">
+                            <li class="disabled">
+                        </c:when>
+                     	<c:otherwise>
+                        	<li>
+                        </c:otherwise>
+                    </c:choose>
+                           	<form action="artList.bo?category=${ searchArt.category }&cPage=${ pi.currentPage + 1 }" method="post">
+                                <input type="hidden" name="keyword" value="${ searchArt.keyword }">
+                                <input type="hidden" name="search" value="${ searchArt.search }">
+                                <button>&gt;</button>
+                            </form>
+                           	</li>
                 </ul>
-
-
             </div>
 
 
@@ -180,6 +236,9 @@
     <script>
         $(window).on('load', function(){
             $('#character_illustration').css('color', '#FF8399')
+            
+            console.log('${pi}');
+            console.dir('${list}')
         });
         
     </script>

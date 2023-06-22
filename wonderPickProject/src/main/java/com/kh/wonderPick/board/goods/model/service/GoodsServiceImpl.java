@@ -1,6 +1,7 @@
 package com.kh.wonderPick.board.goods.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,27 +39,39 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	@Override
 	public int selectCategoryListCount(String goodsCategory) {
+		
 		return goodsDao.selectCategoryListCount(sqlSession, goodsCategory);
 	}
 	@Override
-	public ArrayList<Goods> selectCategoryList(PageInfo pi, String goodsCategory) {
+	public ArrayList<Goods> selectCategoryList(PageInfo pi , String goodsCategory) {
+		System.out.println(goodsDao.selectCategoryList(sqlSession, pi, goodsCategory));
 		return goodsDao.selectCategoryList(sqlSession, pi, goodsCategory);
+	}
+	
+	@Override
+	public int searchGoodsCount(HashMap map) {
+		return goodsDao.searchGoodsCount(sqlSession, map);
+	}
+	@Override
+	public ArrayList<Goods> searchGoods(HashMap map, PageInfo pi){
+		return goodsDao.searchGoods(sqlSession, map , pi );
 	}
 	
 	
 
 	@Override
 	@Transactional
-	public int insertGoods(Goods g , Board b, BoardImage bi) {
+	public int insertGoods(Board b, ArrayList<BoardImage> list, Goods g) {
 		
-		int result2 = goodsDao.insertBoard(sqlSession, b);
-		 int result = goodsDao.insertGoods(sqlSession, g);
-		 int result3 = 1;
-		 if(bi != null) {
-			 result3 = goodsDao.insertBoardImage(sqlSession, bi);
-		 }
-		 
-			  return (result*result2*result3);
+		int result1 = goodsDao.insertBoard(sqlSession, b);
+		int result2 = 1;
+		for(int i=0; i<list.size(); i++) {
+			goodsDao.insertBoardImage(sqlSession, list.get(i));
+		}
+		int result3 = goodsDao.insertGoods(sqlSession, g);
+		
+		return (result1 * result2 * result3);
+		
 	}
 
 	@Override
@@ -69,6 +82,10 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public Goods selectGoods(int boardNo) {
 		return goodsDao.selectGoods(sqlSession, boardNo);
+	}
+	@Override
+	public ArrayList<BoardImage> selectBoardImage(int boardNo) {
+		return goodsDao.selectBoardImage(sqlSession, boardNo);
 	}
 	/*
 	@Override
@@ -117,8 +134,13 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	
 	@Override
-	public ArrayList<Heart> selectHeartList(int memberNo){
+	public ArrayList<Heart> selectHeartList(int memberNo ){
 		return goodsDao.selectHeartList(sqlSession, memberNo);
+	}
+	
+	@Override
+	public int deleteReply(int replyNo) {
+		return goodsDao.deleteReply(sqlSession, replyNo);
 	}
 
 	

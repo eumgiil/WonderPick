@@ -116,20 +116,20 @@
         <hr style="border: 1px solid black; width: 200px;">
         <table class="category_option">
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${ g.goodsCategory.equals('FASHION') }&cPage=1">패션</a></td>
+                <td><a href="categorylist.go?goodsCategory=FASHION&cPage=1">패션</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${category.kitchen}&cPage=1">주방</a></td>
+                <td><a href="categorylist.go?goodsCategory=KITCHEN&cPage=1">주방</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${category.interior}&cPage=1">인테리어</a></td>
+                <td><a href="categorylist.go?goodsCategory=INTERIOR&cPage=1">인테리어</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${category.stationery}&cPage=1">문구</a></td>
+                <td><a href="categorylist.go?goodsCategory=STATIONERY&cPage=1">문구</a></td>
             </tr>
             <tr>
             </tr>
-                <td><a href="categorylist.go?goodsCategory=${category.etc}&cPage=1">기타</a></td>
+                <td><a href="categorylist.go?goodsCategory=ETC&cPage=1">기타</a></td>
             </tr>
         </table>
     </div>
@@ -203,10 +203,10 @@
 	<!--  카테고리별  리스트-->
 	<div class="categoryList"  id="goods" style="width: 900px;" align="center">
           <c:choose>  
-            <c:when test="${not empty categoryList}">
-              <c:forEach items="${categoryList}" var="g">
+            <c:when test="${not empty list}">
+              <c:forEach items="${list}" var="g">
                   <div class="goodsList2" style="display:inline-block;" align="center">
-                    <img src="resources/image/79505b031fb97b848044ad0f4935cd98.jpg" alt=""  width="250"  onclick="like();" id="goodsimg"><br>
+                    <img src="resources/boardUpfiles/goodsFiles/b61adf9a35bba64590b9bc1d10734d93.jpg" alt=""  width="250"  id="goodsimg"><br>
                     <table id="goodsInfo"  id="goods" width="250">
 	                    <tr>
 	                        <td>${g.nickName}</td>
