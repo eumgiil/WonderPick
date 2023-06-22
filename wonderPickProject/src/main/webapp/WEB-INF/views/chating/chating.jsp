@@ -75,10 +75,11 @@
 }
 </style>
 </head>
-<jsp:include page="../common/header.jsp" />
 <body>
+	<jsp:include page="../common/header.jsp" />
 	<jsp:include page="suggestModal.jsp" />
-	<div id="chatingMain" style="width: 100%" align="center">
+	
+	<div id="chatingMain" style="width: 100%">
 		<div id="chatingList">
 			<table width="260" border="1" align="center">
 				<thead>
@@ -102,10 +103,10 @@
 											</div>
 											<div class="chatingContent" align="left">
 												<h6>${list.artistNickName}</h6>
-												<label>채팅내역으로 꾀나 길거임</label>
 											</div>
-											<input type="hidden" name="roomAddress"
-												value="${ list.roomName }">
+											<input type="hidden" name="roomAddress" value="${ list.roomName }">
+											<input type="hidden" name="roomNo" value="${ list.boardNo }">
+											<input type="hidden" name="artist" value="${ list.artistNo }">
 										</div>
 									</td>
 									<td><input type="checkbox" name="checkedcChat"></td>
@@ -120,10 +121,10 @@
 											</div>
 											<div class="chatingContent" align="left">
 												<h6>${list.membertNickName}</h6>
-												<label>채팅내역으로 꾀나 길거임</label>
 											</div>
-											<input type="hidden" name="roomAddress"
-												value="${ list.roomName }">
+											<input type="hidden" name="roomAddress" value="${ list.roomName }">
+											<input type="hidden" name="roomNo" value="${ list.boardNo }">
+											<input type="hidden" name="artist" value="${ list.artistNo }">
 										</div>
 									</td>
 									<td><input type="checkbox" name="checkedcChat"></td>
@@ -157,10 +158,11 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
-			<div id="chatingView"
-				style="overflow: scroll; border: 1px solid black;">
+			<div id="chatingView" style="overflow: scroll; border: 1px solid black;">
+				<input type="hidden" name="boardNo" value="${ boardNo }">
+				<input type="hidden" name="contractArtist" value="${ c.artistNo }">
+				<input type="hidden" name="currentRoom" value="${ c.roomName }">
 				<form action="chatsave.co" method="post"></form>
-				<img src="" alt="화면공유중" style="width: 100%; height: 80%;">
 			</div>
 			<div id="inputText">
 				<textarea style="width: 100%; height: 100%;" id="textContent"></textarea>
@@ -168,7 +170,7 @@
 			<div id="chatingMenu">
 				<img src="" alt="이모티콘" style="height: 5%;">
 				<div id="sendBtn">
-					<button data-toggle="modal" data-target="#loginModal">가격제안</button>
+					<button data-toggle="modal" data-target="#suggestModal">가격제안</button>
 					<button id='writeBtn'>보내기</button>
 				</div>
 			</div>
@@ -180,7 +182,9 @@
 			var socket
 
 			$(function() {
-
+				if('${alreadyReject}'==1){
+					alert('이미 거절된 제안입니다.')
+				}
 				$('#chatingView>form>').remove();
 
 				if ('${readYetMSG}' != '') {
@@ -193,25 +197,14 @@
 				var name = '${loginMember.nickName}'
 				var yourNick = '${c.artistNickName}'
 				var roomName = '${c.roomName}'
-
+				
 				if ($('.suggest').length != 0) {
-					$('.suggest')
-							.each(
-									function() {
-										console.log($(this).children("p")
-												.text())
-										console.log(name)
-										console.log($(this).children("p")
-												.text().includes(name))
-										if ($(this).children("p").text()
-												.includes(name)) {
-											$(this).children("p").text(
-													yourNick + "님이 요청을 검토중입니다");
-											$(this).children(
-													"input[name=reject]")
-													.remove()
-										}
-									});
+					$('.suggest').each(function() {
+						if ($(this).children("p").text().includes(name)) {
+							$(this).children("p").text(yourNick + "님이 요청을 검토중입니다");
+							$(this).children("input[name=reject]").remove()
+						}
+					});
 				}
 
 				socket = new WebSocket(uri);
@@ -226,16 +219,30 @@
 				socket.onmessage = function(e) {
 					console.log(e.data);
 					var revieveMSG = e.data.split(',');
-					if (revieveMSG[0] == "someoneIn"
-							&& revieveMSG[1] != "${loginMember.nickName}") {
+					if (revieveMSG[0] == "someoneIn" && revieveMSG[1] != "${loginMember.nickName}") {
 						$('.ReadCheck').text("");
+						var boardNo = $('input[name=boardNo]').val()
+						$.ajax({
+							url : 'readedChat.co',
+							data : {
+								membertNickName : name,
+								artistNickName : yourNick,
+								roomName : roomName,
+								boardNo : boardNo
+							},
+							success : function() {
+								console.log("chating saved")
+							}
+						});
 					}
 					if (revieveMSG[0] == 1) {
 						console.log(revieveMSG[1])
+						var boardNo = $('input[name=boardNo]').val()
 						$.ajax({
 							url : 'insertUnreadChat.co',
 							data : {
 								roomName : roomName,
+								boardNo : boardNo,
 								fromMember : name,
 								toMember : yourNick,
 								readCheck : name,
@@ -247,28 +254,7 @@
 								}
 							}
 						});
-						$('#chatingView>form').append(
-								revieveMSG[1]
-										+ '<small class="ReadCheck">1</small>');
-
-						if ($('.suggest').length != 0) {
-							$('.suggest')
-									.each(
-											function() {
-												if ($(this).children("p")
-														.text().includes(name)) {
-													$(this)
-															.children("p")
-															.text(
-																	yourNick
-																			+ "님이 요청을 검토중입니다");
-													$(this)
-															.children(
-																	"input[name=reject]")
-															.remove()
-												}
-											});
-						}
+						$('#chatingView>form').append(revieveMSG[1] + '<small class="ReadCheck">1</small>');
 
 					}
 					if (revieveMSG[0] == 2) {
@@ -287,28 +273,17 @@
 						$('#chatingView>form').append(revieveMSG[1]);
 
 						if ($('.suggest').length != 0) {
-							$('.suggest')
-									.each(
-											function() {
-												if ($(this).children("p")
-														.text().includes(name)) {
-													$(this)
-															.children("p")
-															.text(
-																	yourNick
-																			+ "님이 요청을 검토중입니다");
-													$(this)
-															.children(
-																	"input[name=reject]")
-															.remove()
-												}
-											});
+							$('.suggest').each(function() {
+								if ($(this).children("p").text().includes(name)) {
+									$(this).children("p").text(yourNick+ "님이 요청을 검토중입니다");
+									$(this).children("input[name=reject]").remove()
+								}
+							});
 						}
 
 					}
 				}
 
-				$('#chatingView img').hide();
 				$('input[name=checkedcChat]').each(function() {
 					$(this).hide();
 				});
@@ -339,125 +314,151 @@
 					});
 				});
 
-				$('#writeBtn')
-						.click(
-								function() {
-									if ($('#textContent').val() != '') {
-										var now = new Date();
-										var nowTime = String(now.getHours())
-												+ '시 '
-												+ String(now.getMinutes())
-												+ '분';
+				$('#writeBtn').click(function() {
+					if ($('#textContent').val() != '') {
+						var now = new Date();
+						var nowTime = String(now.getHours())
+								+ '시 '
+								+ String(now.getMinutes())
+								+ '분';
 
-										var $textContent = $('#textContent')
-												.val();
-										var sendMsg = '<div class="chatings" align="left">'
-												+ '<inpurt type="text" name="userName" id="1">'
-												+ name
-												+ '<br>'
-												+ '<input type="text" name="chatings" style="width: 300px; height: auto;" readonly value="'+$textContent+'">'
-												+ '&nbsp;&nbsp;<small>'
-												+ nowTime
-												+ '</small>'
-												+ '</div>';
+						var $textContent = $('#textContent').val();
+						$textContent = $textContent.replace(/</g,'&lt;')
+						$textContent = $textContent.replace(/>/g,'&gt;')
+						var sendMsg = '<div class="chatings" align="left">'
+								+ '<inpurt type="text" name="userName" id="1">'+ name
+								+ '<br>'
+								+ '<pre style="font-size : 20px">'+$textContent+'</pre>'
+								+ '&nbsp;&nbsp;<small>'+ nowTime + '</small>'
+								+ '</div>';
+						socket.send(roomName + ',' + name + ','+ yourNick + ',' + sendMsg);
+						$('#textContent').val('');
+						$('#chatingView').scrollTop(
+								$(document).height());
 
-										socket.send(roomName + ',' + name + ','
-												+ yourNick + ',' + sendMsg);
-										$('#textContent').val('');
-										$('#chatingView').scrollTop(
-												$(document).height());
+					}
+				});
 
-									}
-								});
+				$('.chatingOne').click(function() {
+					
+					
+					$('input[name=contractArtist]').val($(this).find('input[name=artist]').val())
+					
+					var un = $(this).find('h6').text();
+					
+					yourNick = un;
+					
+					var changeRoom = $(this).find('input[name=roomAddress]').val();
+					
+					$('input[name=currentRoom]').val(changeRoom)
+					
+					$('input[name="contractArtist"]').val($(this).find('input[name=artist]').val());
+					
+					var boardNo = $('input[name=roomNo]').val()
+					
+					$('#namespace').find('h3').text(un);
+					
+					$('#chatingView>form>').remove();
+					
+					$.ajax({
+						url : "loadChatings.co",
+						data : {
+							membertNickName : '${loginMember.nickName}',
+							artistNickName : yourNick,
+							roomName : changeRoom,
+							boardNo : boardNo
+						},
+						success : function(result) {
+							console.log(typeof(result))
+							
+							$('input[name=boardNo]').val(boardNo)
+							
+							roomName = changeRoom
+							
+							socket.send('getin,' + roomName + ',${loginMember.nickName}');
+							
+							$('#chatingView>form').append(result);
+						}
+					});
+				})
+				
+				$('#suggestbtn').click(function() {
+					if(${ac eq null}){
+						alert("비어있음")
+					}else{
+						alert("구라임")
+					}
+					var accepter = 0;
 
-				$('.chatingOne').click(
-						function() {
-							var un = $(this).find('h6').text();
-							yourNick = un;
-							var changeRoom = $(this).find(
-									'input[name=roomAddress]').val();
-							$('#namespace').find('h3').text(un);
-							$('#chatingView>form>').remove();
-							$.ajax({
-								url : "loadChatings.co",
-								data : {
-									membertNickName : '${loginUser.nickName}',
-									artistNickName : yourNick,
-									roomName : roomName
-								},
-								success : function(result) {
-									console.log(result)
-									roomName = changeRoom
-									socket.send('getin,' + roomName
-											+ ',${loginMember.nickName}');
-									$('#chatingView>form').append(result);
-								}
-							});
-						})
+					var now = new Date();
+					
+					var nowTime = String(now.getHours()) + '시 '
+					
+							+ String(now.getMinutes()) + '분';
+					
+					var totalprice = $('#modalBody>p').text();
+					
+					var $textContent = $('#textContent').val();
+					
+					var boardNo = $('input[name=boardNo]').val();
+					
+					var roomName = $('input[name=currentRoom]').val();
+					
+					var reciever = $('#namespace').find('h3').text();
+					var artistNo = $('input[name=contractArtist]').val()
+					var sendMsg = '<div class="suggest" align="left">'
+							+ '<p>${ loginMember.nickName }님이 '
+							+ totalprice
+							+ '원을 제안하셨습니다. 수락하시겠습니까?</p>'
+							+ '<form action="checkCondition.co">'
+							+ '<input type="submit" name="deal" readonly value="조건보기">'
+							+ '<input type="hidden" name="boardNo" value="'+boardNo+'">'
+							+ '<input type="hidden" name="originPrice" value="2000">'/*디비에서 원가 끌고올것*/
+							+ '<input type="hidden" name="artistNo" value="'+artistNo+'">'
+							+ '<input type="hidden" name="roomName" value="'+roomName+'">'
 
-				$('#suggestbtn')
-						.click(
-								function() {
+					if ($('.addpriceDiv').length == 0) {
+						sendMsg += '<input type="hidden" name="noMoreCon" value="y">'
+					}
 
-									var now = new Date();
-									var nowTime = String(now.getHours()) + '시 '
-											+ String(now.getMinutes()) + '분';
-									var totalprice = $('#modalBody>p').text();
-									var $textContent = $('#textContent').val();
-									var sendMsg = '<div class="suggest" align="left">'
-											+ '<p>${ loginUser.nickName }님이 '
-											+ totalprice
-											+ '원을 제안하셨습니다. 수락하시겠습니까?</p>'
-											+ '<form action="checkCondition.co">'
-											+ '<input type="submit" name="deal" readonly value="조건보기">'
-											+ '<input type="hidden" name="boardNo" value="${ boardNo }">'
-											+ '<input type="hidden" name="originPrice" value="2000">'/*디비에서 원가 끌고올것*/
-											+ '<input type="hidden" name="reciever" value="${c.artistNickName}">'
+					sendMsg += '</form>'
+							+'&nbsp;&nbsp;<small>' + nowTime + '</small>' + '</div>';
 
-									if ($('.addpriceDiv').length == 0) {
-										sendMsg += '<input type="hidden" name="noMoreCon" value="y">'
-									}
+					socket.send(roomName + ',' + name + ','
+							+ yourNick + ',' + sendMsg);
+					$('#textContent').val('');
+					$('#chatingView').scrollTop(
+							$(document).height());
 
-									sendMsg += '</form>'
-											+ '<form action="removeCondition.co">'
-											+ '<input type="submit" name="reject" readonly value="거절하기">'
-											+ '<input type="hidden" name="boardNo" value="${ boardNo }">'
-											+ '</form>' + '&nbsp;&nbsp;<small>'
-											+ nowTime + '</small>' + '</div>';
-
-									socket.send(roomName + ',' + name + ','
-											+ yourNick + ',' + sendMsg);
-									$('#textContent').val('');
-									$('#chatingView').scrollTop(
-											$(document).height());
-
-									var request = ""
-									var addPrices = ""
-									$('.addPriceDiv').each(
-											function() {
-												request += $(this).find(
-														'.reason').val()
-														+ ","
-												addPrices += $(this).find(
-														'input[name=price]')
-														.val()
-														+ ","
-											});
-									console.log(request)
-									if (request != "" && addPrices != "") {
-										$.ajax({
-											url : 'insertReasonPrice.co',
-											data : {
-												boardNo : '${ boardNo }',
-												addPrices : addPrices,
-												request : request
-											},
-											success : function(result) {
-												console.log(result)
-											}
-										});
-									}
-								});
+					var request = ""
+					var addPrices = ""
+					
+					$('.addPriceDiv').each(function() {
+						request += $(this).find('.reason').val()+ ","
+						addPrices += $(this).find('input[name=price]').val()+ ","
+					});
+					
+					console.log(request)
+					if (request != "" && addPrices != "") {
+						var artist = $('input[name=contractArtist]').val()
+						if('${loginMember.memberNo}'== artist){
+							accepter = artist
+						}
+						$.ajax({
+							url : 'insertReasonPrice.co',
+							data : {
+								boardNo : boardNo,
+								addPrices : addPrices,
+								request : request,
+								roomName : roomName,
+								accepter : accepter
+							},
+							success : function(result) {
+								console.log(result)
+							}
+						});
+					}
+				});
 			});
 		</script>
 	</div>

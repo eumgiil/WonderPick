@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.wonderPick.chatting.model.vo.AcceptCondition;
 import com.kh.wonderPick.chatting.model.vo.AddPriceAndReason;
 import com.kh.wonderPick.chatting.model.vo.BeforeReadChatings;
 import com.kh.wonderPick.chatting.model.vo.Chating;
@@ -66,6 +67,36 @@ public class ChatingDao {
 	public Member selectartistNick(SqlSessionTemplate sqlSession, int artistNickName) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("chatingMapper.selectartistNick",artistNickName);
+	}
+
+	public String selectMemberNo(SqlSessionTemplate sqlSession, int memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("chatingMapper.selectMemberNo",memberNo);
+	}
+
+	public int deletePriceAndReason(SqlSessionTemplate sqlSession, int i) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("chatingMapper.deletePriceAndReason",i);
+	}
+
+	public int insertAcceptCondition(SqlSessionTemplate sqlSession, AddPriceAndReason apar) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("chatingMapper.insertAcceptCondition",apar );
+	}
+
+	public int updatetAcceptCondition(SqlSessionTemplate sqlSession, Chating c) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("chatingMapper.updatetAcceptCondition",c);
+	}
+
+	public AcceptCondition selectAcceptStatus(SqlSessionTemplate sqlSession, Chating c) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("chatingMapper.selectAcceptStatus",c);
+	}
+
+	public int deleteAcceptCondition(SqlSessionTemplate sqlSession, Chating c) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("chatingMapper.deleteAcceptCondition",c);
 	}
 
 }
