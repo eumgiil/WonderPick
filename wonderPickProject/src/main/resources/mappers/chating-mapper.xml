@@ -234,24 +234,12 @@
 			ACCEPT_CONDITION
 			(
 				BOARD_NO,
-				ROOM_NAME,
-				MEMBER_CHECK,
-				ARTIST_CHECK
+				ROOM_NAME
 			)
 		values
 			(
 				#{boardNo},
-				#{roomName},
-				<choose>
-					<when test="#{accepter==0}">
-						'Y',
-						default
-					</when>
-					<otherwise>
-						default
-						'Y',
-					</otherwise>
-				</choose>
+				#{roomName}
 			)
 	</insert>
 	<update id="updatetAcceptCondition" parameterType="chating">

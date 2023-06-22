@@ -73,6 +73,25 @@
 	position: absolute;
 	bottom: 0;
 }
+
+/* ----------- emoticon --------------- */
+
+#emoticon_area{
+	width: 500px;
+	height: 500px;
+	background-color: yellow;
+	position: absolute;
+	top: 200px;
+	right:200px;
+
+	display: none;
+
+	
+}
+
+
+
+
 </style>
 </head>
 <body>
@@ -162,19 +181,42 @@
 				<input type="hidden" name="boardNo" value="${ boardNo }">
 				<input type="hidden" name="contractArtist" value="${ c.artistNo }">
 				<input type="hidden" name="currentRoom" value="${ c.roomName }">
+				<input type="hidden" name="alreadyReject" value="${alreadyReject}">
+				
+				<!-- <input type="hidden" name="memberCheck" value="${memberCheck}">
+				<input type="hidden" name="artistCheck" value="${artistCheck}"> -->
 				<form action="chatsave.co" method="post"></form>
 			</div>
 			<div id="inputText">
 				<textarea style="width: 100%; height: 100%;" id="textContent"></textarea>
 			</div>
+
+			<div id="emoticon_area">
+				이모티콘 집어넣을꺼임 건들지마셈
+				<div>여기는 사진</div>
+				<div>여기는 제목</div>
+				<div>가격</div>
+			</div>
+
 			<div id="chatingMenu">
 				<img src="" alt="이모티콘" style="height: 5%;">
 				<div id="sendBtn">
+					<button onclick="chating_emoticonList();">이모티콘</button>
 					<button data-toggle="modal" data-target="#suggestModal">가격제안</button>
 					<button id='writeBtn'>보내기</button>
 				</div>
 			</div>
 		</div>
+
+
+
+
+
+
+
+
+
+
 
 		<script>
 			var uri = "ws://localhost:8010/wonderPick/sc";
@@ -182,8 +224,12 @@
 			var socket
 
 			$(function() {
-				if('${alreadyReject}'==1){
-					alert('이미 거절된 제안입니다.')
+				function validate() {
+					if($('input[name=alreadyReject]').val()==1){
+						alert('이미 거절된 제안입니다')
+						return false;
+					}
+					return true;
 				}
 				$('#chatingView>form>').remove();
 
@@ -369,7 +415,7 @@
 							boardNo : boardNo
 						},
 						success : function(result) {
-							console.log(typeof(result))
+							console.log(result)
 							
 							$('input[name=boardNo]').val(boardNo)
 							
@@ -377,17 +423,20 @@
 							
 							socket.send('getin,' + roomName + ',${loginMember.nickName}');
 							
-							$('#chatingView>form').append(result);
+							$('#chatingView>form').append(result.str);
+							
+							/*$('input[name=memberCheck]').val(result.ac.memberCheck);
+							$('input[name=artistCheck]').val(result.ac.artistCheck);*/
+							
+						},
+						error : function(e) {
+							console.log(e)
 						}
 					});
 				})
 				
 				$('#suggestbtn').click(function() {
-					if(${ac eq null}){
-						alert("비어있음")
-					}else{
-						alert("구라임")
-					}
+					
 					var accepter = 0;
 
 					var now = new Date();
@@ -404,62 +453,117 @@
 					
 					var roomName = $('input[name=currentRoom]').val();
 					
-					var reciever = $('#namespace').find('h3').text();
-					var artistNo = $('input[name=contractArtist]').val()
-					var sendMsg = '<div class="suggest" align="left">'
-							+ '<p>${ loginMember.nickName }님이 '
-							+ totalprice
-							+ '원을 제안하셨습니다. 수락하시겠습니까?</p>'
-							+ '<form action="checkCondition.co">'
-							+ '<input type="submit" name="deal" readonly value="조건보기">'
-							+ '<input type="hidden" name="boardNo" value="'+boardNo+'">'
-							+ '<input type="hidden" name="originPrice" value="2000">'/*디비에서 원가 끌고올것*/
-							+ '<input type="hidden" name="artistNo" value="'+artistNo+'">'
-							+ '<input type="hidden" name="roomName" value="'+roomName+'">'
-
-					if ($('.addpriceDiv').length == 0) {
-						sendMsg += '<input type="hidden" name="noMoreCon" value="y">'
-					}
-
-					sendMsg += '</form>'
-							+'&nbsp;&nbsp;<small>' + nowTime + '</small>' + '</div>';
-
-					socket.send(roomName + ',' + name + ','
-							+ yourNick + ',' + sendMsg);
-					$('#textContent').val('');
-					$('#chatingView').scrollTop(
-							$(document).height());
-
-					var request = ""
-					var addPrices = ""
-					
-					$('.addPriceDiv').each(function() {
-						request += $(this).find('.reason').val()+ ","
-						addPrices += $(this).find('input[name=price]').val()+ ","
-					});
-					
-					console.log(request)
-					if (request != "" && addPrices != "") {
-						var artist = $('input[name=contractArtist]').val()
-						if('${loginMember.memberNo}'== artist){
-							accepter = artist
-						}
-						$.ajax({
-							url : 'insertReasonPrice.co',
-							data : {
-								boardNo : boardNo,
-								addPrices : addPrices,
-								request : request,
-								roomName : roomName,
-								accepter : accepter
-							},
-							success : function(result) {
-								console.log(result)
+					//ajax로 check상태 확인하고 둘다 수락했으면 못눌러
+					$.ajax({
+						url : 'suggest.co',
+						data : {
+							boardNo : boardNo,
+							roomName : roomName
+						},
+						success : function(result) {
+							$('input[name=alreadyReject]').val(0)
+							console.log(result)
+							if(result=='N'){
+								var reciever = $('#namespace').find('h3').text();
+								var artistNo = $('input[name=contractArtist]').val()
+								var sendMsg = '<div class="suggest" align="left">'
+										+ '<p>${ loginMember.nickName }님이 '
+										+ totalprice
+										+ '원을 제안하셨습니다. 수락하시겠습니까?</p>'
+										+ '<form action="checkCondition.co">'
+										+ '<input type="submit" name="deal" readonly value="조건보기" onclick="return validate();">'
+										+ '<input type="hidden" name="boardNo" value="'+boardNo+'">'
+										+ '<input type="hidden" name="originPrice" value="2000">'/*디비에서 원가 끌고올것*/
+										+ '<input type="hidden" name="artistNo" value="'+artistNo+'">'
+										+ '<input type="hidden" name="roomName" value="'+roomName+'">'
+			
+								if ($('.addpriceDiv').length == 0) {
+									sendMsg += '<input type="hidden" name="noMoreCon" value="y">'
+								}
+			
+								sendMsg += '</form>'
+										+'&nbsp;&nbsp;<small>' + nowTime + '</small>' + '</div>';
+			
+								socket.send(roomName + ',' + name + ','+ yourNick + ',' + sendMsg);
+								
+								$('#textContent').val('');
+								
+								$('#chatingView').scrollTop($(document).height());
+			
+								var request = ""
+								var addPrices = ""
+								
+								$('.addPriceDiv').each(function() {
+									request += $(this).find('.reason').val()+ ","
+									addPrices += $(this).find('input[name=price]').val()+ ","
+								});
+								
+								console.log(request)
+								if (request != "" && addPrices != "") {
+									$.ajax({
+										url : 'insertReasonPrice.co',
+										data : {
+											boardNo : boardNo,
+											addPrices : addPrices,
+											request : request,
+											roomName : roomName,
+										},
+										success : function(result) {
+											console.log(result)
+										}
+									});
+								}
+								
 							}
-						});
-					}
+							if(result=="Y"){
+								alert('상대방이 요청을 수락하여 요청을 보낼 수 없습니다');
+							}
+						}
+					})
 				});
 			});
+
+
+
+
+
+
+			///========================= 이모티콘 이코옴티티ㅗㄴ 밈ㅇ노코놐노ㅗㄴ콬노노ㅗ뇡미외코잉 이몽미오미이몽 키ㅣㅣ티티코오코ㅗ오오코ㅗㅗ오잉 밍 오미오미ㅗ코ㅗㅇㅋ오========================
+
+
+			function chating_emoticonList(){
+				$.ajax({
+					url : 'emoticonList.ct',
+					data : {
+						memberNo : ${ sessionScope.loginMember.memberNo }
+					},
+					success : result => {
+						console.log(result);
+
+						// value = '';
+						// for(var i in result){
+						// 	value += 
+
+						// }
+
+					},
+					error : () => {
+						alert('error!!')
+					}
+
+
+				});
+
+
+
+				$('#emoticon_area').toggle()
+
+
+			}
+
+
+
+
 		</script>
 	</div>
 </body>

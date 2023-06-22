@@ -190,7 +190,7 @@ div {
 				<form action="removeCondition">
 					<input type="hidden" name="rejectList">
 					<input type="hidden" name="roomName" value="${ roomName }">
-					<input type="hidden" name="boardNo" value="${ suggestList.get(0).boardNo }">
+					<input type="hidden" name="boardNo" value="${ boardNo }">
 					<button class="btn btn-danger">거절하기</button>
 				</form>
 				<script>
@@ -206,7 +206,7 @@ div {
 	<script>
 		$(function() {
 			if($('#suggestbtn').length!=0){
-				$('#suggestbtn').hide();
+				$('#suggestbtn').hide(); 
 				if(${ac.memberCheck eq "Y" and ac.artistCheck eq "Y"}){
 					$('#suggestbtn').show();
 				}
@@ -224,13 +224,11 @@ div {
 		});
 		
 		$('#accept-btn').click(function() {
-			
 			var artist = 0;
 			alert('${loginMember.memberNo==artistNo}')
 			if(${loginMember.memberNo==artistNo}){
 				artist=1;
-			}
-			alert(artist)
+			} 
 			$.ajax({
 				url : 'updatetAcceptCondition.co',
 				data : {
@@ -239,6 +237,7 @@ div {
 					roomName : '${roomName}'
 				},
 				success : function(result) {
+					alert('성공적으로 수락하였습니다.')
 					if(result=='Y'){
 						if($('#suggestbtn').length!=0){
 							$('#suggestbtn').show();

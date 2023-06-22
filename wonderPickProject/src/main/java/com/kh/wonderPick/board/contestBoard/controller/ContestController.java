@@ -223,6 +223,22 @@ public class ContestController {
 	}
 	
 	
+	// 채팅에서 이모티콘불러오기 
+	@ResponseBody
+	@RequestMapping(value = "emoticonList.ct" , produces="application/json; charset=UTF-8")
+	public String selectEmoticon(int memberNo, Model model) {
+		
+		// 가져와야 할 것 
+		// 사진,제목, 가격,유무료 유무
+		
+		ArrayList<Contest> winnerList = contestService.selectWinnerList();
+		//model.addAttribute("winnerList", winnerList);
+		
+		return new Gson().toJson(winnerList);
+	}
+	
+	
+	
 }
 
 

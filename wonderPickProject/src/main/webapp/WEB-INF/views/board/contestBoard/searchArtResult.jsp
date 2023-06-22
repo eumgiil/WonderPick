@@ -90,7 +90,6 @@
         height: auto;
         display: inline-table;
         margin: 10px;
-        border-radius: 40px;
         box-shadow: 1px 1px 10px rgb(200, 200, 200);
         padding: 20px;
     }
@@ -99,7 +98,7 @@
         margin-left: 60px;
         margin-top: 20px;
     }
-    #nickName{
+    .nickName{
         width: auto;
         font-size: small;
         color: gray;
@@ -110,13 +109,20 @@
         text-align: end;
     }
     .table_title{
+       
         font-size: large;
+
+        width: 180px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      
     }
     .table_sysdate{
         font-size: 12px;
         color: gray;
     }
-    
+   
    
    
     
@@ -130,7 +136,7 @@
     <div id="all_area">
         <div id="main_area">
             <div id="searchResult_title">
-                <span id="result_text">"${ keyword }"에 대한 검색결과 입니다. </span>
+                <span id="result_text">"${ keyword }"에 대한 검색결과 입니다.</span>
             </div>
             <div id="contents_area">
                 <ul class="list_tab">
@@ -187,7 +193,7 @@
                                         </tr>
                                         <tr>
                                             <td class="table_title" colspan="3">
-                                                <div class="table_title">
+                                                <div class="table_title" id="title_overflow">
                                                    <span id="title"> ${ list.boardTitle }</span>
                                                 </div>
                                             </td>
@@ -195,11 +201,11 @@
                                         <tr>
                                             <td class="table_profile_img" >
                                                 <div align="center" >
-                                                    <img align="left" class="profile_img" src="${sessionScope.loginMember.profilePath }/${sessionScope.loginMember.profileImg}">
+                                                    <img align="left" class="profile_img" src="${sessionScope.loginMember.profilePath }/${sessionScope.loginMember.profileImg}" >
                                                 </div>
                                             </td>
                                             <td id="nickName">
-                                               <span >${ list.nickname }</span> 
+                                               <span class="nickName">${ list.nickname }</span> 
                                             </td>
                                             <td id="price">${ list.price }원 </td>
                                         </tr>
@@ -220,13 +226,7 @@
 
     <script>
 
-        $(function(){
-            alert('ssss')
-        })
-
         function searchGoodsResult(){
-
-            alert('asldjfalsdjflaksdjflkasjdlkf')
 
             $.ajax({
                 url : 'searchGoodsResult.ct',
@@ -278,11 +278,11 @@
                                             +' <tr>'
                                             +' <td class="table_profile_img" >'
                                                 +'<div align="center" >'
-                                                        +' <img align="left" class="profile_img" src="' + ${sessionScope.loginMember.profilePath }/${sessionScope.loginMember.profileImg}+ '">'
+                                                        +' <img align="left" class="profile_img" src="' + ${sessionScope.loginMember.profilePath } + '/' + ${sessionScope.loginMember.profileImg}+ '">'
                                                         +'  </div>'
                                                     +' </td>'
                                                 +'<td id="nickName">'
-                                                    +' <span >'+ result[i].nickName +'</span> '
+                                                    +' <span class="nickName" >'+ result[i].nickName +'</span> '
                                                 +' </td>'
                                                 +' <td id="price">'+ result[i].price +'원 </td>'
                                                 +' </tr>'
@@ -290,7 +290,7 @@
                                             + '<td colspan="3">'
                                                     + '<span class="table_sysdate">'+ result[i].createDate +'</span> '
                                                     +' </td>'
-                                                +   ' </tr>'
+                                                + ' </tr>'
                                         +'</tbody>'
                                     +'</table>'
                                 +'</div>';
@@ -311,7 +311,6 @@
         } 
 
         function searchContestResult(){
-            alert('dddd')
             $.ajax({
                 url : 'searchContestResult.ct',
                 data : {
@@ -338,48 +337,42 @@
                         for(let i in result){
                             
                             value += 
-                                    '<table border="1" class="contest_table">'
-                                        + '<tr>'
+                            '<div class="contest_table">'
+                                    +'<table>'
+                                        +'<tbody>'
+                                            +'<tr>'
+                                                +' <td colspan="3" id="boardImage">'
+                                                    +'<div align="center" class="movePage" >'
+                                                        +'<img src="' + result[i].filePath + '" alt="" class="search_image">'
+                                                        +' <input type="hidden" value="">'
+                                                    +'  </div>'
+                                                    +' </td>'
+                                                + ' </tr>'
+                                            +'  <tr>'
+                                            +'<td class="table_title" colspan="2">'
+                                                    +' <div class="table_title">'
+                                                    +'<span id="title">'+ result[i].boardTitle +'</span>'
+                                                    +' </div>'
+                                                    +'</td>'
+                                                +'</tr>'
+                                            +' <tr>'
+                                                +' <td class="table_profile_img" >'
+                                                    +'<div>'
+                                                        +'<img align="left" class="profile_img" src="' + ${sessionScope.loginMember.profilePath } + '/' + ${sessionScope.loginMember.profileImg}+ '">'
+                                                    +'</div>'
+                                                +'</td>'
+                                                    +'<td id="nickName" >'
+                                                        +' <span class="nickName" align="left" >'+ result[i].nickName +'</span>'
+                                                    +' </td>'
+                                                +' </tr>'
+                                            +' <tr>'
                                                 + '<td colspan="3">'
-                                                +' <div align="center" class="movePage" id="boardImage">'
-                                                    +  '<img src="' + result[i].filePath + '" class="search_image">'
-                                                + '<input type="hidden" value="'+ result[i].boardNo +'">'
-                                                + '</div>'
-                                            + '</td>'
-                                        + '</tr>'
-                                        + '<tr >'
-                                            + '<th class="table_title" colspan="2">'
-                                                +  '<div class="table_title">'
-                                                    + '<a href="#" class="movePage" id="boardTitle">'
-                                                        +  '<input type="hidden" value="'+ result[i].boardNo +'">'
-                                                        + result[i].boardTitle
-                                                    +' </a>'
-                                                    +'</div>'
-                                            + '</th>'
-                                            + '<td class="vote_heart">♡</td>'
-                                            +'</tr>'
-                                        + '<tr>'
-                                            + '<td class="table_profile_img">'
-                                                +  ' <div align="center">'
-                                                    +  '<img src="#" class="profile_img">'
-                                                        
-                                                    +'</div>'
-                                            + '</td>'
-                                                +'<td>'+ result[i].nickName +'</td>'
-                                            + '<td> 투표수 자리 </td>'
-                                            +'</tr>'
-                                        + '<tr>'
-                                            + '<td colspan="3">'
-                                                +   '<span class="table_sysdate">'+ result[i].uploadDate + '</span> '
-                                            + ' </td>'
-                                            +'</tr>'
-                                        + '<tr>'
-                                            +  '<td colspan="3">'
-                                                + '<div class="table_sysdate">조회수</div> '
-                                            + '</td>'
-                                            +'</tr>'
-                                    + '</table>';
-
+                                                        + '<span class="table_sysdate">'+ result[i].uploadDate +'</span> '
+                                                +' </td>'
+                                          + ' </tr>'
+                                        +'</tbody>'
+                                    +'</table>'
+                                +'</div>';
                             $('#list_area').html(value);
                         }
                     }

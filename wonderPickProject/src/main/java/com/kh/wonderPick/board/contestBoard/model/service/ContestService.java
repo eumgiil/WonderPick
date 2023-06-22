@@ -2,6 +2,7 @@ package com.kh.wonderPick.board.contestBoard.model.service;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonElement;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
@@ -39,6 +40,8 @@ public interface ContestService {
 	int insertVoteHeart(Heart heart);
 
 	int deleteVoteHeart(Heart heart);
+
+	ArrayList<Contest> selectEmoticon(int memberNo);
 
 
 	

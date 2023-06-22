@@ -77,10 +77,16 @@
       
         .contest_table{
          display: inline-block;
-         border-radius: 40px;
          padding: 20px;
          box-shadow: 1px 1px 10px rgb(200, 200, 200) ;
         }
+        .contest_table:hover{
+            cursor: pointer;
+            opacity: 0.8;
+            transition: transform 100ms ease-in-out;
+            transform: scale(1.05);
+        }
+        
         #voteList_area{
             margin: auto;
             margin-top: 10px;
@@ -100,7 +106,7 @@
         .vote_heart{
             font-size: 40px;
             color: red;
-            text-align: right;
+            text-align: center;
             
         }
         .profile_img{
@@ -121,8 +127,8 @@
             color: gray;
         }
         .top10_image{
-            width: 100px;
-            height: 100px; 
+            width: 180px;
+            height: 180px; 
         }
         #header-1 h1{
             font-size: 32px;
@@ -243,9 +249,8 @@
                 <img src="resources/boardUpfiles/contestFiles/new3.png" id="refresh">
             </div>
             <div id="voteList_area" align="center">
-                ${ list }
                 <c:forEach  items="${ list }" var="list">
-                <table border="1" class="contest_table">
+                <table class="contest_table">
                     <tbody>
                         <tr >
                             <td colspan="3">
@@ -282,7 +287,7 @@
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <div class="table_sysdate">조회수</div> 
+                                <div class="table_sysdate">조회수(${ list.boardCount }) </div> 
                             </td>
                         </tr>
                         </tbody>
@@ -328,11 +333,14 @@
         //     movePage.add
         // }
 
+
         // 클릭 시 해당 게시물 이동
         var movePage = document.querySelectorAll('.movePage');
-
-
+        
+        
         movePage.forEach( i => i.addEventListener('click', e => {
+    <c:choose>
+        <c:when test="${ !empty sessionScope.loginMember }">
 
            //console.log(document.getElementById('modal_1').href)
            //document.getElementById('modal_1').href ='#exampleModalToggle';
@@ -347,7 +355,17 @@
                 location.href = 'contestDetail.ct?boardNo=' + clickTitleBoardNo;
             }
 
+        </c:when>
+      <c:otherwise>
+           alert('로그인 후 이용가능 합니다.')
+      </c:otherwise>
+    </c:choose>
         }))
+
+
+
+
+
 
         let value = "";
         // 플러스버튼 더보기 
@@ -364,7 +382,7 @@
                     for(let i in result){
                         
                         value += 
-                        '<table border="1" class="contest_table">'
+                        '<table class="contest_table">'
                             + '<tr>'
                                     + '<td colspan="3">'
                                     +' <div align="center" class="movePage" id="boardImage">'
