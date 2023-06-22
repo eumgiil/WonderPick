@@ -111,12 +111,12 @@
 	<insert id="insertSecret" parameterType="secretCode">
 		insert
 		  into
-		  	  (
+		  	  secretCode(
 		  	  who,
 		  	  secret,
 		  	  when
 		  	  )
-		 value
+		values
 		 	  (
 		 	  #{who},
 		 	  #{secret},

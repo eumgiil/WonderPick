@@ -13,5 +13,5 @@ public interface MemberService {
 	
 	int signUpMember(Member m);
 
-	void insertSecret(SecretCode secretCode);
+	int insertSecret(SecretCode secretCode);
 }

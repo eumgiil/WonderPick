@@ -25,7 +25,7 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.signUpMember", m);
 	}
 	
-	public void insertSecret(SecretCode secretCode, SqlSessionTemplate sqlSession) {
-		sqlSession.insert("memberMapper.inserSecret", secretCode);
+	public int insertSecret(SecretCode secretCode, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("memberMapper.insertSecret", secretCode);
 	}
 }
