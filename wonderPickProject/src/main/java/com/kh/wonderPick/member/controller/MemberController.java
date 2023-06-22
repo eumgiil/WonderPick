@@ -31,8 +31,8 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	@Autowired
-	private JavaMailSenderImpl sender;
+//	@Autowired
+//	private JavaMailSenderImpl sender;
 	/**
 	 * 메인페이지
 	 * @return : 어디서는 로고이미지누르면 메인으로 돌려보냄
@@ -120,27 +120,27 @@ public class MemberController {
 		return memberService.nickCheckMember(checkNick) > 0 ? "NNNNN" : "NNNNY";
 	}
 	
-	@ResponseBody
-	@RequestMapping("emailCheck.me")
-	public void emailCheckMember(String checkEamil, HttpServletRequest request) throws MessagingException {
-		MimeMessage message = sender.createMimeMessage(); 
-		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-		
-		String ip = request.getRemoteAddr();
-		String secret = generateSectret();
-		
-		SecretCode secretCode = SecretCode.builder()
-													.who(ip)
-													.secret(secret)
-													.build();
-		memberService.insertSecret(secretCode);
-		
-		helper.setTo(checkEamil);
-		helper.setSubject("인증번호");
-		helper.setText("인증번호 : " + secret);
-		
-		sender.send(message);
-	}
+//	@ResponseBody
+//	@RequestMapping("emailCheck.me")
+//	public void emailCheckMember(String checkEamil, HttpServletRequest request) throws MessagingException {
+//		MimeMessage message = sender.createMimeMessage(); 
+//		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+//		
+//		String ip = request.getRemoteAddr();
+//		String secret = generateSectret();
+//		
+//		SecretCode secretCode = SecretCode.builder()
+//													.who(ip)
+//													.secret(secret)
+//													.build();
+//		memberService.insertSecret(secretCode);
+//		
+//		helper.setTo(checkEamil);
+//		helper.setSubject("인증번호");
+//		helper.setText("인증번호 : " + secret);
+//		
+//		sender.send(message);
+//	}
 	
 	public String generateSectret() {
 		Random r = new Random();

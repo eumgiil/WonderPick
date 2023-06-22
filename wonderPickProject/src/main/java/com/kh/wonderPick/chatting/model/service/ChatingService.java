@@ -2,6 +2,7 @@ package com.kh.wonderPick.chatting.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.wonderPick.chatting.model.vo.AcceptCondition;
 import com.kh.wonderPick.chatting.model.vo.AddPriceAndReason;
 import com.kh.wonderPick.chatting.model.vo.BeforeReadChatings;
 import com.kh.wonderPick.chatting.model.vo.Chating;
@@ -31,4 +32,16 @@ public interface ChatingService {
 	ArrayList<AddPriceAndReason> selectCondition(int boardNo);
 
 	Member selectartistNick(int boardNo);
+
+	String selectMemberNick(int memberNo);
+
+	int deletePriceAndReason(int[] rejectList);
+
+	int insertAcceptCondition(AddPriceAndReason apar);
+
+	int updatetAcceptCondition(Chating c);
+
+	AcceptCondition selectAcceptStatus(Chating c);
+
+	int deleteAcceptCondition(Chating c);
 }

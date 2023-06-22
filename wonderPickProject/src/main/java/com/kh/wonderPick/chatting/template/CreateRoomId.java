@@ -14,7 +14,7 @@ public class CreateRoomId {
 	
 	public String createRoomId(String myMemNo, String youMemNo) {
 		
-		String we = '@'+myMemNo+'@'+youMemNo;
+		String we = myMemNo+'@'+youMemNo;
 
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		
