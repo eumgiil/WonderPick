@@ -134,6 +134,12 @@ public class MemberController {
 													.secret(secret)
 													.build();
 		memberService.insertSecret(secretCode);
+		
+		helper.setTo(checkEamil);
+		helper.setSubject("인증번호");
+		helper.setText("인증번호 : " + secret);
+		
+		sender.send(message);
 	}
 	
 	public String generateSectret() {

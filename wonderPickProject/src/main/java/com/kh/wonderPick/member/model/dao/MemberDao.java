@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.wonderPick.member.model.vo.Member;
+import com.kh.wonderPick.member.model.vo.SecretCode;
 
 @Repository
 public class MemberDao {
@@ -24,4 +25,7 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.signUpMember", m);
 	}
 	
+	public void insertSecret(SecretCode secretCode, SqlSessionTemplate sqlSession) {
+		sqlSession.insert("memberMapper.inserSecret", secretCode);
+	}
 }
