@@ -1,5 +1,7 @@
 package com.kh.wonderPick.board.artBoard.model.vo;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
@@ -13,5 +15,5 @@ public class ArtBoardDTO {
 	private String modifyName;
 	private String memberModifyName;
 	private String category;
-	
+	private Date createDate;
 }
