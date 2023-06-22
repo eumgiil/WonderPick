@@ -73,6 +73,25 @@
 	position: absolute;
 	bottom: 0;
 }
+
+/* ----------- emoticon --------------- */
+
+#emoticon_area{
+	width: 500px;
+	height: 500px;
+	background-color: yellow;
+	position: absolute;
+	top: 200px;
+	right:200px;
+
+	display: none;
+
+	
+}
+
+
+
+
 </style>
 </head>
 <body>
@@ -171,14 +190,30 @@
 			<div id="inputText">
 				<textarea style="width: 100%; height: 100%;" id="textContent"></textarea>
 			</div>
+
+			<div id="emoticon_area">
+				이모티콘 집어넣을꺼임 건들지마셈
+			</div>
+
 			<div id="chatingMenu">
 				<img src="" alt="이모티콘" style="height: 5%;">
 				<div id="sendBtn">
+					<button onclick="chating_emoticonList();">이모티콘</button>
 					<button data-toggle="modal" data-target="#suggestModal">가격제안</button>
 					<button id='writeBtn'>보내기</button>
 				</div>
 			</div>
 		</div>
+
+
+
+
+
+
+
+
+
+
 
 		<script>
 			var uri = "ws://localhost:8010/wonderPick/sc";
@@ -484,6 +519,42 @@
 					})
 				});
 			});
+
+
+
+
+
+
+			///========================= 이모티콘 이코옴티티ㅗㄴ 밈ㅇ노코놐노ㅗㄴ콬노노ㅗ뇡미외코잉 이몽미오미이몽 키ㅣㅣ티티코오코ㅗ오오코ㅗㅗ오잉 밍 오미오미ㅗ코ㅗㅇㅋ오========================
+
+
+			function chating_emoticonList(){
+				$.ajax({
+					url : 'emoticonList.ct',
+					data : {
+						${ sesseionScope.loginMember.memberNo }
+					},
+					success : result => {
+						console.log(result);
+
+					},
+					error : () => {
+						alert('error!!')
+					}
+
+
+				})
+
+
+
+				$('#emoticon_area').toggle()
+
+
+			}
+
+
+
+
 		</script>
 	</div>
 </body>

@@ -59,6 +59,7 @@
 			<result column="MODIFY_NAME" property="modifyName" />
 			<result column="MEMBER_MODIFY_NAME" property="memberModifyName" />
 			<result column="CATEGORY" property="category" />
+			<result column="CREATE_DATE" property="createDate" />
 		</resultMap>
 		
 		
@@ -111,7 +112,7 @@
 			
 		</select>
 		
-		<select id="searchArtResult" resultMap="contestBoardResultSet" parameterType="string"> 
+		<select id="searchArtResult" resultMap="artBoardDTO" parameterType="string"> 
 		select
 		       ab.board_no
 		      ,b.board_title
@@ -121,6 +122,7 @@
 		      ,NVL(ab.price, 0) price
 		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/boardUpfiles/artBoardFiles/2023061222534502.jpg') MEMBER_MODIFY_NAME
 		  	  ,ab.category 
+		  	  ,b.create_date
 		  from
 		       art_board ab
 		  join
@@ -141,7 +143,7 @@
            and
                BOARD_TITLE LIKE '%' || #{ keyword } || '%'
 		 group by
-		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name, mi.MEMBER_MODIFY_NAME, ab.category
+		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name, mi.MEMBER_MODIFY_NAME, ab.category, b.create_date
 		 order by
 		       board_no desc
 			
@@ -201,10 +203,10 @@
 			                
 			        WHERE
 			                BOARD_IMAGE.FILE_LEVEL = 1
-			          AND 
-			                EMOTICON.PRICE_STATUS = 0
 			          AND
-			          		WINNER = 0
+			          		BOARD_TYPE = 'C'
+			         
+			         
                       AND 
                             BOARD_TITLE LIKE '%' || #{ keyword } || '%'
                         

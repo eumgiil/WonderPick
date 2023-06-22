@@ -94,6 +94,11 @@ public class ContestServiceImpl implements ContestService {
 		return contestDao.deleteVoteHeart(sqlSession, heart);
 	}
 
+	@Override
+	public ArrayList<Contest> selectEmoticon(int memberNo) {
+		return contestDao.selectEmoticon(sqlSession, memberNo);
+	}
+
 
 
 }
