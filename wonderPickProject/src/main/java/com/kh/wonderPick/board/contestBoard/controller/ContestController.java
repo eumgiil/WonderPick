@@ -231,6 +231,8 @@ public class ContestController {
 		// 가져와야 할 것 
 		// 사진,제목, 가격,유무료 유무
 		
+		ArrayList<Contest> winnerList = contestService.selectWinnerList();
+		
 		return new Gson().toJson(contestService.selectEmoticon(memberNo));
 	}
 	
