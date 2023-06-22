@@ -162,6 +162,10 @@
 				<input type="hidden" name="boardNo" value="${ boardNo }">
 				<input type="hidden" name="contractArtist" value="${ c.artistNo }">
 				<input type="hidden" name="currentRoom" value="${ c.roomName }">
+				<input type="hidden" name="alreadyReject" value="${alreadyReject}">
+				
+				<!-- <input type="hidden" name="memberCheck" value="${memberCheck}">
+				<input type="hidden" name="artistCheck" value="${artistCheck}"> -->
 				<form action="chatsave.co" method="post"></form>
 			</div>
 			<div id="inputText">
@@ -182,8 +186,12 @@
 			var socket
 
 			$(function() {
-				if('${alreadyReject}'==1){
-					alert('이미 거절된 제안입니다.')
+				function validate() {
+					if($('input[name=alreadyReject]').val()==1){
+						alert('이미 거절된 제안입니다')
+						return false;
+					}
+					return true;
 				}
 				$('#chatingView>form>').remove();
 
@@ -369,7 +377,7 @@
 							boardNo : boardNo
 						},
 						success : function(result) {
-							console.log(typeof(result))
+							console.log(result)
 							
 							$('input[name=boardNo]').val(boardNo)
 							
@@ -377,17 +385,20 @@
 							
 							socket.send('getin,' + roomName + ',${loginMember.nickName}');
 							
-							$('#chatingView>form').append(result);
+							$('#chatingView>form').append(result.str);
+							
+							/*$('input[name=memberCheck]').val(result.ac.memberCheck);
+							$('input[name=artistCheck]').val(result.ac.artistCheck);*/
+							
+						},
+						error : function(e) {
+							console.log(e)
 						}
 					});
 				})
 				
 				$('#suggestbtn').click(function() {
-					if(${ac eq null}){
-						alert("비어있음")
-					}else{
-						alert("구라임")
-					}
+					
 					var accepter = 0;
 
 					var now = new Date();
@@ -404,60 +415,73 @@
 					
 					var roomName = $('input[name=currentRoom]').val();
 					
-					var reciever = $('#namespace').find('h3').text();
-					var artistNo = $('input[name=contractArtist]').val()
-					var sendMsg = '<div class="suggest" align="left">'
-							+ '<p>${ loginMember.nickName }님이 '
-							+ totalprice
-							+ '원을 제안하셨습니다. 수락하시겠습니까?</p>'
-							+ '<form action="checkCondition.co">'
-							+ '<input type="submit" name="deal" readonly value="조건보기">'
-							+ '<input type="hidden" name="boardNo" value="'+boardNo+'">'
-							+ '<input type="hidden" name="originPrice" value="2000">'/*디비에서 원가 끌고올것*/
-							+ '<input type="hidden" name="artistNo" value="'+artistNo+'">'
-							+ '<input type="hidden" name="roomName" value="'+roomName+'">'
-
-					if ($('.addpriceDiv').length == 0) {
-						sendMsg += '<input type="hidden" name="noMoreCon" value="y">'
-					}
-
-					sendMsg += '</form>'
-							+'&nbsp;&nbsp;<small>' + nowTime + '</small>' + '</div>';
-
-					socket.send(roomName + ',' + name + ','
-							+ yourNick + ',' + sendMsg);
-					$('#textContent').val('');
-					$('#chatingView').scrollTop(
-							$(document).height());
-
-					var request = ""
-					var addPrices = ""
-					
-					$('.addPriceDiv').each(function() {
-						request += $(this).find('.reason').val()+ ","
-						addPrices += $(this).find('input[name=price]').val()+ ","
-					});
-					
-					console.log(request)
-					if (request != "" && addPrices != "") {
-						var artist = $('input[name=contractArtist]').val()
-						if('${loginMember.memberNo}'== artist){
-							accepter = artist
-						}
-						$.ajax({
-							url : 'insertReasonPrice.co',
-							data : {
-								boardNo : boardNo,
-								addPrices : addPrices,
-								request : request,
-								roomName : roomName,
-								accepter : accepter
-							},
-							success : function(result) {
-								console.log(result)
+					//ajax로 check상태 확인하고 둘다 수락했으면 못눌러
+					$.ajax({
+						url : 'suggest.co',
+						data : {
+							boardNo : boardNo,
+							roomName : roomName
+						},
+						success : function(result) {
+							$('input[name=alreadyReject]').val(0)
+							console.log(result)
+							if(result=='N'){
+								var reciever = $('#namespace').find('h3').text();
+								var artistNo = $('input[name=contractArtist]').val()
+								var sendMsg = '<div class="suggest" align="left">'
+										+ '<p>${ loginMember.nickName }님이 '
+										+ totalprice
+										+ '원을 제안하셨습니다. 수락하시겠습니까?</p>'
+										+ '<form action="checkCondition.co">'
+										+ '<input type="submit" name="deal" readonly value="조건보기" onclick="return validate();">'
+										+ '<input type="hidden" name="boardNo" value="'+boardNo+'">'
+										+ '<input type="hidden" name="originPrice" value="2000">'/*디비에서 원가 끌고올것*/
+										+ '<input type="hidden" name="artistNo" value="'+artistNo+'">'
+										+ '<input type="hidden" name="roomName" value="'+roomName+'">'
+			
+								if ($('.addpriceDiv').length == 0) {
+									sendMsg += '<input type="hidden" name="noMoreCon" value="y">'
+								}
+			
+								sendMsg += '</form>'
+										+'&nbsp;&nbsp;<small>' + nowTime + '</small>' + '</div>';
+			
+								socket.send(roomName + ',' + name + ','+ yourNick + ',' + sendMsg);
+								
+								$('#textContent').val('');
+								
+								$('#chatingView').scrollTop($(document).height());
+			
+								var request = ""
+								var addPrices = ""
+								
+								$('.addPriceDiv').each(function() {
+									request += $(this).find('.reason').val()+ ","
+									addPrices += $(this).find('input[name=price]').val()+ ","
+								});
+								
+								console.log(request)
+								if (request != "" && addPrices != "") {
+									$.ajax({
+										url : 'insertReasonPrice.co',
+										data : {
+											boardNo : boardNo,
+											addPrices : addPrices,
+											request : request,
+											roomName : roomName,
+										},
+										success : function(result) {
+											console.log(result)
+										}
+									});
+								}
+								
 							}
-						});
-					}
+							if(result=="Y"){
+								alert('상대방이 요청을 수락하여 요청을 보낼 수 없습니다');
+							}
+						}
+					})
 				});
 			});
 		</script>
