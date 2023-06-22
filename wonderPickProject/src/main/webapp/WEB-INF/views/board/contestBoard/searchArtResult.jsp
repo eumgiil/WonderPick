@@ -8,54 +8,30 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
-    #searchResult_area{
+   
+    #all_area{
+        width: 1300px;
+        height: auto;
+        margin: auto;
+    }
+    #main_area{
         box-shadow: 1px 1px 10px rgb(200, 200, 200) ;
         border-radius: 20px;
         margin: auto;
-        width: 800px;
-        height: 500px;
+        width: 900px;
         padding: 20px;
+        margin-top:20px;
+        height: auto;
+    }
+    #result_text{
+        font-size: 30px;
     }
 
     #category_area{
         text-align: center;
     }
 
-    .category{
-        display: inline;
-        margin: center;
-        
-    }
-
-    #wrap_tab {
-        width: 100%;
-        height: 60px;
-    }
-
-    #wrap_tab .list_tab {
-        width: 1000px;
-        margin: 0 auto;
-        padding: 0 185px;
-        box-sizing: border-box;
-    }
-
-    #wrap_tab .list_tab li {
-        width: 33.33%;
-        width: 210px;
-        float: left;
-    }
-
-    #wrap_tab .list_tab li a {
-        border: 1px solid black;
-        height: 60px;
-    }
-
-    #wrap_tab .list_tab li a span {
-        height: 60px;
-        padding: 18px 16px 0;
-        box-sizing: border-box;
-    }
-    
+  
     h1{
         color : rgb(255, 131, 153);
     }
@@ -63,6 +39,55 @@
     #list>li{
         display: inline;
     }
+    .search_image{
+        width: 200px;
+        height: 200px;
+    }
+   
+    .list_table{
+    }
+    #noList{
+        margin: auto;
+        height: 200px;
+        text-align: center;
+        padding-top: 100px;
+        color: gray;
+    }
+   
+    .category_btn{
+        width: 100%;
+        color: gray;
+        border: 0;
+        background-color:  rgb(241, 217, 222);
+    }
+    .contents{
+        font-size: 20px;
+    }
+    #content_1{
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+        border-bottom: 0;
+    }
+    #content_2{
+        border-right: 1px solid gray;
+    }
+    .list_tab>li{
+        width: 33.3%;
+        text-align: center;
+        float: left;
+        color: gray;
+    }
+    #contents_area{
+        margin-bottom: 50px;
+    }
+    .contest_table{
+        display: inline;
+        margin: auto;
+        width: 300px;
+        height: 300px;
+    }
+    
     
    </style>
 
@@ -71,104 +96,76 @@
 
 	 <jsp:include page="../../common/header.jsp" />
 
-    
-	 
-     <div id="searchResult_area">
+    <div id="all_area">
+        <div id="main_area">
             <div id="searchResult_title">
-                <span>"  ${ keyword } "에 대한 검색결과 입니다. </span>
+                <span id="result_text">"${ keyword }"에 대한 검색결과 입니다. </span>
             </div>
-        <div id="contents">
-            <div id="wrap_tab">
-                <form action="" method="GET">
-                    <ul class="list_tab">
-                        <li>
-                            <a href="#"><span  class="on">그림</span></a>
-                            <button type="submit">그림</button>
-                        </li>
-                        <li>
-                            <a href="#"><span class="on" onclick="searchGoodsResult();">굿즈</span></a>
-                            <button type="submit">굿즈</button>
-                            <input type="hidden" name="keyword" value="${ keyword }">
-                        </li>
-                        <li>
-                            <a href="searchContestResult.ct"><span class="on">이모티콘 공모전</span></a>
-                            <button type="submit">이모티콘 공모전</button>
-                            <input type="hidden" name="keyword" value="${ keyword }">
-                        </li>
-                    </ul>
-                </form>
-            </div> <!-- end wrap_tab -->
-        </div> <!-- end contents -->
-
-
-
-        <div>n개의 검색 결과</div>
+            <div id="contents_area">
+                <ul class="list_tab">
+                    <li class="contents">
+                        <form action="searchArtResult.ct" method="get">
+                            <button type="submit" class="category_btn" id="content_1">그림</button>
+                            <input type="hidden" name="keyword" value="${ keyword }" id="search_input" >
+                        </form>
+                    </li>
+                    <li class="contents" >
+                        <button class="category_btn" id="content_2" onclick="searchGoodsResult();">굿즈</button>
+                    </li>
+                    <li class="contents" >
+                        <button class="category_btn" id="content_3" onclick="searchContestResult();">이모티콘 공모전</button>
+                    </li>
+                </ul>
+            </div> <!-- end contents -->
+    
         
-        <select>
-            <option value="">카테고리</option>
-            <option value="">1</option>
-            <option value="">2</option>
-            <option value="">3</option>
-            <option value="">4</option>
-        </select>
-        <select>
-            <option value="">최신순</option>
-            <option value="">인기순</option>
-        </select>
-        <select>
-            <option value="">상업용</option>
-            <option value="">비상업용</option>
-        </select>
+            <select>
+                <option value="">최신순</option>
+                <option value="">인기순</option>
+            </select>
+            <select>
+                <option value="">상업용</option>
+                <option value="">비상업용</option>
+            </select>
 
-
-       
-
-        <div>
-        
-            <ul id="list">
-                <li>
-                    <c:choose>
-                        <c:when test="${ empty list }">
-                            
-                            <div>검색 결과 없음</div>
-                            
-                        </c:when>
-                        <c:otherwise>
-                            
-                            <c:forEach  items="${ list }" var="list">
-                                ${ list }
+            ${ list }
+    
+            <div id="list_area">
+                <c:choose>
+                    <c:when test="${ empty list }">
+                            <div id="noList">검색 결과 없음</div>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach  items="${ list }" var="list">
                             <table border="1" class="contest_table">
                                 <tbody>
                                     <tr >
                                         <td colspan="3">
                                             <div align="center" class="movePage" id="boardImage">
-                                                <img src="${ list.filePath }" alt="" class="top10_image">
+                                                <img src="${ list.modifyName }" alt="" class="search_image">
                                                 <input type="hidden" value="${ list.boardNo }">
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr >
-                                        <th class="table_title" colspan="2">
+                                    <tr>
+                                        <td class="table_title" colspan="3">
                                             <div class="table_title">
-                                                <a href="#" class="movePage" id="boardTitle">
-                                                    <input type="hidden" value="${ list.boardNo }">
-                                                    <p id="djarldlf">${ list.boardTitle }</p>
-                                                </a>
+                                                    제목 : ${ list.boardTitle }
                                             </div>
-                                        </th>
-                                        <td class="vote_heart">♡</td>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class="table_profile_img">
+                                        <td class="table_profile_img" >
                                             <div align="center">
-                                                <img src="#" class="profile_img">
+                                                <img src="${sessionScope.loginMember.profilePath }/${sessionScope.loginMember.profileImg}">
                                             </div>
                                         </td>
                                         <td>${ list.nickName }</td>
-                                        <td>투표수 자리</td>
+                                        <td class="vote_heart">가격 ${ list.price } </td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">
+                                            날짜
                                             <span class="table_sysdate">${ list.uploadDate }</span> 
                                         </td>
                                     </tr>
@@ -179,22 +176,14 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            </c:forEach>
-                            
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-
-            </ul>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
-
     </div>
 
-    <script>
+    <script> // script - start - 
 
         function searchGoodsResult(){
 
@@ -204,8 +193,77 @@
                     keyword : '${ keyword }'
                 },
                 success : result => {
+                    console.log(result)
+                    //console.log(result[0].modifyName);
 
-                    console.log(result);
+                    // 기존 영역 삭제
+                    // 굳이 하지 않아도 기존영역위에 덮어쓰기가 됨 생략해도 됨
+                    // var de_table =  document.getElementById('list_12');
+                    // de_table.replaceChildren();
+
+                    // 색 바꿔주기
+                    $('#content_1').css({'background-color' : 'rgb(241, 217, 222)', 'border' : 'none', 'color' : 'gray'})
+                    $('#content_2').css({'background-color' : 'white','color' : 'black','border' : '1px solid black', 'border-bottom' : '0'});
+                    $('#content_3').css({'background-color' : 'rgb(241, 217, 222)', 'border' : 'none', 'color' : 'gray'})
+
+
+                    if(result.length == 0){
+                        $('#noList').html('검색 결과 없음')
+                    }else{
+
+                        // 채워넣기
+                        let value = '';
+                        for(var i in result){
+
+                            value += 
+                                         '<table border="1" class="contest_table">'
+                                            + '<tbody>'
+                                                + '<tr >'
+                                                    + '<td colspan="3">'
+                                                        + '<div align="center" class="movePage" id="boardImage">'
+                                                            + '<img src="' + result[i].modifyName + '" alt="" class="search_image">'
+                                                            + '<input type="hidden" value="">'
+                                                        + '</div>'
+                                                    + '</td>'
+                                                    +'</tr>'
+                                                + '<tr >'
+                                                    + '<th class="table_title" colspan="2">'
+                                                        + '<div class="table_title">'
+                                                            +  '<a href="#" class="movePage" id="boardTitle">'
+                                                                + '<input type="hidden" value="">'
+                                                                + ' <p id="djarldlf">'+result[i].boardTitle+'</p>'
+                                                            +' </a>'
+                                                        + '</div>'
+                                                    +  '</th>'
+                                                    + ' <td class="vote_heart">♡</td>'
+                                                + '</tr>'
+                                                + ' <tr>'
+                                                    +' <td class="table_profile_img">'
+                                                        +  '<div align="center">'
+                                                            +  '<img src="#" class="profile_img">'
+                                                        + ' </div>'
+                                                    + '</td>'
+                                                    + ' <td>'+ result[i].nickName +'</td>'
+                                                    +' <td>투표수 자리</td>'
+                                                + ' </tr>'
+                                                + '<tr>'
+                                                    + '<td colspan="3">'
+                                                        +' <span class="table_sysdate">'+ result[i].createDate +'</span> '
+                                                    +  '</td>'
+                                                +  '</tr>'
+                                                + '<tr>'
+                                                    +  '<td colspan="3">'
+                                                        +  '<div class="table_sysdate">조회수</div> '
+                                                    +  '</td>'
+                                                + '</tr>'
+                                            + '</tbody>'
+                                        +  '</table>';
+                                        
+                                    // var li = document.createElement('li');
+                                    // li.append(value);
+                                    $('#list_area').html(value);
+                        }
+                    }
 
                 },
                 error : () => {
@@ -216,11 +274,89 @@
 
                                     
           
-        }
+        } // searchGoodsResult - end - 
+
+        function searchContestResult(){
+            $.ajax({
+                url : 'searchContestResult.ct',
+                data : {
+                    keyword : '${ keyword }'
+                },
+                success : result => {
+                    console.log(result);
+
+                    //  // 기존 영역 삭제
+                    //  var de_table =  document.getElementById('list_12');
+                    //  de_table.replaceChildren();
+
+                     // 색 바꿔주기
+                     
+                    $('#content_1').css({'background-color' : 'rgb(241, 217, 222)', 'border' : 'none', 'color' : 'gray'})
+                    $('#content_2').css({'background-color' : 'rgb(241, 217, 222)', 'border' : 'none', 'color' : 'gray'})
+                    $('#content_3').css({'background-color' : 'white','color' : 'black','border' : '1px solid black', 'border-bottom' : '0'});
+
+                    if(result.length == 0){
+                        $('#noList').html('검색 결과 없음')
+                    }else{
+
+                        let value = '';
+                        for(let i in result){
+                            
+                            value += 
+                                    '<table border="1" class="contest_table">'
+                                        + '<tr>'
+                                                + '<td colspan="3">'
+                                                +' <div align="center" class="movePage" id="boardImage">'
+                                                    +  '<img src="' + result[i].filePath + '" class="search_image">'
+                                                + '<input type="hidden" value="'+ result[i].boardNo +'">'
+                                                + '</div>'
+                                            + '</td>'
+                                        + '</tr>'
+                                        + '<tr >'
+                                            + '<th class="table_title" colspan="2">'
+                                                +  '<div class="table_title">'
+                                                    + '<a href="#" class="movePage" id="boardTitle">'
+                                                        +  '<input type="hidden" value="'+ result[i].boardNo +'">'
+                                                        + result[i].boardTitle
+                                                    +' </a>'
+                                                    +'</div>'
+                                            + '</th>'
+                                            + '<td class="vote_heart">♡</td>'
+                                            +'</tr>'
+                                        + '<tr>'
+                                            + '<td class="table_profile_img">'
+                                                +  ' <div align="center">'
+                                                    +  '<img src="#" class="profile_img">'
+                                                        
+                                                    +'</div>'
+                                            + '</td>'
+                                                +'<td>'+ result[i].nickName +'</td>'
+                                            + '<td> 투표수 자리 </td>'
+                                            +'</tr>'
+                                        + '<tr>'
+                                            + '<td colspan="3">'
+                                                +   '<span class="table_sysdate">'+ result[i].uploadDate + '</span> '
+                                            + ' </td>'
+                                            +'</tr>'
+                                        + '<tr>'
+                                            +  '<td colspan="3">'
+                                                + '<div class="table_sysdate">조회수</div> '
+                                            + '</td>'
+                                            +'</tr>'
+                                    + '</table>';
+
+                            $('#list_area').html(value);
+                        }
+                    }
+                }
+            })
+
+
+        }// searchContestResult - end - 
 
 
 
-    </script>
+    </script> 
 	 
 
 </body>

@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kh.wonderPick.board.contestBoard.model.vo.Search;
+import com.kh.wonderPick.board.goods.model.service.GoodsService;
+import com.kh.wonderPick.common.model.vo.PageInfo;
+import com.kh.wonderPick.common.template.Pagination;
 import com.kh.wonderPick.search.model.service.SearchService;
 
 @Controller
@@ -18,6 +22,7 @@ public class SearchController {
 
 	@Autowired
 	private SearchService searchService;
+	
 		
 		@ResponseBody
 		@RequestMapping(value="searchAutoComplet", produces="application/json; charset=UTF-8")
@@ -45,8 +50,6 @@ public class SearchController {
 		@RequestMapping("searchArtResult.ct")
 		public String searchContestResult(String keyword, Model model) {
 			
-			
-			
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("list", searchService.searchArtResult(keyword));
 			
@@ -56,8 +59,6 @@ public class SearchController {
 		@ResponseBody
 		@RequestMapping(value="searchGoodsResult.ct", produces="application/json; charset=UTF-8")
 		public String searchGoodsResult(String keyword) {
-			
-			System.out.println(keyword);
 			
 			return new Gson().toJson(searchService.searchGoodsResult(keyword));
 		}
