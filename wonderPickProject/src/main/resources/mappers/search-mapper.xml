@@ -203,10 +203,10 @@
 			                
 			        WHERE
 			                BOARD_IMAGE.FILE_LEVEL = 1
-			          AND 
-			                EMOTICON.PRICE_STATUS = 0
 			          AND
-			          		WINNER = 0
+			          		BOARD_TYPE = 'C'
+			         
+			         
                       AND 
                             BOARD_TITLE LIKE '%' || #{ keyword } || '%'
                         

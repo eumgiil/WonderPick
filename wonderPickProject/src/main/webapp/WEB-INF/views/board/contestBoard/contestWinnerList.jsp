@@ -48,10 +48,17 @@
         }
         .contest_table{
          display: inline-block;
-         border-radius: 40px;
          padding: 20px;
          box-shadow: 1px 1px 10px rgb(200, 200, 200) ;
         }
+
+        .contest_table:hover{
+            cursor: pointer;
+            opacity: 0.8;
+            transition: transform 100ms ease-in-out;
+            transform: scale(1.05);
+        }
+
         .movePage:hover{
             cursor: pointer;
         }
@@ -103,7 +110,7 @@
                     <h1 onclick="winnerPage();">역대 이달의 우승작<hr id="hr_1"></h1>
                 </div>
                 <div>
-                    <table border="1" class="contest_table">
+                    <table class="contest_table">
                         <tbody>
                             <tr >
                                 <td colspan="3">
@@ -150,7 +157,7 @@
                 
                 <div id="voteList_area" align="center">
                     <c:forEach  items="${ list }" var="list">
-                    <table border="1" class="contest_table">
+                    <table class="contest_table">
                         <tbody>
                             <tr >
                                 <td colspan="3">

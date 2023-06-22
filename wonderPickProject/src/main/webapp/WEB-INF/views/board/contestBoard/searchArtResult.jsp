@@ -115,6 +115,7 @@
         width: 180px;
         overflow: hidden;
         white-space: nowrap;
+        text-overflow: ellipsis;
       
     }
     .table_sysdate{
@@ -135,7 +136,7 @@
     <div id="all_area">
         <div id="main_area">
             <div id="searchResult_title">
-                <span id="result_text">${ keyword }"에 대한 검색결과 입니다.</span>
+                <span id="result_text">"${ keyword }"에 대한 검색결과 입니다.</span>
             </div>
             <div id="contents_area">
                 <ul class="list_tab">

@@ -50,7 +50,7 @@
                         <a href="#">공지사항</a>
                             <ul class="detailCategory">
                                 <li><a href="#">공지사항</a></li>
-                                <li><a href="selectTop10.ct">공모전</a></li>
+                                <li><a href="selectVotePage.ct">공모전</a></li>
                                 <li><a href="#">1대1문의</a></li>
                                 <li><a href="#">광고문의</a></li>
                             </ul>
@@ -60,7 +60,7 @@
                 <div class="search_area">
                     <form action="searchArtResult.ct" method="get">
                         <div id="search_main">
-                            <input type="text" placeholder="검색어를 입력해주세요" name="keyword" id="search_input" onkeyup="searchAutoComplet();"  >
+                            <input type="text" placeholder="검색어를 입력해주세요" name="keyword" id="search_input" onkeyup="searchAutoComplet();" required>
                             <button type="submit"><span class="material-symbols-outlined"> search</span></button>
                         </div>
                         <div id="search_list_area">
