@@ -39,9 +39,9 @@ public class KakaoController {
       param +="&total_amount="+total_amount;
       param +="&vat_amount=200";
       param +="&tax_free_amount=0";
-      param +="&approval_url=http://localhost:8007/wonderPick/success";
-      param +="&fail_url=http://localhost:8007/wonderPick";
-      param +="&cancel_url=http://localhost:8007/wonderPick";
+      param +="&approval_url=http://localhost:8010/wonderPick/success";
+      param +="&fail_url=http://localhost:8010/wonderPick";
+      param +="&cancel_url=http://localhost:8010/wonderPick";
       System.out.println(param);
 
       OutputStream output  = connectServer.getOutputStream();

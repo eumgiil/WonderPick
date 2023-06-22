@@ -30,6 +30,7 @@
 		<typeAlias type="com.kh.wonderPick.chatting.model.vo.Chating" alias="chating"/>
 		<typeAlias type="com.kh.wonderPick.chatting.model.vo.BeforeReadChatings" alias="beforeReadChatings"/>
 		<typeAlias type="com.kh.wonderPick.chatting.model.vo.AddPriceAndReason" alias="apar"/>
+		<typeAlias type="com.kh.wonderPick.chatting.model.vo.AcceptCondition" alias="ac"/>
 
 	</typeAliases>
 	

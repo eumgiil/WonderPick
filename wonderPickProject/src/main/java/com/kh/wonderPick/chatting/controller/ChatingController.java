@@ -13,6 +13,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.wonderPick.chatting.model.service.ChatingService;
+import com.kh.wonderPick.chatting.model.vo.AcceptCondition;
 import com.kh.wonderPick.chatting.model.vo.AddPriceAndReason;
 import com.kh.wonderPick.chatting.model.vo.BeforeReadChatings;
 import com.kh.wonderPick.chatting.model.vo.Chating;
@@ -41,7 +43,7 @@ public class ChatingController {
 	private WebSocketBasicServer wsb;
 
 	@RequestMapping("chating.co")
-	public ModelAndView chatingView(Chating c, @RequestParam(value="boardNo")int boardNo, HttpSession session, ModelAndView mv) throws IOException {
+	public ModelAndView chatingView(Chating c, @RequestParam(value="boardNo", defaultValue = "0")int boardNo, HttpSession session, ModelAndView mv, @RequestParam(value="alreadyReject", defaultValue = "0")int alreadyReject) throws IOException {
 
 		System.out.println(boardNo);
 		
@@ -49,8 +51,36 @@ public class ChatingController {
 		
 		c.setMembertNickName(loginMember.getNickName());
 		c.setMemberNo(loginMember.getMemberNo());
+		c.setBoardNo(boardNo);
+		
+		if(boardNo==0) {
+			
+			Chating roomListSearch = new Chating();
+
+			roomListSearch.setMembertNickName("%"+c.getMembertNickName()+"%");
+
+			ArrayList<Chating> roomList = chatingService.selectAllRoom(roomListSearch);
+			
+			for(Chating c1 : roomList) {
+				if(c1.getMemberNo()==loginMember.getMemberNo()) {
+					c1.setMembertNickName(chatingService.selectMemberNick(c1.getMemberNo()));
+					c1.setArtistNickName(chatingService.selectMemberNick(c1.getArtistNo())) ;
+				}
+				if(c1.getArtistNo()==loginMember.getMemberNo()) {
+					c1.setMembertNickName(chatingService.selectMemberNick(c1.getArtistNo()));
+					c1.setArtistNickName(chatingService.selectMemberNick(c1.getMemberNo()));
+				}
+			}
+			System.out.println(roomList);
+			mv.addObject("roomList",roomList)
+			.addObject("c",c)
+			.addObject("alreadyReject",alreadyReject)
+			.setViewName("/chating/chating");
+			
+		}else {
 		
 		Member nickAndNo = chatingService.selectartistNick(boardNo);
+		
 		System.out.println(nickAndNo);
 		
 		c.setArtistNickName(nickAndNo.getNickName());
@@ -122,7 +152,6 @@ public class ChatingController {
 					System.out.println("1");
 				} 
 				if(msg.getFromMember().equals(c.getMembertNickName()) && msg.getReadCheck().equals(msg.getToMember())){
-					readYetMSG+=msg.getContent()+"<small class=\"ReadCheck\"></small>";
 					read=1;
 					System.out.println("2");
 				}
@@ -134,19 +163,22 @@ public class ChatingController {
 				}
 			}
 			if(read==1) {
-				readedChating(c);
 				chatingService.removeReadChat(c);
 				System.out.println("4");
 			}
 		}
 		
+		AcceptCondition ac = chatingService.selectAcceptStatus(c);
 		//세션에 맴버 받아와야함
 		mv.addObject("c",c)
+		.addObject("ac",ac)
+		.addObject("alreadyReject",alreadyReject)
 		.addObject("readYetMSG",readYetMSG)
 		.addObject("roomList",roomList)
 		.addObject("savedChating",str)
 		.addObject("boardNo",boardNo)
 		.setViewName("/chating/chating");
+		}
 		return mv;
 	}
 
@@ -179,7 +211,7 @@ public class ChatingController {
 
 	@ResponseBody
 	@RequestMapping(value="readedChat.co",produces="application/json; charset=UTF-8")
-	public void readedChating(Chating c) throws IOException {
+	public void readedChating(Chating c) {
 		//상대가 채팅방에 없을 때는 보낸 내용을 db에 저장해서 채팅방에 입장 시 파일에 저장해 두고 db에 내용은 삭제한다
 		File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles/"+c.getMembertNickName()+c.getArtistNickName()+".txt");
 
@@ -188,29 +220,52 @@ public class ChatingController {
 		if(!brcList.isEmpty()) {
 			ArrayList<BeforeReadChatings> afterList = chatingService.selectreadYetChatings(c);
 			if(afterList.get(0).getReadCheck().equals(afterList.get(0).getToMember())) {
-				for(BeforeReadChatings msg : brcList) {
-					BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-					// 파일에 쓰기
-					writer.write(msg.getContent());
-					//writer.newLine();
-					// 버퍼 및 스트림 뒷정리
-					writer.flush(); // 버퍼의 남은 데이터를 모두 쓰기
-					writer.close(); // 스트림 종료
+				int i = 0;
+				for(BeforeReadChatings msg : afterList) {
+					System.out.println(msg);
+					BufferedWriter writer;
+					try {
+						writer = new BufferedWriter(new FileWriter(file, true));
+						// 파일에 쓰기
+						writer.write(msg.getContent());
+						//writer.newLine();
+						// 버퍼 및 스트림 뒷정리
+						writer.flush(); // 버퍼의 남은 데이터를 모두 쓰기
+						writer.close(); // 스트림 종료
+						i++;
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}finally {
+						System.out.println("i"+i);
+						if(i==afterList.size()) {
+							System.out.println("안됨 ㅠ");
+							//chatingService.removeReadChat(c);
+						}
+					}
 				}
 			}
 		}
 	}
 
 	@ResponseBody
-	@RequestMapping(value="loadChatings.co", produces="text/html; charset=UTF-8")
+	@RequestMapping(value="loadChatings.co", produces="application/json; charset=UTF-8")
 	public String loadChatings(Chating c) throws IOException {
+		
+		AcceptCondition ac = chatingService.selectAcceptStatus(c);
+		
+		System.out.println("?"+c);
 		
 		Chating rn = new Chating();
 
 		rn.setArtistNickName("%"+c.getArtistNickName()+"%");
 		rn.setMembertNickName("%"+c.getMembertNickName()+"%");
-
+		
+		System.out.println(rn);
+		
 		Chating roomAdd = chatingService.selectRoomName(rn);
+		
+		System.out.println(roomAdd);
 
 		wsb.changeRoom(c.getRoomName(), c.getMembertNickName());
 
@@ -232,6 +287,8 @@ public class ChatingController {
 
 		ArrayList<BeforeReadChatings> brc = chatingService.selectreadYetChatings(roomAdd);
 
+		System.out.println(brc);
+		
 		int read = 0;
 		for(BeforeReadChatings msg : brc) {
 			if(msg.getFromMember().equals(c.getMembertNickName()) && !(msg.getReadCheck().equals(msg.getToMember()))) {
@@ -239,7 +296,6 @@ public class ChatingController {
 				System.out.println("11");
 			} 
 			if(msg.getFromMember().equals(c.getMembertNickName()) && msg.getReadCheck().equals(msg.getToMember())){
-				str+=msg.getContent()+"<small class=\"ReadCheck\"></small>";
 				read=1;
 				System.out.println("12");
 			}
@@ -252,17 +308,22 @@ public class ChatingController {
 		}
 		if(read==1) {
 			System.out.println("14");
-			readedChating(c);
 			chatingService.removeReadChat(c);
 		}
 
-		return str;
+		JSONObject jObj = new JSONObject();
+		jObj.put("ac",ac);
+		jObj.put("str",str);
+		
+		return jObj.toJSONString();
 	}
 
 	@ResponseBody
 	@RequestMapping(value="insertReasonPrice.co",produces="application/json; charset=UTF-8")
 	public int insertReasonPrice(AddPriceAndReason apar){
 
+		System.out.println(apar);
+		
 		String [] priceArr = apar.getAddPrices().split(",");
 		String [] requestArr = apar.getRequest().split(",");
 
@@ -277,30 +338,74 @@ public class ChatingController {
 		}
 
 		System.out.println(list);
+		
+		Chating c = new Chating();
+		c.setBoardNo(apar.getBoardNo());
+		c.setRoomName(apar.getRoomName());
+		if(chatingService.selectAcceptStatus(c)==null) {
+			chatingService.insertAcceptCondition(apar);
+		}
 
 		return chatingService.insertReasonPrice(list);
 
 	}
 
 	@RequestMapping("checkCondition.co")
-	public ModelAndView selectCondition(String reciever, int originPrice, AddPriceAndReason apn, ModelAndView mv, String noMoreCon){
+	public ModelAndView selectCondition(HttpSession session, String roomName, int artistNo, int originPrice, AddPriceAndReason apn, ModelAndView mv, String noMoreCon){
 
 		System.out.println(noMoreCon);/**/
-
 		ArrayList<AddPriceAndReason> apan = chatingService.selectCondition(apn.getBoardNo());
-
+		
+		Chating c = new Chating();
+		
+		c.setRoomName(roomName);
+		c.setBoardNo(apn.getBoardNo());
+		
+		AcceptCondition ac = chatingService.selectAcceptStatus(c);
+		
+		if(ac==null) {
+			session.setAttribute("loginMember", (Member)session.getAttribute("loginMember"));
+			
+			mv.addObject("session",session.getAttribute("loginMember"))
+			.setViewName("redirect:chating.co?alreadyReject=1");
+			return mv;
+		}
+		System.out.println(ac);
 		System.out.println(apan);
-		System.out.println("reciever"+reciever);
+		System.out.println("artistNo"+artistNo);
 		System.out.println(originPrice);
 
-		mv.addObject("suggestList",apan).addObject("originPrice",originPrice).addObject("reciever",reciever).setViewName("getSuggest");
+		mv.addObject("suggestList",apan)
+		.addObject("originPrice",originPrice)
+		.addObject("artistNo",artistNo)
+		.addObject("roomName",roomName)
+		.addObject("ac",ac)
+		.setViewName("chating/getSuggest");
 
 		return mv;
 	}
 
-	@ResponseBody
 	@RequestMapping("removeCondition")
-	public String removeCondition(Model m, int boardNo) {
+	public String removeCondition(Model m, int[] rejectList, Chating c) {
+		chatingService.deletePriceAndReason(rejectList);
+		chatingService.deleteAcceptCondition(c);
 		return "redirect:chating.co";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="updatetAcceptCondition.co", produces="application/json; charset=UTF-8")
+	public String updatetAcceptCondition(Chating c) {
+		
+		String result="";
+		
+		if(chatingService.updatetAcceptCondition(c)==1) {
+			System.out.println("*"+c);
+			AcceptCondition ac = chatingService.selectAcceptStatus(c);
+			System.out.println("*"+ac);
+			if("Y".equals(ac.getMemberCheck()) && "Y".equals(ac.getArtistCheck())) {
+				result="Y";
+			}
+		}
+		return result;
 	}
 }

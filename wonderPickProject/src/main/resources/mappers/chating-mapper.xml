@@ -5,11 +5,13 @@
 <mapper namespace="chatingMapper">
 	<resultMap type="chating" id="chatingResultSet">
  		<result column="ROOM_NAME" property="roomName"/>
+ 		<result column="BOARD_NO" property="boardNo"/>
  		<result column="ARTIST_NO" property="artistNo"/>
  		<result column="MEMBER_NO" property="memberNo"/>
  	</resultMap>
  	
  	<resultMap type="beforeReadChatings" id="brcResultSet">
+ 		<result column="BOARD_NO" property="boardNo"/>
  		<result column="FROM_MEMBER" property="fromMember"/>
  		<result column="TO_MEMBER" property="toMember"/>
  		<result column="CONTENT" property="content"/>
@@ -41,6 +43,13 @@
 		<result column="modify_date" property="modifyDate" />
 	</resultMap>
 	
+	<resultMap type="ac" id="acResultSet">
+ 		<result column="BOARD_NO" property="boardNo"/>
+ 		<result column="ROOM_NAME" property="roomName"/>
+ 		<result column="MEMBER_CHECK" property="memberCheck"/>
+ 		<result column="ARTIST_CHECK" property="artistCheck"/>
+ 	</resultMap>
+	
  	<select id="selectartistNick" parameterType="_int" resultMap="memberResultSet">
  		select
  			nickname,member_no
@@ -50,7 +59,16 @@
 			member_no = (select member_no
                     	 from board
                     	 where board_no = #{boardNo})
- 			
+ 	</select>
+ 	
+ 	<select id="selectMemberNo" parameterType="_int" resultType="string">
+ 		select
+ 			nickname
+ 		from
+ 			member
+ 		where
+ 			member_no = #{memberNo}
+ 		
  	</select>
  	
 	<insert id="createRoom" parameterType="chating">
@@ -59,12 +77,14 @@
 		CHATING
 		(
 		ROOM_NAME,
+		BOARD_NO,
 		ARTIST_NO,
 		MEMBER_NO
 		)
 		 VALUES
 		(
 		#{roomName},
+		#{boardNo},
 		#{artistNo},
 		#{memberNo}
 		)
@@ -81,7 +101,7 @@
 	
 	<select id="selectRoomName" resultMap="chatingResultSet" parameterType="chating">
 		select
-			ROOM_NAME
+			*
 		from
 			chating
 		where 
@@ -108,6 +128,7 @@
 			BEFORE_READ_CHATINGS
 			(
 			CHATTING_NO,
+			BOARD_NO,
 			ROOM_NAME,
 			FROM_MEMBER,
 			TO_MEMBER,
@@ -118,6 +139,7 @@
 		values
 			(
 			SEQ_CHATIN_NO.NEXTVAL,
+			#{boardNo},
 			#{roomName},
 			#{fromMember},
 			#{toMember},
@@ -137,7 +159,8 @@
 			BEFORE_READ_CHATINGS
 		where
 			ROOM_NAME=#{roomName}
-		
+		and 
+			BOARD_NO=#{boardNo} 
 		order
 		by
 			ENROLL_DATE ASC
@@ -150,6 +173,8 @@
 			READ_CHECK = #{membertNickName}
 		where
 			ROOM_NAME = #{roomName}
+		and
+			BOARD_NO = #{boardNo}
 	</update>
 	
 	<delete id="removeReadChat" parameterType="chating">
@@ -158,6 +183,9 @@
 			BEFORE_READ_CHATINGS
 		where
 			ROOM_NAME = #{roomName}
+		and
+			BOARD_NO = #{boardNo}
+			
 	</delete>
 	
 	<update id="insertReasonPrice" parameterType="apar">
@@ -191,4 +219,79 @@
 		WHERE
 			BOARD_NO=#{boardNo}
 	</select>
+	
+	<delete id="deletePriceAndReason" parameterType="_int">
+		delete
+		from
+			ADD_PRICE_AND_REASON
+		where
+			OPTION_NO = #{i}
+	</delete>
+	
+	<insert id="insertAcceptCondition" parameterType="apar">
+		insert
+		into
+			ACCEPT_CONDITION
+			(
+				BOARD_NO,
+				ROOM_NAME,
+				MEMBER_CHECK,
+				ARTIST_CHECK
+			)
+		values
+			(
+				#{boardNo},
+				#{roomName},
+				<choose>
+					<when test="#{accepter==0}">
+						'Y',
+						default
+					</when>
+					<otherwise>
+						default
+						'Y',
+					</otherwise>
+				</choose>
+			)
+	</insert>
+	<update id="updatetAcceptCondition" parameterType="chating">
+		update
+			ACCEPT_CONDITION
+		set
+			<choose>
+					<when test="artistNo!=0">
+						ARTIST_CHECK='Y'
+					</when>
+					<otherwise>
+						MEMBER_CHECK='Y'
+					</otherwise>
+				</choose>
+		where
+			BOARD_NO = #{boardNo}
+		and
+			ROOM_NAME = #{roomName}
+	</update>
+	<select id="selectAcceptStatus" parameterType="chating" resultMap="acResultSet">
+		select 
+			BOARD_NO,
+			ROOM_NAME,
+			MEMBER_CHECK,
+			ARTIST_CHECK
+		from
+			ACCEPT_CONDITION
+		where
+			BOARD_NO = #{boardNo}
+		and
+			ROOM_NAME = #{roomName}
+	</select>
+	
+	<delete id="deleteAcceptCondition" parameterType="chating">
+		delete
+		from
+			ACCEPT_CONDITION
+		where
+			BOARD_NO = #{boardNo}
+		and
+			ROOM_NAME = #{roomName}
+	</delete>
 </mapper>
