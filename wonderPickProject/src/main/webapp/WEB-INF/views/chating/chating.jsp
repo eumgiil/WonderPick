@@ -377,7 +377,7 @@
 							
 							socket.send('getin,' + roomName + ',${loginMember.nickName}');
 							
-							$('#chatingView>form').append(result.str);
+							$('#chatingView>form').append(result);
 						}
 					});
 				})

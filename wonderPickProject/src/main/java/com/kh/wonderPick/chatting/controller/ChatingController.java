@@ -249,7 +249,7 @@ public class ChatingController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value="loadChatings.co", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="loadChatings.co", produces="text/html; charset=UTF-8")
 	public String loadChatings(Chating c) throws IOException {
 		
 		AcceptCondition ac = chatingService.selectAcceptStatus(c);
@@ -311,11 +311,11 @@ public class ChatingController {
 			chatingService.removeReadChat(c);
 		}
 
-		JSONObject jObj = new JSONObject();
-		jObj.put("ac",ac);
-		jObj.put("str",str);
+//		JSONObject jObj = new JSONObject();
+//		jObj.put("ac",ac);
+//		jObj.put("str",str);
 		
-		return jObj.toJSONString();
+		return str;
 	}
 
 	@ResponseBody
