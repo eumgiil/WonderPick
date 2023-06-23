@@ -16,6 +16,7 @@ import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.artBoard.model.vo.SearchArt;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 
 @Service
@@ -117,7 +118,15 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 		return result;
 	}
 
+	@Override
+	public ArrayList<Reply> selectReplyList(int boardNo) {
+		return artDao.selectReplyList(sqlSession, boardNo);
+	}
 
+	@Override
+	public int insertReply(Reply r) {
+		return artDao.insertReply(sqlSession, r);
+	}
 	
 	
 

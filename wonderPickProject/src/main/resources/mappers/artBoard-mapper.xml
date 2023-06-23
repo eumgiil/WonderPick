@@ -460,7 +460,40 @@
 	
 
 
-
+	<select id="selectReplyList" resultType="reply">
+		select
+			   member_no memberNo,
+		       nickname nickname,
+		       content content,
+		       to_char(create_date, 'YYYY-MM-DD') as "createDate"
+		  from reply
+		  join member using (member_no)
+		 where board_no = #{boardNo}
+		 order 
+		 	by 
+		 	   create_date desc
+	</select>
+	<insert id="insertReply" parameterType="reply">
+	    insert
+	      into
+	           reply
+	           (
+	           reply_no, 
+	           board_no,
+	           member_no,
+	           content,
+	           create_date
+	           ) 
+	     values
+	           (
+	           seq_reply_no.nextval,
+	           #{boardNo},
+	           #{memberNo},
+	           #{content},
+	           SYSDATE
+	           )
+	</insert>
+	
 
 
 

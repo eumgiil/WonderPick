@@ -15,6 +15,7 @@ import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.artBoard.model.vo.SearchArt;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 
 @Repository
@@ -78,6 +79,14 @@ public class ArtBoardDao {
 	}
 	public int deleteFiles(SqlSessionTemplate sqlSession, int bno) {
 		return sqlSession.delete("artBoardMapper.deleteFiles", bno);
+	}
+	
+	// 문의 댓글
+	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo){
+		return (ArrayList)sqlSession.selectList("artBoardMapper.selectReplyList", boardNo);
+	}
+	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("artBoardMapper.insertReply", r);
 	}
 	
 

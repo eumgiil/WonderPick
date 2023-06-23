@@ -305,31 +305,31 @@
 				<table id="replyArea" align="center" border="1">
 				<thead>
 				<c:choose>
-				  <c:when test="${empty replyList }">
-                    <h6>댓글 내역이 존재하지 않습니다.</h3>
-                    <br>
-				  </c:when>
-				  <c:otherwise>
-                    <c:if test="${not empty reReplyList }">
-                    <input type="hidden" value="${re.replyNo }">
-                    <c:forEach items="${reReplyList }" var="re">
-                    <table class="reReply" border="1">
-                    <tr>
-                    <td width="15%" rowspan="3" style="padding:10px; border-right: 1px solid lightslategray;">판매자 프로필</td>
-                    </tr>
-                    <tr>
-                       <td width="70%" style="padding-left:10px;">${re.nickname }</td>
-                       <td width="15%" rowspan="3">
-	                       <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>
-	                       <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>
-                        </td>
-                    </tr>
-                    <tr>
-                       <td style="padding-left:10px;">${re.content}</td>
-                    </tr>
-                    </table>
-                    </c:forEach>
-                    </c:if>
+                    <c:when test="${empty replyList }">
+                        <h6>댓글 내역이 존재하지 않습니다.</h3>
+                        <br>
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${not empty reReplyList }">
+                            <input type="hidden" value="${re.replyNo }">
+                            <c:forEach items="${reReplyList }" var="re">
+                                <table class="reReply" border="1">
+                                    <tr>
+                                        <td width="15%" rowspan="3" style="padding:10px; border-right: 1px solid lightslategray;">판매자 프로필</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="70%" style="padding-left:10px;">${re.nickname }</td>
+                                        <td width="15%" rowspan="3">
+                                            <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>
+                                            <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:10px;">${re.content}</td>
+                                    </tr>
+                                </table>
+                            </c:forEach>
+                        </c:if>
                    </c:otherwise>
                 </c:choose>
 				</thead>
@@ -383,40 +383,40 @@
         
         		function insertReply(){
         			
-        		// #insertcontent 의 val의 공백 => .trim()
-        	   let content = $('#insertcontent').val();
-        	   console.log(content);
-        	    
-        	   if($('#insertcontent').val().trim() != ''){
-        		   $.ajax({
-        			   url : 'rinsert.go',
-        			   data : {
-        				   boardNo :  ${g.boardNo},
-        				   content : $('#insertcontent').val(),
-        				   memberNo : ${loginMember.memberNo}
-        			   },
-        			   success : function(result){
-        				   console.log(result);
-        				   
-        				   if(result == 'success'){
-        					   selectReplyList(){
-        						   $('#insertcontent').val('');
-        					   }
-        				   };
-        			   },
-        			   error : function(){
-        				console.log('실패!~!~!~!~!');
-        			   }
-        		   });
-        		   
-        	   }else{
-        		   window.alert('5252~!~!~!');
-        	   	
-        	}
+                        // #insertcontent 의 val의 공백 => .trim()
+                    let content = $('#insertcontent').val();
+                    console.log(content);
+                        
+                    if($('#insertcontent').val().trim() != ''){
+                        $.ajax({
+                            url : 'rinsert.go',
+                            data : {
+                                boardNo :  ${g.boardNo},
+                                content : $('#insertcontent').val(),
+                                memberNo : ${loginMember.memberNo}
+                            },
+                            success : function(result){
+                                console.log(result);
+                                
+                                if(result == 'success'){
+                                    selectReplyList(){
+                                        $('#insertcontent').val('');
+                                    }
+                                };
+                            },
+                            error : function(){
+                                console.log('실패!~!~!~!~!');
+                            }
+                        });
+                        
+                    }else{
+                        window.alert('5252~!~!~!');
+                        
+                    }
         		
         		
         	  
-           });
+                };
         	
            function selectReplyList(){
         	   $.ajax({

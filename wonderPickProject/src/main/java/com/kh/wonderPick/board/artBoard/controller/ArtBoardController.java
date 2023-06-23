@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,6 +33,7 @@ import com.kh.wonderPick.board.artBoard.model.vo.SearchArt;
 import com.kh.wonderPick.board.boardCommon.controller.BoardController;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.reply.model.service.ReplyService;
 import com.kh.wonderPick.board.review.model.service.ReviewService;
 import com.kh.wonderPick.common.model.vo.PageInfo;
@@ -367,7 +369,22 @@ public class ArtBoardController {
 	}
 	
 	
+	// 문의 댓글 목록 조회
+	@ResponseBody
+	@RequestMapping(value="rlist.at", produces="application/json; charset=UTF-8")
+	public String ajaxSelectReplyList(int boardNo, ModelAndView mv, HttpSession session) {
+		ArrayList<Reply> replyList = new ArrayList<Reply>();
+		Reply reply = new Reply();
+		replyList.add(reply);
+		return new Gson().toJson(artService.selectReplyList(boardNo));
+	}
 	
+	// 문의 댓글 쓰기
+	@ResponseBody
+	@RequestMapping("rinsert.at")
+	public String ajaxInsertReply(Reply r, HttpSession session) {
+		return artService.insertReply(r) > 0 ? "success" : "fail";
+	}
 	
 	
 	
