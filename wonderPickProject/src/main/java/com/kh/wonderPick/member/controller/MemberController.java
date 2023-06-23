@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.wonderPick.member.model.service.MemberService;
 import com.kh.wonderPick.member.model.vo.Member;
-import com.kh.wonderPick.member.model.vo.MemberImage;
 import com.kh.wonderPick.member.model.vo.SecretCode;
 
 @Controller
@@ -117,6 +116,13 @@ public class MemberController {
 		return memberService.nickCheckMember(checkNick) > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	/**
+	 * 입력한  이메일로 6자리 숫자코드를 발송하는 서비스
+	 * @param checkEmail : 사용자가 입력한 이메일
+	 * @param request 
+	 * @return : 인증에 성공했다면 success, 실패하면 error를를 반환
+	 * @throws MessagingException
+	 */
 	@ResponseBody
 	@RequestMapping("emailCheck.me")
 	public String emailCheckMember(String checkEmail, HttpServletRequest request) throws MessagingException {
@@ -130,9 +136,6 @@ public class MemberController {
 													.who(ip)
 													.secret(secret)
 													.build();
-		System.out.println(checkEmail);
-		System.out.println(secretCode.getWho());
-		System.out.println(secretCode.getSecret());
 		System.out.println(secretCode);
 		if(memberService.insertSecret(secretCode) > 0) {
 			helper.setTo(checkEmail);
@@ -147,13 +150,24 @@ public class MemberController {
 		}
 	}
 	
+	/**
+	 * 랜덤으로6자리 숫자코드 발급
+	 * @return : 6자리 숫자코드 발급
+	 */
 	public String generateSectret() {
 		Random r = new Random();
-		int i = r.nextInt(10000);
+		int i = r.nextInt(100000);
 		Format f = new DecimalFormat("000000");
 		String secret = f.format(i);
 		
 		return secret;
+	}
+	
+	@ResponseBody
+	@RequestMapping("codeCheck.me")
+	public void codeCheckMember(String emailCode) {
+//		memberService.codeCheckMember(emailCode);
+		System.out.println(emailCode);
 	}
 	
 	/**

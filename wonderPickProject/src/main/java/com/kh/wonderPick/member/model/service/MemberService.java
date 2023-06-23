@@ -16,4 +16,6 @@ public interface MemberService {
 	int signUpMember(Member m);
 	
 	int insertProfile(Member mImg);
+	
+	int codeCheckMember(String emailCode);
 }

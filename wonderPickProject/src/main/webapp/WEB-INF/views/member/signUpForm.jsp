@@ -105,6 +105,7 @@
 			const $nameInput = $('#signUpInput #memberName');
 			const $nickInput = $('#signUpInput #nickName');
 			const $phoneInput = $('#signUpInput #phone');
+			const $codeInput = $('#signUpInput #emailCode');
 			
 			// 아이디 정규표현식 검사, 중복검사
 			$idInput.keyup(() => {	
@@ -229,6 +230,28 @@
 							}
 						}
 					})
+				}
+			});
+			
+			$codeInput.keyup(() => {
+				var regExp = /^[0-9]{6}$/;
+				if(regExp.test($codeInput.val())){
+					if($codeInput.val().length = 6){
+						$.ajax({
+							url : 'codeCheck.me',
+							data : { emailCode : $codeInput.val()},
+							success : result => {
+								if(result == 'success'){
+									$('#checkCodeResult').css('color', successColor).text('인증완료되었습니다.');
+								} else {
+									$('#checkCodeResult').css('color', errorColor).text('인증코드가 올바르지 않습니다.');
+								}
+							}
+						})
+					}
+				}
+				 else {
+					$('#checkCodeResult').css('color', errorColor).text('올바른 코드를 입력해주세요.');
 				}
 			});
 			
