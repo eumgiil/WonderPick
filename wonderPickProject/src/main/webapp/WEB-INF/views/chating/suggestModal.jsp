@@ -158,9 +158,9 @@ div {
 
 				<!-- Modal body -->
 				<div class="modal-body" align="center" id="modalBody">
-					<img alt="" src=""> <small>샘플 예시</small>
+					<img alt="이미지" src="${orderList.filePath}"> <small> ${orderList.orderContent}</small>
 					<h2>제안가격:</h2>
-					<p>2000</p>
+					<p>${totalPrice}</p>
 					<button id="remove" style="float: right" onclick="removePrice();">선택제거</button>
 					<button id="selectAll" style="float: right" onclick="selectAll();">전체선택</button>
 					<button id="suggest" style="float: right">가격 추가</button>
@@ -197,7 +197,7 @@ div {
          
          function removePrice() {
         	 $(":checked").parent().remove();
-        	 $('#modalBody>p').text(2000) //db에서 값 끌어와
+        	 $('#modalBody>p').text('${totalPrice}') 
 		}
          
         function selectAll() {

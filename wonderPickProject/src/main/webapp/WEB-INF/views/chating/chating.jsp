@@ -86,7 +86,54 @@
 
 	display: none;
 
-	
+	box-shadow: 1px 1px 10px rgb(200, 200, 200);
+}
+.emoticon_div{
+	border: 1px solid black;
+}
+#emo_img{
+	display: inline;
+}
+#emoticon_image{
+	border: 1px solid black;
+	width: 100px;
+	height: 100px;
+}
+#emo_text{
+	border: 1px solid black;
+	display: inline-table;
+	font-size: large;
+}
+#emo_title{
+	font-size: 50px;
+	width: 350px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+#emo_price{
+	border: 1px solid black;
+	font-size: 20px;
+}
+.emo_list{
+	overflow: scroll;
+	height: 95%;
+}
+
+
+#emo_category{
+	border: 1px solid black;
+	margin: auto;
+}
+#cate_1{
+	border: 1px solid black;
+	display: inline;
+	font-size: 30px;
+}
+#cate_2{
+	border: 1px solid black;
+	display: inline;
+	font-size: 30px;
 }
 
 
@@ -121,7 +168,7 @@
 												<img src="" alt="ㅎㅎ">
 											</div>
 											<div class="chatingContent" align="left">
-												<h6>${list.artistNickName}</h6>
+												<h6 class="name_h6">${list.artistNickName}</h6>
 											</div>
 											<input type="hidden" name="roomAddress" value="${ list.roomName }">
 											<input type="hidden" name="roomNo" value="${ list.boardNo }">
@@ -139,7 +186,7 @@
 												<img src="" alt="ㅎㅎ">
 											</div>
 											<div class="chatingContent" align="left">
-												<h6>${list.membertNickName}</h6>
+												<h6 class="name_h6">${list.membertNickName}</h6>
 											</div>
 											<input type="hidden" name="roomAddress" value="${ list.roomName }">
 											<input type="hidden" name="roomNo" value="${ list.boardNo }">
@@ -171,7 +218,7 @@
 				<c:choose>
 					<c:when test="${c.membertNickName eq loginMember.nickName}">
 						<h3>${ c.artistNickName }</h3>
-					</c:when>
+					</c:when> 
 					<c:otherwise>
 						<h3>${ c.membertNickName }</h3>
 					</c:otherwise>
@@ -192,10 +239,19 @@
 			</div>
 
 			<div id="emoticon_area">
-				이모티콘 집어넣을꺼임 건들지마셈
-				<div>여기는 사진</div>
-				<div>여기는 제목</div>
-				<div>가격</div>
+
+				<div id="emo_category">
+					<div id="cate_1" onclick="chargeList();">
+						<span>역대우승이모티콘</span>	
+					</div>
+					<div id="cate_2" onclick="freeList();">
+						<span>이번달우승이모티콘</span>
+					</div>
+				</div>
+
+				<div class="emo_list">
+				</div>
+
 			</div>
 
 			<div id="chatingMenu">
@@ -209,7 +265,7 @@
 		</div>
 
 
-
+		
 
 
 
@@ -223,14 +279,14 @@
 
 			var socket
 
-			$(function() {
-				function validate() {
-					if($('input[name=alreadyReject]').val()==1){
-						alert('이미 거절된 제안입니다')
-						return false;
-					}
-					return true;
+			function validate() {
+				if($('input[name=alreadyReject]').val()==1){
+					alert('이미 거절된 제안입니다')
+					return false;
 				}
+				return true;
+			}
+			$(function() {
 				$('#chatingView>form>').remove();
 
 				if ('${readYetMSG}' != '') {
@@ -516,7 +572,7 @@
 								
 							}
 							if(result=="Y"){
-								alert('상대방이 요청을 수락하여 요청을 보낼 수 없습니다');
+								alert('상대방이 요청을 수락하여 요청을 보낼 수 없습니다. 요청을 보내려면 제안조건을 거절하세요');
 							}
 						}
 					})
@@ -532,34 +588,151 @@
 
 
 			function chating_emoticonList(){
+				$('#emoticon_area').toggle()
+				chargeList();
+			}
+
+			function chargeList(){
+
 				$.ajax({
 					url : 'emoticonList.ct',
 					data : {
 						memberNo : ${ sessionScope.loginMember.memberNo }
 					},
 					success : result => {
-						console.log(result);
+						//console.log(result);
 
-						// value = '';
-						// for(var i in result){
-						// 	value += 
+						value = '';
+						for(var i in result){
+							value += 
+									'<div id="emo_img" class="emoticon_div">'
+										+'<img src="'+ result[i].filePath +'" id="emoticon_image">'
+										+'<input type="hidden" value="'+ result[i].boardNo +'">'
+									+'</div>'
+									+'<div id="emo_text" class="emoticon_div">'
+										+'<div id="emo_title">'
+											+'<span >'+ result[i].boardTitle +'</span>'
+										+'</div>'
+										+'<div id="emo_price">'
+											+'<span>'+ result[i].price +'</span>'
+										+'</div>'
+									+'</div>';
 
-						// }
+							$('.emo_list').html(value);
+						}
+
+						// 무료는 사용 가능( 이모티콘 집어넣기 )
+						// 로그인 유저, 상대닉네임, 채팅방 주소
+						
+						// 무료랑 유료랑 구분
+						// 해당 이모티콘 클릭시 구매페이지 이동
 
 					},
 					error : () => {
 						alert('error!!')
 					}
+				});
+			};
 
+			function freeList(){
+				$.ajax({
+					url : 'emoFreeList.ct',
+					data : {
+						memberNo : ${ sessionScope.loginMember.memberNo }
+					}, 
+					success : result => {
+						//console.log(result);
+
+						value = '';
+						for(var i in result){
+							value += 
+								'<div class="free_list">'
+									+'<div id="emo_img" class="emoticon_div">'
+										+'<img src="'+ result[i].filePath +'" id="emoticon_image">'
+										+'<input type="hidden" value="'+ result[i].boardNo +'">'
+									+'</div>'
+									+'<div id="emo_text" class="emoticon_div">'
+										+'<div id="emo_title">'
+											+'<span >'+ result[i].boardTitle +'</span>'
+										+'</div>'
+										+'<div id="emo_price">'
+											+'<span>무료 사용 가능</span>'
+										+'</div>'
+									+'</div>'
+								+'</div>';
+
+							$('.emo_list').html(value);
+						}
+
+
+					}, 
+					error : () => {
+						alert('error!!!')
+					}
 
 				});
 
+			};
+
+			// var move = document.querySelectorAll('.emo_list');
+
+			// move.forEach(i => i.addEventListener('click', e => {
 
 
-				$('#emoticon_area').toggle()
+			// 	console.log(e.target);
 
 
-			}
+
+			// }))
+
+			// 로그인 유저, 상대닉네임, 채팅방 주소
+			$('.emo_list').on('click','.free_list', e => {
+
+				//console.log($(e.target).parents('.free_list').children());
+				
+				//let targetName = $(e.target).get(0).tagName;
+				
+				//console.log($(e.target).parents('#free_list').html());
+				//console.log($(e.currentTarget).filter('#emoticon_image').attr('src'));
+
+
+				let emoImgAddress = $(e.currentTarget).find('#emoticon_image').attr('src');
+				let loginUser  ='${ sessionScope.loginMember.nickName }';
+				let otherName = $('.name_h6').html();
+				let chatingRoom =  $('input[name=currentRoom]').val();
+
+				// console.log(loginUser)
+				// console.log('other :' +otherName)
+				// console.log(chatingRoom)
+
+				let sendEmoticon = '<div>'
+								 	+'<img src="'+ emoImgAddress +'" id="emoticon_image">'
+								 + '</div>';
+
+
+				socket.send(chatingRoom + ',' + loginUser + ','+ otherName + ',' + sendEmoticon);
+
+			})
+
+
+			
+			// 무료랑 유료랑 구분
+			// 해당 이모티콘 클릭시 구매페이지 이동
+			
+			
+			// 무료는 사용 가능( 이모티콘 집어넣기 )
+
+
+
+
+
+	
+
+
+			
+
+
+
 
 
 

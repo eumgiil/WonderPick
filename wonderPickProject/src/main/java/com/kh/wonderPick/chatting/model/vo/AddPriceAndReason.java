@@ -10,4 +10,9 @@ public class AddPriceAndReason {
 	private String request;
 	private int accepter;
 	private String roomName;
+	private int totalPrice;
+	private String orderContent;
+	private int price;
+	private String filePath;
+	private int count;
 }
