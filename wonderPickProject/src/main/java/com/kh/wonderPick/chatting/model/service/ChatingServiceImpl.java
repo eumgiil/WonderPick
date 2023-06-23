@@ -75,9 +75,9 @@ public class ChatingServiceImpl implements  ChatingService{
 	}
 
 	@Override
-	public ArrayList<AddPriceAndReason> selectCondition(int boardNo) {
+	public ArrayList<AddPriceAndReason> selectCondition(Chating c) {
 		// TODO Auto-generated method stub
-		return chatingDao.selectCondition(sqlSession,boardNo);
+		return chatingDao.selectCondition(sqlSession,c);
 	}
 
 	@Override
