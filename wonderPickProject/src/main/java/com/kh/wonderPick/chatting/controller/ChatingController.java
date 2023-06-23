@@ -43,7 +43,13 @@ public class ChatingController {
 	private WebSocketBasicServer wsb;
 
 	@RequestMapping("chating.co")
-	public ModelAndView chatingView(Chating c, @RequestParam(value="boardNo", defaultValue = "0")int boardNo, HttpSession session, ModelAndView mv, @RequestParam(value="alreadyReject", defaultValue = "0")int alreadyReject) throws IOException {
+	public ModelAndView chatingView(Chating c, 
+			@RequestParam(value="boardNo", defaultValue = "0")int boardNo, 
+			HttpSession session, 
+			ModelAndView mv,
+			@RequestParam(value="alreadyReject", defaultValue = "0")int alreadyReject,
+			@RequestParam(value="totalPrice", defaultValue = "0")int totalPrice
+			) throws IOException {
 
 		System.out.println(boardNo);
 
@@ -92,6 +98,7 @@ public class ChatingController {
 			File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles/"+c.getMembertNickName()+c.getArtistNickName()+".txt");
 			if(!file.exists()){ // 파일이 존재하지 않으면
 				file.createNewFile(); // 신규생성
+				//C:/wonderPick-workspace/WonderPick/wonderPickProject/src/main/webapp/resources/chatingFiles/이걸로 바꿔요
 			}
 
 			//채팅 리스트 조회
@@ -169,12 +176,11 @@ public class ChatingController {
 					System.out.println("4");
 				}
 			}
-
-			AcceptCondition ac = chatingService.selectAcceptStatus(c);
+			ArrayList<AddPriceAndReason> apan = chatingService.selectCondition(c);
+			
 			//세션에 맴버 받아와야함
 			mv.addObject("c",c)
-//			.addObject("memberCheck",ac.getMemberCheck())
-//			.addObject("artistCheck",ac.getArtistCheck())
+			.addObject("orderList",apan)
 			.addObject("alreadyReject",alreadyReject)
 			.addObject("readYetMSG",readYetMSG)
 			.addObject("roomList",roomList)
@@ -316,7 +322,12 @@ public class ChatingController {
 		}
 		AcceptCondition ac = chatingService.selectAcceptStatus(c);
 
+		ArrayList<AddPriceAndReason> suggestList = chatingService.selectCondition(c);
 		JSONObject jObj = new JSONObject();
+		
+		if(suggestList.isEmpty()) {
+			jObj.put("priceAndTtile",suggestList);
+		}
 		jObj.put("ac",ac);
 		jObj.put("str",str);
 
@@ -336,6 +347,7 @@ public class ChatingController {
 
 		for(int i = 0; i < priceArr.length; i++) {
 			AddPriceAndReason a = new AddPriceAndReason();
+			a.setRoomName(apar.getRoomName());
 			a.setBoardNo(apar.getBoardNo());
 			a.setAddPrices(priceArr[i]);
 			a.setRequest(requestArr[i]);
@@ -359,12 +371,14 @@ public class ChatingController {
 	public ModelAndView selectCondition(HttpSession session, String roomName, int artistNo, int originPrice, AddPriceAndReason apn, ModelAndView mv, String noMoreCon){
 
 		System.out.println(noMoreCon);/**/
-		ArrayList<AddPriceAndReason> apan = chatingService.selectCondition(apn.getBoardNo());
-
+		
 		Chating c = new Chating();
-
+		
 		c.setRoomName(roomName);
 		c.setBoardNo(apn.getBoardNo());
+		
+		ArrayList<AddPriceAndReason> apan = chatingService.selectCondition(c);
+
 
 		AcceptCondition ac = chatingService.selectAcceptStatus(c);
 
@@ -399,7 +413,7 @@ public class ChatingController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value="updatetAcceptCondition.co", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="updatetAcceptCondition.co", produces="application/text; charset=UTF-8")
 	public String updatetAcceptCondition(Chating c) {
 
 		String result="";

@@ -24,6 +24,11 @@
  		<result column="BOARD_NO" property="boardNo"/>
  		<result column="ADD_PRICES" property="addPrices"/>
  		<result column="REQUEST" property="request"/>
+    	<result column="TOTAL_PRICE" property="totalPrice"/>
+    	<result column="ORDER_CONTENT" property="order_content"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="COUNT" property="count"/>
  	</resultMap>
  	
  	<resultMap id="memberResultSet" type="member">
@@ -195,6 +200,7 @@
 			(
 			OPTION_NO,
 			BOARD_NO,
+			ROOM_NAME,
 			ADD_PRICES,
 			REQUEST
 			)
@@ -202,22 +208,53 @@
 			(
 			FUN_SEQ_ADDOPTION,
 			#{apar.boardNo},
+			#{apar.roomName},
 			#{apar.addPrices},
 			#{apar.request}
 			)
 		</foreach>
 	</update>
 	
-	<select id="selectCondition" parameterType="_int" resultMap="aparResultSet">
-		SELECT
-			OPTION_NO,
-			BOARD_NO,
-			ADD_PRICES,
-			REQUEST
-		FROM
-			ADD_PRICE_AND_REASON
-		WHERE
-			BOARD_NO=#{boardNo}
+	<select id="selectCondition" parameterType="chating" resultMap="aparResultSet">
+		select
+		    OPTION_NO,
+		    BOARD_NO,
+		    ADD_PRICES,
+		    REQUEST, 
+		    total_price,
+		    order_content,price,
+		    file_path,
+		    COUNT
+		from
+		    add_price_and_reason
+		right outer join 
+		    (
+		        select
+		            order_content,
+		            sum(add_prices)+price total_price,
+		            board_no,price,
+		            file_path,
+		            COUNT
+		        from
+		            (
+		                select
+		                    order_content,price,board_no,file_path,COUNT
+		                from
+		                    order_history
+		                join board_image using(board_no)
+		                where
+		                    board_no=#{boardNo}
+		                and
+		                    file_level = 1
+		            )
+		        left outer join add_price_and_reason using(board_no)
+		        group by order_content,price,board_no,price,room_name,file_path,COUNT
+		        having room_name = #{roomName}
+		    ) 
+		using(board_no)
+		where 
+		    board_no = 111
+		order by option_no;
 	</select>
 	
 	<delete id="deletePriceAndReason" parameterType="_int">

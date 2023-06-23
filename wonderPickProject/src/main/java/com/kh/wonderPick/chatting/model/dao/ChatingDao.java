@@ -59,9 +59,9 @@ public class ChatingDao {
 		return sqlSession.insert("chatingMapper.insertReasonPrice",list);
 	}
 
-	public ArrayList<AddPriceAndReason> selectCondition(SqlSessionTemplate sqlSession, int boardNo) {
+	public ArrayList<AddPriceAndReason> selectCondition(SqlSessionTemplate sqlSession, Chating c) {
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSession.selectList("chatingMapper.selectCondition",boardNo);
+		return (ArrayList)sqlSession.selectList("chatingMapper.selectCondition",c);
 	}
 
 	public Member selectartistNick(SqlSessionTemplate sqlSession, int artistNickName) {

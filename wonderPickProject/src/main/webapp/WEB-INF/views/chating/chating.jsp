@@ -171,7 +171,7 @@
 				<c:choose>
 					<c:when test="${c.membertNickName eq loginMember.nickName}">
 						<h3>${ c.artistNickName }</h3>
-					</c:when>
+					</c:when> 
 					<c:otherwise>
 						<h3>${ c.membertNickName }</h3>
 					</c:otherwise>
@@ -205,29 +205,19 @@
 			</div>
 		</div>
 
-
-
-
-
-
-
-
-
-
-
 		<script>
 			var uri = "ws://localhost:8010/wonderPick/sc";
 
 			var socket
 
-			$(function() {
-				function validate() {
-					if($('input[name=alreadyReject]').val()==1){
-						alert('이미 거절된 제안입니다')
-						return false;
-					}
-					return true;
+			function validate() {
+				if($('input[name=alreadyReject]').val()==1){
+					alert('이미 거절된 제안입니다')
+					return false;
 				}
+				return true;
+			}
+			$(function() {
 				$('#chatingView>form>').remove();
 
 				if ('${readYetMSG}' != '') {
@@ -513,7 +503,7 @@
 								
 							}
 							if(result=="Y"){
-								alert('상대방이 요청을 수락하여 요청을 보낼 수 없습니다');
+								alert('상대방이 요청을 수락하여 요청을 보낼 수 없습니다. 요청을 보내려면 제안조건을 거절하세요');
 							}
 						}
 					})

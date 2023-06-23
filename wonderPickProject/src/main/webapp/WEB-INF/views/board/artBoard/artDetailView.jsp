@@ -399,10 +399,20 @@
             </div>
             <br><hr><br>
 
+			<input type="hidden" name="nickName " value="${artBoard.member.nickName}">
+			<input type="hidden" name="orderType " value="D">
+			<input type="hidden" name="orderContent " value="${artBoard.board.boardTitle}">
+			<input type="hidden" name="price" value="${ artBoard.price }">
+			<input type="hidden" name="orderStatus" value="진행중">
+			<input type="hidden" name="defaultSize" value="${artBoard.defaultSize}">
+			<input type="hidden" name="count" value="${artBoard.modifyCount}">
+			
             <div id="btnRequest" class="center">
-            	<form action="chating.co">
+            	<form action="chating.co">${artBoard.member.nickName}
             		<input type="hidden" name="boardNo" value="${ bno }">
-            		<button>작가에게 주문요청</button>
+            		<input type="hidden" name="totalPrice">
+            		<input type="hidden" name="boardTitle " value="${artBoard.board.boardTitle}">
+            		<button onclick="return toChat();">작가에게 주문요청</button>
             	</form>
                 
             </div>
@@ -410,7 +420,10 @@
             <script>
 
                 function toChat(){
-                    let requestArr = [];
+                	$('input[name=totalPrice]').val($('#totalPrice').val());
+                		return true;
+                	}
+                    /*let requestArr = [];
                     let priceArr = [];
                     
                     // querySelectorAll로 잡으면 type면서도 충돌이 일어날 가능성이 높음
@@ -430,7 +443,7 @@
                     // let f = document.createElement('form');
                     
                     
-                    /* 여기는 옵션을 db에 넣는 기능 insertReasonPrice.co맵핑값으로 ajax요청 후 성공시 chating.co를 불러야함 */
+                    /* 여기는 옵션을 db에 넣는 기능 insertReasonPrice.co맵핑값으로 ajax요청 후 성공시 chating.co를 불러야함 
                     /*
                     let requestInput = document.createElement('input');
                     requestInput.setAttribute('tyep', 'hidden');
@@ -445,7 +458,7 @@
                     f.append(requestStr)
                     f.append(priceStr);
                     f.setAttribute('method', 'post');
-                    f.setAttribute('action', 'insertReasonPrice.co');*/
+                    f.setAttribute('action', 'insertReasonPrice.co');
                     
                     let requestInput = document.createElement('input');
                     requestInput.setAttribute('tyep', 'hidden');
@@ -474,7 +487,7 @@
                     //     if(option2.text != '==='){
                     //         console.log("asd")
                     //     }
-                    // }
+                    // }*/
 
 
                 }
