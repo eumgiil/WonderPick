@@ -25,6 +25,7 @@
         .goodsList1{
             border: 1px solid black;
             width: 900px;
+            margin:auto;
             
         }
         
@@ -52,7 +53,7 @@
         
         .topouter{
             float : left;
-            margin-left :150px;
+            margin-left :200px;
             
         }
         #enrollGoods{
@@ -179,30 +180,43 @@
         <br><br><br><br>
 
         <!-- 전체리스트 -->
-        <div class="goodsList1"  id="goods" style="width: 900px; margin-left: 500px; margin-top:100px;"  align="center">
+        <div class="goodsList1"  id="goods" style="width: 900px; margin-left: 600px; margin-top:100px;"  align="center">
           <c:choose>  
             <c:when test="${not empty list}">
               <c:forEach items="${list}" var="g">
                   <div class="goodsList2" style="display:inline-block;">
-                    <img src="${ g.modifyName }" alt=""  width="250" style="border:1px solid black; width:250px; height:250px;"  ><br>
+                    <img src="${ g.filePath }" alt=""  width="250" style="border:1px solid black; width:250px; height:250px;"  ><br>
                     <table id="goodsInfo"  id="goods" width="250">
 	                    <tr>
 	                        <td>${g.nickName}</td>
 	                        <c:choose>
-	                        <c:when test="${empty loginMember}">
-	                        <td></td>
-	                        </c:when>
-	                        <c:otherwise>
-	                        <td><img id="heart" src=""></td>
-	                        </c:otherwise>
-	                        </c:choose>
-	                        
+		                        <c:when test="${empty loginMember}">
+		                        	<td></td>
+		                        </c:when>
+		                        <c:otherwise>
+			                      	 <c:if test="${not empty heartList }">
+			                      	 	<c:forEach items="${heartList}" var="h">
+			                      	 	<c:choose>
+				                            <c:when test="${ h.memberNo == loginMember.memberNo && g.boardNo == h.boardNo }">
+				                              <th style="font-size: 35px;"><img src="resources/common/heart.png" width="30" style="float: right;" alt="" id="heart" onclick="updateHeart();"></th>
+				                            </c:when>  
+				                            <c:otherwise>
+					                               <th style="font-size: 35px;"><img src="resources/common/noheart.png" width="30" style="float: right;"alt="" id="heart" onclick="updateHeart();"></th>
+					                        </c:otherwise>
+				                         </c:choose>
+			                      	 	</c:forEach>
+				                      </c:if>
+				                      <c:if test="${empty heartList }">
+				                      <th style="font-size: 35px;"><img src="resources/common/noheart.png" width="30" style="float: right;"alt="" id="heart" onclick="updateHeart();"></th>
+				                      </c:if>
+		                        </c:otherwise>
+		                 </c:choose> 
 	                    </tr>
 	                    <tr>
 	                        <td colspan="2">★★★★☆</td>
 	                    </tr>
 	                    <tr>
-	                        <td><a href="detail.go?boardNo= ${ g.boardNo }">${g.boardTitle }</a></td>
+	                        <td><a href="detail.go?boardNo= ${ g.boardNo }" style="color:rgb(255, 131, 153);">${g.boardTitle }</a></td>
 	                        <td style="float: right;">${g.price}</td>
 	                    </tr>
                     </table>
@@ -218,49 +232,13 @@
 	</div>
 	
 	<script>
+		selectHeart();
+	    updateHeart();
+	
 		$(function(){
 			selectHeart();
 			heartUpdate();
 		});
-		
-		
-		function selectHeart(){
-			$.ajax({
-				url : 'selectHeart.go',
-				type : "POST",
-				dataType :"json",
-				data : {
-					memberNo : ${loginMember.memberNo}
-				},
-				success : function(result){
-					if(result > 0 ){
-						$("#heart").attr("src","resources/common/heart.png");
-					}else{
-						$("#heart").attr("src", "resources/common/noheart.png" );
-					}
-				},
-				error : function(){
-					console.log('좋아요 조회 실패');
-				}
-			});
-		};
-		
-		function heartUpdate(){
-			$.ajax({
-				url : 'heartCount.go',
-				data : {
-					boardNo : ${g.boardNo},
-					memberNo : ${loginMember.memberNo}
-				},
-				success : function(result){
-					selectHeart();
-				},
-				error :  function(){
-					console.log('실패');
-					T
-				}
-			});
-		};
 		</script>
 	
 	
@@ -274,7 +252,7 @@
 	
 	
 	<br><br>
-	<div class="pagingArea"  align="center" >
+	<div class="pagingArea"  align="center" style="margin-left:950px;" >
                 <ul class="pagination" >
                 <c:choose>
                   <c:when test="${pi.currentPage eq 1 }">
@@ -288,15 +266,15 @@
                 
                 <c:forEach var="pi" begin="${requestScope.pi.startPage}" end="${requestScope.pi.endPage }">
                 		<c:if test="${ not empty list }">
-                			<li><a href="list.go?cPage=${pi}" class="page-link">${pi}</a></li>
+                			<li><a href="list.go?cPage=${pi}" class="page-link" style="color:rgb(255, 131, 153);">${pi}</a></li>
                 		</c:if>
                 </c:forEach>
                   <c:choose>
                   <c:when test="${ pi.currentPage eq pi.maxPage }">
-                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                  <li class="page-item"><a class="page-link" href="#" style="color:rgb(255, 131, 153);">Next</a></li>
                   </c:when>
                   <c:otherwise>
-                  <li class="page-item"><a class="page-link" href="list.go?cPage=${pi.currentPage+1 }">Next</a></li>
+                  <li class="page-item"><a class="page-link" href="list.go?cPage=${pi.currentPage+1 }" style="color:rgb(255, 131, 153);">Next</a></li>
                   </c:otherwise>
                     
                     </c:choose>

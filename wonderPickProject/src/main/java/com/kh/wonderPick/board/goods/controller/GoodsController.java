@@ -39,17 +39,18 @@ public class GoodsController {
 	private GoodsService goodsService;
 	
 	@RequestMapping("list.go")
-	public String selectList(@RequestParam(value="cPage", defaultValue="1")int currentPage,  Model model) {
+	public String selectList(@RequestParam(value="cPage", defaultValue="1")int currentPage, Model model) {
 		PageInfo pi = Pagination.getPageInfo(goodsService.selectListCount(), currentPage,12, 10);
-		
-		
-		
+		/*
+		ArrayList<Heart>heartList = new ArrayList();
+		Heart h = new Heart();
+		heartList = goodsService.selectHeartList();
+		*/
 		
 		model.addAttribute("pi", pi);
+		model.addAttribute("heartList",goodsService.selectHeartList());
+		System.out.println(goodsService.selectHeartList());
 		model.addAttribute("list", goodsService.selectGoodsList(pi));
-		
-		
-	
 		
 		return "board/goods/goodsListView";
 	}
@@ -68,7 +69,7 @@ public class GoodsController {
 	}
 
 	@RequestMapping("detail.go")
-	public ModelAndView selectGoods(ModelAndView mv, int boardNo,   HttpSession session) {
+	public ModelAndView selectGoods(ModelAndView mv, int boardNo,  HttpSession session) {
 		
 		
 		if(goodsService.increaseCount(boardNo)>0) {
@@ -77,6 +78,8 @@ public class GoodsController {
 			System.out.println(goodsService.selectBoardImage(boardNo));
 			mv.addObject("reviewList", goodsService.selectReviewList(boardNo));
 			mv.addObject("replyList", goodsService.selectReplyList(boardNo));
+			mv.addObject("heart", goodsService.selectHeart(boardNo));
+			System.out.println(goodsService.selectHeart(boardNo));
 			mv.setViewName("board/goods/goodsDetailView");
 			
 		}else {
@@ -215,6 +218,90 @@ public class GoodsController {
 		return mv;
 	}
 	
+	@RequestMapping("update.go")
+		public String updateGoods(int boardNo, Board b, Goods g, BoardImage bi , MultipartFile reThumbnailUpFile,  MultipartFile[] reUpfile, ModelAndView mv , HttpSession session) {
+			
+		ArrayList<BoardImage>list = new ArrayList();
+		
+		
+		String originName = reThumbnailUpFile.getOriginalFilename();
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+		String ext = originName.substring(originName.lastIndexOf("."));
+		int randomNumber = (int)(Math.random() * 9000 + 1000);
+		String changeName = currentTime + randomNumber + ext;
+		String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/goodsFiles/");
+		try {
+			reThumbnailUpFile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		BoardImage boardImage =  new BoardImage();
+		
+		list.add(boardImage);
+		
+		
+		if(!reThumbnailUpFile.getOriginalFilename().equals("")) {
+		  if(boardImage.getOriginName() != null) {
+			  new File(session.getServletContext().getRealPath(boardImage.getModifyName())).delete();
+		  }
+		}
+		boardImage.setOriginName(originName);
+		boardImage.setModifyName(b.getBoardTitle());
+		boardImage.setFileLevel(1);
+		boardImage.setFilePath("resources/boardUpfiles/goodsFiles/" + changeName);
+		
+		
+		for(MultipartFile multipartFile : reUpfile) {
+			if(multipartFile.getOriginalFilename().equals("")) {
+				if(boardImage.getOriginName() != null) {
+					  new File(session.getServletContext().getRealPath(boardImage.getModifyName())).delete();
+				}
+			}
+			
+			if(multipartFile.getSize() != 0) {
+				String originName2 = multipartFile.getOriginalFilename();
+				String currentTime2 = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+				String ext2 = originName2.substring(originName2.lastIndexOf("."));
+				int randomNumber2 = (int)(Math.random() * 9000 + 1000);
+				String changeName2 = currentTime2 + randomNumber2 + ext2;
+				String savePath2 = session.getServletContext().getRealPath("/resources/boardUpfiles/goodsFiles/");
+				
+				try {
+					multipartFile.transferTo(new File(savePath2 + changeName2));
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+				
+				boardImage =  new BoardImage();
+				boardImage.setOriginName(originName2);
+				boardImage.setModifyName(b.getBoardTitle());
+				boardImage.setFileLevel(2);
+				boardImage.setFilePath("resources/boardUpfiles/goodsFiles/" + changeName2);
+				
+				list.add(boardImage);
+				
+			}
+		}
+		
+		mv.addObject("bi", goodsService.selectBoardImage(boardNo));
+		mv.setViewName("board/goods/goodsUpdateForm");
+		
+		
+		int result = goodsService.updateGoods(b, list , g);
+		
+		if(result > 0) {
+			
+			mv.addObject("result", result);
+			session.setAttribute("alertMsg", "굿즈 상품 수정 성공" );
+			return "redirect:list.go?cPage=1";
+		}else {
+			mv.addObject("errorMsg", "상품 수정 실패");
+			return "redirect:updateForm.go";
+		}
+		}
+	
+	
 	
 	 
 	
@@ -227,9 +314,12 @@ public class GoodsController {
 		replyList.add(reply);
 		return new Gson().toJson(goodsService.selectReplyList(boardNo));
 	}
+	
 	@ResponseBody
 	@RequestMapping("rinsert.go")
-	public String ajaxInsertReply(Reply r) {
+	public String ajaxInsertReply(Reply r, HttpSession session) {
+		
+		
 		System.out.println(r);
 		return goodsService.insertReply(r) > 0 ? "success" : "fail";
 		
@@ -257,11 +347,46 @@ public class GoodsController {
 	}
 	
 	// 회원별 좋아요 조회
+	/*
 	@ResponseBody
-	@RequestMapping(value="selectHeart.go", produces="application/json; charset=UTF-8" )
-	public String ajaxSelectHeartList(int memberNo) {
-		return new Gson().toJson(goodsService.selectHeartList(memberNo));
+	@RequestMapping("selectHeartList.go" )
+	public ModelAndView SelectHeartList(int memberNo, HttpSession session,ModelAndView mv) {
+		
+		mv.addObject("result", goodsService.selectHeartList(memberNo));
+		mv.setViewName("board/goods/goodsListView");
+		
+		
+		return mv;
 	}
+	*/
+	/*
+	@RequestMapping("selectHeart.go")
+	public ModelAndView selectHeart(int memberNo,  HttpSession session, ModelAndView mv) {
+		
+		
+			mv.addObject("heart", goodsService.selectHeart(memberNo));
+			System.out.println(goodsService.selectHeart(memberNo));
+			mv.setViewName("board/goods/goodsDetailView");
+	
+		return mv;
+	}
+	*/
+	
+	/*
+	@ResponseBody
+	@RequestMapping(value="updateHeart.go", produces="application/json; charset=UTF-8")
+	public String updateHeart(Heart h , HttpSession httpSession, Model model) {
+		
+		
+		int result = goodsService.insertHeart(h);
+		
+		if(result > 0 ) {
+			 model.addAttribute("result", result);
+			 
+		}
+		
+	}
+	*/
 	
 	// 댓글 삭제
 	@RequestMapping("deleteReply.go")
