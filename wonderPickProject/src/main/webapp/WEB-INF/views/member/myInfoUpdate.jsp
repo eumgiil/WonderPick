@@ -16,7 +16,7 @@
             <div id="rightMainContent">
             	<form enctype="multipart/form-data" action="updateProfile.me" method="post">
 	                <div id="rightProfile">
-	                    <img src="${sessionScope.loginMember.profilePath }/${sessionScope.loginMember.profileImg}">
+	                    <img src="${sessionScope.loginMember.memberFilePath }${sessionScope.loginMember.memberModifyName}">
 	                    <button type="submit" id="profileBtn" >
 	                    	<label for="fileInput" id="fileLabel">프로필 변경
 	                    		<input id="fileInput" type="file" style="display:none;">
@@ -24,7 +24,7 @@
                     	</button>
 	                </div>
             	</form>
-            	<script>
+            	<script>	
             		$('#profileBtn').on('click', function(){
             			$('#fileInput').click();
             			$('#fileInput').on('change', function(){

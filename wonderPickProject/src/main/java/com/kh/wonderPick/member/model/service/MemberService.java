@@ -10,8 +10,10 @@ public interface MemberService {
 	int idCheckMember(String checkId);
 	
 	int nickCheckMember(String checkNick);
-	
-	int signUpMember(Member m);
 
 	int insertSecret(SecretCode secretCode);
+	
+	int signUpMember(Member m);
+	
+	int insertProfile(Member mImg);
 }
