@@ -23,6 +23,7 @@ public class Goods extends Board{
 	private int goodsNo;
 	private int fileLevel;
 	private String filePath;
+	private String memberModifyName;
 	
 	
 	

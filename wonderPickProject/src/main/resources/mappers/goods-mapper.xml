@@ -17,7 +17,8 @@
   	<result column="modify_name" property="modifyName" />
   	<result column="origin_name" property="originName" />
   	<result column="file_level" property="fileLevel" />
-  	
+  	<result column="member_modify_name" property="memberModifyName" />
+  	<result column="file_path" property="filePath" />
   	
   	<result column="goods_no" property="goodsNo" />
   	<result column="price" property="price" />
@@ -29,6 +30,11 @@
   	<result column="amount" property="amount" />
   	<result column="goods_category" property="goodsCategory" />
   	<result column="add_info" property="addInfo" />
+  </resultMap>
+  <resultMap id="heartResultSet" type="heart">
+    <result column="board_no" property="boardNo" />
+    <result column="member_no" property="memberNo" />
+   
   </resultMap>
   
   
@@ -74,7 +80,8 @@
        to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
        price,
        origin_name,
-       modify_name
+       modify_name,
+       file_path
   from 
        board b
  join 
@@ -94,7 +101,8 @@ order by
   select file_level, 
   		 origin_name,
   		 modify_name,
-         board_no
+         board_no,
+         file_path
  	from 
  	     board_image
     join board using (board_no)
@@ -214,6 +222,44 @@ order by
    
    )
   </insert>
+  <update id="updateBoard" parameterType="board">
+  UPDATE 
+  		board
+   SET 
+       board_title = #{boardTitle}
+       , board_content = #{boardContent}
+       , create_date = SYSDATE
+ WHERE board_no = #{boardNo}
+  
+  </update>
+  <update id="updateGoods" parameterType="goods">
+  update
+        goods
+    set
+        price = #{price}
+        , draft = #{draft}
+        , modify_count = #{modifyCount}
+        , WORKDAY = #{workday}
+        , add_draft = #{addDraft}
+        , add_modify =  #{addModify}
+        , goods_category = #{goodsCategory}
+  where 
+        board_no = #{boardNo}
+  AND     member_no =  #{memberNo}
+  
+  </update>
+  <update id="updateBoardImage" parameterType="boardImage">
+  update board_image
+    set
+        origin_name = #{originName}
+        , modify_name = #{modifyName}
+        , upload_date = SYSDATE
+        , file_level = #{fileLevel}
+        , file_path = #{filePath}
+  where 
+		board_no = #{boardNo}
+  
+  </update>
   <update id="increaseCount">
   update
         board
@@ -225,22 +271,29 @@ order by
         status = 'Y'
   </update>
   <select id="selectGoods" resultMap="goodsResultSet">
-  select
-  		board_no,
-  		nickname,
-  		board_title,
-  		board_content,
-      	price,
-      	draft,
-      	modify_count,
-      	WORKDAY,
-      	add_draft,
-      	add_modify,
-      	goods_category
- from goods
- join board using (board_no)
- join member using(member_no)
- where board_no = #{boardNo}
+   select      b.board_no, 
+	        nickname, 
+	        board_title, 
+	        board_content, 
+	        price, 
+	        draft, 
+	        modify_count, 
+	        workday,
+	        add_draft,
+	        add_modify,
+	        goods_category,
+	        NVL(mi.MEMBER_MODIFY_NAME, 'resources/memberUpfiles/basicProfile.jpg') MEMBER_MODIFY_NAME
+	 from 
+	 	    board b
+	 join 
+	        member m on (m.member_no = b.member_no)
+	 join 
+	        goods g on (g.board_no = b.board_no)
+  left join 
+           member_image mi on (mi.member_no = b.board_no)
+	 where 
+	       b.board_no = #{boardNo}
+  
   </select>
   <select id="selectReviewCount" resultType="_int" >
 	select 
@@ -303,14 +356,16 @@ select
               reply_no, 
                board_no,
                member_no,
-               content
+               content,
+               create_date
                    ) 
          values
                   (
                 seq_reply_no.nextval,
-               #{boardNo},
+                #{boardNo},
                #{memberNo},
-               #{content}
+               #{content},
+               SYSDATE
                    )
   </insert>
   <select id="selectReReplyList" resultType="reReply">
@@ -325,12 +380,28 @@ select
   
   </select>
   <select id="selectHeartList" resultType="heart">
-  select *
-	from 
-		  heart
-	where 
-	      member_no = #{memberNo}
+	select 
+		    board_no , h.member_no
+      from heart h
+ left join board b using (board_no)
+     where board_type ='G'
+       and h.member_no = #{memberNo}
   </select>
+  <select id="selectHeart" resultMap="heartResultSet" parameterType="_int">
+  select 
+          board_no,
+          h.member_no
+	from 
+		  heart h
+    join board b using (board_no)
+	where board_type = 'G'
+    and board_no = #{boardNo}
+    and h.member_no = #{memberNo}
+  
+  
+  </select>
+  
+  
   <select id="searchGoodsCount" resultType="_int" parameterType="hashmap">
   select count(*)
 	from board
@@ -381,10 +452,8 @@ order by
   FROM reply
  WHERE 
        reply_no = #{replyNo}
- 
- 
  </delete>
- 
+
  
  
   

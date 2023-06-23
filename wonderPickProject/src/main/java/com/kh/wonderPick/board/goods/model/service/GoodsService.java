@@ -46,7 +46,7 @@ public interface GoodsService {
 	ArrayList<Goods> searchGoods(HashMap map , PageInfo pi );
 	
 	// 게시글 수정하기
-	int updateGoods(Goods g);
+	int updateGoods(Board b, ArrayList<BoardImage> list, Goods g);
 	
 	// 리뷰 총 개수 조회
 	//int selectReviewCount(int boardNo);
@@ -69,12 +69,17 @@ public interface GoodsService {
 	// 대댓글 작성
 	int insertReReply(Re_Reply re);
 	
-	// 회원별 좋아요 조회
-	ArrayList<Heart> selectHeartList(int memberNo);
+	// 회원별 좋아요 리스트 조회 
+	ArrayList<Heart> selectHeartList();
+	
+	// 회원별 좋아요 글별 상세 조회
+	Heart selectHeart(int boardNo);
 	
 	
 	// 댓글 삭제
 	int deleteReply(int replyNo);
+	
+
 	
 	
 
