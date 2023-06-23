@@ -5,7 +5,7 @@
 <mapper namespace="memberMapper">
 	
 	<!-- memberResultSet -->
-	<resultMap id="memberResultSet" type="member">
+	<resultMap id="memberLoginResultSet" type="member">
 		<result column="member_no" property="memberNo" />
 		<result column="member_grade" property="memberGrade" />
 		<result column="member_id" property="memberId" />
@@ -19,12 +19,13 @@
 		<result column="status" property="status" />
 		<result column="enroll_date" property="enrollDate" />
 		<result column="modify_date" property="modifyDate" />
-		<result column="member_origin_name" property="profileImg"/>
-		<result column="member_file_path" property="profilePath" />
+		<result column="member_origin_name" property="memberOriginName" />
+		<result column="member_modify_name" property="memberModifyName" />
+		<result column="member_file_path" property="MemberFilePath" />
 	</resultMap>
 	
 	<!-- 로그인용 쿼리문 -->
-	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
+	<select id="loginMember" parameterType="member" resultMap="memberLoginResultSet">
 		select
 			   member_no
 			  ,member_grade
@@ -41,6 +42,7 @@
 			  ,enroll_date
 			  ,modify_date
 			  ,member_origin_name
+			  ,member_modify_name
 			  ,member_file_path
 		  from
 		 	   member
@@ -72,6 +74,23 @@
 		 where
 		 	   nickname = #{checkNick}
 	</select>
+	
+	<!-- 인증코드 발급용 쿼리문 -->
+	<insert id="insertSecret" parameterType="secretCode">
+		insert
+		  into
+		  	  secretCode(
+		  	  who
+		  	 ,secret
+		  	 ,when
+		  	  )
+		values
+		 	  (
+		 	  #{who},
+		 	 ,#{secret}
+		 	 ,sysdate
+		 	  )
+	</insert>
 	
 	<!-- 회원가입용 쿼리문 -->
 	<insert id="signUpMember" >
@@ -107,20 +126,27 @@
 			   )
 	</insert>
 	
-	<!-- 인증코드 발급용 쿼리문 -->
-	<insert id="insertSecret" parameterType="secretCode">
+	<!-- 기본 프로필 발급용 -->
+	<insert id="insertProfile">
 		insert
 		  into
-		  	  secretCode(
-		  	  who,
-		  	  secret,
-		  	  when
-		  	  )
+		  	   member_image
+		  	   (
+		  	   member_img_no
+		  	  ,member_no
+		  	  ,member_origin_name
+		  	  ,member_modify_name
+		  	  ,member_upload_date
+		  	  ,member_file_path
+		  	   )
 		values
-		 	  (
-		 	  #{who},
-		 	  #{secret},
-		 	  sysdate
-		 	  )
+			   (
+			   seq_memberimg_no.nextval
+			  ,#{memberNo}
+			  ,#{memberOriginName}
+			  ,#{memberOriginName}
+			  ,sysdate
+			  ,#{memberFilePath}
+			   )
 	</insert>
 </mapper>

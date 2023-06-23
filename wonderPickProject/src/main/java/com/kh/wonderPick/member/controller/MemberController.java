@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.wonderPick.member.model.service.MemberService;
 import com.kh.wonderPick.member.model.vo.Member;
+import com.kh.wonderPick.member.model.vo.MemberImage;
 import com.kh.wonderPick.member.model.vo.SecretCode;
 
 @Controller
@@ -50,13 +51,9 @@ public class MemberController {
 	 */
 	@RequestMapping("login.me")
 	public String loginMember(Member m,
-							HttpSession session) {
+							  HttpSession session) {
 		Member loginMember = memberService.loginMember(m);
 		if(loginMember != null && bcryptPasswordEncoder.matches(m.getMemberPwd(), loginMember.getMemberPwd())) {
-			if(loginMember.getProfileImg() == null && loginMember.getProfilePath() == null) {
-				loginMember.setProfileImg("basicProfile.jpg");
-				loginMember.setProfilePath("resources/memberUpfiles");
-			}
 			session.setAttribute("loginMember", loginMember);
 		} else {
 			session.setAttribute("alertMsg", "등록되지 않거나, 잘못된 정보입니다.");
@@ -174,20 +171,16 @@ public class MemberController {
 		String encPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 		m.setMemberPwd(encPwd);
 		if(memberService.signUpMember(m)>0) {
+			Member mImg = memberService.loginMember(m);
+			mImg.setMemberOriginName("basicProfile.jpg");
+			mImg.setMemberFilePath("resources/memberUpfiles/");
+			memberService.insertProfile(mImg);
 			session.setAttribute("alertMsg", "회원가입을 축하합니다!");
 		} else {
 			session.setAttribute("alertMsg", "회원가입에 실패하셨습니다.");
 		}
 		return "redirect:/";
 	}
-	// 회원가입을 하면 기본 프로필을 발급해줄꺼임!
-	// 근데 언제해야되나?
-	// 일단 insert를 성공하면?
-	// 그치 선행이 회원번호가 생겨야하는거니까 무조건 insert성공하고나면
-	// 그럼 insert성공하고나면 기본프로필을 발급하는데, 만약 그 발급이 실패한다면? 그래도 회원가입 진행으로하나?
-	// 일단DB에 데이터가 넘어간건데 그게맞나?
-	// 그냥 무조건 기본 프로필을 발급해주고, 그걸로 하는게 맞다! 그럴려고 vo에 만들어둔거임!
-	// profileImg 파일이름 // profilePath 파일경로
 	
 	/**
 	 * 마이페이지url을 정확하게 알려주지 않기 위해서 거쳐서 보내줌
@@ -207,4 +200,15 @@ public class MemberController {
 	public void updateProfileMember(Member m) {
 		
 	}
+	
+	
+//	public String saveFile(MultipartFile upfile, HttpSession session) {
+//		String originName = upfile.getOriginalFilename();
+//		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+//		int ranNum = (int)(Math.random() * 9000 + 10000);
+//		String ext = originName.substring(originName.lastIndexOf("."));
+//		String changeName = currentTime + ranNum + ext;
+//		String savePath = session.getServletContext().getRealPath("/resources/memberUpfiles/");
+//		MultipartFile upfile = (MultipartFile) new File(savePath + changeName);
+//	}
 }
