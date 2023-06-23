@@ -1,6 +1,7 @@
 package com.kh.wonderPick.board.artBoard.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO;
@@ -18,13 +19,17 @@ public interface ArtBoardService {
 	
 	int insertArtBoard(Board board, ArtBoard artBoard, ArrayList<Option> list, ArrayList<BoardImage> files);
 	
-	ArtBoard selectArtBoard(int bno);
+	ArtBoard selectArtBoard(HashMap maps);
 	
 	ArrayList<BoardImage> selectBoardImage(int bno);
 	
 	ArrayList<Option> selectOptionList(int bno);
 	
-//	int selectSearchListCount(SearchArt searchArt);
+	int updateArtBoard(Board board, ArtBoard artBoard, ArrayList<Option> list, ArrayList<BoardImage> files, ArrayList<Integer> optionNos);
+
+	int deleteOption(int bno);
+	
+	//	int selectSearchListCount(SearchArt searchArt);
 //	
 //	ArrayList<ArtBoardDTO> selectSearchList(PageInfo pi, SearchArt searchArt);
 	

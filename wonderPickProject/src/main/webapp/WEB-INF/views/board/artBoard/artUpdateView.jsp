@@ -61,7 +61,7 @@
 
 
         <form id="form" method="post" enctype="multipart/form-data">
-
+            <input type="hidden" name="boardNo" value="${ bno }">
             <div style="display:none;" id="file-area">
 		        <input type="file" id="file1" name="upFile" onchange="loadImg(this, 1);" required>
 		        <input type="file" id="file2" name="upFile" onchange="loadImg(this, 2);">
@@ -87,16 +87,16 @@
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품명</h5></th>
-	                    <td colspan="3"><input type="text" name="boardTitle" style="width: 85%;" required></td>
+	                    <td colspan="3"><input type="text" name="boardTitle" style="width: 85%;" value="${ artBoard.board.boardTitle }" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품가격</h5></th>
-	                    <td><input type="number" name="price" style="width: 70%;" required>원 </td>
+	                    <td><input type="number" name="price" style="width: 70%;" value="${ artBoard.price }" required>원 </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품 대표 이미지</h5></th>
 	                    <td align="center" colspan="3">
-	                        <img id="titleimg" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
+	                        <img id="titleimg" class="contentImg" src="" alt="" >
 	                    </td>
 	                </tr>
 	                <tr>
@@ -119,23 +119,23 @@
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">파일유형</h5></th>
-	                    <td><input type="text" name="fileType" maxlength="5" placeholder="영어로 작성" required></td>
+	                    <td><input value="${ artBoard.fileType }" type="text" name="fileType" maxlength="5" placeholder="영어로 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">해상도</h5> </th>
-	                    <td><input type="text" name="dpi" maxlength="20" placeholder="영어로 작성" required></td>
+	                    <td><input value="${ artBoard.dpi }" type="text" name="dpi" maxlength="20" placeholder="영어로 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본사이즈</h5></th>
-	                    <td><input type="text" name="defaultSize" maxlength="50" placeholder="영어로 작성" required></td>
+	                    <td><input value="${ artBoard.defaultSize }" type="text" name="defaultSize" maxlength="50" placeholder="영어로 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본수정횟수</h5></th>
-	                    <td><input type="number" name="modifyCount" placeholder="영어로 작성" required></td>
+	                    <td><input value="${ artBoard.modifyCount }" type="number" name="modifyCount" placeholder="영어로 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">작업기간</h5></th>
-	                    <td><input type="text" name="workday" placeholder="영어로 작성" required></td>
+	                    <td><input value="${ artBoard.workday }" type="text" name="workday" placeholder="영어로 작성" required></td>
 	                </tr>
 	                <tr>
 	                    <th colspan="4"><hr class="line"></th>
@@ -161,14 +161,19 @@
 	            </tr>
 	            <tr>
 	                <td colspan="5" align="center"><div onclick="start();" class="btn btn-info" style="width: 50%; height: 40px; 
-	                background-color:  rgb(255, 131, 153); color: black; border: none;">굿즈 판매 요청하기</div></td>
+	                background-color:  rgb(255, 131, 153); color: black; border: none;">업데이트</div></td>
 	            </tr>
+                <tr>
+                    <td colspan="5" align="center">
+                        <button id="deleteBoard" type="button">삭제</button>
+                    </td>
+                </tr>
 	        </table>
 	        
-            <input type="hidden" id="options" name="options" value="'+ options +'">
-            
-	    </form>
 
+            <input type="hidden" id="options" name="options" value="'+ options +'">
+	    	
+	    </form>
     </div>
     <br><br><br><br>
 
@@ -179,14 +184,83 @@
 
 
     <script>
+        // let i = 1;
+        // let j = 1;
+
+        window.onload = () => {
+            document.querySelector('#category option[value=${ artBoard.category }]').setAttribute('selected', true);
+            /* 기존 사진 */
+            /*
+                경우의 수
+                1 : 사진 파일을 건들지 않아서 그대로 일 때 -> img id값과 src를 객체배열로 전달해서 비교
+                2 : 사진 전체 삭제했을 때              ->
+                3 : 사진 일부를 삭제했을 때             ->
+                4 : 사진 전체 바꿨을 때                ->
+                5 : 사진 일부만 바꿨을 때              ->
+                img src를 json에 배열로 담아서 전달.    
+                controller에서 
+            */
+            let titleimg = document.getElementById('titleimg');
+            let boardImages = JSON.parse('${ boardImage }');
+            for(var i = 0; i < boardImages.length; i++){
+                if(boardImages[i].fileLevel == 1){
+                    titleimg.setAttribute('src', boardImages[i].modifyName);
+                }
+                else if(boardImages[i].fileLevel == 2){
+                    document.getElementById('contentImg' + i).setAttribute('src', boardImages[i].modifyName)
+                }
+            }
+
+            // boardContent에 기존 값 넣어놓기
+            document.getElementById('boardContent').value = '${ artBoard.board.boardContent }';
+            /* 상세설명 불러오기 */
+            let boardContent = JSON.parse('${ artBoard.board.boardContent }');
+            console.dir(document.getElementById('boardContent').value);
+            let explain = document.getElementById('explain');
+            for(var i = 0; i < boardContent.length; i++){
+                if(boardContent[i].type == 'text'){
+                    let explain = document.getElementById('explain');
+                    explain.append(boardContent[i].data);
+                }
+                else{
+                    let explainImg = document.createElement('img');
+                    explainImg.setAttribute("id", "explainImg");
+                    explainImg.setAttribute("src", boardContent[i].data);
+                    explainImg.setAttribute("width", '80%');
+                    explain.append(explainImg);
+                }
+            }
+
+                    /* 옵션추가 */
+            // option 보내준 값 json으로 변환
+            let optionList = JSON.parse('${ optionList }');
+            if(optionList.length != 0){
+                // 메인옵션 칸 늘리고 기존 값 각각 넣기
+                for(var i = 0; i < optionList.length; i++){
+                    op_plus();
+                    let option = document.getElementById('option_' + (i+1));
+                    option.value = optionList[i].mainOp;
+                    // 상세옵션
+                    if(optionList[i].detailOption.length != 0){
+                        for(var j = 0; j < optionList[i].detailOption.length; j++){
+                            var e = option.parentElement.previousElementSibling.firstChild;
+                            detail_op_plus(e);
+
+                            let details = document.getElementsByClassName('detailOp' + (i+1));
+                            details[j].value = optionList[i].detailOption[j].detail;
+                            let opPrices = document.getElementsByClassName('opPrice' + (i+1));
+                            opPrices[j].value = optionList[i].detailOption[j].price;
+                        } 
+                    }
+                }
+            }
+        }
 
         /* 옵션+버튼 스크립트 */
         let i = 1;
         let j = 1;
         let num;
         var art_table = document.getElementById('art_table');
-        
-
         function op_plus(){
             let value = '';
             value = '<th>'
@@ -214,7 +288,6 @@
         function detail_op_plus(e){
 
         	let tbody = e.parentElement.parentElement.parentElement;
-            console.log(e);
             let id = tbody.id;
             // let str = id.slice(0, id.indexOf('y') + 1);
             num = parseInt(id.slice(id.indexOf('y')+1));
@@ -235,12 +308,8 @@
         }
 
         function start(){
-
             /* tbody개수 파악  */
         	let length = art_table.tBodies.length;
-
-            let deList = [];
-            let prList = [];
 
             let detailOp = [];
             let opPrice = [];
@@ -254,13 +323,12 @@
                 option = document.getElementById('option_'+ i);
                 
                 options.push(option.value);
-
             };
 
             let form = document.getElementById('form');
             document.getElementById('options').value = options;
             
-           	form.action = 'insertBoard.at';
+           	form.action = 'updateBoard.at';
             form.submit();
         }
 
@@ -314,6 +382,10 @@
             }
             boardContent.value = JSON.stringify(list);
         }   
+
+        document.getElementById('deleteBoard').addEventListener('click', () => {
+            location.href = 'deleteBoard.at?boardNo=${bno}';
+        })
 
 
 

@@ -2,6 +2,7 @@
 package com.kh.wonderPick.board.artBoard.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -40,25 +41,21 @@ public class ArtBoardDao {
 	public int insertBoard(SqlSessionTemplate sqlSession, Board board) {
 		return sqlSession.insert("artBoardMapper.insertBoard", board);
 	}
-
 	public int insertArtBoard(SqlSessionTemplate sqlSession, ArtBoard artBoard) {
 		return sqlSession.insert("artBoardMapper.insertArtBoard", artBoard);
 	}
-	
 	public int insertOptions(SqlSessionTemplate sqlSession, Option option) {
 		return sqlSession.insert("artBoardMapper.insertOptions", option);
 	}
 	public int insertDetailOption(SqlSessionTemplate sqlSession, DetailOption detailOption) {
 		return sqlSession.insert("artBoardMapper.insertDetailOption", detailOption);
 	}
-	
-	
 	public int insertFiles(SqlSessionTemplate sqlSession, BoardImage boardImage) {
 		return sqlSession.insert("artBoardMapper.insertFiles", boardImage);
 	}
 	
-	public ArtBoard selectArtBoard(SqlSessionTemplate sqlSession, int bno) {
-		return sqlSession.selectOne("artBoardMapper.selectArtBoard", bno);
+	public ArtBoard selectArtBoard(SqlSessionTemplate sqlSession, HashMap maps) {
+		return sqlSession.selectOne("artBoardMapper.selectArtBoard", maps);
 	}
 	public ArrayList<Option> selectOptionList(SqlSessionTemplate sqlSession, int bno){
 		return (ArrayList)sqlSession.selectList("artBoardMapper.selectOptionList", bno);
@@ -67,6 +64,21 @@ public class ArtBoardDao {
 		return (ArrayList)sqlSession.selectList("artBoardMapper.selectBoardImage", bno);
 	}
 	
+	public int updateBoard(SqlSessionTemplate sqlSession, Board board) {
+		return sqlSession.update("artBoardMapper.insertBoard", board);
+	}
+	public int updateArtBoard(SqlSessionTemplate sqlSession, ArtBoard artBoard) {
+		return sqlSession.update("artBoardMapper.insertArtBoard", artBoard);
+	}
+	public int deleteDetailOption(SqlSessionTemplate sqlSession, int optionNo) {
+		return sqlSession.delete("artBoardMapper.deleteDetailOption", optionNo);
+	}
+	public int deleteOption(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.delete("artBoardMapper.deleteOption", bno);
+	}
+	public int deleteFiles(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.delete("artBoardMapper.deleteFiles", bno);
+	}
 	
 
 }

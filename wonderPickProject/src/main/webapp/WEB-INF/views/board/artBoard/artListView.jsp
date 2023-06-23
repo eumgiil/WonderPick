@@ -79,6 +79,9 @@
             font-size:20px;
             font-weight:900;
         }
+        #pagingArea button{
+            margin: 2px;
+        }
         .disabled{
         	pointer-events: none;
         }
@@ -109,9 +112,9 @@
                 
             </div>
             <div id="searchGoods">
-                <form action="artList.bo" method="post">
+                <form action="artList.bo" method="post" id="listForm">
 
-                    <select name="search" id="option">
+                    <select name="search" id="search">
                         <option value="all">전체</option>
                         <option value="artist">작가명</option>
                         <option value="name">제목순</option>
@@ -124,17 +127,15 @@
                         <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-search-strong-512.png" alt="" width="40">
                     </button>
 
-                </form>
-
-                    <select name="" id="option">
-                        <option value="">인기순</option>
-                        <option value="">가격 낮은 순</option>
-                        <option value="">최신 등록순</option>
+                    
+                    <select name="" id="selectOrder">
+                        <option value="registration">최신 등록순</option>
+                        <option value="heart">인기순</option>
+                        <option value="cost">가격 낮은 순</option>
                     </select>
 
-
+                </form>
             </div>
-
 
             <br><br><br>
 
@@ -150,10 +151,19 @@
                                 <table class="artInfo" width="100%">
                                     <tr>
                                         <th>${ b.nickname }</th>
-                                        <td class="right" rowspan="2"><img class="artist_img" src="${b.memberModifyName}"></td>
+                                        <td class="right" rowspan="2">
+                                            <c:choose>
+                                                <c:when test="${ artBoard.heart > 0 }">
+                                                    ♥
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ♡
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">${ b.star }</td>
+                                        <td colspan="2">${ b.heart }</td>
                                     </tr>
                                     <tr>
                                         <td>${ b.boardTitle }</td>
@@ -184,7 +194,7 @@
                             	<form action="artList.bo?${ searchArt.category }&cPage=${ pi.currentPage - 1 }" method="post">
                                     <input type="hidden" name="keyword" value="${ searchArt.keyword }">
                                     <input type="hidden" name="search" value="${ searchArt.search }">
-                                    <button>&lt;</button>
+                                    <button class="btn btn-info">&lt;</button>
                                 </form>
                            	</li>
 
@@ -193,7 +203,7 @@
                         	<form action="artList.bo?category=${ searchArt.category }&cPage=${p}" method="post">
                                 <input type="hidden" name="keyword" value="${ searchArt.keyword }">
                                 <input type="hidden" name="search" value="${ searchArt.search }">
-                                <button>${p}</button>
+                                <button class="btn btn-info">${p}</button>
                             </form>
                        	</li>
                     </c:forEach>
@@ -207,39 +217,38 @@
                         	<li>
                         </c:otherwise>
                     </c:choose>
-                           	<form action="artList.bo?category=${ searchArt.category }&cPage=${ pi.currentPage + 1 }" method="post">
-                                <input type="hidden" name="keyword" value="${ searchArt.keyword }">
-                                <input type="hidden" name="search" value="${ searchArt.search }">
-                                <button>&gt;</button>
-                            </form>
+                            	<form action="artList.bo?category=${ searchArt.category }&cPage=${ pi.currentPage + 1 }" method="post">
+	                                <input type="hidden" name="keyword" value="${ searchArt.keyword }">
+	                                <input type="hidden" name="search" value="${ searchArt.search }">
+	                                <button class="btn btn-info">&gt;</button>
+	                            </form>
                            	</li>
                 </ul>
             </div>
-
-
-
-
-
-
-
         </div><!-- topOuter -->
-
-
-
-
-
-
-
         
     </div> <!-- all_area 끝 -->
 
     <script>
-        $(window).on('load', function(){
-            $('#character_illustration').css('color', '#FF8399')
-            
-            console.log('${pi}');
-            console.dir('${list}')
-        });
+        let order = document.getElementById('selectOrder');
+        
+        window.onload = () => {
+            order.name = '';
+            for(var i = 0; i < order.options.length; i++){
+                if(order.options[i].value == '${searchArt.selectOrder}'){
+                    order.options[i].selected = true;
+                }
+            }
+            let character_illustration = document.getElementById('character_illustration');
+            character_illustration.style.color = '#FF8399';
+        }
+
+        order.onchange = () => {
+            order.name = 'selectOrder';
+            let listForm = document.getElementById('listForm');
+            listForm.submit();
+        }
+        
         
     </script>
     

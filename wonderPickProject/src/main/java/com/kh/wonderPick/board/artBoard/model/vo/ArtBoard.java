@@ -17,6 +17,7 @@ public class ArtBoard{
 	private String workday; // WORKDAY	VARCHAR2(100 BYTE)
 	private String category; // CATEGORY	VARCHAR2(2 BYTE)
 	private String price; // PRICE	NUMBER
+	private int heart;
 	
 	private Member member;
 	private MemberImage memberImage;
