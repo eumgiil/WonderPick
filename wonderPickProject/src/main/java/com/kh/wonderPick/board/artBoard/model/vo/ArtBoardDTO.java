@@ -13,5 +13,6 @@ public class ArtBoardDTO {
 	private String modifyName;
 	private String memberModifyName;
 	private String category;
+	private int heart;
 	
 }
