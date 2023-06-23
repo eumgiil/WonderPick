@@ -21,7 +21,7 @@
 		<result column="modify_date" property="modifyDate" />
 		<result column="member_origin_name" property="memberOriginName" />
 		<result column="member_modify_name" property="memberModifyName" />
-		<result column="member_file_path" property="MemberFilePath" />
+		<result column="member_file_path" property="memberFilePath" />
 	</resultMap>
 	
 	<!-- 로그인용 쿼리문 -->
