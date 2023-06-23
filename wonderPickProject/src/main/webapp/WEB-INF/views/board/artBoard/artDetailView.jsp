@@ -576,15 +576,12 @@
 		}
 
         function selectReplyList(){
-        	console.log('실행은 됩니다')
             $.ajax({
                 url : 'rlist.at',
                 data : {
                     boardNo: "${ bno }"
                 },
                 success : function(replyList){
-                    console.log(replyList);
-
                     let value="";
                     for(let i of replyList){
                         console.log(i.memberNo == '${loginMember.memberNo}');
