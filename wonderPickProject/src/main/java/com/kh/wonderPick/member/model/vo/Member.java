@@ -21,6 +21,7 @@ public class Member {
 	private String status;
 	private Date enrollDate;
 	private Date modifyDate;
-	private String profileImg;
-	private String profilePath;
+	private String memberOriginName; 
+	private String memberModifyName; 
+	private String memberFilePath;
 }

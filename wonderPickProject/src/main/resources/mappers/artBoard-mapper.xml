@@ -24,6 +24,7 @@
 		<result column="WORKDAY" property="workday" />
 		<result column="CATEGORY" property="category" />
 		<result column="PRICE" property="price" />
+		<result column="HEART" property="heart" />
 		<collection property="board" resultMap="board" />
 		<collection property="member" resultMap="member" />
 		<collection property="memberImage" resultMap="memberImage" />
@@ -82,6 +83,7 @@
 		<result column="MODIFY_NAME" property="modifyName" />
 		<result column="MEMBER_MODIFY_NAME" property="memberModifyName" />
 		<result column="CATEGORY" property="category" />
+		<result column="HEART" property="heart" />
 	</resultMap>
 
 	<select id="selectArtListCount" resultType="_int" parameterType="searchArt">
@@ -128,7 +130,8 @@
 		      ,AVG(NVL(r.star, 0))
 		      ,NVL(ab.price, 0) price
 		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/memberUpfiles/basicProfile.jpg') MEMBER_MODIFY_NAME
-		  	  ,ab.category 
+		  	  ,ab.category
+		  	  ,NVL(count(h.member_no), 0) heart
 		  from
 		       art_board ab
 		  join
@@ -141,35 +144,47 @@
 		       member_image mi on(mi.member_no = b.member_no)
 		  left join
 		       review r on(b.board_no = r.board_no)
+		  left join
+               heart h on(ab.board_no = h.board_no)
 		 where
 		       b.status = 'Y'
 		   and
 		       bi.file_level = '1'
- 	   		<if test="category != null and category != ''">
+			<if test="category != null and category != ''">
 		   and
 		       ab.category = #{ category }
-	       </if>
-	       <if test="null != search and search != ''">
-			and
-			<choose>
-				<when test="search == 'artist'">
-					m.nickname like '%'||#{ keyword }||'%'
-				</when>
-				<when test="search == 'name'">
-					b.board_title like '%'||#{ keyword }||'%'
-				</when>
-				<when test="search == 'all'">
-					(
-					m.nickname like '%'||#{ keyword }||'%'
-					or
-					b.board_title like '%'||#{ keyword }||'%'
-					)
-				</when>
-			</choose>
-		</if>
+			</if>
+			<if test="null != search and search != ''">
+				and
+				<choose>
+					<when test="search == 'artist'">
+						m.nickname like '%'||#{ keyword }||'%'
+					</when>
+					<when test="search == 'name'">
+						b.board_title like '%'||#{ keyword }||'%'
+					</when>
+					<when test="search == 'all'">
+						(
+						m.nickname like '%'||#{ keyword }||'%'
+						or
+						b.board_title like '%'||#{ keyword }||'%'
+						)
+					</when>
+				</choose>
+			</if>
 		 group by
 		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name, mi.MEMBER_MODIFY_NAME, ab.category
 		 order by
+		 	<if test="null != selectOrder and selectOrder != 'registration'">
+				<choose>
+					<when test="selectOrder == 'heart'">
+						heart desc,
+					</when>
+					<when test="selectOrder == 'cost'">
+						ab.price desc,
+					</when>
+				</choose>
+		 	</if>
 		       board_no desc
 	</select>
 
@@ -286,7 +301,38 @@
 			   )
 	</insert>
 
-	<select id="selectArtBoard" parameterType="_int" resultMap="artBoard">
+	<select id="selectArtBoard" parameterType="hashmap" resultMap="artBoard">
+		<!-- select
+		       b.member_no
+		      ,nickname
+		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/memberUpfiles/basicProfile.jpg') MEMBER_MODIFY_NAME
+		      ,board_title
+		      ,board_content
+		      ,create_date
+		      ,board_count
+		      ,file_type
+		      ,dpi
+		      ,default_size
+		      ,modify_count
+		      ,workday
+		      ,category
+		      ,price
+		      ,h.member_no heart
+		  from
+		       art_board ab
+		  join
+		       board b using(board_no)
+		  join
+		       member m on(b.member_no = m.member_no)
+		  left join
+		       member_image mi on(mi.member_no = m.member_no)
+		  join
+               heart h on(ab.board_no = h.board_no)
+		 where
+		       board_no = #{ bno }
+		   and
+		       b.status = 'Y' -->
+		       
 		select
 		       b.member_no
 		      ,nickname
@@ -302,16 +348,26 @@
 		      ,workday
 		      ,category
 		      ,price
+              ,NVL(h.member_no, 0) heart
 		  from
 		       art_board ab
 		  join
-		       board b using(board_no)
+		       board b on(ab.board_no = b.board_no)
 		  join
 		       member m on(b.member_no = m.member_no)
 		  left join
 		       member_image mi on(mi.member_no = m.member_no)
+          left join
+               (select
+                       *
+                  from
+                       heart
+                 where
+                       member_no = #{ mno }
+                   and
+                       board_no = #{ bno }) h on(ab.board_no = h.board_no)
 		 where
-		       board_no = #{ bno }
+		       b.board_no = #{ bno }
 		   and
 		       b.status = 'Y'
 	</select>
@@ -346,84 +402,62 @@
 		  	   board_no = #{ bno }
 	</select>
 
-	<!-- 검색 -->
-	<!-- <select id="selectSearchListCount" resultType="_int" parameterType="searchArt">
-		select
-		       count(*)
-		  from
-		       board b
-		  join
-		       art_board ab on(b.board_no = ab.board_no)
-		  join
-		       member m on(m.member_no = b.member_no)
-		 where
-		       board_type = 'D'
-		   and
-		       b.status = 'Y'
-		   and
-		<choose>
-			<when test="search == 'artist'">
-				m.nickname like '%'||#{ keyword }||'%'
-			</when>
-			<when test="search == 'name'">
-				b.board_title like '%'||#{ keyword }||'%'
-			</when>
-			<when test="search == 'all'">
-				m.nickname like '%'||#{ keyword }||'%'
-				or
-				b.board_title like '%'||#{ keyword }||'%'
-			</when>
-		</choose>
-	</select>
 	
-	<select id="selectSearchList" resultMap="artBoardDTO" parameterType="searchArt">
-		select
-		       ab.board_no
-		      ,b.board_title
-		      ,NVL(bi.modify_name, 'resources/boardUpfiles/artBoardFiles/2023061222534502.jpg') modify_name
-		      ,m.nickname
-		      ,AVG(NVL(r.star, 0))
-		      ,NVL(ab.price, 0) price
-		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/memberUpfiles/basicProfile.jpg') MEMBER_MODIFY_NAME
-		  	  ,ab.category 
-		  from
-		       art_board ab
-		  join
-		       board b on(b.board_no = ab.board_no)
-		  join
-		       board_image bi on(bi.board_no = b.board_no)
-		  join
-		       member m on(b.member_no = m.member_no)
-		  left join
-		       member_image mi on(mi.member_no = b.member_no)
-		  left join
-		       review r on(b.board_no = r.board_no)
+	
+	
+	
+	
+	
+	<update id="updateBoard" parameterType="board">
+		update
+			   board
+		   set
+		   	   board_title = #{boardTitle} 
+		  	  ,board_content = #{boardContent}
 		 where
-		       b.status = 'Y'
-		   and
-		       bi.file_level = '1'
-		   and
-		<choose>
-			<when test="search == 'artist'">
-				m.nickname like '%'||#{ keyword }||'%'
-			</when>
-			<when test="search == 'name'">
-				b.board_title like '%'||#{ keyword }||'%'
-			</when>
-			<when test="search == 'all'">
-				(
-				m.nickname like '%'||#{ keyword }||'%'
-				or
-				b.board_title like '%'||#{ keyword }||'%'
-				)
-			</when>
-		</choose>
-		 group by
-		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name, mi.MEMBER_MODIFY_NAME, ab.category
-		 order by
-		       board_no desc
-	</select> -->
+		 	   board_no = #{boardNo}
+	</update>
 
+	<update id="updateArtBoard" parameterType="artBoard">
+		update
+			   art_board
+		   set
+		   	   FILE_TYPE = #{fileType}
+		   	  ,DPI = #{dpi}
+		   	  ,DEFAULT_SIZE = #{defaultSize}
+		   	  ,MODIFY_COUNT = #{modifyCount}
+		   	  ,WORKDAT = #{workdat}
+		   	  ,CATEGORY = #{category}
+		   	  ,PRICE = #{price}
+		 where
+		 	   board_no = #{boardNo}
+	</update>
+	
+	
+	<delete id="deleteDetailOption" parameterType="_int">
+		delete
+		  from
+		  	   art_option_detail
+		 where
+		 	   option_no = #{ optionNo }
+	</delete>
+	<delete id="deleteOption" parameterType="_int">
+		delete
+		  from
+		  	   art_option
+		 where
+		 	   board_no = #{ bno }
+	</delete>
+	
+	<delete id="deleteFiles" parameterType="_int">
+		delete
+		  from
+		       board_image
+		 where
+		       board_no = #{ bno }
+	</delete>
+	
+	
 
 
 

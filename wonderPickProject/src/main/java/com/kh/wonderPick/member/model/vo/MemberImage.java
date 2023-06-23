@@ -5,11 +5,10 @@ import lombok.Data;
 @Data
 public class MemberImage {
 
-	private int imgNo; // IMG_NO	NUMBER
+	private int memberImgNo; // IMG_NO	NUMBER
 	private int memberNo; // MEMBER_NO	NUMBER
-	private String originName; // ORIGIN_NAME	VARCHAR2(1000 BYTE)
+	private String memberOriginName; // ORIGIN_NAME	VARCHAR2(1000 BYTE)
 	private String memberModifyName; // MEMBER_MODIFY_NAME	VARCHAR2(1000 BYTE)
-	private String uploadDate; // UPLOAD_DATE	DATE
-	private int fileLevel; // sFILE_LEVEL	NUMBER
-	
+	private String memberUploadDate; // UPLOAD_DATE	DATE
+	private String memberFilePath; // sFILE_LEVEL	NUMBER
 }

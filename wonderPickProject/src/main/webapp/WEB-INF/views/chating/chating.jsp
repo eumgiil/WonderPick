@@ -193,6 +193,9 @@
 
 			<div id="emoticon_area">
 				이모티콘 집어넣을꺼임 건들지마셈
+				<div>여기는 사진</div>
+				<div>여기는 제목</div>
+				<div>가격</div>
 			</div>
 
 			<div id="chatingMenu">
@@ -522,10 +525,16 @@
 				$.ajax({
 					url : 'emoticonList.ct',
 					data : {
-						${ sesseionScope.loginMember.memberNo }
+						memberNo : ${ sessionScope.loginMember.memberNo }
 					},
 					success : result => {
 						console.log(result);
+
+						// value = '';
+						// for(var i in result){
+						// 	value += 
+
+						// }
 
 					},
 					error : () => {
@@ -533,7 +542,7 @@
 					}
 
 
-				})
+				});
 
 
 

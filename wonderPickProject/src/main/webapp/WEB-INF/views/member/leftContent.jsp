@@ -11,7 +11,7 @@
 <body>
     <div id="leftContent">
         <div id="profileContent">
-            <img src="${sessionScope.loginMember.profilePath }/${sessionScope.loginMember.profileImg}" />
+            <img src="${sessionScope.loginMember.memberFilePath }${sessionScope.loginMember.memberModifyName}" />
             <div id="loginNickName">
                 <h3>${sessionScope.loginMember.nickName}님</h3>
             </div>

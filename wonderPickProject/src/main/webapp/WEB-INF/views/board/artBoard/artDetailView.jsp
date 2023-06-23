@@ -81,7 +81,11 @@
         .inquire_img{
             border-right: 1px solid lightslategray;
         }
-     
+
+        #explain{
+            display: inline-block;
+        }
+    
 
     </style>
 </head>
@@ -91,24 +95,11 @@
 
         <!-- 여기는 제품 사진 및 정보 -->
         <div class="detail" align="center">
-
-            <div class="">
-            	<c:forEach items="${boardImage}" var="img">
-	            	<c:choose>
-	            		<c:when test="${ img.fileLevel eq 1 }">
-	            			<div class="">
-			                    <img class="detail_img" src="${img.modifyName}" alt="">
-			                </div>
-	            		</c:when>
-	            		<c:when test="${ img.fileLevel eq 2 }">
-	            			<div class="list">
-			                    <img class="detail_img" src="${img.modifyName}" alt="">
-			                </div>
-	            		</c:when>
-	            	</c:choose>
-            	</c:forEach>
+            <div id="artImages" class="">
+            	
             </div>
             <br><br>
+
 
 
 
@@ -250,11 +241,24 @@
             <div>
                 <table class="width">
                     <tr>
-                        <th style="font-size: 35px;">❤</th>
+                        <th style="font-size: 35px;">
+                            <c:choose>
+                                <c:when test="${ artBoard.heart > 0 }">
+                                    ♥
+                                </c:when>
+                                <c:otherwise>
+                                    ♡
+                                </c:otherwise>
+                            </c:choose>
+                        </th>
                         <td class="t_align_right">
-                            <c:if test="${member.memberNo eq artBoard.board.boardNo}">
-                                <button>수정</button>
-                            </c:if>
+                            <form action="updateForm.at" method="get">
+                                <input type="hidden" name="boardNo" value="${ bno }">
+                                <button class="btn btn-danger">수정</button>
+
+                                <!-- <c:if test="${member.memberNo eq artBoard.board.boardNo}"> -->
+                                <!-- </c:if> -->
+                            </form>
                         </td>
                     </tr>
                     <tr>
@@ -317,76 +321,16 @@
                 <h3 class="op_title width">가격 옵션</h3>
             </div>
             <div class="">
-                <table class="width">
+                <table id="optionTable" class="width">
                     <!-- 여기서부터 -->
-                    <c:forEach items="${optionList}" var="option">
-                    	<tr>
-	                        <td>${ option.mainOp }</td>
-	                        <td class="t_align_right">
-	                            <select class="select" onchange="choice();" style="width:70%;">
-	                            	<option value="0">===</option>
-									<c:forEach items="${ option.detailOption }" var="detail">
-										<option  value="${ detail.price }" align="center" >
-											${ detail.detail }&nbsp;&nbsp;&nbsp;&nbsp;${ detail.price }원 
-										</option>
-									</c:forEach>
-	                            </select>
-	                        </td>
-	                    </tr>
-                    </c:forEach>
+                    
                     <!-- 여기까지 반복 -->
                 </table>
             </div>
             <br><br>
 
                                                         <!-- 굿즈옵션 -->
-            <div class="">
-                <h3 class="op_title width">굿즈 옵션</h3>
-            </div>
-            <div class="">
-                <!-- <table class="width">
-                    <tr>
-                        <td>제품</td>
-                        <td class="t_align_right">
-                            <select name="" id="">
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>사이즈</td>
-                        <td class="t_align_right">
-                            <select name="" id="">
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>주문수량</td>
-                        <td class="t_align_right">
-                            <select name="" id="">
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>포장방식</td>
-                        <td class="t_align_right">
-                            <select name="" id="">
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                            </select>
-                        </td>
-                    </tr>
-                </table> -->
-            </div>
+            
             <hr><br>
 
             <div>
@@ -459,6 +403,7 @@
                     f.append(priceStr);
                     f.setAttribute('method', 'post');
                     f.setAttribute('action', 'insertReasonPrice.co');
+                    */
                     
                     let requestInput = document.createElement('input');
                     requestInput.setAttribute('tyep', 'hidden');
@@ -490,7 +435,7 @@
                     // }*/
 
 
-                }
+                
 
 
             </script>
@@ -500,19 +445,66 @@
         
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    
 
-
-
+    
     <script>
-        /* 상세설명 div */
+        
         window.onload = () => {
+            /* 옵션 불러오기 */
+            let optionTable = document.getElementById('optionTable');
+            let optionList = JSON.parse('${ optionList }');
+            for(var eachOption of optionList){
+                let select = document.createElement('select');
+                select.style.textAlign = 'center';
+                select.className = 'select';
+                select.addEventListener('change',  choice);
+                select.style.width = '70%';
+                
+                let option = document.createElement('option');
+                option.value = 0;
+                option.innerHTML = '===';
+                select.append(option);
+                for(var detailOption of eachOption.detailOption){
+                    let option = document.createElement('option');
+                    option.value = detailOption.price;
+                    option.innerHTML = detailOption.detail + '&nbsp;&nbsp;&nbsp;&nbsp;' + detailOption.price;
+                    select.append(option);
+                }
+                let tr = document.createElement('tr');
+                let td1 = document.createElement('td');
+                let td2 = document.createElement('td');
+                td1.innerHTML = eachOption.mainOp;
+                td2.className = 't_align_right';
+                td2.append(select);
+                tr.append(td1);
+                tr.append(td2);
+                optionTable.append(tr);
+            }
+
+            /* 등록이미지 불러오기 */
+            let artImages = document.getElementById('artImages');
+            let boardImages = JSON.parse('${ boardImage }');
+            for(var img of boardImages){
+                if(img.fileLevel != 3){
+                    let div = document.createElement('div');
+                    if(img.fileLevel == 2){
+                        div.className = 'list';
+                    }
+                    let imgTag = document.createElement('img');
+                    imgTag.setAttribute('class', 'detail_img');
+                    imgTag.setAttribute('src', img.modifyName);
+                    div.append(imgTag);
+                    artImages.append(div);
+                }
+            }
+
+            /* 상세설명 div */
             let boardContent = JSON.parse('${ artBoard.board.boardContent }');
             let explain = document.getElementById('explain');
             for(var i = 0; i < boardContent.length; i++){
                 if(boardContent[i].type == 'text'){
-                    let p = document.createElement('p');
-                    p.innerHTML = boardContent[i].data;
-                    explain.append(p)
+                    explain.append(boardContent[i].data);
                 }
                 else{
                     let explainImg = document.createElement('img');
@@ -522,9 +514,7 @@
                 }
             }
         }
-        $(window).on('load', function(){
-            $('#character_illustration').css('color', '#FF8399')
-        });
+        
 
         // 클릭 시 해당 글 위치로 이동
         function move(name){

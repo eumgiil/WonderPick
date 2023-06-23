@@ -201,7 +201,7 @@
                                         <tr>
                                             <td class="table_profile_img" >
                                                 <div align="center" >
-                                                    <img align="left" class="profile_img" src="${sessionScope.loginMember.profilePath }/${sessionScope.loginMember.profileImg}">
+                                                    <img align="left" class="profile_img" src="${sessionScope.loginMember.profilePath }/${sessionScope.loginMember.profileImg}" >
                                                 </div>
                                             </td>
                                             <td id="nickName">
