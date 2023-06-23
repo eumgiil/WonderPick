@@ -4,6 +4,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.wonderPick.member.model.vo.Member;
+import com.kh.wonderPick.member.model.vo.MemberImage;
+import com.kh.wonderPick.member.model.vo.SecretCode;
 
 @Repository
 public class MemberDao {
@@ -24,4 +26,11 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.signUpMember", m);
 	}
 	
+	public int insertSecret(SecretCode secretCode, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("memberMapper.insertSecret", secretCode);
+	}
+	
+	public int insertProfile(Member mImg, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("memberMapper.insertProfile", mImg);
+	}
 }

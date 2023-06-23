@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.wonderPick.member.model.dao.MemberDao;
 import com.kh.wonderPick.member.model.vo.Member;
+import com.kh.wonderPick.member.model.vo.MemberImage;
+import com.kh.wonderPick.member.model.vo.SecretCode;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -30,9 +32,20 @@ public class MemberServiceImpl implements MemberService {
 	public int nickCheckMember(String checkNick) {
 		return memberDao.nickCheckMember(checkNick, sqlSession);
 	}
+	
+	@Override
+	public int insertSecret(SecretCode secretCode) {
+		return memberDao.insertSecret(secretCode, sqlSession);
+	}
 
 	@Override
 	public int signUpMember(Member m) {
 		return memberDao.signUpMember(m, sqlSession);
 	}
+	
+	@Override
+	public int insertProfile(Member mImg) {
+		return memberDao.insertProfile(mImg, sqlSession);
+	}
+
 }

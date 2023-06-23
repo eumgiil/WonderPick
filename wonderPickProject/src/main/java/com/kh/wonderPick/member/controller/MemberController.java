@@ -1,18 +1,27 @@
 package com.kh.wonderPick.member.controller;
 
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.util.Random;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.wonderPick.common.model.vo.PageInfo;
-import com.kh.wonderPick.common.template.Pagination;
 import com.kh.wonderPick.member.model.service.MemberService;
 import com.kh.wonderPick.member.model.vo.Member;
+import com.kh.wonderPick.member.model.vo.MemberImage;
+import com.kh.wonderPick.member.model.vo.SecretCode;
 
 @Controller
 public class MemberController {
@@ -23,6 +32,8 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	@Autowired
+	private JavaMailSenderImpl sender;
 	/**
 	 * 메인페이지
 	 * @return : 어디서는 로고이미지누르면 메인으로 돌려보냄
@@ -40,19 +51,14 @@ public class MemberController {
 	 */
 	@RequestMapping("login.me")
 	public String loginMember(Member m,
-							HttpSession session) {
+							  HttpSession session) {
 		Member loginMember = memberService.loginMember(m);
 		if(loginMember != null && bcryptPasswordEncoder.matches(m.getMemberPwd(), loginMember.getMemberPwd())) {
-			if(loginMember.getProfileImg() == null && loginMember.getProfilePath() == null) {
-				loginMember.setProfileImg("basicProfile.jpg");
-				loginMember.setProfilePath("resources/memberUpfiles");
-			}
 			session.setAttribute("loginMember", loginMember);
-			return "redirect:/";
 		} else {
 			session.setAttribute("alertMsg", "등록되지 않거나, 잘못된 정보입니다.");
-			return "redirect:/";
 		}
+		return "redirect:/";
 	}
 	
 	/**
@@ -111,34 +117,70 @@ public class MemberController {
 		return memberService.nickCheckMember(checkNick) > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	@ResponseBody
+	@RequestMapping("emailCheck.me")
+	public String emailCheckMember(String checkEmail, HttpServletRequest request) throws MessagingException {
+		MimeMessage message = sender.createMimeMessage(); 
+		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+		
+		String ip = request.getRemoteAddr();
+		String secret = generateSectret();
+		
+		SecretCode secretCode = SecretCode.builder()
+													.who(ip)
+													.secret(secret)
+													.build();
+		System.out.println(checkEmail);
+		System.out.println(secretCode.getWho());
+		System.out.println(secretCode.getSecret());
+		System.out.println(secretCode);
+		if(memberService.insertSecret(secretCode) > 0) {
+			helper.setTo(checkEmail);
+			helper.setSubject("Wonder Pick 인증번호입니다.");
+			helper.setText("인증번호 : " + secret);
+			
+			sender.send(message);
+			
+			return "success";
+		} else {
+			return "error";
+		}
+	}
+	
+	public String generateSectret() {
+		Random r = new Random();
+		int i = r.nextInt(10000);
+		Format f = new DecimalFormat("000000");
+		String secret = f.format(i);
+		
+		return secret;
+	}
 	
 	/**
 	 * 회원가입 서비스
 	 * @param m : 사용자가 입력한 값들을 담은 객체
+	 * @param emailAgree : 이메일 수신 동의 여부 / 체크를 하지 않으면 값이 넘어오지 않기때문에, 기본값을 설정
 	 * @param session : 메시지를 담아서 alert창으로 띄워줌
-	 * @return : 회원가입 성공시 메인화면으로 돌려보냄
+	 * @return : 메인화면으로 돌려보냄
 	 */
 	@RequestMapping("signUp.me")
 	public String signUpMember(Member m,
+							   @RequestParam(value="emailAgree", defaultValue="N")String emailAgree,
 							   HttpSession session) {
+		m.setEmailAgree(emailAgree);
 		String encPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 		m.setMemberPwd(encPwd);
 		if(memberService.signUpMember(m)>0) {
+			Member mImg = memberService.loginMember(m);
+			mImg.setMemberOriginName("basicProfile.jpg");
+			mImg.setMemberFilePath("resources/memberUpfiles/");
+			memberService.insertProfile(mImg);
 			session.setAttribute("alertMsg", "회원가입을 축하합니다!");
-			return "redirect:/";
 		} else {
 			session.setAttribute("alertMsg", "회원가입에 실패하셨습니다.");
-			return "common/error";
 		}
+		return "redirect:/";
 	}
-	// 회원가입을 하면 기본 프로필을 발급해줄꺼임!
-	// 근데 언제해야되나?
-	// 일단 insert를 성공하면?
-	// 그치 선행이 회원번호가 생겨야하는거니까 무조건 insert성공하고나면
-	// 그럼 insert성공하고나면 기본프로필을 발급하는데, 만약 그 발급이 실패한다면? 그래도 회원가입 진행으로하나?
-	// 일단DB에 데이터가 넘어간건데 그게맞나?
-	// 그냥 무조건 기본 프로필을 발급해주고, 그걸로 하는게 맞다! 그럴려고 vo에 만들어둔거임!
-	// profileImg 파일이름 // profilePath 파일경로
 	
 	/**
 	 * 마이페이지url을 정확하게 알려주지 않기 위해서 거쳐서 보내줌
@@ -158,4 +200,15 @@ public class MemberController {
 	public void updateProfileMember(Member m) {
 		
 	}
+	
+	
+//	public String saveFile(MultipartFile upfile, HttpSession session) {
+//		String originName = upfile.getOriginalFilename();
+//		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+//		int ranNum = (int)(Math.random() * 9000 + 10000);
+//		String ext = originName.substring(originName.lastIndexOf("."));
+//		String changeName = currentTime + ranNum + ext;
+//		String savePath = session.getServletContext().getRealPath("/resources/memberUpfiles/");
+//		MultipartFile upfile = (MultipartFile) new File(savePath + changeName);
+//	}
 }

@@ -59,12 +59,26 @@
 			<result column="MODIFY_NAME" property="modifyName" />
 			<result column="MEMBER_MODIFY_NAME" property="memberModifyName" />
 			<result column="CATEGORY" property="category" />
+			<result column="CREATE_DATE" property="createDate" />
 		</resultMap>
 		
 		
 		
-		 <resultMap id="goodsResultSet" type="goods">
+		  <resultMap id="goodsResultSet" type="goods">
+  
 		  	<result column="board_no" property="boardNo" />
+		  	<result column="board_title" property="boardTitle" />
+		  	<result column="board_content" property="boardContent" />
+		  	<result column="member_no" property="memberNo" />
+		  	<result column="create_date" property="createDate" />
+		  	<result column="board_count" property="boardCount" />
+		  	<result column="nickname" property="nickName" />
+		  	<result column="modify_name" property="modifyName" />
+		  	<result column="origin_name" property="originName" />
+		  	<result column="file_level" property="fileLevel" />
+		  	
+		  	
+		  	<result column="goods_no" property="goodsNo" />
 		  	<result column="price" property="price" />
 		  	<result column="draft" property="draft" />
 		  	<result column="modify_count" property="modifyCount" />
@@ -74,14 +88,8 @@
 		  	<result column="amount" property="amount" />
 		  	<result column="goods_category" property="goodsCategory" />
 		  	<result column="add_info" property="addInfo" />
-		  	<result column="member_no" property="memberNo" />
-		  	<result column="board_title" property="boardTitle" />
-		  	<result column="board_content" property="boardContent" />
-		  	<result column="create_date" property="createDate" />
-		  	<result column="board_count" property="boardCount" />
-		  	<result column="nickname" property="nickName" />
-		  	<result column="goods_no" property="goodsNo" />
 		  </resultMap>
+  
 			
 		
 		
@@ -104,7 +112,7 @@
 			
 		</select>
 		
-		<select id="searchArtResult" resultMap="contestBoardResultSet" parameterType="string"> 
+		<select id="searchArtResult" resultMap="artBoardDTO" parameterType="string"> 
 		select
 		       ab.board_no
 		      ,b.board_title
@@ -114,6 +122,7 @@
 		      ,NVL(ab.price, 0) price
 		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/boardUpfiles/artBoardFiles/2023061222534502.jpg') MEMBER_MODIFY_NAME
 		  	  ,ab.category 
+		  	  ,b.create_date
 		  from
 		       art_board ab
 		  join
@@ -134,7 +143,7 @@
            and
                BOARD_TITLE LIKE '%' || #{ keyword } || '%'
 		 group by
-		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name, mi.MEMBER_MODIFY_NAME, ab.category
+		       ab.board_no, b.board_title, m.nickname, ab.price, bi.modify_name, mi.MEMBER_MODIFY_NAME, ab.category, b.create_date
 		 order by
 		       board_no desc
 			
@@ -143,30 +152,30 @@
 		<select id="searchGoodsResult" resultMap="goodsResultSet" parameterType="string">
 		
 		
-			 select
-			       board_no, 
-			       board_title, 
-			       nickname, 
-			       board_count,
-			       to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
-			       price,
-			       origin_name
-			  from 
-			       board b
-			 join 
-			      member using (member_no)
-			 join 
-			 	 board_image using (board_no)
-			 join goods using (board_no )
-			 where
-			     b.status = 'Y'
-			and 
-			    board_type ='G'
-			and
-			         BOARD_TITLE LIKE '%' || #{ keyword } || '%'
-			order by
-			      board_no asc
-		
+		       select
+				       board_no, 
+				       board_title, 
+				       nickname, 
+				       to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
+				       price,
+				       origin_name,
+				       modify_name
+				  from 
+				       board b
+				 join 
+				      member using (member_no)
+				 join 
+				 	 board_image using (board_no)
+				 join goods using (board_no )
+				 where
+				     b.status = 'Y'
+				and 
+				    board_type ='G'
+				and file_level = 1
+				and BOARD_TITLE LIKE '%' || #{ keyword } || '%'
+				order by
+				      board_no asc
+				
 		</select>
 		<select id="searchContestResult" resultMap="contestBoardResultSet" parameterType="string">
 			
@@ -194,17 +203,17 @@
 			                
 			        WHERE
 			                BOARD_IMAGE.FILE_LEVEL = 1
-			          AND 
-			                EMOTICON.PRICE_STATUS = 0
 			          AND
-			          		WINNER = 0
+			          		BOARD_TYPE = 'C'
+			         
+			         
                       AND 
-                            BOARD_TITLE LIKE '%' || '#{ keyword }' || '%'
+                            BOARD_TITLE LIKE '%' || #{ keyword } || '%'
                         
 			        ORDER
 			           BY   
 			                UPLOAD_DATE DESC)
-			WHERE ROWNUM BETWEEN 1 AND 5        
+			WHERE ROWNUM BETWEEN 1 AND 20     
 		</select>
 		 
 		

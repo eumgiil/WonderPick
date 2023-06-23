@@ -11,6 +11,7 @@
 			<result column="BOARD_TITLE" property="boardTitle"/>
 			<result column="BOARD_CONTENT" property="boardContent"/>
 			<result column="MEMBER_NO" property="memberNo"/>
+			<result column="BOARD_COUNT" property="boardCount"/>
 		
 			
 			<result column="NICKNAME" property="nickName"/>
@@ -181,6 +182,7 @@
 			                    ,BOARD_IMAGE.MODIFY_NAME    
 			                    ,BOARD_IMAGE.UPLOAD_DATE               
 			                    ,FILE_PATH
+			                    ,BOARD_COUNT
 			          FROM 
 			                 BOARD
 			        LEFT JOIN
@@ -219,6 +221,7 @@
 					                    ,BOARD_IMAGE.MODIFY_NAME    
 					                    ,BOARD_IMAGE.UPLOAD_DATE               
 					                    ,FILE_PATH
+					                    ,BOARD_COUNT
 			          FROM 
 			                 BOARD
 			        LEFT JOIN
@@ -368,6 +371,9 @@
 		    		  BOARD_NO = #{ boardNo } 
 			    
 		</delete>
+		
+		
+	
 
 	</mapper>
 	

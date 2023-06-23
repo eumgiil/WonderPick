@@ -1,15 +1,19 @@
 package com.kh.wonderPick.member.model.service;
 
 import com.kh.wonderPick.member.model.vo.Member;
+import com.kh.wonderPick.member.model.vo.SecretCode;
 
 public interface MemberService {
 	
-	public Member loginMember(Member m);
+	Member loginMember(Member m);
 	
-	public int idCheckMember(String checkId);
+	int idCheckMember(String checkId);
 	
-	public int nickCheckMember(String checkNick);
-	
-	public int signUpMember(Member m);
+	int nickCheckMember(String checkNick);
 
+	int insertSecret(SecretCode secretCode);
+	
+	int signUpMember(Member m);
+	
+	int insertProfile(Member mImg);
 }

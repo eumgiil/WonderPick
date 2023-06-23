@@ -1,6 +1,7 @@
 package com.kh.wonderPick.board.artBoard.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,8 +69,8 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 
 
 	@Override
-	public ArtBoard selectArtBoard(int bno) {
-		return artDao.selectArtBoard(sqlSession, bno);
+	public ArtBoard selectArtBoard(HashMap maps) {
+		return artDao.selectArtBoard(sqlSession, maps);
 	}
 
 	@Override
@@ -81,6 +82,43 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	public ArrayList<BoardImage> selectBoardImage(int bno) {
 		return artDao.selectBoardImage(sqlSession, bno);
 	}
+
+	@Override
+	public int deleteOption(int bno) {
+		return artDao.deleteOption(sqlSession, bno);
+	}
+	
+	@Override
+	@Transactional
+	public int updateArtBoard(Board board, ArtBoard artBoard, ArrayList<Option> list, ArrayList<BoardImage> files, ArrayList<Integer> optionNos) {
+		
+		
+		int result = artDao.updateBoard(sqlSession, board);
+		result *= artDao.updateArtBoard(sqlSession, artBoard);
+		
+		// 디테일 옵션 -> 옵션 삭제
+		for(int i = 0; i < optionNos.size(); i++) {
+			result *= artDao.deleteDetailOption(sqlSession, optionNos.get(i));
+		}
+		result *= artDao.deleteOption(sqlSession, board.getBoardNo());
+		// 옵션 -> 디테일 옵션 추가
+		for(int i = 0; i < list.size(); i++) {
+			result *= artDao.insertOptions(sqlSession, list.get(i));
+			for(int j = 0; j < list.get(i).getDetailOption().size(); j++) {
+				result *= artDao.insertDetailOption(sqlSession, list.get(i).getDetailOption().get(j));
+			}
+		}
+		
+		// 사진 삭제 -> 재등록
+		result *= artDao.deleteFiles(sqlSession, board.getBoardNo());
+		for(int i = 0; i < files.size(); i++) {
+			result *= artDao.insertFiles(sqlSession, files.get(i));
+		}
+		return result;
+	}
+
+
+	
 	
 
 	

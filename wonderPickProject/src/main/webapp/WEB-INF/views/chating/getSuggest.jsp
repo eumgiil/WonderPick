@@ -147,7 +147,8 @@ div {
 </style>
 </head>
 <body>
-
+	<jsp:include page="../common/header.jsp" />
+	<br><br><br><br>
 	<div style="width: 100%" align="center">
 		<div class="modal-content" style="width: 500px">
 			<!-- Modal Header -->
@@ -172,71 +173,83 @@ div {
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 									<input type="text" class="reason" value="${c.request}">
-									<input type="checkbox" name="selectToRemove">
-									<input type="hidden" name="optionNo" value="${ c.optionNo }">
+									<input type="hidden" class="optionNo" value="${ c.optionNo }">
 								</div>
 							</c:forEach>
 						</c:when>
-						<c:otherwise>
-							<c:choose>
-								<c:when test="">
-								
-								</c:when>
-								<c:otherwise>
-								
-								</c:otherwise>
-							</c:choose>
-						</c:otherwise>
 					</c:choose>
 				</div>
 			</div>
 
 			<!-- Modal footer -->
 			<div class="modal-footer">
-
-				<c:if test="${  loginUser.nickName eq reciever }">
-					<button type="button" class="btn btn-primary" id="suggestbtn"
-						onclick="kakaoPay();">결제하기</button>
+				<button class="btn btn-primary" id="accept-btn">수락하기</button>
+				<c:if test="${loginMember.memberNo!=artistNo }">
+					<button type="button" class="btn btn-primary" id="suggestbtn"onclick="kakaoPay();">결제하기</button>
 				</c:if>
-				<button id="negative">가격 삭제하기</button>
-				<button type="button" class="btn btn-danger" id="updateCondition">수정하기</button>
-				<button type="button" class="btn btn-danger">거절하기</button>
+				<form action="removeCondition">
+					<input type="hidden" name="rejectList">
+					<input type="hidden" name="roomName" value="${ roomName }">
+					<input type="hidden" name="boardNo" value="${ boardNo }">
+					<button class="btn btn-danger">거절하기</button>
+				</form>
+				<script>
+						var rejectList = []
+						$('.optionNo').each(function() {
+							rejectList.push($(this).val())
+						})
+						$('input[name=rejectList]').val(rejectList)
+				</script>
 			</div>
 		</div>
 	</div>
 	<script>
 		$(function() {
-			alert('${ not loginUser.nickName eq reciever }')
-			alert('${loginUser.nickName}')
-			alert('${reciever}')
-			
-			$('#negative').hide();
+			if($('#suggestbtn').length!=0){
+				$('#suggestbtn').hide(); 
+				if(${ac.memberCheck eq "Y" and ac.artistCheck eq "Y"}){
+					$('#suggestbtn').show();
+				}
+				if(${not ac.memberCheck eq "Y" and ac.artistCheck eq "Y"}){
+					$('#suggestbtn').hide();
+				}
+			}
 			$('input[name=selectToRemove]').hide()
 			
 			var priceCount = Number('${ originPrice }')
 			$('.price').each(function() {
 				priceCount = priceCount + Number($(this).val())
 			})
-			$("#totalprice").text(priceCount)
-			
-			$('#updateCondition').click(function() {
-				$('#negative').show();
-				$('input[type=checkbox]').show();
-			});
-			
-			$('#negative').click(function() {
-				
-				alert($(':checked').next().val())
-				$.ajax({
-					
-				})
-			});
+			$("#totalprice").text(priceCount);
 		});
 		
+		$('#accept-btn').click(function() {
+			var artist = 0;
+			alert('${loginMember.memberNo==artistNo}')
+			if(${loginMember.memberNo==artistNo}){
+				artist=1;
+			} 
+			$.ajax({
+				url : 'updatetAcceptCondition.co',
+				data : {
+					artistNo : artist,
+					boardNo : '${suggestList.get(0).boardNo}',
+					roomName : '${roomName}'
+				},
+				success : function(result) {
+					alert('성공적으로 수락하였습니다.')
+					if(result=='Y'){
+						if($('#suggestbtn').length!=0){
+							$('#suggestbtn').show();
+						}
+					}
+				}
+			
+			})
+		})
 		
 
 		function kakaoPay() {
-
 			var title = $('#title').text();
 			var total_amount = $("#totalprice").text()
 			$.ajax({

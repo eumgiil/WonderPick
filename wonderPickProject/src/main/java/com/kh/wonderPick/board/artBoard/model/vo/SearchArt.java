@@ -8,5 +8,6 @@ public class SearchArt {
 	private String search;
 	private String keyword;
 	private String category;
+	private String selectOrder;
 	
 }
