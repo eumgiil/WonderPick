@@ -1,18 +1,26 @@
 package com.kh.wonderPick.member.controller;
 
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.util.Random;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.wonderPick.common.model.vo.PageInfo;
-import com.kh.wonderPick.common.template.Pagination;
 import com.kh.wonderPick.member.model.service.MemberService;
 import com.kh.wonderPick.member.model.vo.Member;
+import com.kh.wonderPick.member.model.vo.SecretCode;
 
 @Controller
 public class MemberController {
@@ -23,6 +31,8 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	@Autowired
+	private JavaMailSenderImpl sender;
 	/**
 	 * 메인페이지
 	 * @return : 어디서는 로고이미지누르면 메인으로 돌려보냄
@@ -48,11 +58,10 @@ public class MemberController {
 				loginMember.setProfilePath("resources/memberUpfiles");
 			}
 			session.setAttribute("loginMember", loginMember);
-			return "redirect:/";
 		} else {
 			session.setAttribute("alertMsg", "등록되지 않거나, 잘못된 정보입니다.");
-			return "redirect:/";
 		}
+		return "redirect:/";
 	}
 	
 	/**
@@ -111,25 +120,65 @@ public class MemberController {
 		return memberService.nickCheckMember(checkNick) > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	@ResponseBody
+	@RequestMapping("emailCheck.me")
+	public String emailCheckMember(String checkEmail, HttpServletRequest request) throws MessagingException {
+		MimeMessage message = sender.createMimeMessage(); 
+		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+		
+		String ip = request.getRemoteAddr();
+		String secret = generateSectret();
+		
+		SecretCode secretCode = SecretCode.builder()
+													.who(ip)
+													.secret(secret)
+													.build();
+		System.out.println(checkEmail);
+		System.out.println(secretCode.getWho());
+		System.out.println(secretCode.getSecret());
+		System.out.println(secretCode);
+		if(memberService.insertSecret(secretCode) > 0) {
+			helper.setTo(checkEmail);
+			helper.setSubject("Wonder Pick 인증번호입니다.");
+			helper.setText("인증번호 : " + secret);
+			
+			sender.send(message);
+			
+			return "success";
+		} else {
+			return "error";
+		}
+	}
+	
+	public String generateSectret() {
+		Random r = new Random();
+		int i = r.nextInt(10000);
+		Format f = new DecimalFormat("000000");
+		String secret = f.format(i);
+		
+		return secret;
+	}
 	
 	/**
 	 * 회원가입 서비스
 	 * @param m : 사용자가 입력한 값들을 담은 객체
+	 * @param emailAgree : 이메일 수신 동의 여부 / 체크를 하지 않으면 값이 넘어오지 않기때문에, 기본값을 설정
 	 * @param session : 메시지를 담아서 alert창으로 띄워줌
-	 * @return : 회원가입 성공시 메인화면으로 돌려보냄
+	 * @return : 메인화면으로 돌려보냄
 	 */
 	@RequestMapping("signUp.me")
 	public String signUpMember(Member m,
+							   @RequestParam(value="emailAgree", defaultValue="N")String emailAgree,
 							   HttpSession session) {
+		m.setEmailAgree(emailAgree);
 		String encPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 		m.setMemberPwd(encPwd);
 		if(memberService.signUpMember(m)>0) {
 			session.setAttribute("alertMsg", "회원가입을 축하합니다!");
-			return "redirect:/";
 		} else {
 			session.setAttribute("alertMsg", "회원가입에 실패하셨습니다.");
-			return "common/error";
 		}
+		return "redirect:/";
 	}
 	// 회원가입을 하면 기본 프로필을 발급해줄꺼임!
 	// 근데 언제해야되나?
@@ -152,5 +201,10 @@ public class MemberController {
 	@RequestMapping("updateInfo.me")
 	public void updateInfoMember(Member m) {
 		System.out.println(m);
+	}
+	
+	@RequestMapping("updateProfile.me")
+	public void updateProfileMember(Member m) {
+		
 	}
 }

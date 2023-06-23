@@ -50,7 +50,7 @@
                         <a href="#">공지사항</a>
                             <ul class="detailCategory">
                                 <li><a href="#">공지사항</a></li>
-                                <li><a href="selectTop10.ct">공모전</a></li>
+                                <li><a href="selectVotePage.ct">공모전</a></li>
                                 <li><a href="#">1대1문의</a></li>
                                 <li><a href="#">광고문의</a></li>
                             </ul>
@@ -58,9 +58,9 @@
                 </ul>
                 <!-- 검색 시작 -->
                 <div class="search_area">
-                    <form action="searchResult.ct" method="get">
+                    <form action="searchArtResult.ct" method="get">
                         <div id="search_main">
-                            <input type="text" placeholder="검색어를 입력해주세요" name="search" id="search_input" onkeyup="searchAutoComplet();" >
+                            <input type="text" placeholder="검색어를 입력해주세요" name="keyword" id="search_input" onkeyup="searchAutoComplet();" required>
                             <button type="submit"><span class="material-symbols-outlined"> search</span></button>
                         </div>
                         <div id="search_list_area">
@@ -124,7 +124,7 @@
                             var searchValue = searchElement.value;
                             var searchLength = searchValue.length
                             
-                            // 스페이스바 막기
+                            // 스페이스바 막기(첫 공백문자 막기)
                             if(searchLength == 1 && searchValue == ' '){
                                 document.getElementById('search_input').value = '';
                             }
@@ -155,7 +155,7 @@
                                httpRequest.open('POST', 'searchAutoComplet?searchValue=' + searchValue );
                                httpRequest.responseType = 'json';
                                httpRequest.send();
-                           }
+                        }
 
 
 

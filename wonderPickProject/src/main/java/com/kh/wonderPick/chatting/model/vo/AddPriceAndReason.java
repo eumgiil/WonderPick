@@ -8,4 +8,6 @@ public class AddPriceAndReason {
 	private int boardNo;
 	private String addPrices;
 	private String request;
+	private int accepter;
+	private String roomName;
 }

@@ -148,7 +148,7 @@ div {
 </head>
 <body>
 	<!-- 로그인 클릭 시 뜨는 모달 (기존에는 안보이다가 위의 a 클릭 시 보임) -->
-	<div class="modal fade" id="loginModal">
+	<div class="modal fade" id="suggestModal">
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content" style="width: 500px">
 				<!-- Modal Header -->

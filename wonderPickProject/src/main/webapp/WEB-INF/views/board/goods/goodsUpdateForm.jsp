@@ -53,18 +53,50 @@
                 <td class="wide"><h5 style="font-weight: bolder;">상품가격</h5></td>
                 <td ><input type="number" style="width: 50%;" name="price" value="${g.price }" required>원 </td>
             </tr>
+            
+            <c:choose>
+            <c:when test="${not empty bi }">
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상품 대표 이미지</h5></td>
                 <td align="center" colspan="3">
-                    <img id="titleimg" name="upfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
+                    <img id="titleimg" name="reThumbnailUpFile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
+                </td>
+            </tr>
+            
+            <c:choose>
+            <c:when test="${bi.fileLevel eq 2 }">
+            <tr>
+                <td class="wide"><h5 style="font-weight: bolder;">상세이미지</h5></td>
+                <td><img id="contentImg1" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200" value=""></td>
+                <td><img id="contentImg2" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg3" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+            </tr>
+            </c:when>
+            <c:otherwise>
+            <tr>
+                <td class="wide"><h5 style="font-weight: bolder;">상세이미지</h5></td>
+                <td><img id="contentImg1" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg2" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg3" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+            </tr>
+            </c:otherwise>
+            </c:choose>
+            </c:when>
+            <c:otherwise>
+            <tr>
+                <td class="wide"><h5 style="font-weight: bolder;">상품 대표 이미지</h5></td>
+                <td align="center" colspan="3">
+                    <img id="titleimg" name="reThumbnailUpFile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
                 </td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상세이미지</h5></td>
-                <td><img id="contentImg1" name="upfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
-                <td><img id="contentImg2" name="upfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
-                <td><img id="contentImg3" name="upfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg1" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg2" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg3" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
             </tr>
+            </c:otherwise>
+            </c:choose>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상품설명</h5></td>
                 <td colspan="3"><textarea name="boardContent" id="" cols="30" rows="10" style="width: 100%;" value="${g.boardContent }"required></textarea></td>

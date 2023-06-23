@@ -11,6 +11,7 @@
 	<typeAliases>
 		<typeAlias type="com.kh.wonderPick.member.model.vo.Member" alias="member" />
 		<typeAlias type="com.kh.wonderPick.member.model.vo.MemberImage" alias="memberImage" />
+		<typeAlias type="com.kh.wonderPick.member.model.vo.SecretCode" alias="secretCode" />
 		
 		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Board" alias="board" />
 		<typeAlias type="com.kh.wonderPick.board.artBoard.model.vo.ArtBoard" alias="artBoard" />
@@ -22,6 +23,7 @@
 		<typeAlias type="com.kh.wonderPick.board.contestBoard.model.vo.Contest" alias="contest"/>
 		<typeAlias type="com.kh.wonderPick.board.contestBoard.model.vo.Vote" alias="vote"/>
 		<typeAlias type="com.kh.wonderPick.board.contestBoard.model.vo.Search" alias="search"/>
+		
 		<typeAlias type="com.kh.wonderPick.board.review.model.vo.Review" alias="review" />
 		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Reply" alias="reply" />
 		<typeAlias type="com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply" alias="reReply" />
@@ -33,6 +35,7 @@
 		<typeAlias type="com.kh.wonderPick.chatting.model.vo.Chating" alias="chating"/>
 		<typeAlias type="com.kh.wonderPick.chatting.model.vo.BeforeReadChatings" alias="beforeReadChatings"/>
 		<typeAlias type="com.kh.wonderPick.chatting.model.vo.AddPriceAndReason" alias="apar"/>
+		<typeAlias type="com.kh.wonderPick.chatting.model.vo.AcceptCondition" alias="ac"/>
 
 	</typeAliases>
 	
@@ -53,6 +56,7 @@
 		<mapper resource="/mappers/chating-mapper.xml" />
 		<mapper resource="/mappers/review-mapper.xml" />
 		<mapper resource="/mappers/reply-mapper.xml" />
+		<mapper resource="/mappers/search-mapper.xml" />
 	</mappers>	
 	
 	

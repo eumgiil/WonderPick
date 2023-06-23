@@ -65,14 +65,11 @@ public class ContestDao {
 		return sqlSession.delete("contestBoardMapper.deleteVoteHeart", heart);
 	}
 
-	public ArrayList<Search> searchAutoComplet(SqlSessionTemplate sqlSession, String searchValue) {
-		return (ArrayList)sqlSession.selectList("contestBoardMapper.searchAutoComplet", searchValue);
+	public ArrayList<Contest> selectEmoticon(SqlSessionTemplate sqlSession, int memberNo) {
+		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectEmoticon", memberNo);
 	}
 
-	public ArrayList<Contest> searchResult(SqlSessionTemplate sqlSession, String search) {
-		return (ArrayList)sqlSession.selectList("contestBoardMapper.searchResult", search);
-	}
-
+	
 	
 
 

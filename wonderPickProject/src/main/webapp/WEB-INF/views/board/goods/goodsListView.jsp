@@ -22,12 +22,12 @@
            
         }
         
-        .goodsList1 , .categoryList{
+        .goodsList1{
             border: 1px solid black;
             width: 900px;
-            margin-left:50px;
             
         }
+        
         .all_area{
             width: 1300px;
         }
@@ -65,13 +65,15 @@
         }
         #searchGoods{
          float : left;
-         margin-left : 500px;
+         margin-left:50px;
+         
         }
         .pagingArea{
         margin-left : 450px;
         }
         .category{
             float: left;
+            width:400px;
             margin-left: 5%;
             margin-top: 10%;
             height: 500px;
@@ -91,6 +93,10 @@
             height: 300px;
             width: 100%;
         }
+        .top{
+        margin-left : 10px;
+        width: 700px;
+        }
         
         
 
@@ -104,20 +110,21 @@
         <hr style="border: 1px solid black; width: 200px;">
         <table class="category_option">
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${g.goodsCategory.values('FASHION')}&cPage=1">패션</a></td>
+                
+                <td><a href="categorylist.go?goodsCategory=FASHION&cPage=1">패션</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${goodsCategory.kitchen}&cPage=1">주방</a></td>
+                <td><a href="categorylist.go?goodsCategory=KITCHEN&cPage=1">주방</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${category.interior}&cPage=1">인테리어</a></td>
+                <td><a href="categorylist.go?goodsCategory=INTERIOR&cPage=1">인테리어</a></td>
             </tr>
             <tr>
-                <td><a href="categorylist.go?goodsCategory=${category.stationery}&cPage=1">문구</a></td>
+                <td><a href="categorylist.go?goodsCategory=STATIONERY&cPage=1">문구</a></td>
             </tr>
             <tr>
             </tr>
-                <td><a href="categorylist.go?goodsCategory=${category.etc}&cPage=1">기타</a></td>
+                <td><a href="categorylist.go?goodsCategory=ETC&cPage=1">기타</a></td>
             </tr>
         </table>
 
@@ -135,59 +142,49 @@
         <h2 align="center" style="color: rgb(255, 131, 153);">굿즈</h2>
         <hr style="width: 600px; border: 1px solid gray;">
         <h6>n개의 상품이 있습니다.</h6>
-
-        <form action="searchGoods.go" method="get" align="center">
-        <div id="searchGoods" >
-         <select name="option" id="option">
-            <option value="whole">전체</option>
+   <div class="top" align="center" style="float : left;">
+   <div id="searchGoods" >
+        <form action="search.go" method="get" align="center">
+        <input type="hidden" name="currentPage" value="1">
+         <select name="condition" style="width:100px; height:35px;" >
             <option value="nickname">작가명</option>
             <option value="boardTitle">제목순</option>
         </select>
-        <input type="text" value="" name="searchGoods">
+        <input type="text" value="${ keyword }" name="keyword">
         <button type="submit" style="background-color: white; border: none;"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-search-strong-512.png" alt="" width="40"></button>
         </form>
-
-        <select name="option" id="option">
+   </div>
+   <c:if test="${not empty condition}">
+   <script>
+    $(function(){
+    	$('#searchGoods option[value=${condition}]').attr('selected', true);
+    })
+   </script>
+   
+   </c:if>
+   <div class="option" >
+        <select name="option" id="option" >
             <option value="popularity" onclick="option(1)">인기순</option>
             <option value="lowPrice" onclick="option(2)">가격 낮은 순</option>
             <option value="latest" onclick="option(3)">최신 등록순</option>
         </select>
-        
+   </div>     
+   </div>
         <script>
         
-        function option(num){
-        	num = $('#option').val();
-        };
-        $.ajax({
-        	url : 'list.go?cPage=1',
-        	data : num ,
-        	type :'get',
-        	success : function(result){
-        		for(var i = 0 ; i< result.length; i++){
-        			
-        		}
-        	}
-        		
-        		
-        		
-        	},
-        	error : () => {
-        		console.log('실패');
-        	}
-        		
-        });
+      
         </script>
 
         </div>
-        <br><br><br>
+        <br><br><br><br>
 
         <!-- 전체리스트 -->
-        <div class="goodsList1"  id="goods" style="width: 900px;" align="center">
+        <div class="goodsList1"  id="goods" style="width: 900px; margin-left: 500px; margin-top:100px;"  align="center">
           <c:choose>  
             <c:when test="${not empty list}">
               <c:forEach items="${list}" var="g">
                   <div class="goodsList2" style="display:inline-block;">
-                    <img src="resources/boardUpfiles/goodsFiles/b61adf9a35bba64590b9bc1d10734d93.jpg" alt=""  width="250" ><br>
+                    <img src="${ g.modifyName }" alt=""  width="250" style="border:1px solid black; width:250px; height:250px;"  ><br>
                     <table id="goodsInfo"  id="goods" width="250">
 	                    <tr>
 	                        <td>${g.nickName}</td>
@@ -226,17 +223,20 @@
 			heartUpdate();
 		});
 		
+		
 		function selectHeart(){
 			$.ajax({
 				url : 'selectHeart.go',
+				type : "POST",
+				dataType :"json",
 				data : {
 					memberNo : ${loginMember.memberNo}
 				},
 				success : function(result){
 					if(result > 0 ){
-						$('#heart').attr('src', 'resources/common/heart.png');
+						$("#heart").attr("src","resources/common/heart.png");
 					}else{
-						$('#heart').attr('src', 'resources/common/noheart.png');
+						$("#heart").attr("src", "resources/common/noheart.png" );
 					}
 				},
 				error : function(){

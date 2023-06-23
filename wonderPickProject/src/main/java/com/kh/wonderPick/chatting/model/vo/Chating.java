@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class Chating {
 	private String roomName;
+	private int boardNo;
 	private int memberNo;
 	private int artistNo;
 	private String artistNickName;//ARTIST_NO NUMBER NOT NULL,

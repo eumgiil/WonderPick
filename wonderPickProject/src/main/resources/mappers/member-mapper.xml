@@ -106,4 +106,21 @@
 			  ,default			   
 			   )
 	</insert>
+	
+	<!-- 인증코드 발급용 쿼리문 -->
+	<insert id="insertSecret" parameterType="secretCode">
+		insert
+		  into
+		  	  secretCode(
+		  	  who,
+		  	  secret,
+		  	  when
+		  	  )
+		values
+		 	  (
+		 	  #{who},
+		 	  #{secret},
+		 	  sysdate
+		 	  )
+	</insert>
 </mapper>

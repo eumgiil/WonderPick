@@ -221,34 +221,23 @@ public class ContestController {
 		heart.setMemberNo(memberNo);
 		return new Gson().toJson(contestService.deleteVoteHeart(heart));
 	}
+	
+	
+	// 채팅에서 이모티콘불러오기 
 	@ResponseBody
-	@RequestMapping(value="searchAutoComplet", produces="application/json; charset=UTF-8")
-	public String searchAutoComplet(String searchValue) {
+	@RequestMapping(value = "emoticonList.ct" , produces="application/json; charset=UTF-8")
+	public String selectEmoticon(int memberNo, Model model) {
 		
-		if(searchValue.equals("")) {
-			int gap = 0;
-			return new Gson().toJson(gap);
-			
-		}else {
-			ArrayList<Search> list = contestService.searchAutoComplet(searchValue);
-			if(list.isEmpty()){
-				int empty = 0;
-				return new Gson().toJson(empty);
-			}else {
-				return new Gson().toJson(list);
-			}
-		}
+		// 가져와야 할 것 
+		// 사진,제목, 가격,유무료 유무
 		
+		ArrayList<Contest> winnerList = contestService.selectWinnerList();
+		//model.addAttribute("winnerList", winnerList);
+		
+		return new Gson().toJson(winnerList);
 	}
-	@RequestMapping("searchResult.ct")
-	public String searchResult(String search) {
-		
-		System.out.println(search);
-		
-		//contestService.searchResult(search);
-		
-		return "board/contestBoard/searchResult";
-	}
+	
+	
 	
 }
 

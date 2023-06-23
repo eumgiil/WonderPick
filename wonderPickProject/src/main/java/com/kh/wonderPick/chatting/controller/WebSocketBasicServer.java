@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -26,8 +27,6 @@ public class WebSocketBasicServer extends TextWebSocketHandler{
 		System.out.println(session);
 
 		System.out.println("접속성공");
-		
-		WebSocketSession remover = null;
 		
 		users.add(session);
 		
@@ -54,28 +53,29 @@ public class WebSocketBasicServer extends TextWebSocketHandler{
 
 		String[] recieveMsg  = message.getPayload().split(",");
 		System.out.println("msg : "+message.getPayload());
+		
 		if(recieveMsg[0].equals("getin")) {//소켓 접속시 처음으로 보낸 메세지일 뗴 getin,채팅방이름 이렇게 있음
-			//방명을 키로한 리스트에 추가하는 작업
-			ArrayList<WebSocketSession> list = new ArrayList<WebSocketSession>();
-			
-			for(String key : roomInMap.keySet()) {
-				if(key.equals(recieveMsg[1])) {//들어가고자하는 방이 있다면
-					list = ((ArrayList<WebSocketSession>)roomInMap.get(key));
-					list.add(session);
+			if(!"".equals(recieveMsg[1])) {
+				//방명을 키로한 리스트에 추가하는 작업
+				ArrayList<WebSocketSession> list = new ArrayList<WebSocketSession>();
+				
+				for(String key : roomInMap.keySet()) {
+					if(key.equals(recieveMsg[1])) {//들어가고자하는 방이 있다면
+						list = ((ArrayList<WebSocketSession>)roomInMap.get(key));
+						list.add(session);
+					}
 				}
-			}
-			
-			if(list.isEmpty()) {
-				list.add(session);
-				roomInMap.put(recieveMsg[1], list);
-			}else {
-				roomInMap.put(recieveMsg[1], list);
-			}
-			
-			
-			for(WebSocketSession user : (ArrayList<WebSocketSession>)roomInMap.get(recieveMsg[1])) {
-				TextMessage getInReadMessage = new TextMessage("someoneIn,"+recieveMsg[2]);
-				user.sendMessage(getInReadMessage);
+				
+				if(list.isEmpty()) {
+					list.add(session);
+					roomInMap.put(recieveMsg[1], list);
+				}else {
+					roomInMap.put(recieveMsg[1], list);
+				}
+				for(WebSocketSession user : (ArrayList<WebSocketSession>)roomInMap.get(recieveMsg[1])) {
+					TextMessage getInReadMessage = new TextMessage("someoneIn,"+recieveMsg[2]);
+					user.sendMessage(getInReadMessage);
+				}
 			}
 			
 			//방이 존재	하면 value인 리스트에 session추가

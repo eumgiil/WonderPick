@@ -2,11 +2,13 @@ package com.kh.wonderPick.board.contestBoard.model.service;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonElement;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
 import com.kh.wonderPick.board.contestBoard.model.vo.Search;
+import com.kh.wonderPick.board.goods.model.vo.Goods;
 
 public interface ContestService {
 
@@ -39,9 +41,8 @@ public interface ContestService {
 
 	int deleteVoteHeart(Heart heart);
 
-	ArrayList<Search> searchAutoComplet(String searchValue);
+	ArrayList<Contest> selectEmoticon(int memberNo);
 
-	ArrayList<Contest> searchResult(String search);
 
 	
 	// 페이징처리 

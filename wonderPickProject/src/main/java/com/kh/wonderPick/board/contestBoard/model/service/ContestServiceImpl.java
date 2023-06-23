@@ -13,6 +13,7 @@ import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.contestBoard.model.dao.ContestDao;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
 import com.kh.wonderPick.board.contestBoard.model.vo.Search;
+import com.kh.wonderPick.board.goods.model.vo.Goods;
 
 @Service
 public class ContestServiceImpl implements ContestService {
@@ -94,13 +95,8 @@ public class ContestServiceImpl implements ContestService {
 	}
 
 	@Override
-	public ArrayList<Search> searchAutoComplet(String searchValue) {
-		return contestDao.searchAutoComplet(sqlSession, searchValue);
-	}
-
-	@Override
-	public ArrayList<Contest> searchResult(String search) {
-		return contestDao.searchResult(sqlSession, search);
+	public ArrayList<Contest> selectEmoticon(int memberNo) {
+		return contestDao.selectEmoticon(sqlSession, memberNo);
 	}
 
 
