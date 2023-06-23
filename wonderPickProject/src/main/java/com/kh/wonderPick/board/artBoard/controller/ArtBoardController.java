@@ -25,6 +25,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.wonderPick.board.artBoard.model.service.ArtBoardService;
 import com.kh.wonderPick.board.artBoard.model.vo.ArtBoard;
+import com.kh.wonderPick.board.artBoard.model.vo.ArtBoardDTO;
 import com.kh.wonderPick.board.artBoard.model.vo.DetailOption;
 import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.artBoard.model.vo.SearchArt;
@@ -53,7 +54,6 @@ public class ArtBoardController {
 	
 	@RequestMapping("artList.bo")
 	public ModelAndView selectArtList(ModelAndView mv, @RequestParam(value="cPage", defaultValue="1") int currentPage, SearchArt searchArt) {
-		System.out.println(searchArt);
 		PageInfo pi;
 		
 		pi = Pagination.getPageInfo(artService.selectArtListCount(searchArt), currentPage, 12, 10);
@@ -62,8 +62,8 @@ public class ArtBoardController {
 		  .addObject("searchArt", searchArt)
 		  .setViewName("board/artBoard/artListView");
 		
-		System.out.println("pi : " + pi);
-		System.out.println("list : " + artService.selectArtList(pi, searchArt));
+//		System.out.println("pi : " + pi);
+//		System.out.println("list : " + artService.selectArtList(pi, searchArt));
 		return mv;
 	}
 	
@@ -226,7 +226,8 @@ public class ArtBoardController {
 						    MultipartFile[] upFile,
 						    HttpSession session,
 						    HttpServletRequest request,
-						    Model model) {
+						    Model model,
+						    String imgs) {
 		
 		
 		// 로그인 나오면 지울 부
@@ -240,7 +241,7 @@ public class ArtBoardController {
 			optionNos.add(artService.selectOptionList(board.getBoardNo()).get(i).getOptionNo());
 		}
 		
-		System.out.println(optionNos.toString());
+		
 		
 		// 옵션 ArrayList에 담기
 		ArrayList<Option> list = new ArrayList(); // VO들이 담긴 객체
@@ -258,6 +259,8 @@ public class ArtBoardController {
 			option.setBoardNo(board.getBoardNo());
 			list.add(option);
 		}
+		
+		System.out.println(optionNos.toString());
 		System.out.println(board);
 		System.out.println(artBoard);
 		System.out.println(list.toString());
@@ -271,36 +274,65 @@ public class ArtBoardController {
 				   img가 다른 것은....
 			
 		*/
+		JsonArray imgsArray = new JsonParser().parse(imgs).getAsJsonArray();
+		System.out.println(imgsArray.toString());
+		System.out.println("aaa : " + imgsArray.get(0).getAsJsonObject().get("type").toString().equals("\"titleimg\""));
+		System.out.println("ccc : " + imgsArray.get(0).getAsJsonObject().get("type").equals("\"titleimg\""));
+		System.out.println("bbb : " + imgsArray.get(0).getAsJsonObject().get("type").toString());
 		
 		
-		
-		
-		
+		ArrayList<BoardImage> selectBoardImage = artService.selectBoardImage(board.getBoardNo()); // 해당 게시글에 있던 모든 BoardImage 리스트
+		System.out.println(selectBoardImage.toString());
+		ArrayList<Integer> deleteBoardImgNo = new ArrayList();
+		for(int i = 0; i < imgsArray.size(); i++) {		// 전체 이미지 JsonArray에 담음 
+			JsonObject img = imgsArray.get(i).getAsJsonObject();		// JsonArray 객체 하나씩 
+			int imgFileLevel;
+			if(img.get("type").toString().equals("\"titleimg\"")) {			// JsonArray type명에 따라서 imgFileLevel = 1 or 2
+				imgFileLevel = 1;
+			} else {
+				imgFileLevel = 2;
+			}
+			for(int j = 0; j < selectBoardImage.size(); j++) {				// DB에 있던 ArrayList<BoardImage> 돌림
+				if(selectBoardImage.get(j).getFileLevel() == imgFileLevel) {	// 각 BoardImage fileLevel이 JsonObject imgFilelevel이랑 같으면
+					String src = img.get("src").toString();						// JsonObject src와 BoardImage src를 비교할 수 있게 JsonObject src 가공
+					src.replaceAll("\"", "");
+					System.out.println("src : " + src);
+					if(!selectBoardImage.get(j).getModifyName().equals(src)) { 
+						// src가 서로 같으면 update할 필요가 없음.
+						// 그렇지만 src가 다른 경우 (기본값(이미지가 없을 때)은 imgsArray에 안담게 했 
+						// DB에 있는 img를 삭제 후 file에서 데이터 받아서 가공 후 DB에 저장
+						deleteBoardImgNo.add(selectBoardImage.get(j).getBoardImgNo());	// 나중에 deleteBoardImgNo리스트 들고 DB에서 삭제
+						new File("/" + selectBoardImage.get(j).getModifyName()).delete();		// 해당 파일 resources 폴더에서 삭제
+					}
+				}
+			}
+		}
 		// resources 파일 삭제
-		int totalFileSize = 0;
-		for(MultipartFile upfile : upFile) {
-			totalFileSize += upfile.getSize();
-		}
-		System.out.println("totalFileSize : " + totalFileSize);
-		if(totalFileSize != 0) {
-			ArrayList<String> filePathList = new ArrayList();
-			for(int i = 0; i < artService.selectBoardImage(board.getBoardNo()).size(); i++) {
-				filePathList.add(artService.selectBoardImage(board.getBoardNo()).get(i).getFilePath());
-			}
-			for(int i = 0; i < filePathList.size(); i++) {
-				new File(filePathList.get(i)).delete();
-			}
-		}
+//		int totalFileSize = 0;
+//		for(MultipartFile upfile : upFile) {
+//			totalFileSize += upfile.getSize();
+//		}
+//		System.out.println("totalFileSize : " + totalFileSize);
+//		
+//		if(totalFileSize != 0) {
+//			ArrayList<String> filePathList = new ArrayList();
+//			for(int i = 0; i < artService.selectBoardImage(board.getBoardNo()).size(); i++) {
+//				filePathList.add(artService.selectBoardImage(board.getBoardNo()).get(i).getFilePath());
+//			}
+//			for(int i = 0; i < filePathList.size(); i++) {
+//				new File(filePathList.get(i)).delete();
+//			}
+//		}
 		
 		
 		// 파일 이름 바꾸기
 		String savePath = session.getServletContext().getRealPath("/resources/boardUpfiles/artBoardFiles/");
 		String folderPath = "resources/boardUpfiles/artBoardFiles/";
 		ArrayList<BoardImage> files = new BoardController().saveFile(upFile, session, savePath, folderPath);
-		System.out.println("upFile[0].getOriginalFilename() : " + upFile[0].getOriginalFilename());
-		System.out.println("upFile.getSize() : " + upFile[0].getSize());
-		System.out.println("upFile.length : " + upFile.length);
-		System.out.println("files : " + files);
+//		System.out.println("upFile[0].getOriginalFilename() : " + upFile[0].getOriginalFilename());
+//		System.out.println("upFile.getSize() : " + upFile[0].getSize());
+//		System.out.println("upFile.length : " + upFile.length);
+//		System.out.println("files : " + files);
 		// 상세설명 영역
 		JsonArray total  = new JsonParser().parse(board.getBoardContent()).getAsJsonArray();
 		System.out.println("total.toString() : " + total.toString());
@@ -321,11 +353,11 @@ public class ArtBoardController {
 		
 		board.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
 		int result = artService.updateArtBoard(board, artBoard, list, files, optionNos);
-//		if(result > 0) {
-//			model.addAttribute("alertMsg", "업로드 성공");
-//		} else {
-//			model.addAttribute("alertMsg", "업로드 실패");
-//		}
+		if(result > 0) {
+			model.addAttribute("alertMsg", "업로드 성공");
+		} else {
+			model.addAttribute("alertMsg", "업로드 실패");
+		}
 		return "redirect:artList.bo?category=CI";
 	}
 	
@@ -333,7 +365,6 @@ public class ArtBoardController {
 	public String deleteBoard(int boardNo) {
 		return "redirect:artList.bo";
 	}
-	
 	
 	
 	
