@@ -59,14 +59,14 @@
         
         <br>
 
-
+    
         <form id="form" method="post" enctype="multipart/form-data">
             <input type="hidden" name="boardNo" value="${ bno }">
             <div style="display:none;" id="file-area">
-		        <input type="file" id="file1" name="upFile" onchange="loadImg(this, 1);" required>
-		        <input type="file" id="file2" name="upFile" onchange="loadImg(this, 2);">
-		        <input type="file" id="file3" name="upFile" onchange="loadImg(this, 3);">
-		        <input type="file" id="file4" name="upFile" onchange="loadImg(this, 4);">
+		        <input type="file" id="file1" name="upFile" onchange="loadImg(this, 1);" onclick="deleteImg(this, 1);" required>
+		        <input type="file" id="file2" name="upFile" onchange="loadImg(this, 2);" onclick="deleteImg(this, 2);">
+		        <input type="file" id="file3" name="upFile" onchange="loadImg(this, 3);" onclick="deleteImg(this, 3);">
+		        <input type="file" id="file4" name="upFile" onchange="loadImg(this, 4);" onclick="deleteImg(this, 4);">
 	    	</div>
 
 	        <table id="art_table" align="center">
@@ -96,16 +96,26 @@
 	                <tr>
 	                    <th><h5 class="sub_title">상품 대표 이미지</h5></th>
 	                    <td align="center" colspan="3">
-	                        <img id="titleimg" class="contentImg" src="" alt="" >
+	                        <img id="titleimg" class="contentImg" src="" alt="">
+                            <input type="hidden" id="input_titleimg" name="input_titleimg" value="">
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <th>
 	                        <h5 class="sub_title">상세이미지</h5>
 	                    </th>
-	                    <td><img id="contentImg1" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt=""></td>
-	                    <td><img id="contentImg2" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt=""></td>
-	                    <td><img id="contentImg3" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt=""></td>
+	                    <td>
+                            <img id="contentImg1" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+                            <input type="hidden" id="input_contentImg1" name="input_contentImg1" value="">
+                        </td>
+	                    <td>
+                            <img id="contentImg2" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+                            <input type="hidden" id="input_contentImg2" name="input_contentImg2" value="">
+                        </td>
+	                    <td>
+                            <img id="contentImg3" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+                            <input type="hidden" id="input_contentImg3" name="input_contentImg3" value="">
+                        </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품설명</h5></th>
@@ -172,6 +182,7 @@
 	        
 
             <input type="hidden" id="options" name="options" value="'+ options +'">
+            <input type="hidden" id="imgs" name="imgs">
 	    	
 	    </form>
     </div>
@@ -184,33 +195,51 @@
 
 
     <script>
-        // let i = 1;
-        // let j = 1;
-
-        window.onload = () => {
-            document.querySelector('#category option[value=${ artBoard.category }]').setAttribute('selected', true);
-            /* 기존 사진 */
-            /*
-                경우의 수
-                1 : 사진 파일을 건들지 않아서 그대로 일 때 -> img id값과 src를 객체배열로 전달해서 비교
-                2 : 사진 전체 삭제했을 때              ->
-                3 : 사진 일부를 삭제했을 때             ->
-                4 : 사진 전체 바꿨을 때                ->
-                5 : 사진 일부만 바꿨을 때              ->
-                img src를 json에 배열로 담아서 전달.    
-                controller에서 
-            */
+        /* 제출버튼 누르면 가장 먼저 실행되는 img담는 메소드 */
+        function allSrcIntoInput(){
             let titleimg = document.getElementById('titleimg');
-            let boardImages = JSON.parse('${ boardImage }');
-            for(var i = 0; i < boardImages.length; i++){
-                if(boardImages[i].fileLevel == 1){
-                    titleimg.setAttribute('src', boardImages[i].modifyName);
-                }
-                else if(boardImages[i].fileLevel == 2){
-                    document.getElementById('contentImg' + i).setAttribute('src', boardImages[i].modifyName)
+            let contentImg1 = document.getElementById('contentImg1');
+            let contentImg2 = document.getElementById('contentImg2');
+            let contentImg3 = document.getElementById('contentImg3');
+            let allSrc = [];
+
+            let contentImg = document.getElementsByClassName('contentImg');
+
+            for(var i = 0; i < contentImg.length; i++){
+                if(contentImg[i].getAttribute('src') != "https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg"){
+                    allSrc.push(
+                        {'type' : contentImg[i].id, 'src' : contentImg[i].getAttribute('src')}
+                    )
                 }
             }
 
+            let imgs = document.getElementById('imgs');
+            imgs.value = JSON.stringify(allSrc);
+            
+        }
+
+        /* 기존 사진 나타내주기 */
+        function loadToImg(){
+            let titleimg = document.getElementById('titleimg');
+            let boardImages = JSON.parse('${ boardImage }');
+
+            for(var i = 0; i < boardImages.length; i++){
+                if(boardImages[i].fileLevel == 1){
+                    titleimg.setAttribute('src', boardImages[i].modifyName);
+                    document.getElementById('input_titleimg').value = boardImages[i].modifyName;
+                }
+                else if(boardImages[i].fileLevel == 2){
+                    document.getElementById('contentImg' + i).setAttribute('src', boardImages[i].modifyName)
+                    document.getElementById('input_contentImg'+(i+1)).value = boardImages[i].modifyName;
+                }
+            }
+            imgPushInput();
+        }
+        function imgPushInput(){
+
+        }
+
+        function loadExplain(){
             // boardContent에 기존 값 넣어놓기
             document.getElementById('boardContent').value = '${ artBoard.board.boardContent }';
             /* 상세설명 불러오기 */
@@ -230,7 +259,9 @@
                     explain.append(explainImg);
                 }
             }
+        }
 
+        function allOption(){
                     /* 옵션추가 */
             // option 보내준 값 json으로 변환
             let optionList = JSON.parse('${ optionList }');
@@ -254,6 +285,15 @@
                     }
                 }
             }
+        }
+
+        window.onload = () => {
+            document.querySelector('#category option[value=${ artBoard.category }]').setAttribute('selected', true);
+        
+            loadToImg();
+            loadExplain();
+            allOption();
+
         }
 
         /* 옵션+버튼 스크립트 */
@@ -308,6 +348,8 @@
         }
 
         function start(){
+            /* img태그 src 배열에 담아 컨트롤러에서 바뀐 게 있는지 비교 */
+            allSrcIntoInput();
             /* tbody개수 파악  */
         	let length = art_table.tBodies.length;
 
@@ -414,30 +456,39 @@
 
         function loadImg(inputFile, num) {
 
+            console.log("체인지 됨")
+
             if(inputFile.files.length == 1){ 
             let reader = new FileReader();
             reader.readAsDataURL(inputFile.files[0]);
             reader.onload = function(e){
             switch(num) {
-                            case 1 : $('#titleimg').attr('src', e.target.result); break;
-                            case 2 : $('#contentImg1').attr('src', e.target.result); break;
-                            case 3 : $('#contentImg2').attr('src', e.target.result); break;
-                            case 4 : $('#contentImg3').attr('src', e.target.result); break;
-                        }
-                    }
-
+                case 1 : $('#titleimg').attr('src', e.target.result); break;
+                case 2 : $('#contentImg1').attr('src', e.target.result); break;
+                case 3 : $('#contentImg2').attr('src', e.target.result); break;
+                case 4 : $('#contentImg3').attr('src', e.target.result); break;
+            }
+        }
             } else {
                 switch(num) {
-                        case 1 : $('#titleimg').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
-                        case 2 : $('#contentImg1').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
-                        case 3 : $('#contentImg2').attr('src','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
-                        case 4 : $('#contentImg3').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
-                    }
+                    case 1 : $('#titleimg').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
+                    case 2 : $('#contentImg1').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
+                    case 3 : $('#contentImg2').attr('src','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
+                    case 4 : $('#contentImg3').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
+                }
+            }
+        }
 
+        /* 이미지 클릭하면 기존 이미지 삭제됨 */
+        function deleteImg(inputFile, num){
+            switch(num) {
+                case 1 : $('#titleimg').attr('src', 'https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg'); break;
+                case 2 : $('#contentImg1').attr('src', 'https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg'); break;
+                case 3 : $('#contentImg2').attr('src','https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg'); break;
+                case 4 : $('#contentImg3').attr('src', 'https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg'); break;
             }
         }
 </script>
-
 
     
     

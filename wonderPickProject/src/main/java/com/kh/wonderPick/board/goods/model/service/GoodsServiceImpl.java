@@ -75,6 +75,19 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
+	public int updateGoods(Board b, ArrayList<BoardImage> list, Goods g) {
+
+		int result1 = goodsDao.insertBoard(sqlSession, b);
+		int result2 = 1;
+		for(int i=0; i<list.size(); i++) {
+			goodsDao.insertBoardImage(sqlSession, list.get(i));
+		}
+		int result3 = goodsDao.insertGoods(sqlSession, g);
+		
+		return (result1 * result2 * result3);
+	}
+	
+	@Override
 	public int increaseCount(int boardNo) {
 		return goodsDao.increaseCount(sqlSession, boardNo);
 	}
@@ -129,19 +142,21 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	
 	@Override
-	public int updateGoods(Goods g) {
-		return 0;
+	public ArrayList<Heart> selectHeartList(){
+		return goodsDao.selectHeartList(sqlSession);
 	}
 	
 	@Override
-	public ArrayList<Heart> selectHeartList(int memberNo ){
-		return goodsDao.selectHeartList(sqlSession, memberNo);
+	public Heart selectHeart(int boardNo) {
+		return goodsDao.selectHeart(sqlSession,  boardNo);
 	}
 	
 	@Override
 	public int deleteReply(int replyNo) {
 		return goodsDao.deleteReply(sqlSession, replyNo);
 	}
+	
+	
 
 	
 

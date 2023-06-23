@@ -237,6 +237,20 @@ public class ContestController {
 		return new Gson().toJson(winnerList);
 	}
 	
+	// 채팅에서 이모티콘불러오기 
+	@ResponseBody
+	@RequestMapping(value = "emoFreeList.ct" , produces="application/json; charset=UTF-8")
+	public String selectFreeList(int memberNo, Model model) {
+		
+		// 가져와야 할 것 
+		// 사진,제목, 가격,유무료 유무
+		
+		ArrayList<Contest> freeList = contestService.selectVotePage();
+		//model.addAttribute("winnerList", winnerList);
+		
+		return new Gson().toJson(freeList);
+	}
+	
 	
 	
 }

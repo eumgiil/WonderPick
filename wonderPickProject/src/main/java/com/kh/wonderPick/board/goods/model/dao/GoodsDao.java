@@ -74,6 +74,22 @@ public class GoodsDao {
 	public Goods selectGoods(SqlSessionTemplate sqlSession , int boardNo) {
 		return sqlSession.selectOne("goodsMapper.selectGoods", boardNo);
 	}
+	
+	// 수정
+	// 게시글 수정
+	public int updateBoard(SqlSessionTemplate sqlSession , Board b) {
+		return sqlSession.update("goodsMapper.updateBoard", b);
+	}
+	// 굿즈 수정
+	public int updateGoods(SqlSessionTemplate sqlSession, Goods g) {
+		return sqlSession.update("goodsMapper.updateGoods",g);
+	}
+	// 게시판 이미지 수정
+	public int updateBoardImage(SqlSessionTemplate sqlSession, BoardImage bi) {
+		return sqlSession.update("goodsMapper.updateBoardImage", bi);
+	}
+	
+	
 	public ArrayList<BoardImage> selectBoardImage(SqlSessionTemplate sqlSession, int boardNo) {
 		System.out.println("안뇽 나는 보드이미지 뎨요");
 		return (ArrayList)sqlSession.selectList("goodsMapper.selectBoardImage", boardNo);
@@ -110,14 +126,28 @@ public class GoodsDao {
 		return sqlSession.insert("goodsMapper.insertReReply", re);
 	}
 	
-	// 회원별 좋아요 조회
-	public ArrayList<Heart> selectHeartList(SqlSessionTemplate sqlSession, int memberNo ){
-		return (ArrayList)sqlSession.selectList("goodsMapper.selectHeartList", memberNo );
+	// 회원별 좋아요 리스트 조회
+	public ArrayList<Heart> selectHeartList(SqlSessionTemplate sqlSession ){
+		System.out.println("안뇽 나는 하또 리스트 뎨요!");
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectHeartList" );
 		
+	}
+	
+	// 회원별 좋아요 상세 조회
+	public Heart selectHeart(SqlSessionTemplate sqlSession, int boardNo ) {
+		System.out.println("안녕 나는 하또 뎨요~~~~~");
+		return sqlSession.selectOne("goodsMapper.selectHeart", boardNo);
+	}
+	
+	// 좋아요 업데이트
+	public int updateHeart(SqlSessionTemplate sqlSession, Heart h) {
+		return sqlSession.update("goodsMapper.updateHeart", h);
 	}
 	
 	// 댓글 삭제
 	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
 		return sqlSession.delete("goodsMapper.deleteReply", replyNo);
 	}
+	
+
 }

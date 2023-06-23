@@ -221,15 +221,15 @@
 					url : 'emailCheck.me',
 					data : { checkEmail : $('#signUpInput #email').val()},
 					success : result => {
-						if(result == 'success'){
-							$('#checkEmailResult').css('color', successColor).text('이메일이 발송되었습니다.');
-						} else {
-							$('#checkEmailResult').css('color', errorColor).text('이메일 발송에 실패했습니다.');
+							if(result == 'success'){
+								$('#checkEmailResult').css('color', successColor).text('이메일이 발송되었습니다.');
+								$('#emailCode').focus();
+							} else {
+								$('#checkEmailResult').css('color', errorColor).text('이메일 발송에 실패했습니다.');
+							}
 						}
-					}
-				})
+					})
 				}
-				
 			});
 			
 			$('#submitBtn').on('click', () => {

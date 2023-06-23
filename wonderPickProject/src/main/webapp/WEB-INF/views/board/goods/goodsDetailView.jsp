@@ -12,19 +12,19 @@
     <style>
         .content {
             /* background-color:rgb(247, 245, 245); */
-            width:700px;
+            width:900px;
             margin-left:500px;
-            margin-top: 150px;
+            margin-top: 5px;
             
         }
         .detail{
             float: left;
-            width:100%;
+            width:600px;
+            margin-left:150px;
             /* display: inline-block; */
         }        
         .detail_img{
             width: 100%;
-             display: inline-block;
         }
         .artist{
             display: inline-block;
@@ -34,7 +34,6 @@
             
         }
         .list{
-            width :100%;
             display: inline-block;
         }
         
@@ -155,20 +154,22 @@
 
             <div class="list">
 	             <c:if test="${not empty bi }">
-	             	<c:forEach items="${bi}" var="bi">
-			            	<table border="1" class="goodsImage" >
+	            	<table border="1" class="goodsImage" >
+		             	<c:forEach items="${bi}" var="bi">
 			            	 <c:if test="${ bi.fileLevel eq 1 }">
 				            	<tr>
-				            	    <td colspan="3"><img class="detail_img" src="${bi.originName }" alt=""></td>
+				            	    <td colspan="3"><img class="detail_img" src="${bi.filePath}" alt=""></td>
 				            	</tr>
 			            	 </c:if>
-			            	<c:if test="${ bi.fileLevel eq 2 }"> 
-				            	<tr>
-					            	<td><img class="detail_img" id="filelevel2" src="${bi.originName}" alt=""></td>
+				            	<tr >
+				            	
+				            	    <c:if test="${ bi.fileLevel eq 2 }"> 
+					            	<td ><img class="detail_img" id="filelevel2" src="${bi.filePath}" alt="" ></td>
+					            	</c:if>	
 				            	</tr>
-				            </c:if>	
-				            </table>
-		             </c:forEach>	
+				            
+			             </c:forEach>	
+		            </table>
 		          </c:if>   	
             </div>	
             
@@ -350,21 +351,20 @@
 				</c:when>
 				<c:otherwise>
 				<br>
-				<form action="rinsert.go" method="post">
 				<table>
 				<tr>
 				     <th colspan="2">
 				     <input type="hidden" value="${g.boardNo}" id="boardNo" name="${g.boardNo }">
 				     <input type="hidden" value="${loginMember.memberNo }" name="${loginMember.memberNo}">
-                     <textarea class="form-control" name="content" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+                     <textarea class="form-control" name="content" id="insertcontent" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+                     
                      </th>
                      <br>
                      <th style="vertical-align:middle">
-                     <button type="submit" class="btn btn-secondary" onclick="addReply();" id="submit">등록하기</button>
+                     <button type="submit" class="btn btn-secondary"  onclick="insertReply();" id="replysubmit">등록하기</button>
                      </th>
 				</tr>
 				</table>
-				</form>
 				</c:otherwise>
 				</c:choose>
 				</tbody>
@@ -376,17 +376,47 @@
         </div>
         <!-- 왼쪽 끝 -->	
         <script>
-        	$(function(){
-        		selectReplyList();
-        	});
-        	
-        	function addReply(){
-        		if($('#submit').val() > 0){
-        			window.alert('댓글작성완료');
-        		}else{
-        			console.log('댓글달기실패');
-        		}
+        $(function(){
+            selectReplyList();
+         });
+        
+        
+        		function insertReply(){
+        			
+        		// #insertcontent 의 val의 공백 => .trim()
+        	   let content = $('#insertcontent').val();
+        	   console.log(content);
+        	    
+        	   if($('#insertcontent').val().trim() != ''){
+        		   $.ajax({
+        			   url : 'rinsert.go',
+        			   data : {
+        				   boardNo :  ${g.boardNo},
+        				   content : $('#insertcontent').val(),
+        				   memberNo : ${loginMember.memberNo}
+        			   },
+        			   success : function(result){
+        				   console.log(result);
+        				   
+        				   if(result == 'success'){
+        					   selectReplyList(){
+        						   $('#insertcontent').val('');
+        					   }
+        				   };
+        			   },
+        			   error : function(){
+        				console.log('실패!~!~!~!~!');
+        			   }
+        		   });
+        		   
+        	   }else{
+        		   window.alert('5252~!~!~!');
+        	   	
         	}
+        		
+        		
+        	  
+           });
         	
            function selectReplyList(){
         	   $.ajax({
@@ -399,7 +429,7 @@
         			   
         			   let value="";
         			   for(let i in replyList){
-        				   value   += '<input type="hidden" value="'+replyList[i].boardNo + '">'
+        				   value   += '<input type="hidden" value="'+ replyList[i].boardNo + '">'
         				   		   + '<table class="t_align_left" style="border: 1px solid black;">'
 	        					   + '<tr>'
 	        					   +'<td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">'
@@ -427,6 +457,9 @@
         		   
         	   });
            };
+           
+           
+           
         </script>
 		</div>
 		</div>
@@ -437,7 +470,14 @@
             	<div>
 	                <table class="width" >
 	                    <tr>
-	                        <th style="font-size: 35px;"><img src="" width="30" style="float: left;"alt="" id="heart"></th>
+	                      <c:choose>
+		                       <c:when test="${heart.memberNo.equals(loginMember.memberNo) }">
+		                        <th style="font-size: 35px;"><img src="resources/common/heart.png" width="30" style="float: left;"alt="" id="heart" onclick="updateHeart();"></th>
+		                       </c:when>
+		                       <c:otherwise>
+		                       <th style="font-size: 35px;"><img src="resources/common/noheart.png" width="30" style="float: left;"alt="" id="heart" onclick="updateHeart();"></th>
+		                       </c:otherwise>
+	                      </c:choose>
 	                        <c:choose >
 	                        <c:when test="${loginMember.nickName eq g.nickName}">
 	                        <input type="hidden" value="${g.boardNo}">
@@ -459,7 +499,7 @@
 	            <div>
 	                <table class="width">
 	                    <tr>
-	                        <td rowspan="2" style="width:100px;"><img class="detail_img" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif" alt=""></td>
+	                        <td rowspan="2" style="width:100px;"><img class="detail_img" src="${g.memberModifyName }" alt=""></td>
 	                        <td style="font-size: 30px;">${g.nickName}</td>
 	                    </tr>
 	                    <tr>
@@ -471,29 +511,15 @@
             <script>
             selectHeart();
             updateHeart();
+            
             $(function(){
             	selectHeart();
             	updateHeart();
-            })
-            function selectHeart(){
-            	$.ajax({
-            		url : 'selectHeart.go',
-            		data : {
-            			memberNo : ${loginMember.memberNo}
-            		},
-            		success : function(result){
-            			if(result > 0 ) {
-            				$('#heart').attr('src', 'resources/common/heart.png');
-            			}else{
-            				$('#heart').attr('src', 'resources/common/noheart.png');
-            			}
-            		},
-            		error : function(){
-            			console.log('좋아요 찜 조회 실패');
-            		}
-            		
-            	});
-            };
+            });
+            
+            
+            
+            
             </script>
             
 
@@ -530,29 +556,30 @@
             
 
 	            <div class="right">
-		            <form>
+		            <form action="order.go" method="post">
 		                <table class="goods_option" >
+		                <input type="hidden" value="${g.boardNo}"> 
 		                    <tr>
 		                        <td width="50%">추가시안횟수</td>
 		                        <td class="t_align_right" style="float:right;" width="100%">
-		                            <input type="number" min="0" style="width: 100px; " id="addDraft" >회
+		                            <input type="number" min="0" style="width: 100px; " id="addDraft" name="addDraft">회
 		                       </td>
 		                    </tr>
 		                    <tr>
 		                        <td>추가수정횟수</td>
 		                        <td class="t_align_right">
-		                            <input type="number" min="0" style="width: 100px;" id="addModify" >회
+		                            <input type="number" min="0" style="width: 100px;" id="addModify" name="addModify">회
 		                        </td>
 		                    </tr>
 		                    <tr>
 		                        <td>주문수량</td>
 		                        <td class="t_align_right">
-		                            <input type="number" min="1" style="width: 100px;" id="amount" >개
+		                            <input type="number" min="1" style="width: 100px;" id="amount" id="amount" >개
 		                        </td>
 		                    </tr>
 		                    <tr>
 		                        <td class="op_subTitle" style="font-size:20px; font-weight: bolder;" class="num">결제금액</td>
-		                        <td class="t_align_right" min="${g.price}" id="totalPrice" onchange="choice();"> ${g.price} 원</td>
+		                        <td class="t_align_right" min="${g.price}" id="totalPrice" onchange="choice();" name="price"> ${g.price} 원</td>
 		                    </tr>
 		                    <tr><td colspan="2"><hr></tr>
 		                    <tr>
@@ -583,7 +610,7 @@
             	console.log(number);
             	
             	let totalPrice = document.getElementById('totalPrice');
-            	totalPrice.innerHTML = number ;
+            	totalPrice.textContent = number ;
             	
             	
             	//let addDraft = parseInt($('#addDraft').val())*parseInt('${g.addDraft}')  ;
@@ -595,6 +622,15 @@
             	
             	
             }
+            </script>
+            <script>
+            document.addEventListener('DOMContentLoaded', function(){
+            	document.querySelector('')
+            })
+            
+            
+            
+            
             </script>
 
             <hr>

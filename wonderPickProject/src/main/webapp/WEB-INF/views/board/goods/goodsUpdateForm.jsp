@@ -53,50 +53,18 @@
                 <td class="wide"><h5 style="font-weight: bolder;">상품가격</h5></td>
                 <td ><input type="number" style="width: 50%;" name="price" value="${g.price }" required>원 </td>
             </tr>
-            
-            <c:choose>
-            <c:when test="${not empty bi }">
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상품 대표 이미지</h5></td>
                 <td align="center" colspan="3">
-                    <img id="titleimg" name="reThumbnailUpFile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
-                </td>
-            </tr>
-            
-            <c:choose>
-            <c:when test="${bi.fileLevel eq 2 }">
-            <tr>
-                <td class="wide"><h5 style="font-weight: bolder;">상세이미지</h5></td>
-                <td><img id="contentImg1" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200" value=""></td>
-                <td><img id="contentImg2" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
-                <td><img id="contentImg3" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
-            </tr>
-            </c:when>
-            <c:otherwise>
-            <tr>
-                <td class="wide"><h5 style="font-weight: bolder;">상세이미지</h5></td>
-                <td><img id="contentImg1" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
-                <td><img id="contentImg2" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
-                <td><img id="contentImg3" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
-            </tr>
-            </c:otherwise>
-            </c:choose>
-            </c:when>
-            <c:otherwise>
-            <tr>
-                <td class="wide"><h5 style="font-weight: bolder;">상품 대표 이미지</h5></td>
-                <td align="center" colspan="3">
-                    <img id="titleimg" name="reThumbnailUpFile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
+                    <img id="titleimg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" >
                 </td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상세이미지</h5></td>
-                <td><img id="contentImg1" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
-                <td><img id="contentImg2" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
-                <td><img id="contentImg3" name="reUpfile" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg1" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg2" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
+                <td><img id="contentImg3"  src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="" width="200" height="200"></td>
             </tr>
-            </c:otherwise>
-            </c:choose>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">상품설명</h5></td>
                 <td colspan="3"><textarea name="boardContent" id="" cols="30" rows="10" style="width: 100%;" value="${g.boardContent }"required></textarea></td>
@@ -160,18 +128,24 @@
 
         };
     </script>
+  
+ 
+           
+    
+    
+    
          
 
     <!--  판매자는 최소 하나는 첨부해야함 -->
     <div id="file-area">
-        <input type="file" id="file1" name="upfile" required onchange="loadImg(this, 1);">
-        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);">
-        <input type="file" id="file3" name="upfile" onchange="loadImg(this, 3);">
-        <input type="file" id="file4" name="upfile" onchange="loadImg(this, 4);">
+        <input type="file" id="file1" name="reThumbnailUpFile" required onchange="loadImg(this, 1);">
+        <input type="file" id="file2" name="reUpfile" onchange="loadImg(this, 2);">
+        <input type="file" id="file3" name="reUpfile" onchange="loadImg(this, 3);">
+        <input type="file" id="file4" name="reUpfile" onchange="loadImg(this, 4);">
     </div>
 
     <script>
-
+    
         $(function(){
             $('#file-area').hide(); 
             
@@ -193,31 +167,60 @@
                 $('#file4').click();
             })
         })
+		 function loadImg(inputFile, num) {
+		
+		            if(inputFile.files.length == 1){ // 파일이 첨부된 경우
+		            let reader = new FileReader();
+		            reader.readAsDataURL(inputFile.files[0]);
+		            reader.onload = function(e){
+		                switch(num) {
+		                                case 1 : $('#titleimg').attr('src', e.target.result); break;
+		                                case 2 : $('#contentImg1').attr('src', e.target.result); break;
+		                                case 3 : $('#contentImg2').attr('src', e.target.result); break;
+		                                case 4 : $('#contentImg3').attr('src', e.target.result); break;
+		                            }
+		                        }
+		
+					} else {
+					    switch(num) {
+					            case 1 : $('#titleimg').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
+					            case 2 : $('#contentImg1').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
+					            case 3 : $('#contentImg2').attr('src','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
+					            case 4 : $('#contentImg3').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
+					        }
+					
+					}
+					}
+      		 /*
+    	    let titleimg = document.getElementById('titleimg');
+            let contentImg = JSON.parse('${ bi }');
+           
+                if(bi.fileLevel == 1){
+                    titleimg.setAttribute('src', bi.filePath);
+                }
+                else if(bi.fileLevel == 2){
+                	 for(var i = 0; i < bi.length; i++){
+                    document.getElementById('contentImg' + i).setAttribute('src', bi[i].filePath);
+                }
+            }*/
+            
+    	    let titleimg = document.getElementById('titleimg');
+            let boardImg = JSON.parse('${ bi }');
+           for(var i = 0; i < boardImg.length; i++){
+                if(boardImg[i].fileLevel == 1){
+                    titleimg.setAttribute('src', boardImg[i].filePath);
+                }
+                else if(boardImg[i].fileLevel == 2){
+                    document.getElementById('contentImg' + i).setAttribute('src', boardImg[i].filePath);
+                }
+            }
+    
+     
+            
+   
 
-        function loadImg(inputFile, num) {
 
-            if(inputFile.files.length == 1){ // 파일이 첨부된 경우
-            let reader = new FileReader();
-            reader.readAsDataURL(inputFile.files[0]);
-            reader.onload = function(e){
-                switch(num) {
-                                case 1 : $('#titleimg').attr('src', e.target.result); break;
-                                case 2 : $('#contentImg1').attr('src', e.target.result); break;
-                                case 3 : $('#contentImg2').attr('src', e.target.result); break;
-                                case 4 : $('#contentImg3').attr('src', e.target.result); break;
-                            }
-                        }
-
-} else {
-    switch(num) {
-            case 1 : $('#titleimg').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
-            case 2 : $('#contentImg1').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
-            case 3 : $('#contentImg2').attr('src','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
-            case 4 : $('#contentImg3').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpizjtvgskfw6Wuu2sLTi2_1vW1gJgFPFtMw&usqp=CAU'); break;
-        }
-
-}
-}
+       
 </script>
 
 
