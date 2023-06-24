@@ -462,10 +462,12 @@
 
 	<select id="selectReplyList" resultType="reply">
 		select
+			   reply_no replyNo,
 			   member_no memberNo,
 		       nickname nickname,
 		       content content,
 		       to_char(create_date, 'YYYY-MM-DD') as "createDate"
+		       
 		  from reply
 		  join member using (member_no)
 		 where board_no = #{boardNo}
@@ -493,6 +495,13 @@
 	           SYSDATE
 	           )
 	</insert>
+	<delete id="deleteReply" parameterType="_int">
+		DELETE
+		  FROM
+		  	   reply
+		 WHERE 
+		       reply_no = #{ replyNo }
+	</delete>
 	
 
 

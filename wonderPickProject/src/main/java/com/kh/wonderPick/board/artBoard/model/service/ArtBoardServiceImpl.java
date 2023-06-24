@@ -118,16 +118,20 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 		return result;
 	}
 
+	
+	/* 문의 댓글 관련 */
 	@Override
 	public ArrayList<Reply> selectReplyList(int boardNo) {
 		return artDao.selectReplyList(sqlSession, boardNo);
 	}
-
 	@Override
 	public int insertReply(Reply r) {
 		return artDao.insertReply(sqlSession, r);
 	}
-	
+	@Override
+	public int deleteReply(int replyNo) {
+		return artDao.deleteReply(sqlSession, replyNo);
+	}
 	
 
 	

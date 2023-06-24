@@ -585,9 +585,9 @@
                     let value="";
                     for(let i of replyList){
                         console.log(i.memberNo == '${loginMember.memberNo}');
-                        value   += '<input type="hidden" value="'+ i.boardNo + '">'
-                                + '<table class="t_align_left" style="border: 1px solid black;">'
-                                + '<tr>'
+                        value  +='<input type="hidden" value="'+ i.boardNo + '">'
+                                +'<table class="t_align_left" style="border: 1px solid black;">'
+                                +'<tr>'
                                 +'<td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">'
                                 +'<img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">'
                                 +'</td>'
@@ -595,7 +595,7 @@
                                 +'<td width="10%" rowspan="2">';
 
                         if(i.memberNo == '${loginMember.memberNo}'){
-                            value += '<a href="deleteReply.go" style="background-color: white; border: none;">'
+                            value += '<a href="deleteReply.go?replyNo=' + i.replyNo + '" style="background-color: white; border: none;">'
                                      '<img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>';
                         }
 

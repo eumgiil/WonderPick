@@ -88,6 +88,9 @@ public class ArtBoardDao {
 	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.insert("artBoardMapper.insertReply", r);
 	}
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.delete("artBoardMapper.deleteReply", replyNo);
+	}
 	
 
 }

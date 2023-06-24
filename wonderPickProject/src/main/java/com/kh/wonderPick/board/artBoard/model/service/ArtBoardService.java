@@ -33,6 +33,8 @@ public interface ArtBoardService {
 	ArrayList<Reply> selectReplyList(int boardNo);
 
 	int insertReply(Reply r);
+
+	int deleteReply(int replyNo);
 	
 	//	int selectSearchListCount(SearchArt searchArt);
 //	

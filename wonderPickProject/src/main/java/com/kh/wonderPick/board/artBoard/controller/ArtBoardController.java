@@ -369,6 +369,7 @@ public class ArtBoardController {
 	}
 	
 	
+										/* 문의 댓글 관련  */
 	// 문의 댓글 목록 조회
 	@ResponseBody
 	@RequestMapping(value="rlist.at", produces="application/json; charset=UTF-8")
@@ -378,14 +379,23 @@ public class ArtBoardController {
 		replyList.add(reply);
 		return new Gson().toJson(artService.selectReplyList(boardNo));
 	}
-	
 	// 문의 댓글 쓰기
 	@ResponseBody
 	@RequestMapping("rinsert.at")
 	public String ajaxInsertReply(Reply r, HttpSession session) {
 		return artService.insertReply(r) > 0 ? "success" : "fail";
 	}
-	
+	// 댓글 삭제
+	@RequestMapping("deleteReply.go")
+	public String deleteReply(int replyNo, HttpSession session) {
+		if(artService.deleteReply(replyNo) > 0) {
+			session.setAttribute("alertMsg", "댓글 삭제 완료");
+			return "redirect:artDetail.bo";
+		}else {
+			session.setAttribute("errorMsg", "댓글 삭제 실패");
+			return "redirect:artDetail.bo";
+		}
+	}
 	
 	
 	
