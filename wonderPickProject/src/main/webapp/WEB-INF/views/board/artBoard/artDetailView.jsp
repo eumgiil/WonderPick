@@ -177,11 +177,11 @@
 
             <div id="scroll4">
                 <h3>[ 문의 댓글 ]</h3>
-				<table id="replyArea" align="center" border="1">
+				<table id="replyArea" align="center">
                     <thead>
-                        <c:choose>
-                            <c:when test="${empty replyList }">
-                                <h6>댓글 내역이 존재하지 않습니다.</h3>
+                        <!-- <c:choose>
+                            <c:when test="${ empty replyList }">
+                                <h3>댓글 내역이 존재하지 않습니다.</h3>
                                 <br>
                             </c:when>
                             <c:otherwise>
@@ -206,7 +206,7 @@
                                     </c:forEach>
                                 </c:if>
                             </c:otherwise>
-                        </c:choose>
+                        </c:choose> -->
                     </thead>
                     <tbody>
                         <br>
@@ -424,7 +424,7 @@
                     let requestStr = requestArr.join(",");
                     let priceStr = priceArr.join(",");
                     
-                    // let f = document.createElement('form');
+                    let f = document.createElement('form');
                     
                     
                     /* 여기는 옵션을 db에 넣는 기능 insertReasonPrice.co맵핑값으로 ajax요청 후 성공시 chating.co를 불러야함 
@@ -444,7 +444,7 @@
                     f.setAttribute('method', 'post');
                     f.setAttribute('action', 'insertReasonPrice.co');
                     */
-                    
+                    let f = document.createElement('form');
                     let requestInput = document.createElement('input');
                     requestInput.setAttribute('tyep', 'hidden');
                     requestInput.setAttribute('name', 'boardNo');
@@ -459,8 +459,8 @@
 
 
                     
-                    console.log(requestStr);
-                    console.log(priceStr);
+                    // console.log(requestStr);
+                    // console.log(priceStr);
 
                     // for(let option of options){
                     //     if(option.text != '==='){
@@ -492,6 +492,7 @@
         
         window.onload = () => {
 
+            /* 문의댓글 조회 ajax */
             selectReplyList();
 
             /* 옵션 불러오기 */
@@ -583,32 +584,38 @@
                 },
                 success : function(replyList){
                     let value="";
-                    for(let i of replyList){
-                        console.log(i.memberNo == '${loginMember.memberNo}');
-                        value  +='<input type="hidden" value="'+ i.boardNo + '">'
-                                +'<table class="t_align_left" style="border: 1px solid black;">'
-                                +'<tr>'
-                                +'<td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">'
-                                +'<img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">'
-                                +'</td>'
-                                +'<td width="75%" style="padding-left:10px;">' + i.nickname + '</td>'
-                                +'<td width="10%" rowspan="2">';
-
-                        if(i.memberNo == '${loginMember.memberNo}'){
-                            value += '<a href="deleteReply.go?replyNo=' + i.replyNo + '" style="background-color: white; border: none;">'
-                                     '<img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>';
-                        }
-
-                            value += '<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
-                                +'</td>'
-                                +'</tr>'
-                                +'<tr>'
-                                +'<td style="padding-left:10px;">' + i.content + '</td>'
-                                +'</tr>'
+                    if(replyList.length == 0){
+                        value += '<h5>댓글이 존재하지 않습니다.</h5>';
+                        $('#replyArea thead').html(value);
+                    }   
+                    else {
+                        for(let i of replyList){
+                            console.log(i.memberNo == '${loginMember.memberNo}');
+    
+                            value  +='<input type="hidden" value="'+ i.boardNo + '">'
+                                    +'<table class="t_align_left" style="border: 1px solid black;">'
+                                        +'<tr>'
+                                            +'<td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">'
+                                                +'<img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">'
+                                            +'</td>'
+                                            +'<td width="75%" style="padding-left:10px;">' + i.nickname + '</td>'
+                                            +'<td width="10%" rowspan="2">';
+    
+                            if(i.memberNo == '${loginMember.memberNo}'){
+                                value +=         '<a href="deleteReply.at?bno=${ bno }&replyNo=' + i.replyNo + '" style="background-color: white; border: none;">'
+                                                +'<img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>';
+                            }
+    
+                            value +=        '<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
+                                        +'</td>'
+                                    +'</tr>'
+                                    +'<tr>'
+                                        +'<td style="padding-left:10px;">' + i.content + '</td>'
+                                    +'</tr>'
                                 +'</table>';
-                        
-                    };
-                    $('#replyArea thead').html(value);
+                        };
+                        $('#replyArea thead').html(value);
+                    }                 
                 },
                 error : function(){
                     console.log('댓글 목록 조회 실패');

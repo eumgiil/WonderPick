@@ -386,14 +386,14 @@ public class ArtBoardController {
 		return artService.insertReply(r) > 0 ? "success" : "fail";
 	}
 	// 댓글 삭제
-	@RequestMapping("deleteReply.go")
-	public String deleteReply(int replyNo, HttpSession session) {
+	@RequestMapping("deleteReply.at")
+	public String deleteReply(int replyNo, int bno, HttpSession session) {
 		if(artService.deleteReply(replyNo) > 0) {
 			session.setAttribute("alertMsg", "댓글 삭제 완료");
-			return "redirect:artDetail.bo";
+			return "redirect:artDetail.bo?bno=" + bno;
 		}else {
 			session.setAttribute("errorMsg", "댓글 삭제 실패");
-			return "redirect:artDetail.bo";
+			return "redirect:artDetail.bo?bno=" + bno;
 		}
 	}
 	
