@@ -9,6 +9,7 @@ import com.kh.wonderPick.board.artBoard.model.vo.Option;
 import com.kh.wonderPick.board.artBoard.model.vo.SearchArt;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
+import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 
 public interface ArtBoardService {
@@ -28,6 +29,12 @@ public interface ArtBoardService {
 	int updateArtBoard(Board board, ArtBoard artBoard, ArrayList<Option> list, ArrayList<BoardImage> files, ArrayList<Integer> optionNos);
 
 	int deleteOption(int bno);
+
+	ArrayList<Reply> selectReplyList(int boardNo);
+
+	int insertReply(Reply r);
+
+	int deleteReply(int replyNo);
 	
 	//	int selectSearchListCount(SearchArt searchArt);
 //	
