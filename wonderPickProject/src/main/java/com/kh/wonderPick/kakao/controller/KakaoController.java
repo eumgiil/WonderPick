@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.wonderPick.chatting.model.vo.Chating;
+
 @Controller
 public class KakaoController {
 
@@ -22,8 +24,10 @@ public class KakaoController {
    private String tid;
    @ResponseBody
    @RequestMapping(value="kakaoPay.ko", produces="application/json; charset=UTF-8")
-   public String kakaoPay(String item_name, String quantity, String total_amount, Model model) throws IOException {
-      URL kakaoAddress = new URL("https://kapi.kakao.com/v1/payment/ready");
+   public String kakaoPay(Chating c, String item_name, String quantity, String total_amount, Model model) throws IOException {
+	
+	  System.out.println(c);
+	  URL kakaoAddress = new URL("https://kapi.kakao.com/v1/payment/ready");
       HttpURLConnection connectServer = (HttpURLConnection)kakaoAddress.openConnection();
       connectServer.setRequestMethod("POST");
       connectServer.setRequestProperty("Authorization","KakaoAK "+adminKey);
@@ -37,9 +41,8 @@ public class KakaoController {
       param +="&item_name="+item_name;
       param +="&quantity="+quantity;
       param +="&total_amount="+total_amount;
-      param +="&vat_amount=200";
       param +="&tax_free_amount=0";
-      param +="&approval_url=http://localhost:8010/wonderPick/success";
+      param +="&approval_url=http://localhost:8010/wonderPick/success?roomName="+c.getRoomName()+"&membertNickName="+c.getMembertNickName()+"&artistNickName"+c.getArtistNickName();
       param +="&fail_url=http://localhost:8010/wonderPick";
       param +="&cancel_url=http://localhost:8010/wonderPick";
       System.out.println(param);
@@ -62,7 +65,9 @@ public class KakaoController {
       BufferedReader bufferedReader = new BufferedReader(reader);
 
       String responseText = bufferedReader.readLine();
+      System.out.println(responseText);
       String [] tidArr = responseText.substring(responseText.indexOf("tid")).split(",");
+      
       for(int i = 0; i < tidArr.length; i++) {
          if(i==0) {
             for(String j : tidArr[i].split(":")) {
@@ -77,9 +82,10 @@ public class KakaoController {
    }
 
    @RequestMapping("success")
-   public ModelAndView kakaoPayApprove(String pg_token, ModelAndView mv) throws IOException {
+   public ModelAndView kakaoPayApprove(String pg_token, ModelAndView mv,Chating c) throws IOException {
 	   
 	  System.out.println("hihi");
+	  System.out.println(c);
       URL url = new URL("https://kapi.kakao.com/v1/payment/approve");
 
       HttpURLConnection connectServer = (HttpURLConnection) url.openConnection(); 
@@ -112,12 +118,15 @@ public class KakaoController {
       }else {
          input = connectServer.getErrorStream();
       }
+      
       InputStreamReader reader = new InputStreamReader(input);
       BufferedReader bufferedReader = new BufferedReader(reader);
 
       String responseText = bufferedReader.readLine();
 
-      mv.addObject("responseText",responseText).setViewName("chating/successPay");
+      mv.addObject("responseText",responseText)
+      .addObject("c",c)
+      .setViewName("chating/successPay");
       return mv;
 
    }

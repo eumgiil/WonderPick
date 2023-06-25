@@ -154,22 +154,24 @@ div {
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title">가격제안</h4>
-				<h6>게시글 제목</h6>
+				<h6 id="title">${suggestList.get(0).orderContent}</h6>
 			</div>
 
 			<!-- Modal body -->
 			<div class="modal-body" align="center" id="modalBody">
-				<img alt="" src="${suggestList.get(0).filePath}"> <small>샘플 예시</small>
-				<h3>${suggestList.get(0).count}</h3>
-				<h3 id="title">제안가격:</h3>
-				<h3 id="totalprice">'${suggestList.get(0).totalPrice}</h3>
+				<img alt="" src="${suggestList.get(0).filePath}"> 
+				<br>
+				<small>샘플 예시</small>
+				<h3>수량 : ${suggestList.get(0).count}</h3>
+				<h3>제안가격:</h3>
+				<h3 id="totalprice">${suggestList.get(0).totalPrice}</h3>
 				원 <br> <br>
 				<div id="prices">
 					<c:choose>
 						<c:when test="${ not empty suggestList  }">
 							<c:forEach var="c" items="${ suggestList }">
 								<div class="addPriceDiv">
-								<c:if test="${ not suggestList.addPrices eq null}">
+								<c:if test="${ not c.addPrices eq null}">
 									가격추가 : <input type="number" class="price" readonly value="${ c.addPrices }"><br>'
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -225,7 +227,6 @@ div {
 			$('.price').each(function() {
 				priceCount = priceCount + Number($(this).val())
 			})
-			$("#totalprice").text(priceCount);
 		});
 		
 		$('#accept-btn').click(function() {
@@ -262,14 +263,19 @@ div {
 			var total_amount = $("#totalprice").text()
 			$.ajax({
 				url : 'kakaoPay.ko',
+				type : 'POST',
 				data : {
 					item_name : title,
 					quantity : 1, //그림 수량 주문하기에서 끌어와야함 끌어올 시점 정하기
-					total_amount : total_amount
+					total_amount : total_amount,
+					roomName : '${roomName}',
+					membertNickName : '${loginMember.nickName}',
+					artistNickName : '${artistNickName}',
+					boardNo: '${boardNo}'
 				},
-				type : 'POST',
 				success : function(data) {
 					window.open(data.next_redirect_pc_url);
+					location.assign("chating.co?alreadyReject=0");
 				}
 			});
 		}
