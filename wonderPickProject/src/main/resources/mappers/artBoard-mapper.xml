@@ -302,37 +302,6 @@
 	</insert>
 
 	<select id="selectArtBoard" parameterType="hashmap" resultMap="artBoard">
-		<!-- select
-		       b.member_no
-		      ,nickname
-		      ,NVL(mi.MEMBER_MODIFY_NAME, 'resources/memberUpfiles/basicProfile.jpg') MEMBER_MODIFY_NAME
-		      ,board_title
-		      ,board_content
-		      ,create_date
-		      ,board_count
-		      ,file_type
-		      ,dpi
-		      ,default_size
-		      ,modify_count
-		      ,workday
-		      ,category
-		      ,price
-		      ,h.member_no heart
-		  from
-		       art_board ab
-		  join
-		       board b using(board_no)
-		  join
-		       member m on(b.member_no = m.member_no)
-		  left join
-		       member_image mi on(mi.member_no = m.member_no)
-		  join
-               heart h on(ab.board_no = h.board_no)
-		 where
-		       board_no = #{ bno }
-		   and
-		       b.status = 'Y' -->
-		       
 		select
 		       b.member_no
 		      ,nickname
@@ -426,7 +395,7 @@
 		   	  ,DPI = #{dpi}
 		   	  ,DEFAULT_SIZE = #{defaultSize}
 		   	  ,MODIFY_COUNT = #{modifyCount}
-		   	  ,WORKDAT = #{workdat}
+		   	  ,WORKDAY = #{workday}
 		   	  ,CATEGORY = #{category}
 		   	  ,PRICE = #{price}
 		 where
@@ -449,20 +418,116 @@
 		 	   board_no = #{ bno }
 	</delete>
 	
+	<insert id="updateInsertOptions" parameterType="option">
+		insert
+		  into
+		  	   art_option
+		  	   (
+		  	   OPTION_NO
+		  	  ,BOARD_NO
+		  	  ,MAIN_OPTION
+		  	   )
+		values
+			   (
+		       SEQ_OPTION_NO.nextval
+		      ,#{ boardNo }
+		      ,#{ mainOp }
+			   )
+	</insert>
+	
 	<delete id="deleteFiles" parameterType="_int">
 		delete
 		  from
 		       board_image
 		 where
-		       board_no = #{ bno }
+		       BOARD_IMG_NO = #{ deleteBoardImgNo }
+	</delete>
+
+	<update id="updateFiles" parameterType="boardImage">
+		update
+		       board_image
+		   set
+		       origin_name = #{ originName }
+		      ,modify_name = #{ modifyName }
+		      ,upload_date = #{ uploadDate }
+		      ,file_path = #{ filePath }
+		 where
+		       board_img_no = #{ boardImgNo }
+	</update>
+	
+	<insert id="updateInsertFiles" parameterType="boardImage">
+		insert
+		  into
+		  	   board_image
+		  	   (
+		  	   BOARD_IMG_NO
+		  	  ,BOARD_NO
+		  	  ,ORIGIN_NAME
+		  	  ,MODIFY_NAME
+		  	  ,UPLOAD_DATE
+		  	  ,FILE_LEVEL
+		  	  ,FILE_PATH
+		  	   )
+		values
+			   (
+		       seq_boardimg_no.nextval
+		      ,#{boardNo}
+		      ,#{originName}
+		      ,#{modifyName}
+		      ,sysdate
+		      ,#{fileLevel}
+		      ,#{filePath}
+			   )
+	</insert>
+	
+	
+
+
+	<select id="selectReplyList" resultType="reply">
+		select
+			   reply_no replyNo,
+			   member_no memberNo,
+		       nickname nickname,
+		       content content,
+		       to_char(create_date, 'YYYY-MM-DD') as "createDate"
+		       
+		  from reply
+		  join member using (member_no)
+		 where board_no = #{boardNo}
+		 order 
+		 	by 
+		 	   create_date desc
+	</select>
+	<insert id="insertReply" parameterType="reply">
+	    insert
+	      into
+	           reply
+	           (
+	           reply_no, 
+	           board_no,
+	           member_no,
+	           content,
+	           create_date
+	           ) 
+	     values
+	           (
+	           seq_reply_no.nextval,
+	           #{boardNo},
+	           #{memberNo},
+	           #{content},
+	           SYSDATE
+	           )
+	</insert>
+	<delete id="deleteReply" parameterType="_int">
+		DELETE
+		  FROM
+		  	   reply
+		 WHERE 
+		       reply_no = #{ replyNo }
 	</delete>
 	
+
 	
-
-
-
-
-
 
 
 

@@ -63,10 +63,10 @@
         <form id="form" method="post" enctype="multipart/form-data">
             <input type="hidden" name="boardNo" value="${ bno }">
             <div style="display:none;" id="file-area">
-		        <input type="file" id="file1" name="upFile" onchange="loadImg(this, 1);" onclick="deleteImg(this, 1);" required>
-		        <input type="file" id="file2" name="upFile" onchange="loadImg(this, 2);" onclick="deleteImg(this, 2);">
-		        <input type="file" id="file3" name="upFile" onchange="loadImg(this, 3);" onclick="deleteImg(this, 3);">
-		        <input type="file" id="file4" name="upFile" onchange="loadImg(this, 4);" onclick="deleteImg(this, 4);">
+		        <input type="file" id="file1" class="upFile" name="upFile" onchange="loadImg(this, 1);" oncancel="deleteImg(this, 1);" required />
+		        <input type="file" id="file2" class="upFile" name="upFile" onchange="loadImg(this, 2);" oncancel="deleteImg(this, 2);">
+		        <input type="file" id="file3" class="upFile" name="upFile" onchange="loadImg(this, 3);" oncancel="deleteImg(this, 3);">
+		        <input type="file" id="file4" class="upFile" name="upFile" onchange="loadImg(this, 4);" oncancel="deleteImg(this, 4);">
 	    	</div>
 
 	        <table id="art_table" align="center">
@@ -87,11 +87,11 @@
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품명</h5></th>
-	                    <td colspan="3"><input type="text" name="boardTitle" style="width: 85%;" value="${ artBoard.board.boardTitle }" required></td>
+	                    <td colspan="3"><input type="text" name="boardTitle" id="boardTitle" style="width: 85%;" value="${ artBoard.board.boardTitle }"></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품가격</h5></th>
-	                    <td><input type="number" name="price" style="width: 70%;" value="${ artBoard.price }" required>원 </td>
+	                    <td><input type="number" id="basicPrice" name="price" style="width: 70%;" value="${ artBoard.price }">원 </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품 대표 이미지</h5></th>
@@ -122,30 +122,30 @@
 	                    <td colspan="3">
                             <input type="file" id="explainFile" name="upFile" onchange="explain(this);">
 
-	                    	<div name="explain" id="explain" contentEditable='true' onkeyup="deleteImg(event)" onblur="loseFocus(this)"></div>
+	                    	<div name="explain" id="explain" contentEditable='true' onkeyup="deleteExplainImg(event)" onblur="loseFocus(this)"></div>
 
                             <input type="hidden" id="boardContent" name="boardContent">
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">파일유형</h5></th>
-	                    <td><input value="${ artBoard.fileType }" type="text" name="fileType" maxlength="5" placeholder="영어로 작성" required></td>
+	                    <td><input value="${ artBoard.fileType }" class="required" type="text" name="fileType" maxlength="5" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">해상도</h5> </th>
-	                    <td><input value="${ artBoard.dpi }" type="text" name="dpi" maxlength="20" placeholder="영어로 작성" required></td>
+	                    <td><input value="${ artBoard.dpi }" class="required" type="text" name="dpi" maxlength="20" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본사이즈</h5></th>
-	                    <td><input value="${ artBoard.defaultSize }" type="text" name="defaultSize" maxlength="50" placeholder="영어로 작성" required></td>
+	                    <td><input value="${ artBoard.defaultSize }" class="required" type="text" name="defaultSize" maxlength="50" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본수정횟수</h5></th>
-	                    <td><input value="${ artBoard.modifyCount }" type="number" name="modifyCount" placeholder="영어로 작성" required></td>
+	                    <td><input value="${ artBoard.modifyCount }" class="required" type="number" name="modifyCount" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">작업기간</h5></th>
-	                    <td><input value="${ artBoard.workday }" type="text" name="workday" placeholder="영어로 작성" required></td>
+	                    <td><input value="${ artBoard.workday }" class="required" type="text" name="workday" required></td>
 	                </tr>
 	                <tr>
 	                    <th colspan="4"><hr class="line"></th>
@@ -182,7 +182,9 @@
 	        
 
             <input type="hidden" id="options" name="options" value="'+ options +'">
-            <input type="hidden" id="imgs" name="imgs">
+            <input type="hidden" id="deleteImgs" name="deleteImgs">
+            <input type="hidden" id="updateImgs" name="updateImgs">
+            <input type="hidden" id="insertImgs" name="insertImgs">
 	    	
 	    </form>
     </div>
@@ -195,33 +197,78 @@
 
 
     <script>
+        // DB에 저장된 해당 글의 boardImage 배열
+        const boardImages = JSON.parse('${ boardImage }');
+        const basicImg = 'https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg';
+
+        window.onload = () => {
+            document.querySelector('#category option[value=${ artBoard.category }]').setAttribute('selected', true);
+
+            loadToImg();
+            loadExplain();
+            allOption();
+
+        }
+
         /* 제출버튼 누르면 가장 먼저 실행되는 img담는 메소드 */
         function allSrcIntoInput(){
-            let titleimg = document.getElementById('titleimg');
-            let contentImg1 = document.getElementById('contentImg1');
-            let contentImg2 = document.getElementById('contentImg2');
-            let contentImg3 = document.getElementById('contentImg3');
-            let allSrc = [];
+            
 
+            let insertSrc = [];
+            let updateSrc = [];
+            let deleteSrc = [];
             let contentImg = document.getElementsByClassName('contentImg');
+            let upFiles = document.getElementsByClassName('upFile');
 
-            for(var i = 0; i < contentImg.length; i++){
-                if(contentImg[i].getAttribute('src') != "https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg"){
-                    allSrc.push(
-                        {'type' : contentImg[i].id, 'src' : contentImg[i].getAttribute('src')}
+            for(var i = 0; i < boardImages.length; i++){
+                if(contentImg[i].getAttribute('src') == basicImg){
+                    deleteSrc.push(
+                        {'type' : contentImg[i].id
+                        ,'src' : boardImages[i].modifyName
+                        ,'boardImgNo' : boardImages[i].boardImgNo}
+                    )
+                }
+                else if(upFiles[i].files.length == 1){
+                    console.dir(upFiles[i]);
+                    updateSrc.push(
+                        {'type' : contentImg[i].id
+                        ,'src' : contentImg[i].getAttribute('src')
+                        ,'boardImgNo' : boardImages[i].boardImgNo
+                        ,'upFile[i]' : i}
+                    )
+                }
+            }
+            for(var i = boardImages.length; i < contentImg.length; i++){
+                if(upFiles[i].files.length == 1){
+                    insertSrc.push(
+                        {'type' : contentImg[i].id
+                        ,'insertUpFile[i]' : i}
                     )
                 }
             }
 
-            let imgs = document.getElementById('imgs');
-            imgs.value = JSON.stringify(allSrc);
+            let deleteImgs = document.getElementById('deleteImgs');
+            let updateImgs = document.getElementById('updateImgs');
+            let insertImgs = document.getElementById('insertImgs');
+
+            deleteImgs.value = JSON.stringify(deleteSrc);
+            updateImgs.value = JSON.stringify(updateSrc);
+            insertImgs.value = JSON.stringify(insertSrc);
+
+            console.log('=====deleteSrcIntoInput=====')
+            console.log(deleteSrc);
+            console.log(updateSrc);
+            console.log(insertSrc);
+
+            
             
         }
 
         /* 기존 사진 나타내주기 */
         function loadToImg(){
             let titleimg = document.getElementById('titleimg');
-            let boardImages = JSON.parse('${ boardImage }');
+            // let boardImages = JSON.parse('${ boardImage }');
+            console.log(boardImages);
 
             for(var i = 0; i < boardImages.length; i++){
                 if(boardImages[i].fileLevel == 1){
@@ -229,8 +276,8 @@
                     document.getElementById('input_titleimg').value = boardImages[i].modifyName;
                 }
                 else if(boardImages[i].fileLevel == 2){
-                    document.getElementById('contentImg' + i).setAttribute('src', boardImages[i].modifyName)
-                    document.getElementById('input_contentImg'+(i+1)).value = boardImages[i].modifyName;
+                    document.getElementById('contentImg' + (i + 1)).setAttribute('src', boardImages[i].modifyName)
+                    document.getElementById('input_contentImg'+ (1 + i)).value = boardImages[i].modifyName;
                 }
             }
             imgPushInput();
@@ -244,7 +291,7 @@
             document.getElementById('boardContent').value = '${ artBoard.board.boardContent }';
             /* 상세설명 불러오기 */
             let boardContent = JSON.parse('${ artBoard.board.boardContent }');
-            console.dir(document.getElementById('boardContent').value);
+            // console.dir(document.getElementById('boardContent').value);
             let explain = document.getElementById('explain');
             for(var i = 0; i < boardContent.length; i++){
                 if(boardContent[i].type == 'text'){
@@ -258,7 +305,7 @@
                     explainImg.setAttribute("width", '80%');
                     explain.append(explainImg);
                 }
-            }
+            } 
         }
 
         function allOption(){
@@ -287,14 +334,7 @@
             }
         }
 
-        window.onload = () => {
-            document.querySelector('#category option[value=${ artBoard.category }]').setAttribute('selected', true);
-        
-            loadToImg();
-            loadExplain();
-            allOption();
-
-        }
+       
 
         /* 옵션+버튼 스크립트 */
         let i = 1;
@@ -370,8 +410,26 @@
             let form = document.getElementById('form');
             document.getElementById('options').value = options;
             
-           	form.action = 'updateBoard.at';
+
+            if(document.getElementById('boardTitle').value == ''){
+                alert('제목을 확인해주세요');
+                if(document.getElementById('titleimg').getAttribute('src') == basicImg ){
+                    alert('대표 사진을 확인해주세요');
+                    let required = document.getElementsByClassName('required');
+                    for(var i = 0; i < required.length; i++){
+                        if(required[i] == ''){
+                            alert('기본사항 확인해주세요')
+                            return false;
+                        } 
+                    }
+                    return false;
+                }
+                return false;
+            }
+            form.action = 'updateBoard.at';
             form.submit();
+
+           	
         }
 
         /* 상세설명 이미지 담을 수 있는 메소드 */
@@ -397,7 +455,7 @@
         }
 
         /* 이미지를 지우면 input[type=file]도 지워지는 메소드 */
-        function deleteImg(event){
+        function deleteExplainImg(event){
             if(null == document.getElementById('explainImg')){
                 let explainFile = document.getElementById('explainFile');
                 explainFile.value = "";
@@ -479,17 +537,20 @@
             }
         }
 
-        /* 이미지 클릭하면 기존 이미지 삭제됨 */
+        /* 기존 이미지 삭제 */
         function deleteImg(inputFile, num){
-            switch(num) {
-                case 1 : $('#titleimg').attr('src', 'https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg'); break;
-                case 2 : $('#contentImg1').attr('src', 'https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg'); break;
-                case 3 : $('#contentImg2').attr('src','https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg'); break;
-                case 4 : $('#contentImg3').attr('src', 'https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg'); break;
+            if(inputFile.files.length != 1){
+                switch(num) {
+                    case 1 : $('#titleimg').attr('src', basicImg); break;
+                    case 2 : $('#contentImg1').attr('src', basicImg); break;
+                    case 3 : $('#contentImg2').attr('src', basicImg); break;
+                    case 4 : $('#contentImg3').attr('src', basicImg); break;
+                }
             }
         }
-</script>
-
+        
+</script> 
+ 
     
     
 </body>

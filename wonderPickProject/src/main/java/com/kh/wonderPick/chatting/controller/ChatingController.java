@@ -239,8 +239,8 @@ public class ChatingController {
 					//writer.newLine();
 					// 버퍼 및 스트림 뒷정리
 					writer.flush(); // 버퍼의 남은 데이터를 모두 쓰기
-					writer.close();
 				}
+				writer.close();
 				chatingService.removeReadChat(c);
 			}
 			if(!afterList.get(0).getReadCheck().equals(afterList.get(0).getToMember())) {
@@ -326,7 +326,9 @@ public class ChatingController {
 		ArrayList<AddPriceAndReason> suggestList = chatingService.selectCondition(c);
 		JSONObject jObj = new JSONObject();
 		
-		if(suggestList.isEmpty()) {
+		if(!suggestList.isEmpty()) {
+			System.out.println("***********");
+			System.out.println(suggestList);
 			jObj.put("priceAndTtile",suggestList);
 		}
 		jObj.put("ac",ac);
@@ -369,7 +371,13 @@ public class ChatingController {
 	}
 
 	@RequestMapping("checkCondition.co")
-	public ModelAndView selectCondition(HttpSession session, String roomName, int artistNo, int originPrice, AddPriceAndReason apn, ModelAndView mv, String noMoreCon){
+	public ModelAndView selectCondition(HttpSession session, 
+										String roomName, 
+										int artistNo, 
+										AddPriceAndReason apn, 
+										ModelAndView mv, 
+										String noMoreCon,
+										String artistNickName){
 
 		System.out.println(noMoreCon);/**/
 		
@@ -393,10 +401,9 @@ public class ChatingController {
 		System.out.println(ac);
 		System.out.println(apan);
 		System.out.println("artistNo"+artistNo);
-		System.out.println(originPrice);
 
 		mv.addObject("suggestList",apan)
-		.addObject("originPrice",originPrice)
+		.addObject("artistNickName",artistNickName)
 		.addObject("boardNo",apn.getBoardNo())
 		.addObject("artistNo",artistNo)
 		.addObject("roomName",roomName)
