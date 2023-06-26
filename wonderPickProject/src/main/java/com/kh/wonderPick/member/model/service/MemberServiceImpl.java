@@ -39,8 +39,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public int codeCheckMember(String emailCode) {
-		return memberDao.codeCheckMember(emailCode, sqlSession);
+	public boolean codeCheckMember(SecretCode secretCode) {
+		return memberDao.codeCheckMember(secretCode, sqlSession);
 	}
 	
 	@Override

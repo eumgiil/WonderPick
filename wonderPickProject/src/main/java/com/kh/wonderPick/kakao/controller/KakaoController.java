@@ -125,8 +125,7 @@ public class KakaoController {
       String responseText = bufferedReader.readLine();
 
       mv.addObject("responseText",responseText)
-      .addObject("c",c)
-      .setViewName("chating/successPay");
+       .setViewName("chating/successPay");
       return mv;
 
    }
