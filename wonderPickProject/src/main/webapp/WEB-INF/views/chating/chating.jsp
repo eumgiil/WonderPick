@@ -258,7 +258,7 @@
 				<img src="" alt="이모티콘" style="height: 5%;">
 				<div id="sendBtn">
 					<button onclick="chating_emoticonList();">이모티콘</button>
-					<button data-toggle="modal" data-target="#suggestModal">가격제안</button>
+					<button data-toggle="modal" data-target="#suggestModal" id="suggestModal">가격제안</button>
 					<button id='writeBtn'>보내기</button>
 				</div>
 			</div>
@@ -287,27 +287,6 @@
 				return true;
 			}
 			$(function() {
-				$('#chatingView>form>').remove();
-
-				if ('${readYetMSG}' != '') {
-					$('#chatingView>form').append(
-							'${savedChating}' + '${readYetMSG}');
-				} else {
-					$('#chatingView>form').append('${savedChating}');
-				}
-
-				var name = '${loginMember.nickName}'
-				var yourNick = '${c.artistNickName}'
-				var roomName = '${c.roomName}'
-				
-				if ($('.suggest').length != 0) {
-					$('.suggest').each(function() {
-						if ($(this).children("p").text().includes(name)) {
-							$(this).children("p").text(yourNick + "님이 요청을 검토중입니다");
-							$(this).children("input[name=reject]").remove()
-						}
-					});
-				}
 
 				socket = new WebSocket(uri);
 
@@ -384,6 +363,28 @@
 						}
 
 					}
+				}
+				
+				$('#chatingView>form>').remove();
+
+				if ('${readYetMSG}' != '') {
+					$('#chatingView>form').append(
+							'${savedChating}' + '${readYetMSG}');
+				} else {
+					$('#chatingView>form').append('${savedChating}');
+				}
+
+				var name = '${loginMember.nickName}'
+				var yourNick = '${c.artistNickName}'
+				var roomName = '${c.roomName}'
+				
+				if ($('.suggest').length != 0) {
+					$('.suggest').each(function() {
+						if ($(this).children("p").text().includes(name)) {
+							$(this).children("p").text(yourNick + "님이 요청을 검토중입니다");
+							$(this).children("input[name=reject]").remove()
+						}
+					});
 				}
 
 				$('input[name=checkedcChat]').each(function() {
@@ -471,7 +472,7 @@
 							boardNo : boardNo
 						},
 						success : function(result) {
-							console.log(result)
+							console.log(result.priceAndTtile[0].filePath)
 							
 							$('input[name=boardNo]').val(boardNo)
 							
@@ -483,6 +484,12 @@
 							
 							/*$('input[name=memberCheck]').val(result.ac.memberCheck);
 							$('input[name=artistCheck]').val(result.ac.artistCheck);*/
+							
+							var $img = $('#modalBody').find('img');
+							console.log($img)
+							$img.attr('src',result.priceAndTtile[0].filePath);
+							$img.next().text(result.priceAndTtile[0].orderContent);
+							$('#modalBody').find('p').text(result.priceAndTtile[0].totalPrice)
 							
 						},
 						error : function(e) {
@@ -529,8 +536,8 @@
 										+ '<form action="checkCondition.co">'
 										+ '<input type="submit" name="deal" readonly value="조건보기" onclick="return validate();">'
 										+ '<input type="hidden" name="boardNo" value="'+boardNo+'">'
-										+ '<input type="hidden" name="originPrice" value="2000">'/*디비에서 원가 끌고올것*/
 										+ '<input type="hidden" name="artistNo" value="'+artistNo+'">'
+										+ '<input type="hidden" name="artistNickName" value="'+$('#namespace').find('h3').text()+'">'
 										+ '<input type="hidden" name="roomName" value="'+roomName+'">'
 			
 								if ($('.addpriceDiv').length == 0) {
