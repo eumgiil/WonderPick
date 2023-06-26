@@ -85,7 +85,7 @@ public class ChatingController {
 			System.out.println(c);
 
 			//존재하는 대화내용 보여주기
-			File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles/"
+			File file = new File("/Users/gi_ill/Project/WonderPick_workspace/wonderPickProject/bin/src/main/webapp/resources"
 					+c.getMembertNickName()+c.getArtistNickName()+".txt");
 			if(!file.exists()){ // 파일이 존재하지 않으면
 				file.createNewFile(); // 신규생성
@@ -187,7 +187,7 @@ public class ChatingController {
 	@ResponseBody
 	@RequestMapping(value="chatingSave.co",produces="application/json; charset=UTF-8")
 	public void saveChating(String myName, String yourName,String text) throws IOException  {
-		File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles/"+myName+yourName+".txt");
+		File file = new File("/Users/gi_ill/Project/WonderPick_workspace/wonderPickProject/bin/src/main/webapp/resources"+myName+yourName+".txt");
 
 		// BufferedWriter 생성
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
@@ -255,7 +255,7 @@ public class ChatingController {
 
 		wsb.changeRoom(c.getRoomName(), c.getMembertNickName());
 
-		File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles/"+c.getMembertNickName()+c.getArtistNickName()+".txt");
+		File file = new File("/Users/gi_ill/Project/WonderPick_workspace/wonderPickProject/bin/src/main/webapp/resources"+c.getMembertNickName()+c.getArtistNickName()+".txt");
 		if(!file.exists()){ // 파일이 존재하지 않으면
 			file.createNewFile(); // 신규생성
 		}

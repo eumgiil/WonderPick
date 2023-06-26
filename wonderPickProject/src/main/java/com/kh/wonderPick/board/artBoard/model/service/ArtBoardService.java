@@ -26,9 +26,7 @@ public interface ArtBoardService {
 	
 	ArrayList<Option> selectOptionList(int bno);
 	
-	int updateArtBoard(Board board, ArtBoard artBoard, ArrayList<Option> list, ArrayList<BoardImage> files, ArrayList<Integer> optionNos);
-
-	int deleteOption(int bno);
+	int updateArtBoard(Board board, ArtBoard artBoard, ArrayList<Integer> deleteOptionNos, ArrayList<Option> optionList, ArrayList<Integer> deleteBoardImgNo, ArrayList<BoardImage> updateBoardImages, ArrayList<BoardImage> insertBoardImages);
 
 	ArrayList<Reply> selectReplyList(int boardNo);
 
