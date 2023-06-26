@@ -383,6 +383,26 @@
         }
 
 
+      $(function(){
+
+          let searchResult = '${ keyword }';
+    
+          console.log(searchResult)  
+    
+          localStorage.setItem('keyword', searchResult);
+    
+          let keyword = localStorage.getItem('keyword');
+    
+          $('#search_recent_no').html(keyword);
+      })
+
+
+
+
+
+
+
+
 
     </script>
 	 
