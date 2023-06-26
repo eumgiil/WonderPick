@@ -33,8 +33,6 @@ public interface ChatingService {
 
 	Member selectartistNick(int boardNo);
 
-	String selectMemberNick(int memberNo);
-
 	int deletePriceAndReason(int[] rejectList);
 
 	int insertAcceptCondition(AddPriceAndReason apar);

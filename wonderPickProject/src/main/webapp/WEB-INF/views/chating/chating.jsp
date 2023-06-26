@@ -14,7 +14,7 @@
 <title>Document</title>
 <style>
 #chatingMain {
-	width: 1200px;
+	width: 1500px;
 	height: auto;
 }
 
@@ -74,12 +74,21 @@
 	bottom: 0;
 }
 
+#sendBtn>button{
+		width : 100px;
+		height : 40px;
+		color : white;
+        margin : auto;
+        border-radius : 20%;
+        background-color: #FF8399;
+        border : none;
+ }
+    
 /* ----------- emoticon --------------- */
 
 #emoticon_area{
 	width: 500px;
 	height: 500px;
-	background-color: yellow;
 	position: absolute;
 	top: 200px;
 	right:200px;
@@ -89,31 +98,28 @@
 	box-shadow: 1px 1px 10px rgb(200, 200, 200);
 }
 .emoticon_div{
-	border: 1px solid black;
 }
 #emo_img{
 	display: inline;
 }
 #emoticon_image{
-	border: 1px solid black;
 	width: 100px;
 	height: 100px;
 }
 #emo_text{
-	border: 1px solid black;
 	display: inline-table;
 	font-size: large;
 }
 #emo_title{
-	font-size: 50px;
+	font-size: 25px;
 	width: 350px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 #emo_price{
-	border: 1px solid black;
 	font-size: 20px;
+	color: gray;
 }
 .emo_list{
 	overflow: scroll;
@@ -122,18 +128,38 @@
 
 
 #emo_category{
-	border: 1px solid black;
 	margin: auto;
+	background-color: rgb(255, 131, 153);
+	color: white;
 }
 #cate_1{
-	border: 1px solid black;
 	display: inline;
-	font-size: 30px;
+	font-size: 25px;
+	margin-left: 30px;
+}
+#cate_1:hover{
+	cursor: pointer;
+	opacity: 0.8;
+	transition: transform 100ms ease-in-out;
+	transform: scale(1.05);
 }
 #cate_2{
-	border: 1px solid black;
 	display: inline;
-	font-size: 30px;
+	font-size: 25px;
+	margin-left: 20px;
+}
+#cate_2:hover{
+	cursor: pointer;
+	opacity: 0.8;
+	transition: transform 100ms ease-in-out;
+	transform: scale(1.05);
+}
+.free_list:hover{
+	cursor: pointer;
+	opacity: 0.8;
+	transition: transform 100ms ease-in-out;
+	transform: scale(1.05);
+	box-shadow: 1px 1px 10px rgb(200, 200, 200);
 }
 
 
@@ -145,7 +171,7 @@
 	<jsp:include page="../common/header.jsp" />
 	<jsp:include page="suggestModal.jsp" />
 	
-	<div id="chatingMain" style="width: 100%">
+	<div id="chatingMain" >
 		<div id="chatingList">
 			<table width="260" border="1" align="center">
 				<thead>
@@ -165,7 +191,7 @@
 									<td>
 										<div class="chatingOne">
 											<div class="profileIMG">
-												<img src="" alt="ㅎㅎ">
+												<img src="${list.artistFile}" alt="ㅎㅎ" class="profile"><!--  -->
 											</div>
 											<div class="chatingContent" align="left">
 												<h6 class="name_h6">${list.artistNickName}</h6>
@@ -182,8 +208,8 @@
 								<tr>
 									<td>
 										<div class="chatingOne">
-											<div class="profileIMG">
-												<img src="" alt="ㅎㅎ">
+											<div class="profileIMG"><!--  -->
+												<img src="${list.filePath}" alt="ㅎㅎ" class="profile">
 											</div>
 											<div class="chatingContent" align="left">
 												<h6 class="name_h6">${list.membertNickName}</h6>
@@ -199,21 +225,17 @@
 						</c:choose>
 					</c:forEach>
 				</tbody>
-				<div id="buttons">
+				<!-- <div id="buttons">
 					<button id="chocieBtn">선택하기</button>
 					<button id="checkAll">전체선택</button>
 					<button id="deleteBtn">삭제하기</button>
-				</div>
+				</div> -->
 			</table>
 
 		</div>
 
 		<div id="chating">
-			<div id="chatSearchDiv" align="center">
-				<br> <input type="text" name="chatingSearch" id="search"
-					placeholder="채팅 내역 검색">
-				<button id="chatingSearchBtn">검색</button>
-			</div>
+			
 			<div id="namespace">
 				<c:choose>
 					<c:when test="${c.membertNickName eq loginMember.nickName}">
@@ -258,7 +280,7 @@
 				<img src="" alt="이모티콘" style="height: 5%;">
 				<div id="sendBtn">
 					<button onclick="chating_emoticonList();">이모티콘</button>
-					<button data-toggle="modal" data-target="#suggestModal">가격제안</button>
+					<button data-toggle="modal" data-target="#suggestModal" id="suggestModal">가격제안</button>
 					<button id='writeBtn'>보내기</button>
 				</div>
 			</div>
@@ -287,28 +309,10 @@
 				return true;
 			}
 			$(function() {
-				$('#chatingView>form>').remove();
-
-				if ('${readYetMSG}' != '') {
-					$('#chatingView>form').append(
-							'${savedChating}' + '${readYetMSG}');
-				} else {
-					$('#chatingView>form').append('${savedChating}');
-				}
-
-				var name = '${loginMember.nickName}'
-				var yourNick = '${c.artistNickName}'
-				var roomName = '${c.roomName}'
-				
-				if ($('.suggest').length != 0) {
-					$('.suggest').each(function() {
-						if ($(this).children("p").text().includes(name)) {
-							$(this).children("p").text(yourNick + "님이 요청을 검토중입니다");
-							$(this).children("input[name=reject]").remove()
-						}
-					});
-				}
-
+				$('.profile').each(function() {
+					$(this).width("100%")
+					$(this).height("100%")
+				})
 				socket = new WebSocket(uri);
 
 				socket.onopen = function(e) {
@@ -384,6 +388,28 @@
 						}
 
 					}
+				}
+				
+				$('#chatingView>form>').remove();
+
+				if ('${readYetMSG}' != '') {
+					$('#chatingView>form').append(
+							'${savedChating}' + '${readYetMSG}');
+				} else {
+					$('#chatingView>form').append('${savedChating}');
+				}
+
+				var name = '${loginMember.nickName}'
+				var yourNick = '${c.artistNickName}'
+				var roomName = '${c.roomName}'
+				
+				if ($('.suggest').length != 0) {
+					$('.suggest').each(function() {
+						if ($(this).children("p").text().includes(name)) {
+							$(this).children("p").text(yourNick + "님이 요청을 검토중입니다");
+							$(this).children("input[name=reject]").remove()
+						}
+					});
 				}
 
 				$('input[name=checkedcChat]').each(function() {
@@ -484,6 +510,14 @@
 							/*$('input[name=memberCheck]').val(result.ac.memberCheck);
 							$('input[name=artistCheck]').val(result.ac.artistCheck);*/
 							
+							if(result.ac!=null){
+								var $img = $('#modalBody').find('img');
+								console.log($img)
+								$img.attr('src',result.priceAndTtile[0].filePath);
+								$img.next().text(result.priceAndTtile[0].orderContent);
+								$('#modalBody').find('p').text(result.priceAndTtile[0].totalPrice)
+							}
+							
 						},
 						error : function(e) {
 							console.log(e)
@@ -529,8 +563,8 @@
 										+ '<form action="checkCondition.co">'
 										+ '<input type="submit" name="deal" readonly value="조건보기" onclick="return validate();">'
 										+ '<input type="hidden" name="boardNo" value="'+boardNo+'">'
-										+ '<input type="hidden" name="originPrice" value="2000">'/*디비에서 원가 끌고올것*/
 										+ '<input type="hidden" name="artistNo" value="'+artistNo+'">'
+										+ '<input type="hidden" name="artistNickName" value="'+$('#namespace').find('h3').text()+'">'
 										+ '<input type="hidden" name="roomName" value="'+roomName+'">'
 			
 								if ($('.addpriceDiv').length == 0) {
@@ -605,7 +639,8 @@
 						value = '';
 						for(var i in result){
 							value += 
-									'<div id="emo_img" class="emoticon_div">'
+								'<div class="free_list">'
+									+ '<div id="emo_img" class="emoticon_div">'
 										+'<img src="'+ result[i].filePath +'" id="emoticon_image">'
 										+'<input type="hidden" value="'+ result[i].boardNo +'">'
 									+'</div>'
@@ -614,9 +649,10 @@
 											+'<span >'+ result[i].boardTitle +'</span>'
 										+'</div>'
 										+'<div id="emo_price">'
-											+'<span>'+ result[i].price +'</span>'
+											+'<span> 가격 : '+ result[i].price +'</span>'
 										+'</div>'
-									+'</div>';
+									+'</div>'
+								+'</div>';
 
 							$('.emo_list').html(value);
 						}
@@ -674,37 +710,15 @@
 
 			};
 
-			// var move = document.querySelectorAll('.emo_list');
-
-			// move.forEach(i => i.addEventListener('click', e => {
-
-
-			// 	console.log(e.target);
-
-
-
-			// }))
-
+		
 			// 로그인 유저, 상대닉네임, 채팅방 주소
 			$('.emo_list').on('click','.free_list', e => {
-
-				//console.log($(e.target).parents('.free_list').children());
-				
-				//let targetName = $(e.target).get(0).tagName;
-				
-				//console.log($(e.target).parents('#free_list').html());
-				//console.log($(e.currentTarget).filter('#emoticon_image').attr('src'));
-
 
 				let emoImgAddress = $(e.currentTarget).find('#emoticon_image').attr('src');
 				let loginUser  ='${ sessionScope.loginMember.nickName }';
 				let otherName = $('.name_h6').html();
 				let chatingRoom =  $('input[name=currentRoom]').val();
-
-				// console.log(loginUser)
-				// console.log('other :' +otherName)
-				// console.log(chatingRoom)
-
+				
 				let sendEmoticon = '<div>'
 								 	+'<img src="'+ emoImgAddress +'" id="emoticon_image">'
 								 + '</div>';

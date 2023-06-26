@@ -60,7 +60,7 @@
                 <div class="search_area">
                     <form action="searchArtResult.ct" method="get">
                         <div id="search_main">
-                            <input type="text" placeholder="검색어를 입력해주세요" name="keyword" id="search_input" onkeyup="searchAutoComplet();" required>
+                            <input type="text" placeholder="검색어를 입력해주세요" name="keyword" id="search_input" on onkeyup="searchAutoComplet();" required >
                             <button type="submit"><span class="material-symbols-outlined"> search</span></button>
                         </div>
                         <div id="search_list_area">
@@ -114,9 +114,13 @@
                             }
                         });
 
-                        // 검색어 자동완성
 
+
+
+
+                        // 검색어 자동완성
                         function searchAutoComplet(){
+
                             
                             httpRequest = new XMLHttpRequest();
                             
@@ -157,9 +161,14 @@
                                httpRequest.send();
                         }
 
+                       
+
 
 
                     </script>
+
+
+
                 <ul id="memberMenu" class="clear">
                 	<c:choose>
                 		<c:when test="${ empty loginMember }" >

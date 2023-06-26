@@ -158,7 +158,8 @@ div {
 
 				<!-- Modal body -->
 				<div class="modal-body" align="center" id="modalBody">
-					<img alt="이미지" src="${orderList.filePath}"> <small> ${orderList.orderContent}</small>
+					<img alt="이미지" src="${orderList.get(0).filePath}"> 
+					<h3> ${orderList.get(0).orderContent}</h3>
 					<h2>제안가격:</h2>
 					<p>${totalPrice}</p>
 					<button id="remove" style="float: right" onclick="removePrice();">선택제거</button>
@@ -178,6 +179,7 @@ div {
 	</div>
 	<br clear="both">
 	<script>
+		 
          $('#suggest').click(function () {
         	 
         	$('#remove').show();

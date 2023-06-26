@@ -100,6 +100,7 @@ public class MemberController {
 	 */
 	@ResponseBody
 	@RequestMapping("idCheck.me")
+	
 	public String idCheckMember(String checkId) { // 숫자로 바로 보내려고하니까 406오류가뜸
 												  // 그래서 문자열로 보내봄(네이버를참고함)
 		return memberService.idCheckMember(checkId) > 0 ? "NNNNN" : "NNNNY";

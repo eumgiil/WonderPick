@@ -69,11 +69,6 @@ public class ChatingDao {
 		return sqlSession.selectOne("chatingMapper.selectartistNick",artistNickName);
 	}
 
-	public String selectMemberNo(SqlSessionTemplate sqlSession, int memberNo) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("chatingMapper.selectMemberNo",memberNo);
-	}
-
 	public int deletePriceAndReason(SqlSessionTemplate sqlSession, int i) {
 		// TODO Auto-generated method stub
 		return sqlSession.delete("chatingMapper.deletePriceAndReason",i);
