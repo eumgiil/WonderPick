@@ -329,7 +329,9 @@ select
   </select>
   <select id="selectReplyList" resultType="reply">
   select
-         nickname nickname,
+         reply_no replyNo,
+  		 member_no memberNo,
+       	 nickname nickname,
          content content,
          to_char(create_date, 'YYYY-MM-DD') as "createDate"
  	from  reply

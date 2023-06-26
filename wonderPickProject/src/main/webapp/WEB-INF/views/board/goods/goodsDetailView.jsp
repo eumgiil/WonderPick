@@ -432,27 +432,31 @@
              			   console.log(' replyList[i].memberNo : ' + '${ replyList[i].memberNo}');
              			   console.log('asdasd');
              			   let value="";
-             			   for(let i in replyList){
-             				   value   += '<input type="hidden" value="'+ replyList[i].boardNo + '">'
-             				   		   + '<table class="t_align_left" style="border: 1px solid black;">'
-     	        					   + '<tr>'
-     	        					   +'<td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">'
-     	        					   +'<img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">'
-     	        					   +'</td>'
-     	        					   +'<td width="75%" style="padding-left:10px;">' + replyList[i].nickname + '</td>'
-     	        					   +'<td width="10%" rowspan="2">'
-     	        					   + '<c:if test="' + ${loginMember.memberNo eq replyList[i].memberNo}+ '"  >'
-     	        					   +'<a href="deleteReply.go" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>'
-     	        					   + '</c:if>'
-     	        					   +'<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
-     	        					   +'</td>'
-     	        					   +'</tr>'
-     	        					   +'<tr>'
-     	        					   +'<td style="padding-left:10px;">' + replyList[i].content + '</td>'
-     	        					   +'</tr>'
-     	        					   +'</table>';
-             				   
-             			   };
+             			   for(let i of replyList){
+                            console.log(i.memberNo == '${loginMember.memberNo}');
+    
+                            value  +='<input type="hidden" value="'+ i.boardNo + '">'
+                                    +'<table class="t_align_left" style="border: 1px solid black;">'
+                                        +'<tr>'
+                                            +'<td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">'
+                                                +'<img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">'
+                                            +'</td>'
+                                            +'<td width="75%" style="padding-left:10px;">' + i.nickname + '</td>'
+                                            +'<td width="10%" rowspan="2">';
+    
+                            if(i.memberNo == '${loginMember.memberNo}'){
+                                value +=         '<a href="deleteReply.go?bno=${ bno }&replyNo=' + i.replyNo + '" style="background-color: white; border: none;">'
+                                                +'<img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>';
+                            }
+    
+                            value +=        '<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
+                                        +'</td>'
+                                    +'</tr>'
+                                    +'<tr>'
+                                        +'<td style="padding-left:10px;">' + i.content + '</td>'
+                                    +'</tr>'
+                                +'</table>';
+                        };
              			   $('#replyArea thead').html(value);
              		   },
              		   error : function(){
@@ -514,14 +518,7 @@
             
             <script>
            
-            
-            $(function(){
-            	// selectHeart();
-            	// updateHeart();
-            });
-            
-            
-
+           
             
             
             </script>
