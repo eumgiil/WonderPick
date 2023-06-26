@@ -99,6 +99,11 @@ public class ContestServiceImpl implements ContestService {
 		return contestDao.selectEmoticon(sqlSession, memberNo);
 	}
 
+	@Override
+	public ArrayList<Contest> selectVote() {
+		return contestDao.selectVote(sqlSession);
+	}
+
 
 
 }

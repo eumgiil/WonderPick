@@ -214,7 +214,6 @@
                                     </a>
                                 </div>
                             </th>
-                            <td class="vote_heart">♡</td>
                         </tr>
                         <tr>
                             <td class="table_profile_img">
@@ -223,7 +222,6 @@
                                 </div>
                             </td>
                             <td>${ list.nickName }</td>
-                            <td>투표수 자리</td>
                         </tr>
                         <tr>
                             <td colspan="3">
@@ -400,6 +398,63 @@
         })    
         $('#refresh').click(function(){
             location.href = 'selectVotePage.ct';
+        })
+
+
+        $(function(){
+
+                $.ajax({
+                    url : 'selectVote.ct',
+                    success : function(result){
+
+                        console.log(result)
+
+                        if(result.length == 0){
+                            $('#vote_heart').html('♡');
+                        }
+
+                        $('#vote_count').html(result.length)
+
+                        
+                        for(let i in result){
+                            let loginMember = '${ sessionScope.loginMember.memberNo }';
+                            if(loginMember == result[i].memberNo){
+                                $('#vote_heart').html('♥'); 
+                            }else{
+                                $('#vote_heart').html('♡');
+                            }
+                        }
+
+                        
+
+
+                        $('#vote_heart').one("click",function(){
+                            if($('#vote_heart').html() == '♥'){
+
+                                let confirmResult2 = confirm('투표를 취소하시겠습니까?');
+                                if(confirmResult2 == true){
+                                    deleteVote();
+                                }
+                            }
+                            else if($('#vote_heart').html() == '♡'){
+                                let confirmResult = confirm('투표를 진행하면 중복투표는 불가능합니다. 진행하시겠습니까?');
+
+                                if(confirmResult == true){
+                                    insertVote();
+                                }else{
+                                    
+                                }
+                                
+                            }
+                        })
+
+                    
+                    },
+                    error : function(){
+                        alert('selectVoteLike error!!!!')
+                    }
+                });
+
         })
 
       

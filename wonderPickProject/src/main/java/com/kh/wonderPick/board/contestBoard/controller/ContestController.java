@@ -21,7 +21,6 @@ import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.contestBoard.model.service.ContestService;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
-import com.kh.wonderPick.board.contestBoard.model.vo.Search;
 
 @Controller
 public class ContestController {
@@ -249,6 +248,15 @@ public class ContestController {
 		//model.addAttribute("winnerList", winnerList);
 		
 		return new Gson().toJson(freeList);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="selectVote.ct", produces="application/json; charset=UTF-8")
+	public String selectVote() {
+		
+		ArrayList<Contest> list = contestService.selectVote();
+		
+		return new Gson().toJson(list);
 	}
 	
 	

@@ -373,6 +373,18 @@
 			    
 		</delete>
 		
+		<select id="selectVote" resultMap="contestBoardResultSet">
+			select   
+					 heart.member_no 
+				from
+				        heart
+                join
+                     board  on(board.board_no = heart.board_no)
+            where
+                    board_type = 'C'
+				
+		</select>
+		
 		
 	
 

@@ -74,7 +74,7 @@
     <div id="main_area">
 
         <div id="header_area">
-                <table border="1" id="header_table">
+                <table bid="header_table">
                     <tr>
                         <td rowspan="4">
                             <div>
@@ -110,9 +110,13 @@
                     <tr>
                         <td>
                         </td>
+
+                        
                         <td>
                             <button id="buy_btn" onclick="kakaoPay();">구매하기</button>
                         </td>
+
+
                     </tr>
                 </table>
         </div>
