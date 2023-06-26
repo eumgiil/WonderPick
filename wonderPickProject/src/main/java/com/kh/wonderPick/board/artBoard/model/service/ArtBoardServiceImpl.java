@@ -86,7 +86,6 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 							  ArrayList<BoardImage> insertBoardImages
 							  ) {
 		
-		
 		int result = artDao.updateBoard(sqlSession, board);
 		result *= artDao.updateArtBoard(sqlSession, artBoard);
 		
