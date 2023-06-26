@@ -38,7 +38,7 @@ public class WebSocketBasicServer extends TextWebSocketHandler{
 	private String getId(WebSocketSession session) {
 		// TODO Auto-generated method stub
 		httpSession = session.getAttributes();
-		Member loginUser = (Member) httpSession.get("loginUser");
+		Member loginUser = (Member) httpSession.get("loginMember");
 		if(loginUser!=null) {
 			return loginUser.getNickName();
 		}

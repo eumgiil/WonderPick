@@ -51,7 +51,7 @@ public class ChatingController {
 			@RequestParam(value="totalPrice", defaultValue = "0")int totalPrice
 			) throws IOException {
 
-		System.out.println(boardNo);
+		//System.out.println(boardNo);
 
 		Member loginMember = (Member) session.getAttribute("loginMember");
 
@@ -67,16 +67,6 @@ public class ChatingController {
 
 			ArrayList<Chating> roomList = chatingService.selectAllRoom(roomListSearch);
 
-			for(Chating c1 : roomList) {
-				if(c1.getMemberNo()==loginMember.getMemberNo()) {
-					c1.setMembertNickName(chatingService.selectMemberNick(c1.getMemberNo()));
-					c1.setArtistNickName(chatingService.selectMemberNick(c1.getArtistNo())) ;
-				}
-				if(c1.getArtistNo()==loginMember.getMemberNo()) {
-					c1.setMembertNickName(chatingService.selectMemberNick(c1.getArtistNo()));
-					c1.setArtistNickName(chatingService.selectMemberNick(c1.getMemberNo()));
-				}
-			}
 			System.out.println(roomList);
 			mv.addObject("roomList",roomList)
 			.addObject("c",c)
@@ -87,7 +77,7 @@ public class ChatingController {
 
 			Member nickAndNo = chatingService.selectartistNick(boardNo);
 
-			System.out.println(nickAndNo);
+			//System.out.println(nickAndNo);
 
 			c.setArtistNickName(nickAndNo.getNickName());
 			c.setArtistNo(nickAndNo.getMemberNo());
@@ -109,17 +99,8 @@ public class ChatingController {
 
 			ArrayList<Chating> roomList = chatingService.selectAllRoom(roomListSearch);
 
-			for(Chating c1 : roomList) {
-				if(c1.getMemberNo()==loginMember.getMemberNo()) {
-					c1.setMembertNickName(((Member)chatingService.selectartistNick(c1.getMemberNo())).getNickName());
-					c1.setArtistNickName(((Member)chatingService.selectartistNick(c1.getArtistNo())).getNickName());
-				}
-				if(c1.getArtistNo()==loginMember.getMemberNo()) {
-					c1.setMembertNickName(((Member)chatingService.selectartistNick(c1.getArtistNo())).getNickName());
-					c1.setArtistNickName(((Member)chatingService.selectartistNick(c1.getMemberNo())).getNickName());
-				}
-			}
-
+			System.out.println(roomList);
+			
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 
 			//채팅방 사람 초대를 위한 방 주소
@@ -224,7 +205,6 @@ public class ChatingController {
 	public void readedChating(Chating c) throws IOException {
 		//상대가 채팅방에 없을 때는 보낸 내용을 db에 저장해서 채팅방에 입장 시 파일에 저장해 두고 db에 내용은 삭제한다
 		File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles/"+c.getMembertNickName()+c.getArtistNickName()+".txt");
-		System.out.println(file.getName());
 		ArrayList<BeforeReadChatings> brcList = chatingService.selectreadYetChatings(c);
 
 		if(!brcList.isEmpty()) {
@@ -233,7 +213,6 @@ public class ChatingController {
 				BufferedWriter writer = null;
 				writer = new BufferedWriter(new FileWriter(file, true));
 				for(BeforeReadChatings msg : afterList) {
-					System.out.println(msg);
 					// 파일에 쓰기
 					writer.write(msg.getContent());
 					//writer.newLine();
@@ -247,7 +226,6 @@ public class ChatingController {
 				BufferedWriter writer = null;
 				writer = new BufferedWriter(new FileWriter(file, true));
 				for(BeforeReadChatings msg : afterList) {
-					System.out.println(msg);
 					// 파일에 쓰기
 					writer.write(msg.getContent());
 					//writer.newLine();
@@ -263,7 +241,6 @@ public class ChatingController {
 	@RequestMapping(value="loadChatings.co", produces="application/json; charset=UTF-8")
 	public JSONObject loadChatings(Chating c) throws IOException {
 
-		System.out.println("?"+c);
 
 		Chating rn = new Chating();
 
@@ -296,7 +273,6 @@ public class ChatingController {
 
 		ArrayList<BeforeReadChatings> brc = chatingService.selectreadYetChatings(roomAdd);
 
-		System.out.println(brc);
 
 		int read = 0;
 		for(BeforeReadChatings msg : brc) {
@@ -327,8 +303,6 @@ public class ChatingController {
 		JSONObject jObj = new JSONObject();
 		
 		if(!suggestList.isEmpty()) {
-			System.out.println("***********");
-			System.out.println(suggestList);
 			jObj.put("priceAndTtile",suggestList);
 		}
 		jObj.put("ac",ac);
@@ -341,7 +315,6 @@ public class ChatingController {
 	@RequestMapping(value="insertReasonPrice.co",produces="application/json; charset=UTF-8")
 	public int insertReasonPrice(AddPriceAndReason apar){
 
-		System.out.println(apar);
 
 		String [] priceArr = apar.getAddPrices().split(",");
 		String [] requestArr = apar.getRequest().split(",");
@@ -357,7 +330,6 @@ public class ChatingController {
 			list.add(a);
 		}
 
-		System.out.println(list);
 
 		Chating c = new Chating();
 		c.setBoardNo(apar.getBoardNo());
@@ -379,7 +351,6 @@ public class ChatingController {
 										String noMoreCon,
 										String artistNickName){
 
-		System.out.println(noMoreCon);/**/
 		
 		Chating c = new Chating();
 		
@@ -398,9 +369,6 @@ public class ChatingController {
 			.setViewName("redirect:chating.co?alreadyReject=1");
 			return mv;
 		}
-		System.out.println(ac);
-		System.out.println(apan);
-		System.out.println("artistNo"+artistNo);
 
 		mv.addObject("suggestList",apan)
 		.addObject("artistNickName",artistNickName)
@@ -427,9 +395,7 @@ public class ChatingController {
 		String result="";
 
 		if(chatingService.updatetAcceptCondition(c)==1) {
-			System.out.println("*"+c);
 			AcceptCondition ac = chatingService.selectAcceptStatus(c);
-			System.out.println("*"+ac);
 			if("Y".equals(ac.getMemberCheck()) && "Y".equals(ac.getArtistCheck())) {
 				result="Y";
 			}
