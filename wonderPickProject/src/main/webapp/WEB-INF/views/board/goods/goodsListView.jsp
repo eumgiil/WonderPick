@@ -142,7 +142,7 @@
     <div class="topouter" align="center">
         <h2 align="center" style="color: rgb(255, 131, 153);">굿즈</h2>
         <hr style="width: 600px; border: 1px solid gray;">
-        <h6>n개의 상품이 있습니다.</h6>
+        <h6>${list.size()}개의 상품이 있습니다.</h6>
    <div class="top" align="center" style="float : left;">
    <div id="searchGoods" >
         <form action="search.go" method="get" align="center">

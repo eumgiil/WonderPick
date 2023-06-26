@@ -390,14 +390,14 @@ public class GoodsController {
 	
 	// 댓글 삭제
 	@RequestMapping("deleteReply.go")
-	public String deleteReply(int replyNo, HttpSession session) {
+	public String deleteReply(int replyNo, int boardNo, HttpSession session) {
 		if(goodsService.deleteReply(replyNo)>0) {
 			session.setAttribute("alertMsg", "댓글 삭제 완료");
-			return "redirect:detail.go";
+			return "redirect:detail.go?boardNo=" + boardNo;
 		}else {
 			session.setAttribute("errorMsg", "댓글 삭제 실패");
-			return "redirect:detail.go";
-		}
+			return "redirect:detail.go?boardNo=" + boardNo;
+		} 
 	}
 	
 	

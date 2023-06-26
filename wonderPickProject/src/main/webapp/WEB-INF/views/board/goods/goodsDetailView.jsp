@@ -418,6 +418,8 @@
         		
         	  
                 };
+                
+                
         	
                 function selectReplyList(){
              	   console.log("실행은 됨")
@@ -589,7 +591,7 @@
 		                    <tr>
 		                    	<td colspan="2">
 		                    	<div class="center">
-					                <button type="submit" class="btn btn-info" style="border: none; background-color:  black; color: rgb(255, 131, 153); width:100%; ">작가에게 주문요청</button>
+					                <button type="submit" onclick="orderGoods()" class="btn btn-info" style="border: none; background-color:  black; color: rgb(255, 131, 153); width:100%; ">작가에게 주문요청</button>
 					            </div>
 		                    	</td>
 		                    <tr>
