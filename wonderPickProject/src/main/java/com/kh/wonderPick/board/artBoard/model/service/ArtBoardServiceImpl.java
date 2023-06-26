@@ -78,7 +78,8 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	
 	@Override
 	@Transactional
-	public int updateArtBoard(Board board, ArtBoard artBoard,
+	public int updateArtBoard(Board board,
+							  ArtBoard artBoard,
 							  ArrayList<Integer> deleteOptionNos,
 							  ArrayList<Option> optionList,
 							  ArrayList<Integer> deleteBoardImgNo,
@@ -114,6 +115,9 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 		for(int i = 0; i < insertBoardImages.size(); i++){
 			result *= artDao.updateInsertFiles(sqlSession, insertBoardImages.get(i));
 		}
+		
+		// 상세설명 boardContent를 지우는 메소드
+		result *= artDao.updateBoardContent(sqlSession, board);
 
 
 		
@@ -134,6 +138,13 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	public int deleteReply(int replyNo) {
 		return artDao.deleteReply(sqlSession, replyNo);
 	}
+
+	// 상세설명 사진을 지우기 위해 주소값을 비교해 imgNo을 가져오는 메소
+	@Override
+	public int selectBoardImgNo(String src) {
+		return artDao.selectBoardImgNo(sqlSession, src);
+	}
+
 	
 
 	

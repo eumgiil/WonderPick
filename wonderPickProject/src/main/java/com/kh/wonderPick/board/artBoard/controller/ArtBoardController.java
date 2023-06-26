@@ -76,12 +76,12 @@ public class ArtBoardController {
 	
 	@RequestMapping(value="insertBoard.at")
 	public String enrollArtBoard(Board board,
-							   ArtBoard artBoard,
-							   String[] options,
-							   MultipartFile[] upFile,
-							   HttpSession session,
-							   HttpServletRequest request,
-							   Model model) {
+							   	 ArtBoard artBoard,
+							     String[] options,
+							     MultipartFile[] upFile,
+							     HttpSession session,
+							     HttpServletRequest request,
+							     Model model) {
 		
 		// 로그인 나오면 지울 부
 		Member loginUser = new Member();
@@ -112,9 +112,13 @@ public class ArtBoardController {
 		
 		// 상세설명 영역
 		String boardContent = board.getBoardContent();
+		
+		System.out.println("116행 boardContent : " + boardContent);
+		
 		JsonArray total  = new JsonParser().parse(boardContent).getAsJsonArray();
 		for(int i = 0; i < total.size(); i++) {
 			if("img".equals(total.get(i).getAsJsonObject().get("type").getAsString())) {
+				System.out.println("121행 json 중에 img가 자꾸 있대 말이 안되는데  : " + total.get(i).getAsJsonObject());
 				JsonObject jobj = total.get(i).getAsJsonObject();
 				jobj.keySet().remove("data");
 				jobj.addProperty("data", files.get(files.size()-1).getModifyName());
@@ -131,6 +135,15 @@ public class ArtBoardController {
 		} else {
 			model.addAttribute("alertMsg", "업로드 실패");
 		}
+		
+		for(int i = 0; i < upFile.length; i++) {
+			System.out.println(upFile[i].getOriginalFilename());
+		}
+		System.out.println(files);
+		System.out.println(board.getBoardContent());
+		
+		
+		
 		return "redirect:artList.bo?category=CI";
 	}
 	
@@ -222,9 +235,10 @@ public class ArtBoardController {
 	}
 	
 	@RequestMapping("updateBoard.at")
-	public void updateBoard(Board board,
+	public String updateBoard(Board board,
 						    ArtBoard artBoard,
 						    String[] options,
+						    MultipartFile contentFile,
 						    MultipartFile[] upFile,
 						    HttpSession session,
 						    HttpServletRequest request,
@@ -319,31 +333,49 @@ public class ArtBoardController {
 		
 		// 상세설명 영역
 		// boardContent 불러오고 내용 싹 삭제 한 뒤 내용 그대로 다시 추가하면 됨
-		JsonArray total  = new JsonParser().parse(board.getBoardContent()).getAsJsonArray();
-		System.out.println("total.toString() : " + total.toString());
+		int mno = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		HashMap maps = new HashMap();
+		maps.put("mno", mno);
+		maps.put("bno", board.getBoardNo());
+		ArtBoard beforeArtBoard = artService.selectArtBoard(maps); 
+		System.out.println("beforeArtBoard : " + beforeArtBoard);
+		// 기존 artBoard의 Content에 접근해서 img가 있는지 판단 후 resources폴더에서 삭제, DB에서 이미지 삭제하는 메소드의 매개변수 배열에 추가
+		JsonArray total  = new JsonParser().parse(beforeArtBoard.getBoard().getBoardContent()).getAsJsonArray();
 		for(int i = 0; i < total.size(); i++) {
 			if("img".equals(total.get(i).getAsJsonObject().get("type").getAsString())) {
-				JsonObject jobj = total.get(i).getAsJsonObject();
+				String src = total.get(i).getAsJsonObject().get("data").getAsString();
+				System.out.println("src : " + src);
+				new File("/" + src).delete(); // resources 폴더에서 삭제
+				int imgNo = artService.selectBoardImgNo(src);
+				deleteBoardImgNo.add(imgNo);	// 기존 이미지 삭제 메소드 매개변수에 추가
 				
-				System.out.println("jobj : " + jobj);
-				System.out.println("files.get(files.size()-1).getModifyName() : " + files.get(files.size()-1).getModifyName());
+			}
+		}
+		
+		// 새로 입력된 boardContent 1. resources 폴더에서 저장 2. DB에 저장
+		String afterContent = board.getBoardContent();
+		JsonArray aftertotal  = new JsonParser().parse(afterContent).getAsJsonArray();
+		for(int i = 0; i < aftertotal.size(); i++) {
+			if("img".equals(aftertotal.get(i).getAsJsonObject().get("type").getAsString())) {
+				// resources폴더에 저장, modifyName 추가
+				boardImage = new BoardController().saveUpdate(contentFile, session, savePath, folderPath);
 				
+				JsonObject jobj = aftertotal.get(i).getAsJsonObject();
 				jobj.keySet().remove("data");
-				jobj.addProperty("data", files.get(files.size()-1).getModifyName());
-				files.get(files.size()-1).setFileLevel(3);
+				jobj.addProperty("data", boardImage.getModifyName());
+				boardImage.setFileLevel(3);
 			}
 		}
 		board.setBoardContent(total.toString());
-//		
-//		
+		
 //		board.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
 		int result = artService.updateArtBoard(board, artBoard, deleteOptionNos, optionList, deleteBoardImgNo, updateBoardImages, insertBoardImages);
-//		if(result > 0) {
-//			model.addAttribute("alertMsg", "업로드 성공");
-//		} else {
-//			model.addAttribute("alertMsg", "업로드 실패");
-//		}
-//		return "redirect:artList.bo?category=CI";
+		if(result > 0) {
+			model.addAttribute("alertMsg", "업로드 성공");
+		} else {
+			model.addAttribute("alertMsg", "업로드 실패");
+		}
+		return "redirect:artList.bo?category=CI";
 	}
 	
 	@RequestMapping("deleteBoard.at")

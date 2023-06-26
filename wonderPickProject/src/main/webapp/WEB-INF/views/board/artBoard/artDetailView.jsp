@@ -558,7 +558,6 @@
                 }
             }
         }
-        
 
         // 클릭 시 해당 글 위치로 이동
         function move(name){

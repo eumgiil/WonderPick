@@ -120,7 +120,7 @@
 	                <tr>
 	                    <th><h5 class="sub_title">상품설명</h5></th>
 	                    <td colspan="3">
-                            <input type="file" id="explainFile" name="upFile" onchange="explain(this);">
+                            <input type="file" id="explainFile" name="contentFile" onchange="explain(this);">
 
 	                    	<div name="explain" id="explain" contentEditable='true' onkeyup="deleteExplainImg(event)" onblur="loseFocus(this)"></div>
 
