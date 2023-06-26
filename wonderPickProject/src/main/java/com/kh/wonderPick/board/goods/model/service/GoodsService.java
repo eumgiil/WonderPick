@@ -18,7 +18,7 @@ public interface GoodsService {
 	int selectListCount();
 	
 	// 게시글 리스트 조회
-	ArrayList<Goods> selectGoodsList(PageInfo pi);
+	ArrayList<Goods> selectGoodsList(PageInfo pi, String selectOrder);
 	
 	// 카테고리별 게시글 총 개수 조회
 	int selectCategoryListCount(String goodsCategory);

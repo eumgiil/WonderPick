@@ -369,6 +369,8 @@
 		  	   board_image
 		 where
 		  	   board_no = #{ bno }
+		   and
+               file_level in(1, 2)
 	</select>
 
 	

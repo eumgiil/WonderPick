@@ -163,18 +163,16 @@
    </script>
    
    </c:if>
-   <div class="option" >
-        <select name="option" id="option" >
-            <option value="popularity" onclick="option(1)">인기순</option>
-            <option value="lowPrice" onclick="option(2)">가격 낮은 순</option>
-            <option value="latest" onclick="option(3)">최신 등록순</option>
-        </select>
-   </div>     
+   <form action="list.go" method="post" id="listForm">
+       <div class="option" >
+           <select name="selectOrder" id="selectOrder" >
+               <option value="latest">최신 등록순</option>
+               <option value="popularity">인기순</option>
+               <option value="lowPrice">가격 낮은 순</option>
+            </select>
+        </div>     
+    </form>
    </div>
-        <script>
-        
-      
-        </script>
 
         </div>
         <br><br><br><br>
@@ -231,15 +229,6 @@
 	
 	</div>
 	
-	<script>
-		selectHeart();
-	    updateHeart();
-	
-		$(function(){
-			selectHeart();
-			heartUpdate();
-		});
-		</script>
 	
 	
 	<script>
@@ -247,7 +236,18 @@
 		$('.boardNo').click(function(){
 			location.href = 'detail.go?boardNo=' + $(this).childen('.boardNo').text();
 		});
+
+        console.log('${list}');
+
 	})
+
+        let order = document.getElementById('selectOrder');
+        order.onchange = () => {
+            order.name = 'selectOrder';
+            let listForm = document.getElementById('listForm');
+            listForm.submit();
+        }
+
 	</script>
 	
 	

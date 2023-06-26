@@ -315,30 +315,25 @@ public class ArtBoardController {
 			}
 			insertBoardImages.add(boardImage);
 		}
-//		
-//		System.out.println("// 여기서부터 //");
-//		System.out.println("deleteBoardImgNo : " + deleteBoardImgNo.toString());
-//		System.out.println("updateBoardImages : " + updateBoardImages.toString());
-//		System.out.println("insertBoardImages : " + insertBoardImages.toString());
-//		
-//		
 		
-//		// 상세설명 영역
-//		JsonArray total  = new JsonParser().parse(board.getBoardContent()).getAsJsonArray();
-//		System.out.println("total.toString() : " + total.toString());
-//		for(int i = 0; i < total.size(); i++) {
-//			if("img".equals(total.get(i).getAsJsonObject().get("type").getAsString())) {
-//				JsonObject jobj = total.get(i).getAsJsonObject();
-//				
-//				System.out.println("jobj : " + jobj);
-//				System.out.println("files.get(files.size()-1).getModifyName() : " + files.get(files.size()-1).getModifyName());
-//				
-//				jobj.keySet().remove("data");
-//				jobj.addProperty("data", files.get(files.size()-1).getModifyName());
-//				files.get(files.size()-1).setFileLevel(3);
-//			}
-//		}
-//		board.setBoardContent(total.toString());
+		
+		// 상세설명 영역
+		// boardContent 불러오고 내용 싹 삭제 한 뒤 내용 그대로 다시 추가하면 됨
+		JsonArray total  = new JsonParser().parse(board.getBoardContent()).getAsJsonArray();
+		System.out.println("total.toString() : " + total.toString());
+		for(int i = 0; i < total.size(); i++) {
+			if("img".equals(total.get(i).getAsJsonObject().get("type").getAsString())) {
+				JsonObject jobj = total.get(i).getAsJsonObject();
+				
+				System.out.println("jobj : " + jobj);
+				System.out.println("files.get(files.size()-1).getModifyName() : " + files.get(files.size()-1).getModifyName());
+				
+				jobj.keySet().remove("data");
+				jobj.addProperty("data", files.get(files.size()-1).getModifyName());
+				files.get(files.size()-1).setFileLevel(3);
+			}
+		}
+		board.setBoardContent(total.toString());
 //		
 //		
 //		board.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
