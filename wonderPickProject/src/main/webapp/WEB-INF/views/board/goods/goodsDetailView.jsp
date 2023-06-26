@@ -385,36 +385,36 @@
         
         		function insertReply(){
         			
-        			// #insertcontent 의 val의 공백 => .trim()
-             	   let content = $('#insertcontent').val();
-             	   console.log(content);
-             	    
-             	   if($('#insertcontent').val().trim() != ''){
-             		   $.ajax({
-             			   url : 'rinsert.go',
-             			   data : {
-             				   boardNo :  '${g.boardNo}',
-             				   content : $('#insertcontent').val(),
-             				   memberNo : '${loginMember.memberNo}'
-             			   },
-             			   success : function(result){
-             				   console.log(result);
-             				   
-             				   if(result == 'success'){
-     	        					selectReplyList();
-     	        					$('#insertcontent').val('');
-            					   }
-            				   
-             			   },
-             			   error : function(){
-             				console.log('실패!~!~!~!~!');
-             			   }
-             		   });
-             		   
-             	   }else{
-             		   window.alert('5252~!~!~!');
-             	   	
-             		}
+                        // #insertcontent 의 val의 공백 => .trim()
+                    let content = $('#insertcontent').val();
+                    console.log(content);
+                        
+                    if($('#insertcontent').val().trim() != ''){
+                        $.ajax({
+                            url : 'rinsert.go',
+                            data : {
+                                boardNo :  '${g.boardNo}',
+                                content : $('#insertcontent').val(),
+                                memberNo : '${loginMember.memberNo}'
+                            },
+                            success : function(result){
+                                console.log(result);
+                                
+                                if(result == 'success'){
+                                    selectReplyList();
+                                    $('#insertcontent').val('');
+                                };
+                            },
+                            error : function(){
+                                console.log('실패!~!~!~!~!');
+                            }
+                        });
+                        
+                    }else{
+                        window.alert('5252~!~!~!');
+                        
+                    }
+        		
         		
         	  
                 };
@@ -513,8 +513,13 @@
 	            </div>
             
             <script>
-            //selectHeart();
-            //updateHeart();
+           
+            
+            $(function(){
+            	// selectHeart();
+            	// updateHeart();
+            });
+            
             
 
             

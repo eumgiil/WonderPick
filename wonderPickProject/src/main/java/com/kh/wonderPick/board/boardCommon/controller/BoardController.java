@@ -49,6 +49,28 @@ public class BoardController {
 		return list;
 	}
 	
+	public BoardImage saveUpdate(MultipartFile upFile, HttpSession session, String savePath, String folderPath) {
+		
+		String originName = upFile.getOriginalFilename();
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+		String ext = originName.substring(originName.lastIndexOf("."));
+		int randomNumber = (int)(Math.random() * 9000 + 1000);
+		String changeName = currentTime + randomNumber + ext;
+		
+		try {
+			upFile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		BoardImage boardImage =  new BoardImage();
+		boardImage.setOriginName(originName);
+		boardImage.setModifyName(folderPath + changeName);
+//		boardImage.setFileLevel();	 return 받은 영역에서 set 할 것
+		boardImage.setFilePath(folderPath + changeName);
+		
+		return boardImage;
+	}
+	
 	
 	
 	

@@ -157,6 +157,14 @@
         .movePage:hover{
             cursor: pointer;
         }
+        #refresh{
+            width: 35px;
+            height: 35px;
+        }
+        #refresh_div{
+            width: 700px;
+        }
+        
       
     </style>
     
@@ -173,81 +181,18 @@
                 <div class="header_area">
                     <h1 onclick="winnerPage();">역대 이달의 우승작<hr></h1>
                 </div>
-                <div id="d_day">
-                <h3> 2023.05.28</h3> <hr>
-                    <h1>D-3</h1>
-                </div>
-                <div>
-                    <span>
-                        여러분의 선택으로 이달의 이모티콘이 선정됩니다!! <br>
-                        등록한 이모티콘 중 마음에 드시는 이모티콘에 하트를 클릭해
-                        이달의 이모티콘을 선택해주세요! <br>
-                        * 중복투표 불가능
-                    </span>
+           
+                <div id="refresh_div" align="left">
+                    <img src="resources/boardUpfiles/contestFiles/new3.png" id="refresh">
+            <c:choose>
+                <c:when test="${ !empty sessionScope.loginMember }">
+                    <button id="enrollForm_btn" onclick="enrollForm();">공모전 등록하기</button>
+                </c:when>
+            </c:choose>
                 </div>
             </div>
         
-            <!-- 실시간 탑10 -->
-            <!-- 
-            <div id="body_area">
-                <div id="winnerList_title" >
-                    <span><h1>실시간 TOP10<hr align="left" id="top10_hr"></h1></span>
-                </div>
-                <div class="contest_list">
-                    <ul class="winner_list">
-                      <c:forEach var="list" items="" >
-                       <li>
-                            <table class="contest_table">
-                                <thead>
-                                    <tr >
-                                        <td colspan="3">
-                                            <div align="center">
-                                                <img src="" alt="" class="top10_image">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr >
-                                        <th class="table_tite" colspan="2">
-                                            <div class="table_title"> 
-                                              
-                                            </div>
-                                        </th>
-                                        <td class="vote_heart">♡</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table_profile_img">
-                                            <div align="center">
-                                                <img src="/resources/개발진스.png" class="profile_img">
-                                             
-                                            </div>
-                                        </td>
-                                        <td>s</td>
-                                        <td>s</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <span class="table_sysdate">date</span> 
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>	
-                        </li>
-                      </c:forEach>
-  
-                       
-  
-                    </ul>
-                </div>
-            </div> -->
 
-
-            <!-- =============================== 최신순 LIST ===============================-->
-
-            <div align="right">
-                <img src="resources/boardUpfiles/contestFiles/new3.png" id="refresh">
-            </div>
             <div id="voteList_area" align="center">
                 <c:forEach  items="${ list }" var="list">
                 <table class="contest_table">
@@ -314,25 +259,6 @@
 
 
     <script>
-        
-        //let movePage =  document.querySelectorAll('.movePage');
-        
-
-
-            //console.log(this.name);
-
-            //location.href='contestDetail.ct?bno=' + 
-
-
-        // document.querySelector('.movePage').addEventListener('click',function(e){
-
-        //     console.log(this);
-        // })
-
-        // [].forEach.call(cols,function(movePage)){
-        //     movePage.add
-        // }
-
 
         // 클릭 시 해당 게시물 이동
         var movePage = document.querySelectorAll('.movePage');
@@ -341,9 +267,6 @@
         movePage.forEach( i => i.addEventListener('click', e => {
     <c:choose>
         <c:when test="${ !empty sessionScope.loginMember }">
-
-           //console.log(document.getElementById('modal_1').href)
-           //document.getElementById('modal_1').href ='#exampleModalToggle';
 
             if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
                 let clickImageBoardNo = e.currentTarget.children[1].value;
@@ -430,6 +353,9 @@
                             var movePage = document.querySelectorAll('.movePage');
                             movePage.forEach( i => i.addEventListener('click', e => {
 
+                        <c:choose>
+                            <c:when test="${ !empty sessionScope.loginMember }">
+
                                 if(e.currentTarget.id == 'boardImage'){ // 클릭한 타겟이 이미지라면
                                     console.log('이미지 클릭함')
                                 console.log(e.currentTarget.children[1].value);
@@ -441,7 +367,15 @@
                                     let clickTitleBoardNo = e.currentTarget.children[0].value;
                                     location.href = 'contestDetail.ct?boardNo=' + clickTitleBoardNo;
                                 }
+
+                            </c:when>
+                            <c:otherwise>
+                                alert('로그인 후 이용가능 합니다.')
+                            </c:otherwise>
+                        </c:choose>
+                                
                             }))
+
                 },
                 error : function(){
                     alert('조회 실패입니디')
@@ -459,6 +393,14 @@
         function winnerPage(){
             location.href = 'contestWinnerList.ct';
         }
+
+        $('#enrollForm_btn').click(function(){
+            location.href ='enrollForm.ct';
+     
+        })    
+        $('#refresh').click(function(){
+            location.href = 'selectVotePage.ct';
+        })
 
       
    

@@ -63,7 +63,7 @@
         <form id="form" method="post" enctype="multipart/form-data">
 
             <div style="display:none;" id="file-area">
-		        <input type="file" id="file1" name="upFile" onchange="loadImg(this, 1);" required>
+		        <input type="file" id="file1" name="upFile" onchange="loadImg(this, 1);">
 		        <input type="file" id="file2" name="upFile" onchange="loadImg(this, 2);">
 		        <input type="file" id="file3" name="upFile" onchange="loadImg(this, 3);">
 		        <input type="file" id="file4" name="upFile" onchange="loadImg(this, 4);">
@@ -87,11 +87,11 @@
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품명</h5></th>
-	                    <td colspan="3"><input type="text" name="boardTitle" style="width: 85%;" required></td>
+	                    <td colspan="3"><input type="text" id="boardTitle" name="boardTitle" style="width: 85%;"/></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품가격</h5></th>
-	                    <td><input type="number" name="price" style="width: 70%;" required>원 </td>
+	                    <td><input type="number" name="price" style="width: 70%;" required />원 </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품 대표 이미지</h5></th>
@@ -119,23 +119,23 @@
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">파일유형</h5></th>
-	                    <td><input type="text" name="fileType" maxlength="5" placeholder="영어로 작성" required></td>
+	                    <td><input type="text" class="required" name="fileType" maxlength="5" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">해상도</h5> </th>
-	                    <td><input type="text" name="dpi" maxlength="20" placeholder="영어로 작성" required></td>
+	                    <td><input type="text" class="required" name="dpi" maxlength="20" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본사이즈</h5></th>
-	                    <td><input type="text" name="defaultSize" maxlength="50" placeholder="영어로 작성" required></td>
+	                    <td><input type="text" class="required" name="defaultSize" maxlength="50" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">기본수정횟수</h5></th>
-	                    <td><input type="number" name="modifyCount" placeholder="영어로 작성" required></td>
+	                    <td><input type="number" class="required" name="modifyCount" required></td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">작업기간</h5></th>
-	                    <td><input type="text" name="workday" placeholder="영어로 작성" required></td>
+	                    <td><input type="text" class="required" name="workday" required></td>
 	                </tr>
 	                <tr>
 	                    <th colspan="4"><hr class="line"></th>
@@ -259,6 +259,28 @@
 
             let form = document.getElementById('form');
             document.getElementById('options').value = options;
+            
+
+            if(document.getElementById('boardTitle').value == ''){
+                alert('제목을 확인해주세요');
+                if(document.getElementById('titleimg').getAttribute('src') == basicImg ){
+                    alert('대표 사진을 확인해주세요');
+                    let required = document.getElementsByClassName('required');
+                    for(var i = 0; i < required.length; i++){
+                        if(required[i] == ''){
+                            alert('기본사항 확인해주세요')
+                            if(document.getElementById('boardContent').value == ''){
+                                alert('상세설명 확인해주세요');
+                                return false;
+                            }
+                            return false;
+                        } 
+                    }
+                    return false;
+                }
+                return false;
+            }
+
             
            	form.action = 'insertBoard.at';
             form.submit();

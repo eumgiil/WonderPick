@@ -79,7 +79,6 @@
 #emoticon_area{
 	width: 500px;
 	height: 500px;
-	background-color: yellow;
 	position: absolute;
 	top: 200px;
 	right:200px;
@@ -89,31 +88,28 @@
 	box-shadow: 1px 1px 10px rgb(200, 200, 200);
 }
 .emoticon_div{
-	border: 1px solid black;
 }
 #emo_img{
 	display: inline;
 }
 #emoticon_image{
-	border: 1px solid black;
 	width: 100px;
 	height: 100px;
 }
 #emo_text{
-	border: 1px solid black;
 	display: inline-table;
 	font-size: large;
 }
 #emo_title{
-	font-size: 50px;
+	font-size: 25px;
 	width: 350px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 #emo_price{
-	border: 1px solid black;
 	font-size: 20px;
+	color: gray;
 }
 .emo_list{
 	overflow: scroll;
@@ -122,18 +118,38 @@
 
 
 #emo_category{
-	border: 1px solid black;
 	margin: auto;
+	background-color: rgb(255, 131, 153);
+	color: white;
 }
 #cate_1{
-	border: 1px solid black;
 	display: inline;
-	font-size: 30px;
+	font-size: 25px;
+	margin-left: 30px;
+}
+#cate_1:hover{
+	cursor: pointer;
+	opacity: 0.8;
+	transition: transform 100ms ease-in-out;
+	transform: scale(1.05);
 }
 #cate_2{
-	border: 1px solid black;
 	display: inline;
-	font-size: 30px;
+	font-size: 25px;
+	margin-left: 20px;
+}
+#cate_2:hover{
+	cursor: pointer;
+	opacity: 0.8;
+	transition: transform 100ms ease-in-out;
+	transform: scale(1.05);
+}
+.free_list:hover{
+	cursor: pointer;
+	opacity: 0.8;
+	transition: transform 100ms ease-in-out;
+	transform: scale(1.05);
+	box-shadow: 1px 1px 10px rgb(200, 200, 200);
 }
 
 
@@ -612,7 +628,8 @@
 						value = '';
 						for(var i in result){
 							value += 
-									'<div id="emo_img" class="emoticon_div">'
+								'<div class="free_list">'
+									+ '<div id="emo_img" class="emoticon_div">'
 										+'<img src="'+ result[i].filePath +'" id="emoticon_image">'
 										+'<input type="hidden" value="'+ result[i].boardNo +'">'
 									+'</div>'
@@ -621,9 +638,10 @@
 											+'<span >'+ result[i].boardTitle +'</span>'
 										+'</div>'
 										+'<div id="emo_price">'
-											+'<span>'+ result[i].price +'</span>'
+											+'<span> 가격 : '+ result[i].price +'</span>'
 										+'</div>'
-									+'</div>';
+									+'</div>'
+								+'</div>';
 
 							$('.emo_list').html(value);
 						}
@@ -681,37 +699,15 @@
 
 			};
 
-			// var move = document.querySelectorAll('.emo_list');
-
-			// move.forEach(i => i.addEventListener('click', e => {
-
-
-			// 	console.log(e.target);
-
-
-
-			// }))
-
+		
 			// 로그인 유저, 상대닉네임, 채팅방 주소
 			$('.emo_list').on('click','.free_list', e => {
-
-				//console.log($(e.target).parents('.free_list').children());
-				
-				//let targetName = $(e.target).get(0).tagName;
-				
-				//console.log($(e.target).parents('#free_list').html());
-				//console.log($(e.currentTarget).filter('#emoticon_image').attr('src'));
-
 
 				let emoImgAddress = $(e.currentTarget).find('#emoticon_image').attr('src');
 				let loginUser  ='${ sessionScope.loginMember.nickName }';
 				let otherName = $('.name_h6').html();
 				let chatingRoom =  $('input[name=currentRoom]').val();
-
-				// console.log(loginUser)
-				// console.log('other :' +otherName)
-				// console.log(chatingRoom)
-
+				
 				let sendEmoticon = '<div>'
 								 	+'<img src="'+ emoImgAddress +'" id="emoticon_image">'
 								 + '</div>';
