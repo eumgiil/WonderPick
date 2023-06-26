@@ -198,9 +198,10 @@
 
     <script>
         // DB에 저장된 해당 글의 boardImage 배열
+        
         const boardImages = JSON.parse('${ boardImage }');
         const basicImg = 'https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg';
-
+        
         window.onload = () => {
             document.querySelector('#category option[value=${ artBoard.category }]').setAttribute('selected', true);
 
@@ -210,9 +211,25 @@
 
         }
 
+        /* 기존 사진 나타내주기 */
+        function loadToImg(){
+            let titleimg = document.getElementById('titleimg');
+            console.log(boardImages);
+
+            for(var i = 0; i < boardImages.length; i++){
+                if(boardImages[i].fileLevel == 1){
+                    titleimg.setAttribute('src', boardImages[i].modifyName);
+                    document.getElementById('input_titleimg').value = boardImages[i].modifyName;
+                }
+                else if(boardImages[i].fileLevel == 2){
+                    document.getElementById('contentImg'+(i+1)).setAttribute('src', boardImages[i].modifyName);
+                    document.getElementById('input_contentImg'+ (1 + i)).value = boardImages[i].modifyName;
+                }
+            }
+        }
+
         /* 제출버튼 누르면 가장 먼저 실행되는 img담는 메소드 */
         function allSrcIntoInput(){
-            
 
             let insertSrc = [];
             let updateSrc = [];
@@ -254,37 +271,12 @@
             deleteImgs.value = JSON.stringify(deleteSrc);
             updateImgs.value = JSON.stringify(updateSrc);
             insertImgs.value = JSON.stringify(insertSrc);
-
-            console.log('=====deleteSrcIntoInput=====')
-            console.log(deleteSrc);
-            console.log(updateSrc);
-            console.log(insertSrc);
-
             
             
         }
 
-        /* 기존 사진 나타내주기 */
-        function loadToImg(){
-            let titleimg = document.getElementById('titleimg');
-            // let boardImages = JSON.parse('${ boardImage }');
-            console.log(boardImages);
-
-            for(var i = 0; i < boardImages.length; i++){
-                if(boardImages[i].fileLevel == 1){
-                    titleimg.setAttribute('src', boardImages[i].modifyName);
-                    document.getElementById('input_titleimg').value = boardImages[i].modifyName;
-                }
-                else if(boardImages[i].fileLevel == 2){
-                    document.getElementById('contentImg' + (i + 1)).setAttribute('src', boardImages[i].filePath)
-                    document.getElementById('input_contentImg'+ (1 + i)).value = boardImages[i].filePath;
-                }
-            }
-            imgPushInput();
-        }
-        function imgPushInput(){
-
-        }
+        
+        
 
         function loadExplain(){
             // boardContent에 기존 값 넣어놓기
@@ -333,8 +325,6 @@
                 }
             }
         }
-
-       
 
         /* 옵션+버튼 스크립트 */
         let i = 1;
@@ -473,11 +463,11 @@
                 if(nodes[i].nodeName == '#text'){
                     let data = nodes[i].data;
                     list.push({'type' : 'text'
-                                ,'data' : data });
+                              ,'data' : data });
                 } else {
                     let data = nodes[i].src;
                     list.push({'type' : 'img'
-                                ,'data' : data});
+                              ,'data' : data});
                 }
             }
             boardContent.value = JSON.stringify(list);
@@ -550,8 +540,5 @@
         }
         
 </script> 
- 
-    
-    
 </body>
 </html>
