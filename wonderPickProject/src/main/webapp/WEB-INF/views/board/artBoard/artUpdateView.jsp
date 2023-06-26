@@ -276,8 +276,8 @@
                     document.getElementById('input_titleimg').value = boardImages[i].modifyName;
                 }
                 else if(boardImages[i].fileLevel == 2){
-                    document.getElementById('contentImg' + (i + 1)).setAttribute('src', boardImages[i].modifyName)
-                    document.getElementById('input_contentImg'+ (1 + i)).value = boardImages[i].modifyName;
+                    document.getElementById('contentImg' + (i + 1)).setAttribute('src', boardImages[i].filePath)
+                    document.getElementById('input_contentImg'+ (1 + i)).value = boardImages[i].filePath;
                 }
             }
             imgPushInput();

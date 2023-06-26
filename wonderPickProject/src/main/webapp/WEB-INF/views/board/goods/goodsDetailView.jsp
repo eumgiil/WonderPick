@@ -391,17 +391,16 @@
                         $.ajax({
                             url : 'rinsert.go',
                             data : {
-                                boardNo :  ${g.boardNo},
+                                boardNo :  '${g.boardNo}',
                                 content : $('#insertcontent').val(),
-                                memberNo : ${loginMember.memberNo}
+                                memberNo : '${loginMember.memberNo}'
                             },
                             success : function(result){
                                 console.log(result);
                                 
                                 if(result == 'success'){
-                                    selectReplyList(){
-                                        $('#insertcontent').val('');
-                                    }
+                                    selectReplyList();
+                                    $('#insertcontent').val('');
                                 };
                             },
                             error : function(){
@@ -511,12 +510,11 @@
 	            </div>
             
             <script>
-            selectHeart();
-            updateHeart();
+           
             
             $(function(){
-            	selectHeart();
-            	updateHeart();
+            	// selectHeart();
+            	// updateHeart();
             });
             
             
@@ -627,7 +625,7 @@
             </script>
             <script>
             document.addEventListener('DOMContentLoaded', function(){
-            	document.querySelector('')
+            	// document.querySelector('')
             })
             
             

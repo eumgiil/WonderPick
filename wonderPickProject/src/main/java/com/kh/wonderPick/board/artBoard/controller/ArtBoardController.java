@@ -287,33 +287,34 @@ public class ArtBoardController {
 		
 		// 삭제할 boardImgNo가 들어있는 Array  => update로 바꿔야함
 		for(int i = 0; i < deleteImgsArray.size(); i++) {
-			System.out.println(deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString());
 			// resources 폴더에서 삭제
+			System.out.println("삭제 전");
+			System.out.println("/" + deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString());
 			new File("/" + deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString()).delete();
 			// DB에서 삭제하기 위해 array에 담기
 			deleteBoardImgNo.add(deleteImgsArray.get(i).getAsJsonObject().get("boardImgNo").getAsInt());
 		}
-//		
-//		// boardImage 이름 변경 및 resources 폴더에 파일 업로드 / arrayList에 업데이트 할 파일 담기
-//		for(int i = 0; i < updateImgsArray.size(); i++) {
-//			int Filei = updateImgsArray.get(i).getAsJsonObject().get("upFile[i]").getAsInt();
-//			boardImage = new BoardController().saveUpdate(upFile[Filei], session, savePath, folderPath);
-//			boardImage.setBoardImgNo(updateImgsArray.get(i).getAsJsonObject().get("boardImgNo").getAsInt());
-//			updateBoardImages.add(boardImage);
-//		}
-//		
-//		// insert boardImages
-//		for(int i = 0; i < insertImgsArray.size(); i++) {
-//			int insertInt = insertImgsArray.get(i).getAsJsonObject().get("insertUpFile[i]").getAsInt();
-//			boardImage = new BoardController().saveUpdate(upFile[insertInt], session, savePath, folderPath);
-//			boardImage.setBoardNo(board.getBoardNo());
-//			if(insertInt == 0) {
-//				boardImage.setFileLevel(1);
-//			} else {
-//				boardImage.setFileLevel(2);
-//			}
-//			insertBoardImages.add(boardImage);
-//		}
+		
+		// boardImage 이름 변경 및 resources 폴더에 파일 업로드 / arrayList에 업데이트 할 파일 담기
+		for(int i = 0; i < updateImgsArray.size(); i++) {
+			int Filei = updateImgsArray.get(i).getAsJsonObject().get("upFile[i]").getAsInt();
+			boardImage = new BoardController().saveUpdate(upFile[Filei], session, savePath, folderPath);
+			boardImage.setBoardImgNo(updateImgsArray.get(i).getAsJsonObject().get("boardImgNo").getAsInt());
+			updateBoardImages.add(boardImage);
+		}
+		
+		// insert boardImages
+		for(int i = 0; i < insertImgsArray.size(); i++) {
+			int insertInt = insertImgsArray.get(i).getAsJsonObject().get("insertUpFile[i]").getAsInt();
+			boardImage = new BoardController().saveUpdate(upFile[insertInt], session, savePath, folderPath);
+			boardImage.setBoardNo(board.getBoardNo());
+			if(insertInt == 0) {
+				boardImage.setFileLevel(1);
+			} else {
+				boardImage.setFileLevel(2);
+			}
+			insertBoardImages.add(boardImage);
+		}
 //		
 //		System.out.println("// 여기서부터 //");
 //		System.out.println("deleteBoardImgNo : " + deleteBoardImgNo.toString());
@@ -341,7 +342,7 @@ public class ArtBoardController {
 //		
 //		
 //		board.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
-//		int result = artService.updateArtBoard(board, artBoard, deleteOptionNos, optionList, deleteBoardImgNo, updateBoardImages, insertBoardImages);
+		int result = artService.updateArtBoard(board, artBoard, deleteOptionNos, optionList, deleteBoardImgNo, updateBoardImages, insertBoardImages);
 //		if(result > 0) {
 //			model.addAttribute("alertMsg", "업로드 성공");
 //		} else {
