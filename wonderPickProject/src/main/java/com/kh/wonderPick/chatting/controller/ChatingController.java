@@ -43,7 +43,13 @@ public class ChatingController {
 	private WebSocketBasicServer wsb;
 
 	@RequestMapping("chating.co")
-	public ModelAndView chatingView(Chating c, @RequestParam(value="boardNo", defaultValue = "0")int boardNo, HttpSession session, ModelAndView mv, @RequestParam(value="alreadyReject", defaultValue = "0")int alreadyReject) throws IOException {
+	public ModelAndView chatingView(Chating c, 
+			@RequestParam(value="boardNo", defaultValue = "0")int boardNo, 
+			HttpSession session, 
+			ModelAndView mv,
+			@RequestParam(value="alreadyReject", defaultValue = "0")int alreadyReject,
+			@RequestParam(value="totalPrice", defaultValue = "0")int totalPrice
+			) throws IOException {
 
 		System.out.println(boardNo);
 
@@ -89,10 +95,11 @@ public class ChatingController {
 			System.out.println(c);
 
 			//존재하는 대화내용 보여주기
-			File file = new File("/Users/gi_ill/Project/WonderPick_workspace/wonderPickProject/bin/src/main/webapp/resources"
+			File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles/"
 					+c.getMembertNickName()+c.getArtistNickName()+".txt");
 			if(!file.exists()){ // 파일이 존재하지 않으면
 				file.createNewFile(); // 신규생성
+				//C:/wonderPick-workspace/WonderPick/wonderPickProject/src/main/webapp/resources/chatingFiles/이걸로 바꿔요
 			}
 
 			//채팅 리스트 조회
@@ -170,12 +177,11 @@ public class ChatingController {
 					System.out.println("4");
 				}
 			}
-
-			AcceptCondition ac = chatingService.selectAcceptStatus(c);
+			ArrayList<AddPriceAndReason> apan = chatingService.selectCondition(c);
+			
 			//세션에 맴버 받아와야함
 			mv.addObject("c",c)
-//			.addObject("memberCheck",ac.getMemberCheck())
-//			.addObject("artistCheck",ac.getArtistCheck())
+			.addObject("orderList",apan)
 			.addObject("alreadyReject",alreadyReject)
 			.addObject("readYetMSG",readYetMSG)
 			.addObject("roomList",roomList)
@@ -200,7 +206,7 @@ public class ChatingController {
 	@ResponseBody
 	@RequestMapping(value="chatingSave.co",produces="application/json; charset=UTF-8")
 	public void saveChating(String myName, String yourName,String text) throws IOException  {
-		File file = new File("/Users/gi_ill/Project/WonderPick_workspace/wonderPickProject/bin/src/main/webapp/resources"+myName+yourName+".txt");
+		File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles/"+myName+yourName+".txt");
 
 		// BufferedWriter 생성
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
@@ -217,7 +223,7 @@ public class ChatingController {
 	@RequestMapping(value="readedChat.co",produces="application/json; charset=UTF-8")
 	public void readedChating(Chating c) throws IOException {
 		//상대가 채팅방에 없을 때는 보낸 내용을 db에 저장해서 채팅방에 입장 시 파일에 저장해 두고 db에 내용은 삭제한다
-		File file = new File("/Users/gi_ill/Project/WonderPick_workspace/wonderPickProject/bin/src/main/webapp/resources"+c.getMembertNickName()+c.getArtistNickName()+".txt");
+		File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles/"+c.getMembertNickName()+c.getArtistNickName()+".txt");
 		System.out.println(file.getName());
 		ArrayList<BeforeReadChatings> brcList = chatingService.selectreadYetChatings(c);
 
@@ -233,8 +239,8 @@ public class ChatingController {
 					//writer.newLine();
 					// 버퍼 및 스트림 뒷정리
 					writer.flush(); // 버퍼의 남은 데이터를 모두 쓰기
-					writer.close();
 				}
+				writer.close();
 				chatingService.removeReadChat(c);
 			}
 			if(!afterList.get(0).getReadCheck().equals(afterList.get(0).getToMember())) {
@@ -272,7 +278,7 @@ public class ChatingController {
 
 		wsb.changeRoom(c.getRoomName(), c.getMembertNickName());
 
-		File file = new File("/Users/gi_ill/Project/WonderPick_workspace/wonderPickProject/bin/src/main/webapp/resources"+c.getMembertNickName()+c.getArtistNickName()+".txt");
+		File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles/"+c.getMembertNickName()+c.getArtistNickName()+".txt");
 		if(!file.exists()){ // 파일이 존재하지 않으면
 			file.createNewFile(); // 신규생성
 		}
@@ -317,7 +323,14 @@ public class ChatingController {
 		}
 		AcceptCondition ac = chatingService.selectAcceptStatus(c);
 
+		ArrayList<AddPriceAndReason> suggestList = chatingService.selectCondition(c);
 		JSONObject jObj = new JSONObject();
+		
+		if(!suggestList.isEmpty()) {
+			System.out.println("***********");
+			System.out.println(suggestList);
+			jObj.put("priceAndTtile",suggestList);
+		}
 		jObj.put("ac",ac);
 		jObj.put("str",str);
 
@@ -337,6 +350,7 @@ public class ChatingController {
 
 		for(int i = 0; i < priceArr.length; i++) {
 			AddPriceAndReason a = new AddPriceAndReason();
+			a.setRoomName(apar.getRoomName());
 			a.setBoardNo(apar.getBoardNo());
 			a.setAddPrices(priceArr[i]);
 			a.setRequest(requestArr[i]);
@@ -357,15 +371,23 @@ public class ChatingController {
 	}
 
 	@RequestMapping("checkCondition.co")
-	public ModelAndView selectCondition(HttpSession session, String roomName, int artistNo, int originPrice, AddPriceAndReason apn, ModelAndView mv, String noMoreCon){
+	public ModelAndView selectCondition(HttpSession session, 
+										String roomName, 
+										int artistNo, 
+										AddPriceAndReason apn, 
+										ModelAndView mv, 
+										String noMoreCon,
+										String artistNickName){
 
 		System.out.println(noMoreCon);/**/
-		ArrayList<AddPriceAndReason> apan = chatingService.selectCondition(apn.getBoardNo());
-
+		
 		Chating c = new Chating();
-
+		
 		c.setRoomName(roomName);
 		c.setBoardNo(apn.getBoardNo());
+		
+		ArrayList<AddPriceAndReason> apan = chatingService.selectCondition(c);
+
 
 		AcceptCondition ac = chatingService.selectAcceptStatus(c);
 
@@ -379,10 +401,9 @@ public class ChatingController {
 		System.out.println(ac);
 		System.out.println(apan);
 		System.out.println("artistNo"+artistNo);
-		System.out.println(originPrice);
 
 		mv.addObject("suggestList",apan)
-		.addObject("originPrice",originPrice)
+		.addObject("artistNickName",artistNickName)
 		.addObject("boardNo",apn.getBoardNo())
 		.addObject("artistNo",artistNo)
 		.addObject("roomName",roomName)
@@ -400,7 +421,7 @@ public class ChatingController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value="updatetAcceptCondition.co", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="updatetAcceptCondition.co", produces="application/text; charset=UTF-8")
 	public String updatetAcceptCondition(Chating c) {
 
 		String result="";

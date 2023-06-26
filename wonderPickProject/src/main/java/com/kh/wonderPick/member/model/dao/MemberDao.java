@@ -30,6 +30,10 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertSecret", secretCode);
 	}
 	
+	public int codeCheckMember(String emailCode, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.codeCheckMember", emailCode);
+	}
+	
 	public int insertProfile(Member mImg, SqlSessionTemplate sqlSession) {
 		return sqlSession.insert("memberMapper.insertProfile", mImg);
 	}

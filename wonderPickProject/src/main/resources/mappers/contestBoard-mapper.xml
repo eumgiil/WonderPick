@@ -304,6 +304,7 @@
 			                    ,BOARD_IMAGE.MODIFY_NAME    
 			                    ,BOARD_IMAGE.UPLOAD_DATE               
 			                    ,FILE_PATH
+			                    ,PRICE
 			          FROM 
 			                 BOARD
 			        LEFT JOIN

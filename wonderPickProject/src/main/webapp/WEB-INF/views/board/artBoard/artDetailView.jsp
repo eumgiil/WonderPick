@@ -175,39 +175,79 @@
 
             <br><br>
 
-            <div id="">
+            <div id="scroll4">
                 <h3>[ 문의 댓글 ]</h3>
-                <hr><br>
-                <table id="inquire_reply" class="t_align_left">
-                    <tr>
-                        <td class="p_10px inquire_img" width="15%" rowspan="2">
-                            <img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">
-                        </td>
-                        <td width="70%" style="padding-left:10px;">아이디</td>
-                        <td width="15%" rowspan="3">
-                            <!--
-                                입력한 사람한텐 삭제,
-                                아닌 사람한텐 신고
-                            -->
-                            <button>삭제 또는 신고</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left:10px;">댓글 내용 : 것이 따뜻한 봄바람이다 인생에 따뜻한 봄바람을 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의</td>
-                    </tr>
-                </table>
-
-
-                <br>
-                
-
-                <textarea class="width" name="" id="" rows="10" maxlength="500" style="resize:none;"></textarea>
-
-
-                <div class="center width">
-                    <button>작성하기</button>
+				<table id="replyArea" align="center">
+                    <thead>
+                        <!-- <c:choose>
+                            <c:when test="${ empty replyList }">
+                                <h3>댓글 내역이 존재하지 않습니다.</h3>
+                                <br>
+                            </c:when>
+                            <c:otherwise>
+                                <c:if test="${not empty reReplyList }">
+                                    <input type="hidden" value="${re.replyNo }">
+                                    <c:forEach items="${reReplyList }" var="re">
+                                        <table class="reReply" border="1">
+                                            <tr>
+                                                <td width="15%" rowspan="3" style="padding:10px; border-right: 1px solid lightslategray;">판매자 프로필</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="70%" style="padding-left:10px;">${re.nickname }</td>
+                                                <td width="15%" rowspan="3">
+                                                    <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>
+                                                    <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-left:10px;">${re.content}</td>
+                                            </tr>
+                                        </table>
+                                    </c:forEach>
+                                </c:if>
+                            </c:otherwise>
+                        </c:choose> -->
+                    </thead>
+                    <tbody>
+                        <br>
+                        <c:choose>
+                            <c:when test="${empty loginMember}" >
+                                <hr>
+                                <table>
+                                    <tr>
+                                    <th><hr></th>
+                                    </tr>
+                                    <tr> 
+                                        <th colspan="2">
+                                            <textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>로그인 후 댓글 작성가능합니다.</textarea>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </c:when>
+                            <c:otherwise>
+                                <br>
+                                <table>
+                                    <tr>
+                                        <th colspan="2">
+                                            <input type="hidden" value="${ bno }" id="boardNo" name="${ bno }">
+                                            <input type="hidden" value="${loginMember.memberNo }" name="${loginMember.memberNo}">
+                                            <textarea class="form-control" name="content" id="insertcontent" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+                                        
+                                        </th>
+                                        <br>
+                                        <th style="vertical-align:middle">
+                                            <button type="submit" class="btn btn-secondary"  onclick="insertReply();" id="replysubmit">등록하기</button>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </c:otherwise>
+                        </c:choose>
+                    </tbody>
                 </div>
-                
+				</table>
+
+                <br><br><br><br><br>
+
             </div>
 
 
@@ -343,10 +383,20 @@
             </div>
             <br><hr><br>
 
+			<input type="hidden" name="nickName " value="${artBoard.member.nickName}">
+			<input type="hidden" name="orderType " value="D">
+			<input type="hidden" name="orderContent " value="${artBoard.board.boardTitle}">
+			<input type="hidden" name="price" value="${ artBoard.price }">
+			<input type="hidden" name="orderStatus" value="진행중">
+			<input type="hidden" name="defaultSize" value="${artBoard.defaultSize}">
+			<input type="hidden" name="count" value="${artBoard.modifyCount}">
+			
             <div id="btnRequest" class="center">
-            	<form action="chating.co">
+            	<form action="chating.co">${artBoard.member.nickName}
             		<input type="hidden" name="boardNo" value="${ bno }">
-            		<button>작가에게 주문요청</button>
+            		<input type="hidden" name="totalPrice">
+            		<input type="hidden" name="boardTitle " value="${artBoard.board.boardTitle}">
+            		<button onclick="return toChat();">작가에게 주문요청</button>
             	</form>
                 
             </div>
@@ -354,7 +404,10 @@
             <script>
 
                 function toChat(){
-                    let requestArr = [];
+                	$('input[name=totalPrice]').val($('#totalPrice').val());
+                		return true;
+                	}
+                    /*let requestArr = [];
                     let priceArr = [];
                     
                     // querySelectorAll로 잡으면 type면서도 충돌이 일어날 가능성이 높음
@@ -371,10 +424,10 @@
                     let requestStr = requestArr.join(",");
                     let priceStr = priceArr.join(",");
                     
-                    // let f = document.createElement('form');
+                    let f = document.createElement('form');
                     
                     
-                    /* 여기는 옵션을 db에 넣는 기능 insertReasonPrice.co맵핑값으로 ajax요청 후 성공시 chating.co를 불러야함 */
+                    /* 여기는 옵션을 db에 넣는 기능 insertReasonPrice.co맵핑값으로 ajax요청 후 성공시 chating.co를 불러야함 
                     /*
                     let requestInput = document.createElement('input');
                     requestInput.setAttribute('tyep', 'hidden');
@@ -391,7 +444,7 @@
                     f.setAttribute('method', 'post');
                     f.setAttribute('action', 'insertReasonPrice.co');
                     */
-                    
+                    let f = document.createElement('form');
                     let requestInput = document.createElement('input');
                     requestInput.setAttribute('tyep', 'hidden');
                     requestInput.setAttribute('name', 'boardNo');
@@ -406,8 +459,8 @@
 
 
                     
-                    console.log(requestStr);
-                    console.log(priceStr);
+                    // console.log(requestStr);
+                    // console.log(priceStr);
 
                     // for(let option of options){
                     //     if(option.text != '==='){
@@ -419,10 +472,10 @@
                     //     if(option2.text != '==='){
                     //         console.log("asd")
                     //     }
-                    // }
+                    // }*/
 
 
-                }
+                
 
 
             </script>
@@ -438,6 +491,10 @@
     <script>
         
         window.onload = () => {
+
+            /* 문의댓글 조회 ajax */
+            selectReplyList();
+
             /* 옵션 불러오기 */
             let optionTable = document.getElementById('optionTable');
             let optionList = JSON.parse('${ optionList }');
@@ -519,8 +576,86 @@
             price.innerHTML = number;
 		}
 
+        function selectReplyList(){
+            $.ajax({
+                url : 'rlist.at',
+                data : {
+                    boardNo: "${ bno }"
+                },
+                success : function(replyList){
+                    let value="";
+                    if(replyList.length == 0){
+                        value += '<h5>댓글이 존재하지 않습니다.</h5>';
+                        $('#replyArea thead').html(value);
+                    }   
+                    else {
+                        for(let i of replyList){
+                            console.log(i.memberNo == '${loginMember.memberNo}');
+    
+                            value  +='<input type="hidden" value="'+ i.boardNo + '">'
+                                    +'<table class="t_align_left" style="border: 1px solid black;">'
+                                        +'<tr>'
+                                            +'<td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">'
+                                                +'<img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">'
+                                            +'</td>'
+                                            +'<td width="75%" style="padding-left:10px;">' + i.nickname + '</td>'
+                                            +'<td width="10%" rowspan="2">';
+    
+                            if(i.memberNo == '${loginMember.memberNo}'){
+                                value +=         '<a href="deleteReply.at?bno=${ bno }&replyNo=' + i.replyNo + '" style="background-color: white; border: none;">'
+                                                +'<img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>';
+                            }
+    
+                            value +=        '<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
+                                        +'</td>'
+                                    +'</tr>'
+                                    +'<tr>'
+                                        +'<td style="padding-left:10px;">' + i.content + '</td>'
+                                    +'</tr>'
+                                +'</table>';
+                        };
+                        $('#replyArea thead').html(value);
+                    }                 
+                },
+                error : function(){
+                    console.log('댓글 목록 조회 실패');
+                }
+                
+            })
+        }
         
 
+        function insertReply(){
+                
+                // #insertcontent 의 val의 공백 => .trim()
+            let content = $('#insertcontent').val();
+            // console.log(content);
+                
+            if($('#insertcontent').val().trim() != ''){
+                $.ajax({
+                    url : 'rinsert.at',
+                    data : {
+                        boardNo :  "${ bno }",
+                        content : $('#insertcontent').val(),
+                        memberNo : '${loginMember.memberNo}'
+                    },
+                    success : function(result){
+                        console.log(result);
+                        
+                        if(result == 'success'){ 
+                            selectReplyList();
+                            $('#insertcontent').val('');
+                        };
+                    },
+                    error : function(){
+                        console.log('실패!~!~!~!~!');
+                    }
+                });
+            }else{
+                window.alert('5252~!~!~!');
+                
+            }
+        };
 
 
 

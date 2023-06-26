@@ -86,11 +86,17 @@
 		  	  )
 		values
 		 	  (
-		 	  #{who},
+		 	  #{who}
 		 	 ,#{secret}
 		 	 ,sysdate
 		 	  )
 	</insert>
+	
+	<!-- 인증코드 체크 쿼리문 -->
+	<select id="codeCheckMember" resultType="_int">
+		select
+			   
+	</select>
 	
 	<!-- 회원가입용 쿼리문 -->
 	<insert id="signUpMember" >

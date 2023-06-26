@@ -29,7 +29,7 @@ public interface ChatingService {
 
 	int insertReasonPrice(ArrayList<AddPriceAndReason> list);
 
-	ArrayList<AddPriceAndReason> selectCondition(int boardNo);
+	ArrayList<AddPriceAndReason> selectCondition(Chating c);
 
 	Member selectartistNick(int boardNo);
 

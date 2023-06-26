@@ -154,26 +154,30 @@ div {
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title">가격제안</h4>
-				<h6>게시글 제목</h6>
+				<h6 id="title">${suggestList.get(0).orderContent}</h6>
 			</div>
 
 			<!-- Modal body -->
 			<div class="modal-body" align="center" id="modalBody">
-				<img alt="" src="대표 이마지"> <small>샘플 예시</small>
-				<h3>수량:여기에 el구분으로 불러올거임 그거 가져다 쓰면 됌 지금은 1</h3>
-				<h3 id="title">제안가격:</h3>
-				<h3 id="totalprice"></h3>
+				<img alt="" src="${suggestList.get(0).filePath}"> 
+				<br>
+				<small>샘플 예시</small>
+				<h3>수량 : ${suggestList.get(0).count}</h3>
+				<h3>제안가격:</h3>
+				<h3 id="totalprice">${suggestList.get(0).totalPrice}</h3>
 				원 <br> <br>
 				<div id="prices">
 					<c:choose>
 						<c:when test="${ not empty suggestList  }">
 							<c:forEach var="c" items="${ suggestList }">
 								<div class="addPriceDiv">
+								<c:if test="${ not c.addPrices eq null}">
 									가격추가 : <input type="number" class="price" readonly value="${ c.addPrices }"><br>'
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 									<input type="text" class="reason" value="${c.request}">
 									<input type="hidden" class="optionNo" value="${ c.optionNo }">
+								</c:if>
 								</div>
 							</c:forEach>
 						</c:when>
@@ -191,7 +195,7 @@ div {
 					<input type="hidden" name="rejectList">
 					<input type="hidden" name="roomName" value="${ roomName }">
 					<input type="hidden" name="boardNo" value="${ boardNo }">
-					<button class="btn btn-danger">거절하기</button>
+					<button class="btn btn-danger" id="reject-btn">거절하기</button>
 				</form>
 				<script>
 						var rejectList = []
@@ -205,8 +209,11 @@ div {
 	</div>
 	<script>
 		$(function() {
+			$('#reject-btn').click(function() {
+				alert("제안이 거절되었습니다.")
+			})
 			if($('#suggestbtn').length!=0){
-				$('#suggestbtn').hide(); 
+				$('#suggestbtn').hide();  
 				if(${ac.memberCheck eq "Y" and ac.artistCheck eq "Y"}){
 					$('#suggestbtn').show();
 				}
@@ -220,27 +227,29 @@ div {
 			$('.price').each(function() {
 				priceCount = priceCount + Number($(this).val())
 			})
-			$("#totalprice").text(priceCount);
 		});
 		
 		$('#accept-btn').click(function() {
 			var artist = 0;
-			alert('${loginMember.memberNo==artistNo}')
 			if(${loginMember.memberNo==artistNo}){
 				artist=1;
 			} 
 			$.ajax({
 				url : 'updatetAcceptCondition.co',
-				data : {
+				data : { 
 					artistNo : artist,
 					boardNo : '${suggestList.get(0).boardNo}',
 					roomName : '${roomName}'
 				},
-				success : function(result) {
-					alert('성공적으로 수락하였습니다.')
-					if(result=='Y'){
-						if($('#suggestbtn').length!=0){
-							$('#suggestbtn').show();
+				success : function(result) { 
+					alert('성공적으로 수락하였습니다.');
+					if(${loginMember.memberNo==artistNo }){
+						location.assign("chating.co?alreadyReject=0");
+					}else{
+						if(result=='Y'){
+							if($('#suggestbtn').length!=0){
+								$('#suggestbtn').show();
+							}
 						}
 					}
 				}
@@ -254,13 +263,19 @@ div {
 			var total_amount = $("#totalprice").text()
 			$.ajax({
 				url : 'kakaoPay.ko',
+				type : 'POST',
 				data : {
 					item_name : title,
 					quantity : 1, //그림 수량 주문하기에서 끌어와야함 끌어올 시점 정하기
-					total_amount : total_amount
+					total_amount : total_amount,
+					roomName : '${roomName}',
+					membertNickName : '${loginMember.nickName}',
+					artistNickName : '${artistNickName}',
+					boardNo: '${boardNo}'
 				},
 				success : function(data) {
 					window.open(data.next_redirect_pc_url);
+					location.assign("chating.co?alreadyReject=0");
 				}
 			});
 		}
