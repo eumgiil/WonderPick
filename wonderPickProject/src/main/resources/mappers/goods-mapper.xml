@@ -72,30 +72,46 @@
 	  and
 	       board_type = 'G'
   </select>
-  <select id="selectGoodsList" resultMap="goodsResultSet">
- select
-       board_no, 
-       board_title, 
-       nickname, 
-       to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
-       price,
-       origin_name,
-       modify_name,
-       file_path
-  from 
-       board b
- join 
-      member using (member_no)
- join 
- 	 board_image using (board_no)
- join goods using (board_no )
- where
-     b.status = 'Y'
-and 
-    board_type ='G'
-and file_level = 1
-order by
-      board_no asc
+  <select id="selectGoodsList" resultMap="goodsResultSet" parameterType="string">
+	 select
+	       b.board_no, 
+	       board_title, 
+	       nickname, 
+	       to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
+	       price,
+	       origin_name,
+	       modify_name,
+	       file_path,
+           NVL(count(h.member_no), 0) heart
+	  from 
+	       goods g
+      join board b on (g.board_no = b.board_no)
+	  join 
+	       member m on (b.member_no = m.member_no)
+	  join 
+	 	   board_image bi on (bi.board_no = b.board_no)
+	  
+	  left join
+	       heart h on(g.board_no = h.board_no)
+	 where
+	       b.status = 'Y'
+	   and 
+	       board_type ='G'
+	   and file_level = 1
+	 group by
+           b.board_no, board_title, nickname, create_date, price, origin_name, modify_name, file_path
+	 order by
+	     <if test="null != selectOrder and selectOrder != 'registration'">
+	          <choose>
+	               <when test="selectOrder == 'popularity'">
+	                    heart desc,
+	               </when>
+	               <when test="selectOrder == 'lowPrice'">
+	                    g.price asc,
+	               </when>
+	          </choose>
+	     </if>
+	      b.board_no desc
   </select>
   <select id="selectBoardImage" resultMap="boardImage" parameterType="_int">
   select file_level, 
@@ -419,35 +435,37 @@ select
 	like '%' || #{keyword} || '%'
  </select>
  <select id="searchGoods" resultMap="goodsResultSet" parameterType="hashmap">
- select
-       board_no, 
-       board_title, 
-       nickname, 
-       board_count,
-       to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
-       price,
-       origin_name
-  from 
-       board b
- join 
-      member using (member_no)
- join 
- 	 board_image using (board_no)
- join goods using (board_no )
- where
-     b.status = 'Y'
-and 
-    board_type ='G'
-   <if test="condition == 'nickname'">
-	 and nickname
-	</if>
-	<if test="condition == 'boardTitle'">
-	and board_title
-	</if>
-	like '%' || #{keyword} || '%'
-order by
-      board_no asc
- 
+     select
+          board_no, 
+          board_title, 
+          nickname, 
+          board_count,
+          to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
+          price,
+          origin_name
+     from 
+          board b
+     join 
+          member using (member_no)
+     join 
+          board_image using (board_no)
+     join goods using (board_no )
+     where
+          b.status = 'Y'
+     and 
+     board_type ='G'
+     <if test="condition == 'nickname'">
+          and nickname
+     </if>
+     <if test="condition == 'boardTitle'">
+          and board_title
+     </if>
+          like '%' || #{keyword} || '%'
+     
+     order by
+     
+     board_no asc
+     
  </select>
  <delete id="deleteReply" parameterType="_int">
  DELETE

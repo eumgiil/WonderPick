@@ -33,8 +33,8 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public ArrayList<Goods> selectGoodsList(PageInfo pi) {
-		return goodsDao.selectGoodsList(sqlSession, pi);
+	public ArrayList<Goods> selectGoodsList(PageInfo pi, String selectOrder) {
+		return goodsDao.selectGoodsList(sqlSession, pi, selectOrder);
 	}
 	
 	@Override
