@@ -123,6 +123,7 @@ public class MemberController {
 	 * @return : 인증에 성공했다면 success, 실패하면 error를를 반환
 	 * @throws MessagingException
 	 */
+	
 	@ResponseBody
 	@RequestMapping("emailCheck.me")
 	public String emailCheckMember(String checkEmail, HttpServletRequest request) throws MessagingException {
@@ -165,9 +166,13 @@ public class MemberController {
 	
 	@ResponseBody
 	@RequestMapping("codeCheck.me")
-	public void codeCheckMember(String emailCode) {
-//		memberService.codeCheckMember(emailCode);
-		System.out.println(emailCode);
+	public void codeCheckMember(String emailCode, HttpServletRequest request) {
+		SecretCode secretCode = SecretCode.builder()
+													.who(request.getRemoteAddr())
+													.secret(emailCode)
+													.build();
+		memberService.codeCheckMember(secretCode);
+		
 	}
 	
 	/**
