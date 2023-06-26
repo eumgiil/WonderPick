@@ -184,10 +184,10 @@
             
  
             <div>
-                <a href="#scroll1" class="scroll_move">상세설명</a> |
-                <a href="#scroll2" class="scroll_move">취소 및 환불규정</a> |
-                <a href="#scroll3" class="scroll_move">구매 리뷰</a> |
-                <a href="#scroll4" class="scroll_move">문의 댓글</a> 
+                <a href="#scroll1" class="scroll_move"  style="color:rgb(255, 131, 153);">상세설명</a> |
+                <a href="#scroll2" class="scroll_move"  style="color:rgb(255, 131, 153);">취소 및 환불규정</a> |
+                <a href="#scroll3" class="scroll_move"  style="color:rgb(255, 131, 153);">구매 리뷰</a> |
+                <a href="#scroll4" class="scroll_move"  style="color:rgb(255, 131, 153);">문의 댓글</a> 
             </div>
 
             <br><br>
@@ -257,19 +257,19 @@
                         <td class="height_10px" id="">
                         <c:choose>
                             <c:when test="${ r.star == 1}">
-                                <label for="starpoint_1" class="label_star" title="1"><span class="blind">★☆☆☆☆</span></label>
+                                <label for="" class="label_star" title="1"><span class="blind">★☆☆☆☆</span></label>
                             </c:when>
                             <c:when test="${ r.star == 2}">
-                                <label for="starpoint_2" class="label_star" title="2"><span class="blind">★★☆☆☆</span></label>
+                                <label for="" class="label_star" title="2"><span class="blind">★★☆☆☆</span></label>
                             </c:when>
                             <c:when test="${ r.star == 3}">
-                                <label for="starpoint_3" class="label_star" title="3"><span class="blind">★★★☆☆</span></label>
+                                <label for="" class="label_star" title="3"><span class="blind">★★★☆☆</span></label>
                             </c:when>
                             <c:when test="${ r.star == 4}">
-                                <label for="starpoint_4" class="label_star" title="4"><span class="blind">★★★★☆</span></label>
+                                <label for="" class="label_star" title="4"><span class="blind">★★★★☆</span></label>
                             </c:when>
                             <c:otherwise>
-                                <label for="starpoint_5" class="label_star" title="5"><span class="blind">★★★★★</span></label>
+                                <label for="" class="label_star" title="5"><span class="blind">★★★★★</span></label>
                             </c:otherwise>
                         </c:choose>
                         </td>
@@ -361,7 +361,7 @@
                      </th>
                      <br>
                      <th style="vertical-align:middle">
-                     <button type="submit" class="btn btn-secondary"  onclick="insertReply();" id="replysubmit">등록하기</button>
+                     <button type="button" class="btn btn-secondary"  onclick="insertReply();" id="replysubmit">등록하기</button>
                      </th>
 				</tr>
 				</table>
@@ -378,10 +378,13 @@
         <script>
         $(function(){
             selectReplyList();
+          	//selectHeart();
+        	//updateHeart();
          });
         
         
         		function insertReply(){
+        			
         			
         		// #insertcontent 의 val의 공백 => .trim()
         	   let content = $('#insertcontent').val();
@@ -391,18 +394,18 @@
         		   $.ajax({
         			   url : 'rinsert.go',
         			   data : {
-        				   boardNo :  ${g.boardNo},
+        				   boardNo :  '${g.boardNo}',
         				   content : $('#insertcontent').val(),
-        				   memberNo : ${loginMember.memberNo}
+        				   memberNo : '${loginMember.memberNo}'
         			   },
         			   success : function(result){
         				   console.log(result);
         				   
         				   if(result == 'success'){
-        					   selectReplyList(){
-        						   $('#insertcontent').val('');
-        					   }
-        				   };
+	        					selectReplyList();
+	        					$('#insertcontent').val('');
+       					   }
+       				   
         			   },
         			   error : function(){
         				console.log('실패!~!~!~!~!');
@@ -412,21 +415,24 @@
         	   }else{
         		   window.alert('5252~!~!~!');
         	   	
-        	}
+        		}
         		
         		
         	  
-           });
+           };
         	
            function selectReplyList(){
+        	   console.log("실행은 됨")
         	   $.ajax({
         		   url : 'rlist.go',
         		   data : {
-        			   boardNo: ${g.boardNo}
+        			   boardNo: '${g.boardNo}'
         		   },
         		   success : function(replyList){
         			   console.log(replyList);
-        			   
+        			   console.log('loginMember.memberNo : ' + '${loginMember.memberNo}');
+        			   console.log(' replyList[i].memberNo : ' + '${ replyList[i].memberNo}');
+        			   console.log('asdasd');
         			   let value="";
         			   for(let i in replyList){
         				   value   += '<input type="hidden" value="'+ replyList[i].boardNo + '">'
@@ -437,7 +443,7 @@
 	        					   +'</td>'
 	        					   +'<td width="75%" style="padding-left:10px;">' + replyList[i].nickname + '</td>'
 	        					   +'<td width="10%" rowspan="2">'
-	        					   + '<c:if test="' +${loginMember.memberNo eq replyList[i].memberNo} + '"  >'
+	        					   + '<c:if test="' + ${loginMember.memberNo eq replyList[i].memberNo}+ '"  >'
 	        					   +'<a href="deleteReply.go" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>'
 	        					   + '</c:if>'
 	        					   +'<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
@@ -509,15 +515,10 @@
 	            </div>
             
             <script>
-            selectHeart();
-            updateHeart();
+            //selectHeart();
+            //updateHeart();
             
-            $(function(){
-            	selectHeart();
-            	updateHeart();
-            });
-            
-            
+
             
             
             </script>
@@ -579,7 +580,7 @@
 		                    </tr>
 		                    <tr>
 		                        <td class="op_subTitle" style="font-size:20px; font-weight: bolder;" class="num">결제금액</td>
-		                        <td class="t_align_right" min="${g.price}" id="totalPrice" onchange="choice();" name="price"> ${g.price} 원</td>
+		                        <td class="t_align_right" min="${g.price}" id="totalPrice" onchange="choice()" name="price"> ${g.price} 원</td>
 		                    </tr>
 		                    <tr><td colspan="2"><hr></tr>
 		                    <tr>
@@ -600,17 +601,19 @@
             
             
             <script>
+            
+            
             function choice(){
-            	let addDraft = (${g.addDraft} * $('#addDraft').val());
-            	let addModify = (${g.addModify} * $('#addModify').val());
+            	let addDraft = ${g.addDraft} * $('#addDraft').val();
+            	let addModify = ${g.addModify} * $('#addModify').val();
             	let amount = $('#amount').val();
             	let price = ${g.price};
             	
-            	let number = ( addDraft + addModify + (price * amount));
+            	let number = parseInt( addDraft + addModify + (price * amount));
             	console.log(number);
             	
             	let totalPrice = document.getElementById('totalPrice');
-            	totalPrice.textContent = number ;
+            	totalPrice.innerHTML = number;
             	
             	
             	//let addDraft = parseInt($('#addDraft').val())*parseInt('${g.addDraft}')  ;
@@ -623,15 +626,7 @@
             	
             }
             </script>
-            <script>
-            document.addEventListener('DOMContentLoaded', function(){
-            	document.querySelector('')
-            })
             
-            
-            
-            
-            </script>
 
             <hr>
             <br>
