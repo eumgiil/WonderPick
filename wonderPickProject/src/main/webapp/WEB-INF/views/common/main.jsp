@@ -48,6 +48,14 @@
     height: 60px;
     font-size: 30px;
 }
+#button1:hover{
+    background-color: black;
+    color: rgb(255, 131, 153);
+}
+#button2:hover{
+    background-color: black;
+    color: rgb(255, 131, 153);
+}
 .right > a:hover{
     background-color: black;
     color: rgb(255, 131, 153);
@@ -83,7 +91,6 @@
                 <!-- Slides -->
                 <div class="swiper-slide"><img src="resources/common/002.png"></div>
                 <div class="swiper-slide"><img src="resources/common/003.png"></div>
-                <div class="swiper-slide"><img src="https://cdn.pixabay.com/photo/2016/09/01/19/53/pocket-watch-1637396__480.jpg"></div>
             </div>
         
             <!-- If we need pagination -->
@@ -98,7 +105,7 @@
         </div>
     </div>
     
-    <br><br><br><br><br><br><br>
+    <br><br><br>
     
     <div class="content_2" align="center">
     	<h1 class="title">이달의 이모티콘</h1>
@@ -109,7 +116,7 @@
     	<div class="right">
     	 <h3>나도 인기 이모티콘 작가가 되고 싶다면?</h3>
          <br>
-         <a href="enrollForm.ct" class="btn btn-info" id="button2">도전하기</a>
+         <a href="enrollForm.ct" class="btn btn-info" id="button2" >도전하기</a>
     	 </div>
     	 </div>
     	 <a href="selectVotePage.ct" class="btn btn-info" id="button1">더 다양한 이모티콘 보러가기</a>

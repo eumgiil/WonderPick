@@ -354,10 +354,14 @@ select
   		 member_no memberNo,
        	 nickname nickname,
          content content,
-         to_char(create_date, 'YYYY-MM-DD') as "createDate"
+         to_char(create_date, 'YYYY-MM-DD') as "createDate",
+         file_path filePath,
+         file_level fileLevel
  	from  reply
   	join  member using (member_no)
+  	join board_image using(board_no)
 	where board_no = #{boardNo}
+	and file_level = 1
  	order 
  	   by 
  	       create_date desc
