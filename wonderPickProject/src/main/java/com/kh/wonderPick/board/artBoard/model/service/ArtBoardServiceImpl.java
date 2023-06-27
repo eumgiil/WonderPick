@@ -88,13 +88,18 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 							  ) {
 		
 		int result = artDao.updateBoard(sqlSession, board);
+		System.out.println("1 : " + result);
 		result *= artDao.updateArtBoard(sqlSession, artBoard);
-		
+		System.out.println("2 : " + result);
 		// 디테일 옵션 -> 옵션 삭제
 		for(int i = 0; i < deleteOptionNos.size(); i++) {
 			result *= artDao.deleteDetailOption(sqlSession, deleteOptionNos.get(i));
 		}
-		result *= artDao.deleteOption(sqlSession, board.getBoardNo());
+		System.out.println("3 : " + result);
+		if(artDao.selectOptionList(sqlSession, board.getBoardNo()).size() > 0) {
+			result *= artDao.deleteOption(sqlSession, board.getBoardNo());
+		}
+		System.out.println("4 : " + result);
 		// 옵션 -> 디테일 옵션 추가
 		for(int i = 0; i < optionList.size(); i++) {
 			result *= artDao.updateInsertOptions(sqlSession, optionList.get(i));
@@ -102,23 +107,27 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 				result *= artDao.insertDetailOption(sqlSession, optionList.get(i).getDetailOption().get(j));
 			}
 		}
+		System.out.println("5 : " + result);
 		
 		// 사진 삭제
 		for(int i = 0; i < deleteBoardImgNo.size(); i++) {
 			result *= artDao.deleteFiles(sqlSession, deleteBoardImgNo.get(i));
 		}
+		System.out.println("6 : " + result);
 		// 사진 수정
 		for(int i = 0; i < updateBoardImages.size(); i++){
 			result *= artDao.updateFiles(sqlSession, updateBoardImages.get(i));
 		}
+		System.out.println("7 : " + result);
 		// 사진 등록
 		for(int i = 0; i < insertBoardImages.size(); i++){
 			result *= artDao.updateInsertFiles(sqlSession, insertBoardImages.get(i));
 		}
+		System.out.println("8 : " + result);
 		
 		// 상세설명 boardContent를 지우는 메소드
 		result *= artDao.updateBoardContent(sqlSession, board);
-
+		System.out.println("9 : " + result);
 
 		
 		return result;
