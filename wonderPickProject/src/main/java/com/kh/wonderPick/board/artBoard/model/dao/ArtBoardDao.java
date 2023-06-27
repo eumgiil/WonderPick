@@ -53,6 +53,9 @@ public class ArtBoardDao {
 	public ArrayList<Option> selectOptionList(SqlSessionTemplate sqlSession, int bno){
 		return (ArrayList)sqlSession.selectList("artBoardMapper.selectOptionList", bno);
 	}
+	public BoardImage deleteImgPath(SqlSessionTemplate sqlSession, int imgNo){
+		return sqlSession.selectOne("artBoardMapper.deleteImgPath", imgNo);
+	}
 	public ArrayList<BoardImage> selectBoardImage(SqlSessionTemplate sqlSession, int bno){
 		return (ArrayList)sqlSession.selectList("artBoardMapper.selectBoardImage", bno);
 	}

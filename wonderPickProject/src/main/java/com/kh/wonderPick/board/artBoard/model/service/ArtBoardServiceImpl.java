@@ -163,6 +163,12 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 		return artDao.deleteBoard(sqlSession, boardNo);
 	}
 
+
+	@Override
+	public BoardImage deleteImgPath(int imgNo) {
+		return artDao.deleteImgPath(sqlSession, imgNo);
+	}
+
 	
 
 	

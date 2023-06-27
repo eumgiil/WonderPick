@@ -138,7 +138,6 @@ public class MemberController {
 													.who(ip)
 													.secret(secret)
 													.build();
-		System.out.println(secretCode);
 		if(memberService.insertSecret(secretCode) > 0) {
 			helper.setTo(checkEmail);
 			helper.setSubject("Wonder Pick 인증번호입니다.");
@@ -167,13 +166,14 @@ public class MemberController {
 	
 	@ResponseBody
 	@RequestMapping("codeCheck.me")
-	public void codeCheckMember(String emailCode, HttpServletRequest request) {
+	public boolean codeCheckMember(String emailCode, HttpServletRequest request) {
 		SecretCode secretCode = SecretCode.builder()
 													.who(request.getRemoteAddr())
 													.secret(emailCode)
 													.build();
-		memberService.codeCheckMember(secretCode);
+		boolean result = memberService.codeCheckMember(secretCode);
 		
+		return result;
 	}
 	
 	/**
