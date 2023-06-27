@@ -84,8 +84,6 @@
                 <div class="swiper-slide"><img src="resources/common/002.png"></div>
                 <div class="swiper-slide"><img src="resources/common/003.png"></div>
                 <div class="swiper-slide"><img src="https://cdn.pixabay.com/photo/2016/09/01/19/53/pocket-watch-1637396__480.jpg"></div>
-                <div class="swiper-slide"><img src="https://cdn.pixabay.com/photo/2016/05/27/08/51/mobile-phone-1419275__480.jpg"></div>
-                <div class="swiper-slide"><img src="https://cdn.pixabay.com/photo/2015/09/01/09/32/alphabet-916673__480.jpg"></div>
             </div>
         
             <!-- If we need pagination -->
@@ -111,10 +109,10 @@
     	<div class="right">
     	 <h3>나도 인기 이모티콘 작가가 되고 싶다면?</h3>
          <br>
-         <a href="" class="btn btn-info" id="button2">도전하기</a>
+         <a href="enrollForm.ct" class="btn btn-info" id="button2">도전하기</a>
     	 </div>
     	 </div>
-    	 <a href="" class="btn btn-info" id="button1">더 다양한 이모티콘 보러가기</a>
+    	 <a href="selectVotePage.ct" class="btn btn-info" id="button1">더 다양한 이모티콘 보러가기</a>
     	 
     </div>
     
