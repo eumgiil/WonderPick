@@ -185,8 +185,6 @@
         let j = 1;
         let num;
         var art_table = document.getElementById('art_table');
-        
-
         function op_plus(){
             let value = '';
             value = '<th>'

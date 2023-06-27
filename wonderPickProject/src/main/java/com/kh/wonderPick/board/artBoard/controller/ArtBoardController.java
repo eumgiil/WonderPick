@@ -148,10 +148,6 @@ public class ArtBoardController {
 		session.setAttribute("loginUser", loginUser);
 		// 지울 부분 끝
 		
-//		reply
-//		re_reply
-		
-		// 로그인 번호 받고 selectArtBoard에 bno랑 mno를 int[]로 보내기
 		
 		
 		int mno = ((Member)session.getAttribute("loginUser")).getMemberNo();
@@ -194,10 +190,6 @@ public class ArtBoardController {
 		ArrayList<Option> optionList = artService.selectOptionList(boardNo);
 		ArrayList<BoardImage> boardImage = artService.selectBoardImage(boardNo);
 		
-		System.out.println(artBoard);
-		System.out.println(optionList.toString());
-		System.out.println(boardImage);
-		
 		mv.addObject("artBoard", artBoard)
 		  .addObject("optionList", new Gson().toJson(optionList))
 		  .addObject("boardImage", new Gson().toJson(boardImage))
@@ -237,6 +229,8 @@ public class ArtBoardController {
 			Option option = new Option();
 			ArrayList<DetailOption> detailList = new ArrayList();
 			option.setMainOp(request.getParameter("option_" + i));
+			
+			
 			for(int j = 0; j < request.getParameterValues("detailOp" + i).length; j++) {
 				DetailOption detailOption = new DetailOption();
 				detailOption.setDetail(request.getParameterValues("detailOp" + i)[j]);
@@ -302,7 +296,6 @@ public class ArtBoardController {
 			}
 			insertBoardImages.add(boardImage);
 		}
-		System.out.println("insertBoardImages.toString() : " + insertBoardImages.toString());
 		
 		
 		// 상세설명 영역
@@ -317,7 +310,8 @@ public class ArtBoardController {
 		for(int i = 0; i < total.size(); i++) {
 			if("img".equals(total.get(i).getAsJsonObject().get("type").getAsString())) {
 				String src = total.get(i).getAsJsonObject().get("data").getAsString();
-				new File("/" + src).delete(); // resources 폴더에서 삭제
+				String modifyName = artService.deleteImgPath(artService.selectBoardImgNo(src)).getModifyName();
+				new File(session.getServletContext().getRealPath(modifyName)).delete();
 				int imgNo = artService.selectBoardImgNo(src);
 				if(imgNo != 0) {
 					deleteBoardImgNo.add(imgNo);	// 기존 이미지 삭제 메소드 매개변수에 추가

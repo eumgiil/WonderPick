@@ -265,13 +265,13 @@
                             </c:choose>
                         </th>
                         <td class="t_align_right">
-                            <c:if test="${member.memberNo eq artBoard.board.boardNo}">
-                                <form action="updateForm.at" method="get">
-                                    <input type="hidden" name="boardNo" value="${ bno }">
-                                    <button class="btn btn-danger">수정</button>
-
-                                </form>
-                            </c:if>
+                            <form action="updateForm.at" method="get">
+                                <input type="hidden" name="boardNo" value="${ bno }">
+                                <button class="btn btn-danger">수정</button>
+                                
+                            </form>
+                            <!-- <c:if test="${member.memberNo eq artBoard.board.boardNo}"> -->
+                            <!-- </c:if> -->
                         </td>
                     </tr>
                     <tr>
