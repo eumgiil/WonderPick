@@ -81,11 +81,11 @@ public class ArtBoardController {
 							     HttpServletRequest request,
 							     Model model) {
 		
-		// 로그인 나오면 지울 부
-		Member loginUser = new Member();
-		loginUser.setMemberNo(1);
-		session.setAttribute("loginUser", loginUser);
-		// 지울 부분 끝
+//		// 로그인 나오면 지울 부
+//		Member loginUser = new Member();
+//		loginUser.setMemberNo(1);
+//		session.setAttribute("loginUser", loginUser);
+//		// 지울 부분 끝
 		
 		// 옵션 ArrayList에 담기
 		ArrayList<Option> list = new ArrayList(); // VO들이 담긴 객체
@@ -220,11 +220,11 @@ public class ArtBoardController {
 						    String insertImgs) {
 		
 		
-		// 로그인 나오면 지울 부
-		Member loginUser = new Member();
-		loginUser.setMemberNo(1);
-		session.setAttribute("loginUser", loginUser);
-		// 지울 부분 끝
+//		// 로그인 나오면 지울 부
+//		Member loginUser = new Member();
+//		loginUser.setMemberNo(1);
+//		session.setAttribute("loginUser", loginUser);
+//		// 지울 부분 끝
 		
 		// 삭제할 옵션 no
 		ArrayList<Integer> deleteOptionNos = new ArrayList();

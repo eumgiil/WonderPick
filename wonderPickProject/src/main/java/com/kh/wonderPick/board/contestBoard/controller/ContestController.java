@@ -133,11 +133,11 @@ public class ContestController {
 			
 			model.addAttribute("result", result);
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
-			return "board/contestBoard/contestVote";
+			return "redirect:selectVotePage.ct";
 			
 		}else {
 			model.addAttribute("errorMsg", "게시글 작성에 실패하였습니다.");
-			return "board/contestBoard/contestVote";
+			return "redirect:selectVotePage.ct";
 		}
 		
 
