@@ -461,13 +461,14 @@
                                    +'<table class="t_align_left" style="border: 1px solid black;">'
                                         +'<tr>'
                                             +'<td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">'
-                                                +'<img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">'
+                                                +'<img class="width" src="'+ replyList[i].filePath +'">'
                                             +'</td>'
                                             +'<td width="75%" style="padding-left:10px;">' + replyList[i].nickname + '</td>'
                                             +'<td width="10%" rowspan="2">';
     
-                            if(i.memberNo == '${loginMember.memberNo}'){
-                                value +=  '<a href="deleteReply.go?bno=${ bno }&replyNo=' + replyList[i].replyNo + '" style="background-color: white; border: none;">'
+                            if(replyList[i].memberNo == '${loginMember.memberNo}'){
+                                value +=  '<a href="deleteReply.go?boardNo=' + replyList[i].boardNo + '&replyNo=' + replyList[i].replyNo + '" style="background-color: white; border: none;">'
+                                	  + '<input type="hidden" value="'+ replyList[i].replyNo + '">'
                                       +   '<img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>';
                             } 
                                 value +=  '<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'

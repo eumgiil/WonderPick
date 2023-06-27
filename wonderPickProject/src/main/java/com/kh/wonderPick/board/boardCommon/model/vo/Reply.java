@@ -11,4 +11,6 @@ public class Reply {
 	private String content; //CONTENT	VARCHAR2(1000 BYTE)
 	private String createDate; //CREATE_DATE	DATE
 	private String nickname;
+	private int fileLevel;
+	private String filePath;
 }

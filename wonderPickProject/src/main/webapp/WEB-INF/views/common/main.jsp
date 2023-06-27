@@ -91,7 +91,6 @@
                 <!-- Slides -->
                 <div class="swiper-slide"><img src="resources/common/002.png"></div>
                 <div class="swiper-slide"><img src="resources/common/003.png"></div>
-                <div class="swiper-slide"><img src="https://cdn.pixabay.com/photo/2016/09/01/19/53/pocket-watch-1637396__480.jpg"></div>
             </div>
         
             <!-- If we need pagination -->
