@@ -269,8 +269,10 @@ public class ArtBoardController {
 			// resources 폴더에서 삭제
 			if(null != deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString()) {
 				String src = deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString();
-				String modifyName = artService.deleteImgPath(artService.selectBoardImgNo(src)).getModifyName();
-				new File(session.getServletContext().getRealPath(modifyName)).delete();
+				if(artService.selectBoardImgNo(src) > 0) {
+					String modifyName = artService.deleteImgPath(artService.selectBoardImgNo(src)).getModifyName();
+					new File(session.getServletContext().getRealPath(modifyName)).delete();
+				}
 			}
 			// DB에서 삭제하기 위해 array에 담기
 			deleteBoardImgNo.add(deleteImgsArray.get(i).getAsJsonObject().get("boardImgNo").getAsInt());
@@ -310,8 +312,10 @@ public class ArtBoardController {
 		for(int i = 0; i < total.size(); i++) {
 			if("img".equals(total.get(i).getAsJsonObject().get("type").getAsString())) {
 				String src = total.get(i).getAsJsonObject().get("data").getAsString();
-				String modifyName = artService.deleteImgPath(artService.selectBoardImgNo(src)).getModifyName();
-				new File(session.getServletContext().getRealPath(modifyName)).delete();
+				if(artService.selectBoardImgNo(src) > 0) {
+					String modifyName = artService.deleteImgPath(artService.selectBoardImgNo(src)).getModifyName();
+					new File(session.getServletContext().getRealPath(modifyName)).delete();
+				}
 				int imgNo = artService.selectBoardImgNo(src);
 				if(imgNo != 0) {
 					deleteBoardImgNo.add(imgNo);	// 기존 이미지 삭제 메소드 매개변수에 추가
