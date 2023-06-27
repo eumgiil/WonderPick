@@ -81,7 +81,7 @@
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">작업소요일</h5></td>
-                <td style="float: left;"><input type="text" style="width: 45%;" name="workday" required>일</td>
+                <td style="float: left;"><input type="text" style="width: 60%;" name="workday" required placeholder="ex)결제일로부터 3">일</td>
             </tr>
             <tr>
                 <td class="wide"><h5 style="font-weight: bolder;">시안개수</h5></td>

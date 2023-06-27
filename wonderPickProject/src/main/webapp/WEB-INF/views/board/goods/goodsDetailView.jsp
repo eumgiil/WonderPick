@@ -212,6 +212,7 @@
                         event.preventDefault();
                         $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
                     });
+                    choice();
 
                 });
             </script>
@@ -382,6 +383,28 @@
         	//updateHeart();
          });
         
+        function updateHeart(){
+        	$.ajax({
+        		url : 'updateHeart.go',
+        		data : {
+        			boardNo : ${g.boardNo},
+        			memberNo :  ${loginMember.memberNo}
+        		},
+        		success : function(result){
+        			console.log(result);
+        			if(result > 0){
+        				//이미 db에 회원의 좋아요 기록이 있다면
+        				$('#heart').attr('src', 'resources/common/noheart.png');
+        			}else{
+        				// 없으면 하트 생성
+        				$('#heart').attr('src', 'resources/common/heart.png');
+        			};
+        		},
+        		error:function(){
+        			console.log('실패');
+        		}
+        	});
+        
         
         		function insertReply(){
         			
@@ -422,7 +445,6 @@
                 
         	
                 function selectReplyList(){
-             	   console.log("실행은 됨")
              	   $.ajax({
              		   url : 'rlist.go',
              		   data : {
@@ -559,25 +581,41 @@
             
 
 	            <div class="right">
-		            <form action="order.go" method="post">
+		            <form action="order.go" method="post" enctype="multipart/form-data">
 		                <table class="goods_option" >
-		                <input type="hidden" value="${g.boardNo}"> 
+		                <input type="hidden" value="${g.boardNo}" name="boardNo"> 
+		                <input type="hidden" value="${loginMember.memberNo }" name="memberNo">
+		                <input type="hidden" value="${g.boardTitle}" name="orderTitle"> 
 		                    <tr>
 		                        <td width="50%">추가시안횟수</td>
 		                        <td class="t_align_right" style="float:right;" width="100%">
-		                            <input type="number" min="0" style="width: 100px; " id="addDraft" name="addDraft">회
+			                        <c:choose>
+			                        	<c:when test="${g.addDraft == 0 }">
+			                        	<input type="number" min="0" style="width: 100px;" id="addDraft" name="addDraft" onkeyup="choice();" placeholder="0" readonly value=0>회
+			                        	</c:when>
+			                        	<c:otherwise>
+			                        	<input type="number" min="0" style="width: 100px;" id="addDraft" name="addDraft" onkeyup="choice();">회
+			                        	</c:otherwise>
+			                        </c:choose>
 		                       </td>
 		                    </tr>
 		                    <tr>
 		                        <td>추가수정횟수</td>
 		                        <td class="t_align_right">
-		                            <input type="number" min="0" style="width: 100px;" id="addModify" name="addModify">회
+		                        	<c:choose>
+		                        	<c:when test="${g.addModify == 0 }">
+		                        	<input type="number" min="0" style="width: 100px;" id="addModify" name="addModify" onkeyup="choice();" placeholder="0" value=0 readonly>회
+		                        	</c:when>
+		                        	<c:otherwise>
+		                        	<input type="number" min="0" style="width: 100px;" id="addModify" name="addModify" onkeyup="choice();">회
+		                        	</c:otherwise>
+		                        	</c:choose>
 		                        </td>
 		                    </tr>
 		                    <tr>
 		                        <td>주문수량</td>
 		                        <td class="t_align_right">
-		                            <input type="number" min="1" style="width: 100px;" id="amount" id="amount" >개
+		                            <input type="number" min="1" style="width: 100px;" name="amount" id="amount" onkeyup="choice();">개
 		                        </td>
 		                    </tr>
 		                    <tr>
@@ -603,12 +641,15 @@
             
             
             <script>
-            
-            
             function choice(){
-            	let addDraft = ${g.addDraft} * $('#addDraft').val();
+            	let addDraft = ${g.addDraft} * $('#addDraft').val(); 
             	let addModify = ${g.addModify} * $('#addModify').val();
-            	let amount = $('#amount').val();
+            	let amount; 
+           		if($('#amount').val().length == 0){
+           			amount = 1;
+            	}else{
+            		amount = $('#amount').val();
+            	}
             	let price = ${g.price};
             	
             	let number = parseInt( addDraft + addModify + (price * amount));
