@@ -105,15 +105,15 @@
 	                        <h5 class="sub_title">상세이미지</h5>
 	                    </th>
 	                    <td>
-                            <img id="contentImg1" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+                            <img id="contentImg1" class="contentImg contentImgs" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
                             <input type="hidden" id="input_contentImg1" name="input_contentImg1" value="">
                         </td>
 	                    <td>
-                            <img id="contentImg2" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+                            <img id="contentImg2" class="contentImg contentImgs" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
                             <input type="hidden" id="input_contentImg2" name="input_contentImg2" value="">
                         </td>
 	                    <td>
-                            <img id="contentImg3" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+                            <img id="contentImg3" class="contentImg contentImgs" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
                             <input type="hidden" id="input_contentImg3" name="input_contentImg3" value="">
                         </td>
 	                </tr>
@@ -204,7 +204,7 @@
         
         window.onload = () => {
             document.querySelector('#category option[value=${ artBoard.category }]').setAttribute('selected', true);
-
+            
             loadToImg();
             loadExplain();
             allOption();
@@ -222,8 +222,8 @@
                     document.getElementById('input_titleimg').value = boardImages[i].modifyName;
                 }
                 else if(boardImages[i].fileLevel == 2){
-                    document.getElementById('contentImg'+(i+1)).setAttribute('src', boardImages[i].modifyName);
-                    document.getElementById('input_contentImg'+ (1 + i)).value = boardImages[i].modifyName;
+                    document.getElementById('contentImg'+i).setAttribute('src', boardImages[i].modifyName);
+                    document.getElementById('input_contentImg'+ i).value = boardImages[i].modifyName;
                 }
             }
         }
@@ -247,6 +247,11 @@
                 }
                 else if(upFiles[i].files.length == 1){
                     console.dir(upFiles[i]);
+                    if(i == 0){
+                        j == 1;
+                    }else{
+                        j == 2;
+                    }
                     updateSrc.push(
                         {'type' : contentImg[i].id
                         ,'src' : contentImg[i].getAttribute('src')
@@ -256,6 +261,7 @@
                 }
             }
             for(var i = boardImages.length; i < contentImg.length; i++){
+                j == 2;
                 if(upFiles[i].files.length == 1){
                     insertSrc.push(
                         {'type' : contentImg[i].id
@@ -267,6 +273,9 @@
             let deleteImgs = document.getElementById('deleteImgs');
             let updateImgs = document.getElementById('updateImgs');
             let insertImgs = document.getElementById('insertImgs');
+
+            console.log('updateImgs : ' + JSON.stringify(updateSrc));
+            console.log('insertSrc : ' + JSON.stringify(insertSrc));
 
             deleteImgs.value = JSON.stringify(deleteSrc);
             updateImgs.value = JSON.stringify(updateSrc);
@@ -297,7 +306,8 @@
                     explainImg.setAttribute("width", '80%');
                     explain.append(explainImg);
                 }
-            } 
+            }
+            console.log('function loadExplain(){ : ' + document.getElementById('boardContent').value);
         }
 
         function allOption(){
@@ -459,18 +469,20 @@
             // console.dir(boardContent.childNodes);
             // console.log(boardContent.childNodes[0].nodeName);
             let list = [];
+            console.log(nodes);
             for(var i = 0; i < nodes.length; i++){
                 if(nodes[i].nodeName == '#text'){
                     let data = nodes[i].data;
                     list.push({'type' : 'text'
-                              ,'data' : data });
-                } else {
+                              ,'data' : data});
+                } else if(nodes[i].nodeName == 'IMG'){
                     let data = nodes[i].src;
                     list.push({'type' : 'img'
                               ,'data' : data});
                 }
             }
             boardContent.value = JSON.stringify(list);
+            console.log("loseFocus : " + boardContent.value)
         }   
 
         document.getElementById('deleteBoard').addEventListener('click', () => {

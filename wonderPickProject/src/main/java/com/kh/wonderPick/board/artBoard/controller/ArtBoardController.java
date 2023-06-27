@@ -247,6 +247,10 @@ public class ArtBoardController {
 						    String updateImgs,
 						    String insertImgs) {
 		
+		System.out.println(deleteImgs);
+		System.out.println(updateImgs);
+		System.out.println(insertImgs);
+		
 		
 		// 로그인 나오면 지울 부
 		Member loginUser = new Member();
@@ -320,6 +324,7 @@ public class ArtBoardController {
 		// insert boardImages
 		for(int i = 0; i < insertImgsArray.size(); i++) {
 			int insertInt = insertImgsArray.get(i).getAsJsonObject().get("insertUpFile[i]").getAsInt();
+			System.out.println("insertInt : " + insertInt);
 			boardImage = new BoardController().saveUpdate(upFile[insertInt], session, savePath, folderPath);
 			boardImage.setBoardNo(board.getBoardNo());
 			if(insertInt == 0) {
@@ -347,26 +352,33 @@ public class ArtBoardController {
 				System.out.println("src : " + src);
 				new File("/" + src).delete(); // resources 폴더에서 삭제
 				int imgNo = artService.selectBoardImgNo(src);
-				deleteBoardImgNo.add(imgNo);	// 기존 이미지 삭제 메소드 매개변수에 추가
+				if(imgNo != 0) {
+					deleteBoardImgNo.add(imgNo);	// 기존 이미지 삭제 메소드 매개변수에 추가
+				}
 				
 			}
 		}
 		
 		// 새로 입력된 boardContent 1. resources 폴더에서 저장 2. DB에 저장
 		String afterContent = board.getBoardContent();
+		System.out.println("afterContent : " + afterContent);
 		JsonArray aftertotal  = new JsonParser().parse(afterContent).getAsJsonArray();
 		for(int i = 0; i < aftertotal.size(); i++) {
 			if("img".equals(aftertotal.get(i).getAsJsonObject().get("type").getAsString())) {
 				// resources폴더에 저장, modifyName 추가
-				boardImage = new BoardController().saveUpdate(contentFile, session, savePath, folderPath);
 				
-				JsonObject jobj = aftertotal.get(i).getAsJsonObject();
-				jobj.keySet().remove("data");
-				jobj.addProperty("data", boardImage.getModifyName());
-				boardImage.setFileLevel(3);
+				// img가 있어도 실제로 파일을 올리지 않았을 수 있음
+				if(contentFile.getSize() != 0) {
+					boardImage = new BoardController().saveUpdate(contentFile, session, savePath, folderPath);
+					boardImage.setFileLevel(3);
+					
+					JsonObject jobj = aftertotal.get(i).getAsJsonObject();
+					jobj.keySet().remove("data");
+					jobj.addProperty("data", boardImage.getModifyName());
+				}
 			}
 		}
-		board.setBoardContent(total.toString());
+		board.setBoardContent(aftertotal.toString());
 		
 //		board.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
 		int result = artService.updateArtBoard(board, artBoard, deleteOptionNos, optionList, deleteBoardImgNo, updateBoardImages, insertBoardImages);
@@ -379,7 +391,10 @@ public class ArtBoardController {
 	}
 	
 	@RequestMapping("deleteBoard.at")
-	public String deleteBoard(int boardNo) {
+	public String deleteBoard(Model model, int boardNo) {
+		if(artService.deleteBoard(boardNo) <= 0) {
+			model.addAttribute("alertMsg", "삭제 실패");
+		}
 		return "redirect:artList.bo";
 	}
 	

@@ -36,6 +36,8 @@ public interface ArtBoardService {
 
 	int deleteReply(int replyNo);
 	
+	int deleteBoard(int boardNo);
+	
 	
 	
 	

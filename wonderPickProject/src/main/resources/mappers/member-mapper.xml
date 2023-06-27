@@ -109,7 +109,7 @@
 	</select>
 	
 	<!-- 인증코드 삭제용 -->
-	<delete id="removeCode" parameterType="removeCode">
+	<delete id="removeCode" parameterType="secretCode">
 		delete
 			   secretcode
 		 where

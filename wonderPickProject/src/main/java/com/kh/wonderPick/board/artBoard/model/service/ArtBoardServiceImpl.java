@@ -142,7 +142,16 @@ public class ArtBoardServiceImpl implements ArtBoardService {
 	// 상세설명 사진을 지우기 위해 주소값을 비교해 imgNo을 가져오는 메소
 	@Override
 	public int selectBoardImgNo(String src) {
-		return artDao.selectBoardImgNo(sqlSession, src);
+		if(artDao.selectBoardImgNoCount(sqlSession, src) > 0) {
+			return artDao.selectBoardImgNo(sqlSession, src);
+		}
+		return 0;
+	}
+
+
+	@Override
+	public int deleteBoard(int boardNo) {
+		return artDao.deleteBoard(sqlSession, boardNo);
 	}
 
 	
