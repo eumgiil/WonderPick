@@ -498,6 +498,7 @@
             /* 옵션 불러오기 */
             let optionTable = document.getElementById('optionTable');
             let optionList = JSON.parse('${ optionList }');
+            console.log("optionList : " + '${ optionList }');
             for(var eachOption of optionList){
                 let select = document.createElement('select');
                 select.style.textAlign = 'center';
@@ -547,6 +548,7 @@
             let boardContent = JSON.parse('${ artBoard.board.boardContent }');
             let explain = document.getElementById('explain');
             for(var i = 0; i < boardContent.length; i++){
+                console.log(boardContent[i].type);
                 if(boardContent[i].type == 'text'){
                     explain.append(boardContent[i].data);
                 }
@@ -554,11 +556,12 @@
                     let explainImg = document.createElement('img');
                     explainImg.setAttribute("src", boardContent[i].data);
                     explainImg.setAttribute("width", '80%');
+                    explain.append(document.createElement('br'));
                     explain.append(explainImg);
+                    explain.append(document.createElement('br'));
                 }
             }
         }
-        
 
         // 클릭 시 해당 글 위치로 이동
         function move(name){

@@ -24,6 +24,8 @@ public interface ArtBoardService {
 	
 	ArrayList<BoardImage> selectBoardImage(int bno);
 	
+	int selectBoardImgNo(String src);
+	
 	ArrayList<Option> selectOptionList(int bno);
 	
 	int updateArtBoard(Board board, ArtBoard artBoard, ArrayList<Integer> deleteOptionNos, ArrayList<Option> optionList, ArrayList<Integer> deleteBoardImgNo, ArrayList<BoardImage> updateBoardImages, ArrayList<BoardImage> insertBoardImages);
@@ -33,6 +35,13 @@ public interface ArtBoardService {
 	int insertReply(Reply r);
 
 	int deleteReply(int replyNo);
+	
+	int deleteBoard(int boardNo);
+	
+	BoardImage deleteImgPath(int imgNo);
+	
+	
+	
 	
 	//	int selectSearchListCount(SearchArt searchArt);
 //	

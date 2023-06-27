@@ -30,8 +30,13 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertSecret", secretCode);
 	}
 	
-	public int codeCheckMember(String emailCode, SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("memberMapper.codeCheckMember", emailCode);
+	public boolean codeCheckMember(SecretCode secretCode, SqlSessionTemplate sqlSession) {
+		SecretCode result = sqlSession.selectOne("memberMapper.codeCheckMember", secretCode);
+		
+		if(result != null) {
+			sqlSession.delete("memberMapper.removeCode", secretCode);
+		}
+		return result != null;
 	}
 	
 	public int insertProfile(Member mImg, SqlSessionTemplate sqlSession) {

@@ -53,8 +53,17 @@ public class ArtBoardDao {
 	public ArrayList<Option> selectOptionList(SqlSessionTemplate sqlSession, int bno){
 		return (ArrayList)sqlSession.selectList("artBoardMapper.selectOptionList", bno);
 	}
+	public BoardImage deleteImgPath(SqlSessionTemplate sqlSession, int imgNo){
+		return sqlSession.selectOne("artBoardMapper.deleteImgPath", imgNo);
+	}
 	public ArrayList<BoardImage> selectBoardImage(SqlSessionTemplate sqlSession, int bno){
 		return (ArrayList)sqlSession.selectList("artBoardMapper.selectBoardImage", bno);
+	}
+	public int selectBoardImgNoCount(SqlSessionTemplate sqlSession, String src){
+		return sqlSession.selectOne("artBoardMapper.selectBoardImgNoCount", src);
+	}
+	public int selectBoardImgNo(SqlSessionTemplate sqlSession, String src){
+		return sqlSession.selectOne("artBoardMapper.selectBoardImgNo", src);
 	}
 	
 	// 수정 : 게시글
@@ -88,6 +97,10 @@ public class ArtBoardDao {
 	public int updateInsertFiles(SqlSessionTemplate sqlSession, BoardImage boardImage) {
 		return sqlSession.insert("artBoardMapper.updateInsertFiles", boardImage);
 	}
+	// boardContent 업데이트 
+	public int updateBoardContent(SqlSessionTemplate sqlSession, Board board) {
+		return sqlSession.update("artBoardMapper.updateBoardContent", board);
+	}
 	
 	// 문의 댓글
 	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo){
@@ -99,6 +112,13 @@ public class ArtBoardDao {
 	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
 		return sqlSession.delete("artBoardMapper.deleteReply", replyNo);
 	}
+	
+	// 게시글 삭제
+	public int deleteBoard(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.update("artBoardMapper.deleteBoard", bno);
+	}
+
+	
 	
 
 }

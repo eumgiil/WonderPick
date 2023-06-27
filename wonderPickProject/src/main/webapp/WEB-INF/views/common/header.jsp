@@ -58,10 +58,10 @@
                 </ul>
                 <!-- 검색 시작 -->
                 <div class="search_area">
-                    <form action="searchArtResult.ct" method="get">
+                    <form action="searchArtResult.ct" method="get" id="formtag">
                         <div id="search_main">
-                            <input type="text" placeholder="검색어를 입력해주세요" name="keyword" id="search_input" on onkeyup="searchAutoComplet();" required >
-                            <button type="submit"><span class="material-symbols-outlined"> search</span></button>
+                            <input type="text" placeholder="검색어를 입력해주세요" name="keyword" id="search_input2" onkeyup="searchAutoComplet();" required >
+                            <button id="submit_btn" type="button"><span class="material-symbols-outlined"> search</span></button>
                         </div>
                         <div id="search_list_area">
                             <!--
@@ -92,7 +92,7 @@
                 
                         // 클릭하면 보이게 끔	
                         // 바닐라 자바스크립트
-                        document.getElementById('search_input').addEventListener('click', () => {
+                        document.getElementById('search_input2').addEventListener('click', () => {
                             document.getElementById('search_list_area').style.display = 'block';
                         })
                 
@@ -114,6 +114,8 @@
                             }
                         });
 
+                       
+
 
 
 
@@ -124,13 +126,13 @@
                             
                             httpRequest = new XMLHttpRequest();
                             
-                            var searchElement = document.getElementById('search_input');
+                            var searchElement = document.getElementById('search_input2');
                             var searchValue = searchElement.value;
                             var searchLength = searchValue.length
                             
                             // 스페이스바 막기(첫 공백문자 막기)
                             if(searchLength == 1 && searchValue == ' '){
-                                document.getElementById('search_input').value = '';
+                                document.getElementById('search_input2').value = '';
                             }
                             
                             httpRequest.onreadystatechange = () => {
@@ -161,8 +163,164 @@
                                httpRequest.send();
                         }
 
-                       
 
+
+                        // 최근 검색어
+                        
+                        // $('#search_input').keydown(function(e){
+                        //     if(e.keyCode == 13){
+                        //         console.log('ddd')
+                        //     }
+                        // })
+                    
+                        // let array = [];
+                        // let searchResult = '${ keyword }';
+
+                        // array.push(searchResult);
+                        // console.log(searchResult)  
+
+                        // localStorage.setItem('keyword', JSON.atringify(array));
+
+                        // let keyword = localStorage.getItem('keyword');
+
+                        // $('#search_recent_no').html(keyword);
+
+
+                        // let array = [];
+
+                        // $("input[name='keyword']").keydown(function(e){
+
+                        //     //$('#submit_btn').click();
+
+                        // if(e.keyCode == 13){
+
+                            
+                        //     e.preventDefault();
+
+                        //     let searchResult = $('#search_input2').val();
+
+                        //     array.push(searchResult);
+                            
+                        //     localStorage.setItem('keyword', JSON.stringify(array));
+
+                        //     let keyword = localStorage.getItem('keyword');
+
+                        //     $('#search_recent_no').html(keyword);
+                        // }
+
+                        // })
+
+                        let array = [];
+                        //let str = localStorage.getItem('keyword');
+                        
+                        $("input[name='keyword']").keydown(function(e){
+                            
+                            if(e.keyCode == 13){
+                                
+                                // e.preventDefault();
+                                let searchResult = $('#search_input2').val();
+                                array.push(localStorage.getItem('keyword'))
+                                array.push(searchResult);
+
+                                //str += ',' + searchResult
+
+                                localStorage.setItem('keyword', array.join('/'));
+                                //localStorage.setItem('keyword', JSON.stringify(array));
+                                
+                                let formtag = document.getElementById('formtag');
+                                //formtag.submit();
+
+                            }
+
+                        });
+
+
+                        window.onload = () => {
+                            let keyword = localStorage.getItem('keyword');
+                            $('#search_recent_no').html(keyword);
+                            //console.log(array.join(','))
+                            //localStorage.clear();
+                        }
+
+
+
+
+                        // let submit_btn = document.getElementById('submit_btn');
+
+                        
+
+                        // submit_btn.onclick = () => {
+
+                        //     delete localStorage.setItem
+
+
+
+                        //     let array = [];
+
+                        //     let searchResult = $('#search_input2').val();
+                            
+                            
+                        //     array.push(localStorage.getItem('keyword'))
+                        //     array.push(searchResult);
+                        //     localStorage.setItem('keyword', JSON.stringify(array))
+                            
+                        //     // let keyword = localStorage.getItem('keyword');
+                            
+                        //     // $('#search_recent_no').html(keyword);
+                            
+                        //     //$('#submit_btn').click();
+
+                        //     let formtag = document.getElementById('formtag');
+
+                        //     formtag.submit();
+
+
+
+
+
+                        // }
+                        
+                        
+
+                        // $('form[action="searchArtResult.ct"]').submit(function(e){
+                        //     let array = [];
+
+                        //     let searchResult = $('#search_input2').val();
+                            
+                            
+                       
+                            
+
+                        //     console.log(localStorage)
+
+                        //     let keyword = localStorage.getItem('keyword');
+                            
+                        //     $('#search_recent_no').html(keyword);
+                                        
+                        //     let formtag = document.getElementById('formtag');
+                        // })
+
+                        // let submit_btn = document.getElementById('submit_btn');
+                        // submit_btn.onclick = () => {
+                        //     let array = [];
+
+                        //     let searchResult = $('#search_input2').val();
+                            
+                            
+                        //     array.push(localStorage.getItem('keyword'))
+                        //     array.push(searchResult);
+                        //     localStorage.setItem('keyword', JSON.stringify(array));
+                            
+
+                        //     console.log(localStorage)
+
+                        //     let keyword = localStorage.getItem('keyword');
+                            
+                        //     $('#search_recent_no').html(keyword);
+                                        
+                            // let formtag = document.getElementById('formtag');
+
+                        // }
 
 
                     </script>
@@ -203,7 +361,7 @@
 		                    <div class="modal-footer" id="loginModal-footer">
 		                        <button type="submit" class="btn btn-primary">로그인</button>
                                 <div id="loginModal-href">
-                                    <a href="#">아이디·비밀번호 찾기</a> | <a href="#">회원가입</a>
+                                    <a href="#">아이디·비밀번호 찾기</a> | <a href="selectGrade.me">회원가입</a>
                                 </div>
 		                    </div>
 		                </form>

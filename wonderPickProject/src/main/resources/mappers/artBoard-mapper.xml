@@ -353,6 +353,8 @@
                art_option_detail ad using(option_no)
 		 where
 		       board_no = #{ bno }
+		 order by
+          	   option_no asc
 	</select>
 	
 
@@ -371,6 +373,43 @@
 		  	   board_no = #{ bno }
 		   and
                file_level in(1, 2)
+         order by
+          	   board_img_no asc
+	</select>
+	<select id="deleteImgPath" parameterType="_int" resultMap="boardImage" >
+		select
+		 	   board_img_no
+		 	  ,board_no
+		 	  ,origin_name
+		 	  ,modify_name
+		 	  ,upload_date
+		 	  ,file_level
+		 	  ,file_path
+		  from
+		  	   board_image
+		 where
+		  	   board_img_no = #{ imgNo }
+		   and
+               file_level in(1, 2)
+         order by
+          	   board_img_no asc
+	</select>
+	
+	<select id="selectBoardImgNoCount" parameterType="string" resultType="_int" >
+		select
+		 	   count(board_img_no)
+		  from
+		  	   board_image
+		 where
+		  	   modify_name = #{ src }
+	</select>
+	<select id="selectBoardImgNo" parameterType="string" resultType="_int" >
+		select
+		 	   board_img_no
+		  from
+		  	   board_image
+		 where
+		  	   modify_name = #{ src }
 	</select>
 
 	
@@ -482,6 +521,15 @@
 			   )
 	</insert>
 	
+	<update id="updateBoardContent" parameterType="board">
+		update
+		       board
+		   set
+		       board_content = #{ boardContent }
+		 where
+		       board_no = #{ boardNo }
+	</update>
+	
 	
 
 
@@ -528,7 +576,15 @@
 		       reply_no = #{ replyNo }
 	</delete>
 	
-
+	
+	<update id="deleteBoard" parameterType="_int">
+		update
+			   board
+		   set
+		   	   STATUS = 'N'
+		 where
+		 	   board_no = #{boardNo}
+	</update>
 	
 
 

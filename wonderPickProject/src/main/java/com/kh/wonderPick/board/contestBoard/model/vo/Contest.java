@@ -21,6 +21,7 @@ public class Contest extends Board{
 	private String memberFilePath;
 	private String modifyName;
 	private Date uploadDate;
+	private String memberOriginName;
 	
 	
 	//투표 추가 
@@ -35,6 +36,7 @@ public class Contest extends Board{
 	private int endNumber;
 	
 	private int winner;
+	
 	
 	
 	

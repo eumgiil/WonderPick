@@ -175,7 +175,9 @@
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <h3>등록된 상품이 없습니다.</h3>
+                        <div align="center">
+                            <h3>등록된 상품이 없습니다.</h3>
+                        </div>
                     </c:otherwise>
                 </c:choose>
             </div> <!-- 전체 div 끝 -->
@@ -239,8 +241,8 @@
                     order.options[i].selected = true;
                 }
             }
-            let character_illustration = document.getElementById('character_illustration');
-            character_illustration.style.color = '#FF8399';
+            // let character_illustration = document.getElementById('character_illustration');
+            // character_illustration.style.color = '#FF8399';
         }
 
         order.onchange = () => {

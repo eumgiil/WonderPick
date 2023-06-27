@@ -21,7 +21,6 @@ import com.kh.wonderPick.board.boardCommon.model.vo.BoardImage;
 import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.contestBoard.model.service.ContestService;
 import com.kh.wonderPick.board.contestBoard.model.vo.Contest;
-import com.kh.wonderPick.board.contestBoard.model.vo.Search;
 
 @Controller
 public class ContestController {
@@ -79,7 +78,6 @@ public class ContestController {
 		try {
 			thumbnailUpFile.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -135,11 +133,11 @@ public class ContestController {
 			
 			model.addAttribute("result", result);
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
-			return "board/contestBoard/contestMain";
+			return "board/contestBoard/contestVote";
 			
 		}else {
 			model.addAttribute("errorMsg", "게시글 작성에 실패하였습니다.");
-			return "board/contestBoard/contestMain";
+			return "board/contestBoard/contestVote";
 		}
 		
 
@@ -250,6 +248,16 @@ public class ContestController {
 		
 		return new Gson().toJson(freeList);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="selectVote.ct", produces="application/json; charset=UTF-8")
+	public String selectVote() {
+		
+		ArrayList<Contest> list = contestService.selectVote();
+		
+		return new Gson().toJson(list);
+	}
+	
 	
 	
 	
