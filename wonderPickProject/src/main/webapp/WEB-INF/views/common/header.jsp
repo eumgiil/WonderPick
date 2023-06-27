@@ -203,7 +203,7 @@
 		                    <div class="modal-footer" id="loginModal-footer">
 		                        <button type="submit" class="btn btn-primary">로그인</button>
                                 <div id="loginModal-href">
-                                    <a href="#">아이디·비밀번호 찾기</a> | <a href="#">회원가입</a>
+                                    <a href="#">아이디·비밀번호 찾기</a> | <a href="selectGrade.me">회원가입</a>
                                 </div>
 		                    </div>
 		                </form>
