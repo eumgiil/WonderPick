@@ -498,6 +498,7 @@
             /* 옵션 불러오기 */
             let optionTable = document.getElementById('optionTable');
             let optionList = JSON.parse('${ optionList }');
+            console.log("optionList : " + '${ optionList }');
             for(var eachOption of optionList){
                 let select = document.createElement('select');
                 select.style.textAlign = 'center';

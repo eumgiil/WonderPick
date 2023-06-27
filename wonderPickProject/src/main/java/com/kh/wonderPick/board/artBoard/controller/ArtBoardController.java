@@ -135,11 +135,12 @@ public class ArtBoardController {
 		
 		
 		
-		return "redirect:artList.bo?category=CI";
+		return "redirect:artList.bo";
 	}
 	
 	@RequestMapping(value="artDetail.bo")
 	public ModelAndView artDetail(ModelAndView mv, int bno, HttpSession session) {
+		
 		
 		// 로그인 나오면 지울 부
 		Member loginUser = new Member();
@@ -173,6 +174,7 @@ public class ArtBoardController {
 
 	@RequestMapping("updateForm.at")
 	public ModelAndView updateArtBoard(ModelAndView mv, int boardNo, HttpSession session){
+		
 		// 로그인 나오면 지울 부
 		Member loginUser = new Member();
 		loginUser.setMemberNo(1);
@@ -268,11 +270,14 @@ public class ArtBoardController {
 		ArrayList<BoardImage> insertBoardImages = new ArrayList();
 		
 		BoardImage boardImage = new BoardImage();
-		
 		// 삭제할 boardImgNo가 들어있는 Array  => update로 바꿔야함
 		for(int i = 0; i < deleteImgsArray.size(); i++) {
 			// resources 폴더에서 삭제
-			new File("/" + deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString()).delete();
+			if(null != deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString()) {
+				String src = deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString();
+				String modifyName = artService.deleteImgPath(artService.selectBoardImgNo(src)).getModifyName();
+				new File(session.getServletContext().getRealPath(modifyName)).delete();
+			}
 			// DB에서 삭제하기 위해 array에 담기
 			deleteBoardImgNo.add(deleteImgsArray.get(i).getAsJsonObject().get("boardImgNo").getAsInt());
 		}
@@ -288,7 +293,6 @@ public class ArtBoardController {
 		// insert boardImages
 		for(int i = 0; i < insertImgsArray.size(); i++) {
 			int insertInt = insertImgsArray.get(i).getAsJsonObject().get("insertUpFile[i]").getAsInt();
-			System.out.println("insertInt : " +insertInt);
 			boardImage = new BoardController().saveUpdate(upFile[insertInt], session, savePath, folderPath);
 			boardImage.setBoardNo(board.getBoardNo());
 			if(insertInt == 0) {
@@ -349,7 +353,7 @@ public class ArtBoardController {
 		} else {
 			model.addAttribute("alertMsg", "업로드 실패");
 		}
-		return "redirect:artList.bo?category=CI";
+		return "redirect:artList.bo";
 	}
 	
 	@RequestMapping("deleteBoard.at")

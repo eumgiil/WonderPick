@@ -353,6 +353,8 @@
                art_option_detail ad using(option_no)
 		 where
 		       board_no = #{ bno }
+		 order by
+          	   option_no asc
 	</select>
 	
 
@@ -371,6 +373,26 @@
 		  	   board_no = #{ bno }
 		   and
                file_level in(1, 2)
+         order by
+          	   board_img_no asc
+	</select>
+	<select id="deleteImgPath" parameterType="_int" resultMap="boardImage" >
+		select
+		 	   board_img_no
+		 	  ,board_no
+		 	  ,origin_name
+		 	  ,modify_name
+		 	  ,upload_date
+		 	  ,file_level
+		 	  ,file_path
+		  from
+		  	   board_image
+		 where
+		  	   board_img_no = #{ imgNo }
+		   and
+               file_level in(1, 2)
+         order by
+          	   board_img_no asc
 	</select>
 	
 	<select id="selectBoardImgNoCount" parameterType="string" resultType="_int" >

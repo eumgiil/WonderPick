@@ -50,7 +50,7 @@
                         <input type="email" id="email" name="email" placeholder="이메일을 입력해주세요." required>
                         <button type="button" id="checkEmail">이메일 인증</button>
                         <div id="checkEmailResult"></div>
-                        <input type="text" id="emailCode" placeholder="인증번호를 입력해주세요">
+                        <input type="text" id="emailCode" placeholder="인증번호를 입력해주세요" required>
                         <div id="checkCodeResult"></div>
                         <input type="hidden" id="memberGrade" name="memberGrade" value="${ sessionScope.memberGrade }">
                     </div>
@@ -233,7 +233,9 @@
 				}
 			});
 			
+			// 이메일 코드 체크
 			$codeInput.keyup(() => {
+				$('#checkCodeResult').show();
 				var regExp = /^[0-9]{6}$/;
 				if(regExp.test($codeInput.val())){
 					if($codeInput.val().length = 6){
@@ -241,7 +243,7 @@
 							url : 'codeCheck.me',
 							data : { emailCode : $codeInput.val()},
 							success : result => {
-								if(result == 'success'){
+								if(result){
 									$('#checkCodeResult').css('color', successColor).text('인증완료되었습니다.');
 								} else {
 									$('#checkCodeResult').css('color', errorColor).text('인증코드가 올바르지 않습니다.');
