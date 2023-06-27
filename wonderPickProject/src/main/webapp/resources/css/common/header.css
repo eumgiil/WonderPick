@@ -187,7 +187,7 @@
         'GRAD' 0,
         'opsz' 48
     }
-    #search_input{
+    #search_input2{
         margin-top: 3px;
         margin-left : 5px;
         width: 160px;
@@ -196,7 +196,7 @@
         border: none;
         font-size: 12px;
     }
-    #search_input:focus{
+    #search_input2:focus{
         outline: none;
     }
     [type=submit]:not(:disabled), button:not(:disabled){
@@ -215,7 +215,7 @@
     }
     #search_list_area{
         /* border: 1px solid black; */
-        position: absolute;
+        /* position: absolute; */
         left : 885px;
         width: 300px;
         height: auto;

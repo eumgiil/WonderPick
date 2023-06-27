@@ -176,7 +176,7 @@
             <div id="list_area">
                 <c:choose>
                     <c:when test="${ empty list }">
-                            <div id="noList">검색 결과 없음</div>
+                            <div id="noList" >검색 결과 없음</div>
                     </c:when>
                     <c:otherwise>
                         <c:forEach  items="${ list }" var="list">
@@ -186,7 +186,7 @@
                                         <tr>
                                             <td colspan="3" id="boardImage">
                                                 <div align="center" class="movePage" >
-                                                    <img src="${ list.modifyName }" alt="" class="search_image">
+                                                    <img src="${ list.modifyName }" alt="" class="search_image" >
                                                     <input type="hidden" value="${ list.boardNo }">
                                                 </div>
                                             </td>
@@ -383,19 +383,65 @@
         }
 
 
-      $(function(){
+//         $("input[name='keyword']").keydown(function(e){
 
-          let searchResult = '${ keyword }';
-    
-          console.log(searchResult)  
-    
-          localStorage.setItem('keyword', searchResult);
-    
-          let keyword = localStorage.getItem('keyword');
-    
-          $('#search_recent_no').html(keyword);
-      })
 
+//         if(e.keyCode == 13){
+//             alert('ss')
+
+//             console.log('ssdgasdfas')
+
+//             let array = [];
+//             let searchResult = null
+
+//             array.push(searchResult);
+//             console.log(searchResult)  
+
+//             localStorage.setItem('keyword', JSON.atringify(array));
+
+//             let keyword = localStorage.getItem('keyword');
+
+//             //$('#search_recent_no').html(keyword);
+//         }
+
+// })
+
+
+            //$('#search_input2').val('${ keyword }');
+
+
+
+        //    let array = [];
+
+        //         $("input[name='keyword']").keydown(function(e){
+
+        //             //$('#submit_btn').click();
+
+        //         if(e.keyCode == 13){
+
+                    
+        //             e.preventDefault();
+
+        //             let searchResult = $('#search_input2').val();
+
+        //             array.push(searchResult);
+                    
+        //             localStorage.setItem('keyword', JSON.stringify(array));
+
+        //             let keyword = localStorage.getItem('keyword');
+
+        //             $('#search_recent_no').html(keyword);
+        //         }
+
+        //         })
+
+
+
+            // $(function(){
+            //     localStorage.removeItem()
+
+            //     console.log(localStorage)
+            // })
 
 
 

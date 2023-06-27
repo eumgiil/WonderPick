@@ -258,10 +258,10 @@
 
 				<div id="emo_category">
 					<div id="cate_1" onclick="chargeList();">
-						<span>역대우승이모티콘</span>	
+						<span>역대우승이모티콘(유료)</span>	
 					</div>
 					<div id="cate_2" onclick="freeList();">
-						<span>이번달우승이모티콘</span>
+						<span>이번달우승이모티콘(무료)</span>
 					</div>
 				</div>
 
@@ -628,7 +628,7 @@
 						value = '';
 						for(var i in result){
 							value += 
-								'<div class="free_list">'
+								'<div class="charge_list">'
 									+ '<div id="emo_img" class="emoticon_div">'
 										+'<img src="'+ result[i].filePath +'" id="emoticon_image">'
 										+'<input type="hidden" value="'+ result[i].boardNo +'">'
@@ -715,6 +715,9 @@
 
 				socket.send(chatingRoom + ',' + loginUser + ','+ otherName + ',' + sendEmoticon);
 
+			})
+			$('.emo_list').on('click','.charge_list', e =>{
+				alert('success!!!')
 			})
 
 

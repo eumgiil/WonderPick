@@ -129,16 +129,14 @@
                                         </a>
                                     </div>
                                 </th>
-                                <td class="vote_heart">♡</td>
                             </tr>
                             <tr>
                                 <td class="table_profile_img">
                                     <div align="center">
-                                        <img src="#" class="profile_img">
+                                        <img src="${ list.get(0).memberFilePath }${ list.get(0).memberOriginName }" class="profile_img">
                                     </div>
                                 </td>
                                 <td>${ list.get(0).nickName }</td>
-                                <td>투표수 자리</td>
                             </tr>
                             <tr>
                                 <td colspan="3">
@@ -147,13 +145,13 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <div class="table_sysdate">조회수</div> 
                                 </td>
                             </tr>
                             </tbody>
                             
                         </table>
                 </div>
+
                 
                 <div id="voteList_area" align="center">
                     <c:forEach  items="${ list }" var="list">
@@ -176,16 +174,14 @@
                                         </a>
                                     </div>
                                 </th>
-                                <td class="vote_heart">♡</td>
                             </tr>
                             <tr>
                                 <td class="table_profile_img">
                                     <div align="center">
-                                        <img src="#" class="profile_img">
+                                        <img src="${ list.memberFilePath }${ list.memberOriginName }" class="profile_img">
                                     </div>
                                 </td>
                                 <td>${ list.nickName }</td>
-                                <td>투표수 자리</td>
                             </tr>
                             <tr>
                                 <td colspan="3">
@@ -194,7 +190,6 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <div class="table_sysdate">조회수</div> 
                                 </td>
                             </tr>
                             </tbody>

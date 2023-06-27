@@ -191,6 +191,7 @@
             </c:choose>
                 </div>
             </div>
+
         
 
             <div id="voteList_area" align="center">
@@ -218,7 +219,7 @@
                         <tr>
                             <td class="table_profile_img">
                                 <div align="center">
-                                    <img src="#" class="profile_img">
+                                    <img src="${ list.memberFilePath }${ list.memberOriginName }" class="profile_img">
                                 </div>
                             </td>
                             <td>${ list.nickName }</td>
@@ -321,17 +322,15 @@
                                         +' </a>'
                                         +'</div>'
                                 + '</th>'
-                                + '<td class="vote_heart">♡</td>'
                                 +'</tr>'
                             + '<tr>'
                                 + '<td class="table_profile_img">'
                                     +  ' <div align="center">'
-                                        +  '<img src="#" class="profile_img">'
+                                        +  '<img src="'+ result[i].memberFilePath + result[i].memberOriginName +'" class="profile_img">'
                                             
                                         +'</div>'
                                 + '</td>'
                                     +'<td>'+ result[i].nickName +'</td>'
-                                + '<td> 투표수 자리 </td>'
                                 +'</tr>'
                             + '<tr>'
                                 + '<td colspan="3">'

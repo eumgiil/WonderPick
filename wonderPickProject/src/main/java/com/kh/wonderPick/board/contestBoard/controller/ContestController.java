@@ -78,7 +78,6 @@ public class ContestController {
 		try {
 			thumbnailUpFile.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -134,11 +133,11 @@ public class ContestController {
 			
 			model.addAttribute("result", result);
 			session.setAttribute("alertMsg", "공모전 등록 성공!!" );
-			return "board/contestBoard/contestMain";
+			return "board/contestBoard/contestVote";
 			
 		}else {
 			model.addAttribute("errorMsg", "게시글 작성에 실패하였습니다.");
-			return "board/contestBoard/contestMain";
+			return "board/contestBoard/contestVote";
 		}
 		
 
@@ -258,6 +257,7 @@ public class ContestController {
 		
 		return new Gson().toJson(list);
 	}
+	
 	
 	
 	
