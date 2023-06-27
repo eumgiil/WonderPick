@@ -12,7 +12,7 @@
     <style>
         
         #option{
-            width: 110px;
+            width: 20%;
             height: 35px;
        
         }
@@ -32,7 +32,7 @@
         .categoryList {
             border: 1px solid black;
             width: 900px;
-            margin-left:500px;
+            margin-left:650px;
             margin-top : 200px;
             
         }
@@ -62,6 +62,7 @@
         .topouter{
             float : left;
             margin-left :150px;
+            width:900px;
             
         }
         #enrollGoods{
@@ -74,7 +75,9 @@
         }
         #searchGoods{
          float : left;
-         margin-left : 500px;
+         margin-top :10px;
+         width:600px;
+         margin-left :10px;
         }
         .pagingArea{
         margin-left : 450px;
@@ -82,6 +85,7 @@
         
         .category{
             float: left;
+            width:400px;
             margin-left: 5%;
             margin-top: 10%;
             height: 500px;
@@ -135,101 +139,102 @@
     </div>
     
     
-<div class="main">
-
-    <!-- 작가가 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
-    <c:if test="${loginMember.memberGrade.equals('작가')}">
-        <a class="btn btn-secondary" id="enrollGoods" href="enrollForm.go" >글쓰기</a>
-        </c:if>
-    
+	<div class="main">
+	
+	    <!-- 작가가 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
+	    <c:if test="${loginMember.memberGrade.equals('작가')}">
+	        <a class="btn btn-secondary" id="enrollGoods" href="enrollForm.go" >글쓰기</a>
+	        </c:if>
+	 </div> 
+   
     <div class="topouter" align="center">
         <h2 align="center" style="color: rgb(255, 131, 153);">굿즈</h2>
         <hr style="width: 600px; border: 1px solid gray;">
-        <h6>n개의 상품이 있습니다.</h6>
-
-        <form action="searchGoods.go" method="get" align="center">
-        <div id="searchGoods" >
-         <select name="option" id="option">
-            <option value="whole">전체</option>
-            <option value="nickname">작가명</option>
-            <option value="boardTitle">제목순</option>
-        </select>
-        <input type="text" value="" name="searchGoods">
-        <button type="submit" style="background-color: white; border: none;"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-search-strong-512.png" alt="" width="40"></button>
-        </form>
-
-        <select name="option" id="option">
-            <option value="popularity" onclick="option(1)">인기순</option>
-            <option value="lowPrice" onclick="option(2)">가격 낮은 순</option>
-            <option value="latest" onclick="option(3)">최신 등록순</option>
-        </select>
-        
-        <script>
-        
-        function option(num){
-        	num = $('#option').val();
-        };
-        $.ajax({
-        	url : 'list.go?cPage=1',
-        	data : num ,
-        	dataType :'json'
-        	type :'get',
-        	success : function(result){
-        		for(var i = 0 ; i< result.length; i++){
-        			
-        		}
-        	}
-        		
-        		
-        		
-        	},
-        	error : () => {
-        		console.log('실패');
-        	}
-        		
-        });
-        
-        
-        
-        
-        </script>
-
-        </div>
-        <br><br><br>
-
-      
-
-	</div>
+        <h6>${list.size()}개의 상품이 있습니다.</h6>
+        <div class="top" align="center" style="float : left;">
+		   <div id="searchGoods" style="width:800px;" >
+		        <form action="search.go" method="get" align="center">
+			        <input type="hidden" name="currentPage" value="1">
+			         <select name="condition" style="width:100px; height:35px;" >
+			            <option value="nickname">작가명</option>
+			            <option value="boardTitle">제목순</option>
+			        </select>
+			        <input type="text" value="${ keyword }" name="keyword">
+			        <button type="submit" style="background-color: white; border: none;"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-search-strong-512.png" alt="" width="40"></button>
+		        </form>
+		        <form action="list.go" method="post" id="listForm">
+			       <div class="option" >
+			           <select name="selectOrder" id="selectOrder"  style="width:100px; height:40px; float:right;">
+			               <option value="latest">최신 등록순</option>
+			               <option value="popularity">인기순</option>
+			               <option value="lowPrice">가격 낮은 순</option>
+			            </select>
+			        </div>     
+			    </form>
+		   </div>
+   		   <c:if test="${not empty condition}">
+			   <script>
+			    $(function(){
+			    	$('#searchGoods option[value=${condition}]').attr('selected', true);
+			    })
+			   </script>
+   		   </c:if>
+		   
+   </div>
+ 	</div>
+ 	
+     
+  
+        <br><br>
 	<!--  카테고리별  리스트-->
 	<div class="categoryList"  id="goods" style="width: 900px;" align="center">
           <c:choose>  
             <c:when test="${not empty list}">
               <c:forEach items="${list}" var="g">
                   <div class="goodsList2" style="display:inline-block;" align="center">
-                    <img src="resources/boardUpfiles/goodsFiles/b61adf9a35bba64590b9bc1d10734d93.jpg" alt=""  width="250"  id="goodsimg"><br>
+                    <img src="${ g.filePath }" alt=""  width="250" style="border:1px solid black; width:250px; height:250px;"  ><br>
                     <table id="goodsInfo"  id="goods" width="250">
 	                    <tr>
 	                        <td>${g.nickName}</td>
-	                        <td><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-heart-256.png" alt="" width="30" style="float: right;"></td>
+	                        <c:choose>
+		                        <c:when test="${empty loginMember}">
+		                        	<td></td>
+		                        </c:when>
+		                        <c:otherwise>
+			                      	 <c:if test="${not empty heartList }">
+			                      	 	<c:forEach items="${heartList}" var="h">
+			                      	 	<c:choose>
+				                            <c:when test="${ h.memberNo == loginMember.memberNo && g.boardNo == h.boardNo }">
+				                              <th style="font-size: 35px;"><img src="resources/common/heart.png" width="30" style="float: right;" alt="" id="heart" onclick="updateHeart();"></th>
+				                            </c:when>  
+				                            <c:otherwise>
+					                               <th style="font-size: 35px;"><img src="resources/common/noheart.png" width="30" style="float: right;"alt="" id="heart" onclick="updateHeart();"></th>
+					                        </c:otherwise>
+				                         </c:choose>
+			                      	 	</c:forEach>
+				                      </c:if>
+				                      <c:if test="${empty heartList }">
+				                      <th style="font-size: 35px;"><img src="resources/common/noheart.png" width="30" style="float: right;"alt="" id="heart" onclick="updateHeart();"></th>
+				                      </c:if>
+		                        </c:otherwise>
+		                 </c:choose> 
 	                    </tr>
 	                    <tr>
 	                        <td colspan="2">★★★★☆</td>
 	                    </tr>
 	                    <tr>
-	                        <td><a href="detail.go?boardNo= ${ g.boardNo }">${g.boardTitle }</a></td>
+	                        <td><a href="detail.go?boardNo= ${ g.boardNo }" style="color:rgb(255, 131, 153);">${g.boardTitle }</a></td>
 	                        <td style="float: right;">${g.price}</td>
 	                    </tr>
                     </table>
                     <br>
-                    </div>
-                    
-                 </c:forEach> 
+                   </div>
+                  </c:forEach> 
             </c:when>
             <c:otherwise>
                 <h3>등록된 상품이 없습니다.</h3>
             </c:otherwise>
         </c:choose>
-
 	</div>
 	
 	<script>

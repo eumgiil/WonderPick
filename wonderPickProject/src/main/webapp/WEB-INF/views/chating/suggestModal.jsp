@@ -161,7 +161,14 @@ div {
 					<img alt="이미지" src="${orderList.get(0).filePath}"> 
 					<h3> ${orderList.get(0).orderContent}</h3>
 					<h2>제안가격:</h2>
-					<p>${totalPrice}</p>
+					<c:choose>
+						<c:when test="${orderList.get(0).totalPrice!=0}">
+							<p>${orderList.get(0).totalPrice}</p>
+						</c:when>
+						<c:otherwise>
+							<p>${orderList.get(0).price}</p>
+						</c:otherwise>
+					</c:choose>
 					<button id="remove" style="float: right" onclick="removePrice();">선택제거</button>
 					<button id="selectAll" style="float: right" onclick="selectAll();">전체선택</button>
 					<button id="suggest" style="float: right">가격 추가</button>

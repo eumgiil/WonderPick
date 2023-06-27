@@ -13,6 +13,7 @@ import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
+import com.kh.wonderPick.board.goods.model.vo.GoodsOrder;
 import com.kh.wonderPick.board.review.model.vo.Review;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 
@@ -41,7 +42,7 @@ public class GoodsDao {
 	     
 		
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("goodsMapper.selectCategoryList", goodsCategory , rowBounds);
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectCategoryList", goodsCategory ,  rowBounds);
 	}
 	
 	// 검색결과 개수 조회
@@ -134,19 +135,29 @@ public class GoodsDao {
 	}
 	
 	// 회원별 좋아요 상세 조회
-	public Heart selectHeart(SqlSessionTemplate sqlSession, int boardNo ) {
+	public Heart selectHeart(SqlSessionTemplate sqlSession, int boardNo) {
 		System.out.println("안녕 나는 하또 뎨요~~~~~");
 		return sqlSession.selectOne("goodsMapper.selectHeart", boardNo);
 	}
 	
-	// 좋아요 업데이트
-	public int updateHeart(SqlSessionTemplate sqlSession, Heart h) {
-		return sqlSession.update("goodsMapper.updateHeart", h);
+	// 좋아요 추가
+	public int insertHeart(SqlSessionTemplate sqlSession, Heart h) {
+		return sqlSession.insert("goodsMapper.insertHeart", h);
+	}
+	
+	// 좋아요 삭제
+	public int deleteHeart(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.delete("goodsMapper.deleteHeart", boardNo);
 	}
 	
 	// 댓글 삭제
 	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
 		return sqlSession.delete("goodsMapper.deleteReply", replyNo);
+	}
+	
+	// 주문
+	public int insertOrder(SqlSessionTemplate sqlSession, GoodsOrder go) {
+		return sqlSession.insert("goodsMapper.insertOrder" , go);
 	}
 	
 
