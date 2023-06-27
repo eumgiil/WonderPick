@@ -93,13 +93,33 @@
 	</insert>
 	
 	<!-- 인증코드 체크 쿼리문 -->
-	<select id="codeCheckMember" resultType="_int">
+	<select id="codeCheckMember" parameterType="secretCode" resultType="secretCode">
 		select
-			   
+			   who
+			  ,secret
+			  ,when
+	      from
+	      	   secretcode
+	     where
+	     	   who = #{who}
+	       and
+	       	   secret = #{secret}
+	       and
+	       	   when between sysdate-3/24/60 and sysdate 
 	</select>
 	
+	<!-- 인증코드 삭제용 -->
+	<delete id="removeCode" parameterType="secretCode">
+		delete
+			   secretcode
+		 where
+		 	   who = #{who}
+		   and
+		   	   secret = #{secret}
+	</delete>
+	
 	<!-- 회원가입용 쿼리문 -->
-	<insert id="signUpMember" >
+	<insert id="signUpMember">
 		insert
 		  into
 		       member

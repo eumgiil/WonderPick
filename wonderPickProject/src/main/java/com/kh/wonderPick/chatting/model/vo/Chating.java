@@ -10,4 +10,6 @@ public class Chating {
 	private int artistNo;
 	private String artistNickName;//ARTIST_NO NUMBER NOT NULL,
 	private String membertNickName;//MEMBER_NO NUMBER NOT NULL,
+	private String filePath;
+	private String artistFile;
 }

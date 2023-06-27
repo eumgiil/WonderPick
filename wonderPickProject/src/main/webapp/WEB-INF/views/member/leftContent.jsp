@@ -45,7 +45,7 @@
             </li>
             <li><a href="">쪽지함</a></li>
             <li><a href="">1 대 1 문의</a></li>
-            <li><a href="">채팅</a></li>
+            <li><a href="chating.co">채팅</a></li>
         </div>
     </div>
 </body>

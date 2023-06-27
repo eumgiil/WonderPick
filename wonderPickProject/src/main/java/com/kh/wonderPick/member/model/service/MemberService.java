@@ -12,10 +12,11 @@ public interface MemberService {
 	int nickCheckMember(String checkNick);
 
 	int insertSecret(SecretCode secretCode);
+
+	boolean codeCheckMember(SecretCode secretCode);
 	
 	int signUpMember(Member m);
 	
 	int insertProfile(Member mImg);
 	
-	int codeCheckMember(String emailCode);
 }

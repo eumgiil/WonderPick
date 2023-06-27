@@ -8,6 +8,10 @@
  		<result column="BOARD_NO" property="boardNo"/>
  		<result column="ARTIST_NO" property="artistNo"/>
  		<result column="MEMBER_NO" property="memberNo"/>
+ 		<result column="file_path" property="filePath" />
+ 		<result column="ARTIST_FILE" property="artistFile" />
+ 		<result column="membert_nick_name" property="membertNickName" />
+ 		<result column="artist_nick_name" property="artistNickName" />
  	</resultMap>
  	
  	<resultMap type="beforeReadChatings" id="brcResultSet">
@@ -66,15 +70,6 @@
                     	 where board_no = #{boardNo})
  	</select>
  	
- 	<select id="selectMemberNo" parameterType="_int" resultType="string">
- 		select
- 			nickname
- 		from
- 			member
- 		where
- 			member_no = #{memberNo}
- 		
- 	</select>
  	
 	<insert id="createRoom" parameterType="chating">
 		INSERT
@@ -97,11 +92,30 @@
 	
 	<select id="selectAllRoom" resultMap="chatingResultSet" parameterType="chating">
 		select
-			*
+		    *
 		from
-			chating
+		    chating
+		join 
+		    (
+		        select
+		            MEMBER_FILE_PATH || MEMBER_MODIFY_NAME file_path ,nickname membert_nick_name,member_no
+		        from
+		            member
+		        join member_image using (member_no)
+		    ) m
+		using (member_no)
+		join    
+		    (
+		        select
+		            MEMBER_FILE_PATH || MEMBER_MODIFY_NAME ARTIST_FILE ,nickname artist_nick_name,member_no ARTIST_NO
+		        from
+		            member
+		        join member_image using (member_no)
+		    ) a
+		using (ARTIST_NO)  
 		where 
-			ROOM_NAME LIKE #{membertNickName}
+		    ROOM_NAME LIKE #{membertNickName}
+		    
 	</select>
 	
 	<select id="selectRoomName" resultMap="chatingResultSet" parameterType="chating">
