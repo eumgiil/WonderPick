@@ -87,12 +87,6 @@ public class ChatingServiceImpl implements  ChatingService{
 	}
 
 	@Override
-	public String selectMemberNick(int memberNo) {
-		// TODO Auto-generated method stub
-		return chatingDao.selectMemberNo(sqlSession,memberNo);
-	}
-
-	@Override
 	public int deletePriceAndReason(int[] rejectList) {
 		// TODO Auto-generated method stub
 		int delCount = 0;

@@ -239,8 +239,8 @@
                     order.options[i].selected = true;
                 }
             }
-            let character_illustration = document.getElementById('character_illustration');
-            character_illustration.style.color = '#FF8399';
+            // let character_illustration = document.getElementById('character_illustration');
+            // character_illustration.style.color = '#FF8399';
         }
 
         order.onchange = () => {

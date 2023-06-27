@@ -14,7 +14,7 @@
 <title>Document</title>
 <style>
 #chatingMain {
-	width: 1200px;
+	width: 1500px;
 	height: auto;
 }
 
@@ -74,6 +74,16 @@
 	bottom: 0;
 }
 
+#sendBtn>button{
+		width : 100px;
+		height : 40px;
+		color : white;
+        margin : auto;
+        border-radius : 20%;
+        background-color: #FF8399;
+        border : none;
+ }
+    
 /* ----------- emoticon --------------- */
 
 #emoticon_area{
@@ -161,7 +171,7 @@
 	<jsp:include page="../common/header.jsp" />
 	<jsp:include page="suggestModal.jsp" />
 	
-	<div id="chatingMain" style="width: 100%">
+	<div id="chatingMain" >
 		<div id="chatingList">
 			<table width="260" border="1" align="center">
 				<thead>
@@ -181,7 +191,7 @@
 									<td>
 										<div class="chatingOne">
 											<div class="profileIMG">
-												<img src="" alt="ㅎㅎ">
+												<img src="${list.artistFile}" alt="ㅎㅎ" class="profile"><!--  -->
 											</div>
 											<div class="chatingContent" align="left">
 												<h6 class="name_h6">${list.artistNickName}</h6>
@@ -198,8 +208,8 @@
 								<tr>
 									<td>
 										<div class="chatingOne">
-											<div class="profileIMG">
-												<img src="" alt="ㅎㅎ">
+											<div class="profileIMG"><!--  -->
+												<img src="${list.filePath}" alt="ㅎㅎ" class="profile">
 											</div>
 											<div class="chatingContent" align="left">
 												<h6 class="name_h6">${list.membertNickName}</h6>
@@ -215,21 +225,17 @@
 						</c:choose>
 					</c:forEach>
 				</tbody>
-				<div id="buttons">
+				<!-- <div id="buttons">
 					<button id="chocieBtn">선택하기</button>
 					<button id="checkAll">전체선택</button>
 					<button id="deleteBtn">삭제하기</button>
-				</div>
+				</div> -->
 			</table>
 
 		</div>
 
 		<div id="chating">
-			<div id="chatSearchDiv" align="center">
-				<br> <input type="text" name="chatingSearch" id="search"
-					placeholder="채팅 내역 검색">
-				<button id="chatingSearchBtn">검색</button>
-			</div>
+			
 			<div id="namespace">
 				<c:choose>
 					<c:when test="${c.membertNickName eq loginMember.nickName}">
@@ -303,7 +309,10 @@
 				return true;
 			}
 			$(function() {
-
+				$('.profile').each(function() {
+					$(this).width("100%")
+					$(this).height("100%")
+				})
 				socket = new WebSocket(uri);
 
 				socket.onopen = function(e) {
@@ -488,7 +497,7 @@
 							boardNo : boardNo
 						},
 						success : function(result) {
-							console.log(result.priceAndTtile[0].filePath)
+							console.log(result)
 							
 							$('input[name=boardNo]').val(boardNo)
 							
@@ -501,11 +510,13 @@
 							/*$('input[name=memberCheck]').val(result.ac.memberCheck);
 							$('input[name=artistCheck]').val(result.ac.artistCheck);*/
 							
-							var $img = $('#modalBody').find('img');
-							console.log($img)
-							$img.attr('src',result.priceAndTtile[0].filePath);
-							$img.next().text(result.priceAndTtile[0].orderContent);
-							$('#modalBody').find('p').text(result.priceAndTtile[0].totalPrice)
+							if(result.ac!=null){
+								var $img = $('#modalBody').find('img');
+								console.log($img)
+								$img.attr('src',result.priceAndTtile[0].filePath);
+								$img.next().text(result.priceAndTtile[0].orderContent);
+								$('#modalBody').find('p').text(result.priceAndTtile[0].totalPrice)
+							}
 							
 						},
 						error : function(e) {

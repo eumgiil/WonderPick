@@ -24,11 +24,11 @@ public class GoodsDao {
 	}
 	
 	// 굿즈리스트 전체 페이지
-	public ArrayList<Goods> selectGoodsList(SqlSessionTemplate sqlSession, PageInfo pi){
+	public ArrayList<Goods> selectGoodsList(SqlSessionTemplate sqlSession, PageInfo pi, String selectOrder){
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("goodsMapper.selectGoodsList", null , rowBounds);
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectGoodsList", selectOrder , rowBounds);
 	}
 	
 	public int selectCategoryListCount(SqlSessionTemplate sqlSession, String goodsCategory) {

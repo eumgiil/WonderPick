@@ -369,6 +369,25 @@
 		  	   board_image
 		 where
 		  	   board_no = #{ bno }
+		   and
+               file_level in(1, 2)
+	</select>
+	
+	<select id="selectBoardImgNoCount" parameterType="string" resultType="_int" >
+		select
+		 	   count(board_img_no)
+		  from
+		  	   board_image
+		 where
+		  	   modify_name = #{ src }
+	</select>
+	<select id="selectBoardImgNo" parameterType="string" resultType="_int" >
+		select
+		 	   board_img_no
+		  from
+		  	   board_image
+		 where
+		  	   modify_name = #{ src }
 	</select>
 
 	
@@ -480,6 +499,15 @@
 			   )
 	</insert>
 	
+	<update id="updateBoardContent" parameterType="board">
+		update
+		       board
+		   set
+		       board_content = #{ boardContent }
+		 where
+		       board_no = #{ boardNo }
+	</update>
+	
 	
 
 
@@ -526,7 +554,15 @@
 		       reply_no = #{ replyNo }
 	</delete>
 	
-
+	
+	<update id="deleteBoard" parameterType="_int">
+		update
+			   board
+		   set
+		   	   STATUS = 'N'
+		 where
+		 	   board_no = #{boardNo}
+	</update>
 	
 
 

@@ -39,7 +39,9 @@ public class GoodsController {
 	private GoodsService goodsService;
 	
 	@RequestMapping("list.go")
-	public String selectList(@RequestParam(value="cPage", defaultValue="1")int currentPage, Model model) {
+	public String selectList(@RequestParam(value="cPage", defaultValue="1")int currentPage
+							,Model model
+							,String selectOrder) {
 		PageInfo pi = Pagination.getPageInfo(goodsService.selectListCount(), currentPage,12, 10);
 		/*
 		ArrayList<Heart>heartList = new ArrayList();
@@ -50,7 +52,7 @@ public class GoodsController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("heartList",goodsService.selectHeartList());
 		System.out.println(goodsService.selectHeartList());
-		model.addAttribute("list", goodsService.selectGoodsList(pi));
+		model.addAttribute("list", goodsService.selectGoodsList(pi, selectOrder));
 		
 		return "board/goods/goodsListView";
 	}
@@ -91,7 +93,11 @@ public class GoodsController {
 	}
 
 	@RequestMapping("search.go")
-	public ModelAndView searchGoods(@RequestParam(value="cPage", defaultValue="1")int currentPage,ModelAndView mv, String condition, String keyword,  HttpSession session) {
+	public void searchGoods(@RequestParam(value="cPage", defaultValue="1")int currentPage,
+									ModelAndView mv,
+									String condition,
+									String keyword,
+									HttpSession session) {
 		HashMap<String, String> map = new HashMap();
 		
 		map.put("condition", condition);
@@ -102,8 +108,9 @@ public class GoodsController {
 		mv.addObject("pi", pi);
 		mv.addObject("list", goodsService.searchGoods(map, pi));
 		mv.setViewName("board/goods/goodsListView");
+
 		
-		return mv;
+		// return mv;
 	}
 	
 	@RequestMapping("enrollForm.go")

@@ -281,7 +281,7 @@
                 return false;
             }
 
-            
+
            	form.action = 'insertBoard.at';
             form.submit();
         }
@@ -292,7 +292,7 @@
                 if(null != document.getElementById('explainImg')){
                     document.getElementById('explainImg').remove();
                 }
-                let explain = document.getElementById('explain');
+                let explain = document.getElementById('explain'); // 상세설명 div 요소
                 let explainImg = document.createElement('img');
                 let reader = new FileReader();
                 reader.readAsDataURL(inputFile.files[0]);
@@ -320,7 +320,7 @@
             let boardContent = document.getElementById('boardContent');  // div 값을 담을 type:hidden의 input태그
             boardContent.innerHTML = e.innerHTML;
             let nodes = boardContent.childNodes;
-            // console.dir(boardContent.childNodes);
+            console.dir(boardContent.childNodes);
             // console.log(boardContent.childNodes[0].nodeName);
             let list = [];
             for(var i = 0; i < nodes.length; i++){
@@ -328,12 +328,14 @@
                     let data = nodes[i].data;
                     list.push({'type' : 'text'
                                 ,'data' : data });
-                } else {
+                } else if(nodes[i].nodeName == 'IMG'){
                     let data = nodes[i].src;
                     list.push({'type' : 'img'
                                 ,'data' : data});
                 }
             }
+            console.log('enroll 337행 : ')
+            console.dir(list);
             boardContent.value = JSON.stringify(list);
         }   
 

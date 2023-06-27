@@ -100,6 +100,7 @@ public class MemberController {
 	 */
 	@ResponseBody
 	@RequestMapping("idCheck.me")
+	
 	public String idCheckMember(String checkId) { // 숫자로 바로 보내려고하니까 406오류가뜸
 												  // 그래서 문자열로 보내봄(네이버를참고함)
 		return memberService.idCheckMember(checkId) > 0 ? "NNNNN" : "NNNNY";
@@ -123,6 +124,7 @@ public class MemberController {
 	 * @return : 인증에 성공했다면 success, 실패하면 error를를 반환
 	 * @throws MessagingException
 	 */
+	
 	@ResponseBody
 	@RequestMapping("emailCheck.me")
 	public String emailCheckMember(String checkEmail, HttpServletRequest request) throws MessagingException {
@@ -165,9 +167,13 @@ public class MemberController {
 	
 	@ResponseBody
 	@RequestMapping("codeCheck.me")
-	public void codeCheckMember(String emailCode) {
-//		memberService.codeCheckMember(emailCode);
-		System.out.println(emailCode);
+	public void codeCheckMember(String emailCode, HttpServletRequest request) {
+		SecretCode secretCode = SecretCode.builder()
+													.who(request.getRemoteAddr())
+													.secret(emailCode)
+													.build();
+		memberService.codeCheckMember(secretCode);
+		
 	}
 	
 	/**

@@ -105,22 +105,22 @@
 	                        <h5 class="sub_title">상세이미지</h5>
 	                    </th>
 	                    <td>
-                            <img id="contentImg1" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+                            <img id="contentImg1" class="contentImg contentImgs" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
                             <input type="hidden" id="input_contentImg1" name="input_contentImg1" value="">
                         </td>
 	                    <td>
-                            <img id="contentImg2" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+                            <img id="contentImg2" class="contentImg contentImgs" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
                             <input type="hidden" id="input_contentImg2" name="input_contentImg2" value="">
                         </td>
 	                    <td>
-                            <img id="contentImg3" class="contentImg" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
+                            <img id="contentImg3" class="contentImg contentImgs" src="https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg" alt="">
                             <input type="hidden" id="input_contentImg3" name="input_contentImg3" value="">
                         </td>
 	                </tr>
 	                <tr>
 	                    <th><h5 class="sub_title">상품설명</h5></th>
 	                    <td colspan="3">
-                            <input type="file" id="explainFile" name="upFile" onchange="explain(this);">
+                            <input type="file" id="explainFile" name="contentFile" onchange="explain(this);">
 
 	                    	<div name="explain" id="explain" contentEditable='true' onkeyup="deleteExplainImg(event)" onblur="loseFocus(this)"></div>
 
@@ -198,21 +198,57 @@
 
     <script>
         // DB에 저장된 해당 글의 boardImage 배열
+        
         const boardImages = JSON.parse('${ boardImage }');
         const basicImg = 'https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg';
-
+        
         window.onload = () => {
             document.querySelector('#category option[value=${ artBoard.category }]').setAttribute('selected', true);
-
+            
             loadToImg();
             loadExplain();
             allOption();
 
         }
 
+        /* 기존 사진 나타내주기 */
+        function loadToImg(){
+            let titleimg = document.getElementById('titleimg');
+            console.log(boardImages);
+
+            let contentImg1 = document.getElementById('contentImg1');
+            let contentImg2 = document.getElementById('contentImg2');
+            let contentImg3 = document.getElementById('contentImg3');
+            let input_contentImg1 = document.getElementById('input_contentImg1');
+            let input_contentImg2 = document.getElementById('input_contentImg2');
+            let input_contentImg3 = document.getElementById('input_contentImg3');
+
+
+            for(var i = 0; i < boardImages.length; i++){
+                if(boardImages[i].fileLevel == 1){
+                    titleimg.setAttribute('src', boardImages[i].modifyName);
+                    document.getElementById('input_titleimg').value = boardImages[i].modifyName;
+                }
+                else if(boardImages[i].fileLevel == 2){
+                    switch(i){
+                        case 1 : contentImg1.setAttribute('src', boardImages[i].modifyName);
+                                 input_contentImg1.value = boardImages[i].modifyName;
+                                 break;
+                        case 2 : contentImg2.setAttribute('src', boardImages[i].modifyName);
+                                 input_contentImg2.value = boardImages[i].modifyName;
+                                 break;
+                        case 3 : contentImg3.setAttribute('src', boardImages[i].modifyName);
+                                 input_contentImg3.value = boardImages[i].modifyName;
+                                 break;
+                    }
+                    // document.getElementById('contentImg'+i).setAttribute('src', boardImages[i].modifyName);
+                    // document.getElementById('input_contentImg'+ i).value = boardImages[i].modifyName;
+                }
+            }
+        }
+
         /* 제출버튼 누르면 가장 먼저 실행되는 img담는 메소드 */
         function allSrcIntoInput(){
-            
 
             let insertSrc = [];
             let updateSrc = [];
@@ -230,6 +266,11 @@
                 }
                 else if(upFiles[i].files.length == 1){
                     console.dir(upFiles[i]);
+                    if(i == 0){
+                        j == 1;
+                    }else{
+                        j == 2;
+                    }
                     updateSrc.push(
                         {'type' : contentImg[i].id
                         ,'src' : contentImg[i].getAttribute('src')
@@ -239,6 +280,7 @@
                 }
             }
             for(var i = boardImages.length; i < contentImg.length; i++){
+                j == 2;
                 if(upFiles[i].files.length == 1){
                     insertSrc.push(
                         {'type' : contentImg[i].id
@@ -251,40 +293,18 @@
             let updateImgs = document.getElementById('updateImgs');
             let insertImgs = document.getElementById('insertImgs');
 
+            console.log('updateImgs : ' + JSON.stringify(updateSrc));
+            console.log('insertSrc : ' + JSON.stringify(insertSrc));
+
             deleteImgs.value = JSON.stringify(deleteSrc);
             updateImgs.value = JSON.stringify(updateSrc);
             insertImgs.value = JSON.stringify(insertSrc);
-
-            console.log('=====deleteSrcIntoInput=====')
-            console.log(deleteSrc);
-            console.log(updateSrc);
-            console.log(insertSrc);
-
             
             
         }
 
-        /* 기존 사진 나타내주기 */
-        function loadToImg(){
-            let titleimg = document.getElementById('titleimg');
-            // let boardImages = JSON.parse('${ boardImage }');
-            console.log(boardImages);
-
-            for(var i = 0; i < boardImages.length; i++){
-                if(boardImages[i].fileLevel == 1){
-                    titleimg.setAttribute('src', boardImages[i].modifyName);
-                    document.getElementById('input_titleimg').value = boardImages[i].modifyName;
-                }
-                else if(boardImages[i].fileLevel == 2){
-                    document.getElementById('contentImg' + (i + 1)).setAttribute('src', boardImages[i].modifyName)
-                    document.getElementById('input_contentImg'+ (1 + i)).value = boardImages[i].modifyName;
-                }
-            }
-            imgPushInput();
-        }
-        function imgPushInput(){
-
-        }
+        
+        
 
         function loadExplain(){
             // boardContent에 기존 값 넣어놓기
@@ -305,7 +325,8 @@
                     explainImg.setAttribute("width", '80%');
                     explain.append(explainImg);
                 }
-            } 
+            }
+            console.log('function loadExplain(){ : ' + document.getElementById('boardContent').value);
         }
 
         function allOption(){
@@ -333,8 +354,6 @@
                 }
             }
         }
-
-       
 
         /* 옵션+버튼 스크립트 */
         let i = 1;
@@ -469,18 +488,20 @@
             // console.dir(boardContent.childNodes);
             // console.log(boardContent.childNodes[0].nodeName);
             let list = [];
+            console.log(nodes);
             for(var i = 0; i < nodes.length; i++){
                 if(nodes[i].nodeName == '#text'){
                     let data = nodes[i].data;
                     list.push({'type' : 'text'
-                                ,'data' : data });
-                } else {
+                              ,'data' : data});
+                } else if(nodes[i].nodeName == 'IMG'){
                     let data = nodes[i].src;
                     list.push({'type' : 'img'
-                                ,'data' : data});
+                              ,'data' : data});
                 }
             }
             boardContent.value = JSON.stringify(list);
+            console.log("loseFocus : " + boardContent.value)
         }   
 
         document.getElementById('deleteBoard').addEventListener('click', () => {
@@ -550,8 +571,5 @@
         }
         
 </script> 
- 
-    
-    
 </body>
 </html>
