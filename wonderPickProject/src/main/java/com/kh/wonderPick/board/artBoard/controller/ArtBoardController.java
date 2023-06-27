@@ -135,7 +135,7 @@ public class ArtBoardController {
 		
 		
 		
-		return "redirect:artList.bo?category=CI";
+		return "redirect:artList.bo";
 	}
 	
 	@RequestMapping(value="artDetail.bo")
@@ -174,6 +174,7 @@ public class ArtBoardController {
 
 	@RequestMapping("updateForm.at")
 	public ModelAndView updateArtBoard(ModelAndView mv, int boardNo, HttpSession session){
+		
 		// 로그인 나오면 지울 부
 		Member loginUser = new Member();
 		loginUser.setMemberNo(1);
@@ -352,7 +353,7 @@ public class ArtBoardController {
 		} else {
 			model.addAttribute("alertMsg", "업로드 실패");
 		}
-		return "redirect:artList.bo?category=CI";
+		return "redirect:artList.bo";
 	}
 	
 	@RequestMapping("deleteBoard.at")
