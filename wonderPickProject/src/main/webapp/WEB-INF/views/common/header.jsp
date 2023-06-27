@@ -64,19 +64,8 @@
                             <button id="submit_btn" type="button"><span class="material-symbols-outlined"> search</span></button>
                         </div>
                         <div id="search_list_area">
-                            <!--
-                                <div class="search_recent">
-                                    <ul>
-                                        <li>최근검색은 최대 3개까지만</li>
-                                        <li>
-                                        <span>2</span>
-                                        </li>
-                                        <li>3</li>
-                                    </ul>
-                                </div>
-                            -->
                             <div class="search_recent" align="center" id="search_recent_no">
-                                최근 검색어가 없습니다.
+                              
                             </div>
                             <div >
                                 <ul id="search_auto"></ul>
@@ -211,7 +200,7 @@
                         // })
 
                         let array = [];
-                        //let str = localStorage.getItem('keyword');
+                       // let str = localStorage.getItem('keyword');
                         
                         $("input[name='keyword']").keydown(function(e){
                             
@@ -222,9 +211,11 @@
                                 array.push(localStorage.getItem('keyword'))
                                 array.push(searchResult);
 
-                                //str += ',' + searchResult
 
-                                localStorage.setItem('keyword', array.join('/'));
+                                localStorage.setItem('keyword', array.join(','));
+
+                                
+
                                 //localStorage.setItem('keyword', JSON.stringify(array));
                                 
                                 let formtag = document.getElementById('formtag');
@@ -236,10 +227,32 @@
 
 
                         window.onload = () => {
+
+
                             let keyword = localStorage.getItem('keyword');
-                            $('#search_recent_no').html(keyword);
+                            console.dir(keyword)
+                            let arrays = [];
+                            arrays = keyword.split(',');
+                            let html = '';
+                            for(var i = 0; i < arrays.length; i++){
+                                let div = document.createElement('div');
+                                if(arrays.length == 0){
+                                    div.innerHTML = '최근검색어 없음';
+                                }else{
+                                    html += arrays[i];
+                                    div.innerHTML = arrays[i];
+                                }
+                                $('#search_recent_no').prepend(div);
+                            }
+                            
+                            console.log($('#search_recent_no'));
+                            if($('#search_recent_no')[0].children.length > 10){
+                                localStorage.clear();
+                            }
+
+
+
                             //console.log(array.join(','))
-                            //localStorage.clear();
                         }
 
 
