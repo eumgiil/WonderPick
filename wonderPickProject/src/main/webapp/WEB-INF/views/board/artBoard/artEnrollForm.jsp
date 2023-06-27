@@ -164,7 +164,6 @@
 	                background-color:  rgb(255, 131, 153); color: black; border: none;">굿즈 판매 요청하기</div></td>
 	            </tr>
 	        </table>
-	        
             <input type="hidden" id="options" name="options" value="'+ options +'">
             
 	    </form>
@@ -185,17 +184,17 @@
         let j = 1;
         let num;
         var art_table = document.getElementById('art_table');
-        
-
         function op_plus(){
             let value = '';
             value = '<th>'
-                        +'<button type="button" onclick="detail_op_plus(this);" style="float:left;">+</button>'
-                        +'<h5 class="sub_title">옵션카테고리'+ i +'</h5></th>'
+                        +'<button type="button" onclick="detail_op_plus(this);" style="float:left; width:25px;">+</button>'
+                        // +'<button type="button" onclick="removeOption(this);" style="float:left; width:25px;">-</button>'
+                        +'<h5 class="sub_title">메인옵션'+ i +'</h5></th>'
                     +'<td>'
                         +'<input type="text" name="option_' + i + '" id="option_' + i + '">'
                     +'</td>'
-                    +'<th><h5 class="sub_title"></h5></th>'
+                    +'<th>'
+                        +'<h5 class="sub_title"></h5></th>'
                     +'<td>'
                         +'<input type="text" readonly id="price_' + i + '">'
                     +'</td>';
@@ -220,6 +219,7 @@
             num = parseInt(id.slice(id.indexOf('y')+1));
             let value = '';
             value = '<th>'
+                        // +'<button type="button" onclick="removeOption(this);" style="float:left; width:25px;">-</button>'
                         +'<h5>옵션명</h5></th>'
                     +'<td>'
                         +'<input type="text" name="detailOp'+ num +'" class="detailOp'+ num +'">'
@@ -233,6 +233,15 @@
             tr.innerHTML += value;
             tbody.append(tr);
         }
+
+        // function removeOption(e){
+        //     let tr = e.parentElement.parentElement;
+        //     if(tr.id.includes('newTr')){
+        //         tr.parentElement.remove();
+        //     }else{
+        //         tr.remove();
+        //     }
+        // }
 
         function start(){
 

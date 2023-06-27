@@ -14,6 +14,7 @@ import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.dao.GoodsDao;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
+import com.kh.wonderPick.board.goods.model.vo.GoodsOrder;
 import com.kh.wonderPick.board.review.model.vo.Review;
 import com.kh.wonderPick.board.boardCommon.model.vo.Board;
 import com.kh.wonderPick.common.model.vo.PageInfo;
@@ -152,8 +153,23 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	
 	@Override
+	public int insertHeart(Heart h) {
+		return goodsDao.insertHeart(sqlSession, h);
+	}
+	
+	@Override 
+	 public int deleteHeart(int boardNo) {
+		return goodsDao.deleteHeart(sqlSession, boardNo);
+	}
+	
+	@Override
 	public int deleteReply(int replyNo) {
 		return goodsDao.deleteReply(sqlSession, replyNo);
+	}
+	
+	@Override
+	public int insertOrder(GoodsOrder go) {
+		return goodsDao.insertOrder(sqlSession, go);
 	}
 	
 	

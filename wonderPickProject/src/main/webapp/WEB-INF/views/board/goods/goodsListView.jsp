@@ -11,9 +11,10 @@
     <title>굿즈판매목록페이지</title>
     <style>
         
-        #option{
-            width: 110px;
+        #selectOrder{
+            width: 100px;
             height: 35px;
+            float:right;
        
         }
         input{
@@ -25,7 +26,7 @@
         .goodsList1{
             border: 1px solid black;
             width: 900px;
-            margin:auto;
+            margin-left:50px;
             
         }
         
@@ -33,7 +34,7 @@
             width: 1300px;
         }
         .goodsList2{
-            width: 250px;
+            width: 270px;
    
         }
         .main{
@@ -66,8 +67,7 @@
         }
         #searchGoods{
          float : left;
-         margin-left:50px;
-         
+         width:700px;
         }
         .pagingArea{
         margin-left : 450px;
@@ -142,48 +142,48 @@
     <div class="topouter" align="center">
         <h2 align="center" style="color: rgb(255, 131, 153);">굿즈</h2>
         <hr style="width: 600px; border: 1px solid gray;">
-        <h6>n개의 상품이 있습니다.</h6>
+        <h6>${list.size()}개의 상품이 있습니다.</h6>
    <div class="top" align="center" style="float : left;">
-   <div id="searchGoods" >
-        <form action="search.go" method="get" align="center">
-        <input type="hidden" name="currentPage" value="1">
-         <select name="condition" style="width:100px; height:35px;" >
-            <option value="nickname">작가명</option>
-            <option value="boardTitle">제목순</option>
-        </select>
-        <input type="text" value="${ keyword }" name="keyword">
-        <button type="submit" style="background-color: white; border: none;"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-search-strong-512.png" alt="" width="40"></button>
-        </form>
-   </div>
-   <c:if test="${not empty condition}">
-   <script>
-    $(function(){
-    	$('#searchGoods option[value=${condition}]').attr('selected', true);
-    })
-   </script>
-   
-   </c:if>
-   <form action="list.go" method="post" id="listForm">
-       <div class="option" >
-           <select name="selectOrder" id="selectOrder" >
-               <option value="latest">최신 등록순</option>
-               <option value="popularity">인기순</option>
-               <option value="lowPrice">가격 낮은 순</option>
-            </select>
-        </div>     
-    </form>
+		   <div id="searchGoods" >
+		        <form action="search.go" method="get" align="center">
+			        <input type="hidden" name="currentPage" value="1">
+			         <select name="condition" style="width:100px; height:35px;" >
+			            <option value="nickname">작가명</option>
+			            <option value="boardTitle">제목순</option>
+			        </select>
+			        <input type="text" value="${ keyword }" name="keyword">
+			        <button type="submit" style="background-color: white; border: none;"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-search-strong-512.png" alt="" width="40"></button>
+		        </form>
+		        <form action="list.go" method="post" id="listForm">
+			       <div class="option" >
+			           <select name="selectOrder" id="selectOrder" >
+			               <option value="latest">최신 등록순</option>
+			               <option value="popularity">인기순</option>
+			               <option value="lowPrice">가격 낮은 순</option>
+			            </select>
+			        </div>     
+			    </form>
+		   </div>
+   		   <c:if test="${not empty condition}">
+			   <script>
+			    $(function(){
+			    	$('#searchGoods option[value=${condition}]').attr('selected', true);
+			    })
+			   </script>
+   		   </c:if>
+		   
    </div>
 
         </div>
-        <br><br><br><br>
+        <br><br><br><br><br>
 
         <!-- 전체리스트 -->
-        <div class="goodsList1"  id="goods" style="width: 900px; margin-left: 600px; margin-top:100px;"  align="center">
+        <div class="goodsList1"  id="goods" style="width: 1000px; margin-left: 550px; margin-top:100px;"  align="center">
           <c:choose>  
             <c:when test="${not empty list}">
               <c:forEach items="${list}" var="g">
                   <div class="goodsList2" style="display:inline-block;">
-                    <img src="${ g.filePath }" alt=""  width="250" style="border:1px solid black; width:250px; height:250px;"  ><br>
+                    <img src="${ g.filePath }" alt=""  width="250" style=" width:250px; height:250px;"  ><br>
                     <table id="goodsInfo"  id="goods" width="250">
 	                    <tr>
 	                        <td>${g.nickName}</td>
@@ -195,7 +195,7 @@
 			                      	 <c:if test="${not empty heartList }">
 			                      	 	<c:forEach items="${heartList}" var="h">
 			                      	 	<c:choose>
-				                            <c:when test="${ h.memberNo == loginMember.memberNo && g.boardNo == h.boardNo }">
+				                            <c:when test="${ (h.memberNo==loginMember.memberNo) != 0 }">
 				                              <th style="font-size: 35px;"><img src="resources/common/heart.png" width="30" style="float: right;" alt="" id="heart" onclick="updateHeart();"></th>
 				                            </c:when>  
 				                            <c:otherwise>

@@ -101,7 +101,7 @@
 	 group by
            b.board_no, board_title, nickname, create_date, price, origin_name, modify_name, file_path
 	 order by
-	     <if test="null != selectOrder and selectOrder != 'registration'">
+	     <if test="null != selectOrder and selectOrder != 'latest'">
 	          <choose>
 	               <when test="selectOrder == 'popularity'">
 	                    heart desc,
@@ -142,7 +142,10 @@
        board_count,
        to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
        price,
-       origin_name
+       origin_name,
+       modify_name,
+       file_level,
+       file_path
   from 
        board b
  join 
@@ -156,8 +159,10 @@ and
     board_type ='G'
 and 
     goods_category = #{goodsCategory}
+ and 
+    file_level = 1
 order by
-      board_no asc
+	     board_no desc
   
   
   </select>
@@ -349,10 +354,14 @@ select
   		 member_no memberNo,
        	 nickname nickname,
          content content,
-         to_char(create_date, 'YYYY-MM-DD') as "createDate"
+         to_char(create_date, 'YYYY-MM-DD') as "createDate",
+         file_path filePath,
+         file_level fileLevel
  	from  reply
   	join  member using (member_no)
+  	join board_image using(board_no)
 	where board_no = #{boardNo}
+	and file_level = 1
  	order 
  	   by 
  	       create_date desc
@@ -415,9 +424,26 @@ select
 	where board_type = 'G'
     and board_no = #{boardNo}
     and h.member_no = #{memberNo}
-  
-  
   </select>
+  <delete id="deleteHeart"   parameterType="_int">
+  DELETE
+	FROM heart
+	WHERE 
+		 board_no = #{boardNo}
+	and     
+		 member_no = #{memberNo}
+  </delete>
+  <insert id="insertHeart" parameterType="heart">
+  insert 
+    into
+         heart
+  values
+	     (
+	     #{boardNo},
+	     #{memberNo}
+	     )
+  
+  </insert>
   
   
   <select id="searchGoodsCount" resultType="_int" parameterType="hashmap">
@@ -442,7 +468,9 @@ select
           board_count,
           to_char(create_date, 'YYYY-MM-DD') as "create_date" ,
           price,
-          origin_name
+          origin_name,
+          file_level,
+          file_path
      from 
           board b
      join 
@@ -454,6 +482,7 @@ select
           b.status = 'Y'
      and 
      board_type ='G'
+     and file_level = 1
      <if test="condition == 'nickname'">
           and nickname
      </if>
@@ -473,7 +502,24 @@ select
  WHERE 
        reply_no = #{replyNo}
  </delete>
-
+<insert id="insertOrder" parameterType="goodsOrder">
+insert
+  into
+       goods_order
+values
+       (
+       seq_goods_order.nextval,
+       #{boardNo},
+       #{memberNo},
+       #{orderTitle},
+       #{price},
+       #{amount},
+       '결제완료',
+       SYSDATE,
+       #{addDraft},
+       #{addModify}
+       )
+</insert>
  
  
   

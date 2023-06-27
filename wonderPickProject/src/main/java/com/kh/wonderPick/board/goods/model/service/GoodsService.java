@@ -9,6 +9,7 @@ import com.kh.wonderPick.board.boardCommon.model.vo.Heart;
 import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
+import com.kh.wonderPick.board.goods.model.vo.GoodsOrder;
 import com.kh.wonderPick.board.review.model.vo.Review;
 import com.kh.wonderPick.common.model.vo.PageInfo;
 
@@ -25,7 +26,7 @@ public interface GoodsService {
 	
 	
 	// 카테고리별 게시글 리스트 조회
-	ArrayList<Goods> selectCategoryList(PageInfo pi, String goodsCategory);
+	ArrayList<Goods> selectCategoryList(PageInfo pi, String goodsCategory );
 	
 	// 게시글 작성하기
 	int insertGoods(Board b, ArrayList<BoardImage> list, Goods g);
@@ -75,9 +76,17 @@ public interface GoodsService {
 	// 회원별 좋아요 글별 상세 조회
 	Heart selectHeart(int boardNo);
 	
+	// 좋아요 추가
+	int insertHeart(Heart h);
+	
+	// 좋아요 삭제
+	int deleteHeart(int boardNo);
 	
 	// 댓글 삭제
 	int deleteReply(int replyNo);
+	
+	// 주문
+	int insertOrder(GoodsOrder go);
 	
 
 	

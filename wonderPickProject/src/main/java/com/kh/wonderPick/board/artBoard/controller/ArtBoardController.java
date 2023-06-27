@@ -81,11 +81,11 @@ public class ArtBoardController {
 							     HttpServletRequest request,
 							     Model model) {
 		
-		// 로그인 나오면 지울 부
-		Member loginUser = new Member();
-		loginUser.setMemberNo(1);
-		session.setAttribute("loginUser", loginUser);
-		// 지울 부분 끝
+//		// 로그인 나오면 지울 부
+//		Member loginUser = new Member();
+//		loginUser.setMemberNo(1);
+//		session.setAttribute("loginUser", loginUser);
+//		// 지울 부분 끝
 		
 		// 옵션 ArrayList에 담기
 		ArrayList<Option> list = new ArrayList(); // VO들이 담긴 객체
@@ -135,11 +135,12 @@ public class ArtBoardController {
 		
 		
 		
-		return "redirect:artList.bo?category=CI";
+		return "redirect:artList.bo";
 	}
 	
 	@RequestMapping(value="artDetail.bo")
 	public ModelAndView artDetail(ModelAndView mv, int bno, HttpSession session) {
+		
 		
 		// 로그인 나오면 지울 부
 		Member loginUser = new Member();
@@ -147,10 +148,6 @@ public class ArtBoardController {
 		session.setAttribute("loginUser", loginUser);
 		// 지울 부분 끝
 		
-//		reply
-//		re_reply
-		
-		// 로그인 번호 받고 selectArtBoard에 bno랑 mno를 int[]로 보내기
 		
 		
 		int mno = ((Member)session.getAttribute("loginUser")).getMemberNo();
@@ -173,6 +170,7 @@ public class ArtBoardController {
 
 	@RequestMapping("updateForm.at")
 	public ModelAndView updateArtBoard(ModelAndView mv, int boardNo, HttpSession session){
+		
 		// 로그인 나오면 지울 부
 		Member loginUser = new Member();
 		loginUser.setMemberNo(1);
@@ -191,10 +189,6 @@ public class ArtBoardController {
 		artBoard.getBoard().setBoardNo(boardNo);
 		ArrayList<Option> optionList = artService.selectOptionList(boardNo);
 		ArrayList<BoardImage> boardImage = artService.selectBoardImage(boardNo);
-		
-		System.out.println(artBoard);
-		System.out.println(optionList.toString());
-		System.out.println(boardImage);
 		
 		mv.addObject("artBoard", artBoard)
 		  .addObject("optionList", new Gson().toJson(optionList))
@@ -218,11 +212,11 @@ public class ArtBoardController {
 						    String insertImgs) {
 		
 		
-		// 로그인 나오면 지울 부
-		Member loginUser = new Member();
-		loginUser.setMemberNo(1);
-		session.setAttribute("loginUser", loginUser);
-		// 지울 부분 끝
+//		// 로그인 나오면 지울 부
+//		Member loginUser = new Member();
+//		loginUser.setMemberNo(1);
+//		session.setAttribute("loginUser", loginUser);
+//		// 지울 부분 끝
 		
 		// 삭제할 옵션 no
 		ArrayList<Integer> deleteOptionNos = new ArrayList();
@@ -235,6 +229,8 @@ public class ArtBoardController {
 			Option option = new Option();
 			ArrayList<DetailOption> detailList = new ArrayList();
 			option.setMainOp(request.getParameter("option_" + i));
+			
+			
 			for(int j = 0; j < request.getParameterValues("detailOp" + i).length; j++) {
 				DetailOption detailOption = new DetailOption();
 				detailOption.setDetail(request.getParameterValues("detailOp" + i)[j]);
@@ -268,11 +264,16 @@ public class ArtBoardController {
 		ArrayList<BoardImage> insertBoardImages = new ArrayList();
 		
 		BoardImage boardImage = new BoardImage();
-		
 		// 삭제할 boardImgNo가 들어있는 Array  => update로 바꿔야함
 		for(int i = 0; i < deleteImgsArray.size(); i++) {
 			// resources 폴더에서 삭제
-			new File("/" + deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString()).delete();
+			if(null != deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString()) {
+				String src = deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString();
+				if(artService.selectBoardImgNo(src) > 0) {
+					String modifyName = artService.deleteImgPath(artService.selectBoardImgNo(src)).getModifyName();
+					new File(session.getServletContext().getRealPath(modifyName)).delete();
+				}
+			}
 			// DB에서 삭제하기 위해 array에 담기
 			deleteBoardImgNo.add(deleteImgsArray.get(i).getAsJsonObject().get("boardImgNo").getAsInt());
 		}
@@ -288,7 +289,6 @@ public class ArtBoardController {
 		// insert boardImages
 		for(int i = 0; i < insertImgsArray.size(); i++) {
 			int insertInt = insertImgsArray.get(i).getAsJsonObject().get("insertUpFile[i]").getAsInt();
-			System.out.println("insertInt : " +insertInt);
 			boardImage = new BoardController().saveUpdate(upFile[insertInt], session, savePath, folderPath);
 			boardImage.setBoardNo(board.getBoardNo());
 			if(insertInt == 0) {
@@ -298,7 +298,6 @@ public class ArtBoardController {
 			}
 			insertBoardImages.add(boardImage);
 		}
-		System.out.println("insertBoardImages.toString() : " + insertBoardImages.toString());
 		
 		
 		// 상세설명 영역
@@ -313,7 +312,10 @@ public class ArtBoardController {
 		for(int i = 0; i < total.size(); i++) {
 			if("img".equals(total.get(i).getAsJsonObject().get("type").getAsString())) {
 				String src = total.get(i).getAsJsonObject().get("data").getAsString();
-				new File("/" + src).delete(); // resources 폴더에서 삭제
+				if(artService.selectBoardImgNo(src) > 0) {
+					String modifyName = artService.deleteImgPath(artService.selectBoardImgNo(src)).getModifyName();
+					new File(session.getServletContext().getRealPath(modifyName)).delete();
+				}
 				int imgNo = artService.selectBoardImgNo(src);
 				if(imgNo != 0) {
 					deleteBoardImgNo.add(imgNo);	// 기존 이미지 삭제 메소드 매개변수에 추가
@@ -349,7 +351,7 @@ public class ArtBoardController {
 		} else {
 			model.addAttribute("alertMsg", "업로드 실패");
 		}
-		return "redirect:artList.bo?category=CI";
+		return "redirect:artList.bo";
 	}
 	
 	@RequestMapping("deleteBoard.at")

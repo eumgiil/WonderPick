@@ -333,6 +333,8 @@
                     /* 옵션추가 */
             // option 보내준 값 json으로 변환
             let optionList = JSON.parse('${ optionList }');
+            console.log('function allOption()')
+            console.dir(optionList)
             if(optionList.length != 0){
                 // 메인옵션 칸 늘리고 기존 값 각각 넣기
                 for(var i = 0; i < optionList.length; i++){
@@ -390,6 +392,7 @@
             let id = tbody.id;
             // let str = id.slice(0, id.indexOf('y') + 1);
             num = parseInt(id.slice(id.indexOf('y')+1));
+            console.log("395행 num : " + num)
             let value = '';
             value = '<th>'
                         +'<h5>옵션명</h5></th>'
@@ -411,6 +414,8 @@
             allSrcIntoInput();
             /* tbody개수 파악  */
         	let length = art_table.tBodies.length;
+
+            console.log('417행 : ' + length)
 
             let detailOp = [];
             let opPrice = [];
@@ -447,7 +452,8 @@
             }
             form.action = 'updateBoard.at';
             form.submit();
-
+            console.log("454행  options");
+            console.dir(options);
            	
         }
 

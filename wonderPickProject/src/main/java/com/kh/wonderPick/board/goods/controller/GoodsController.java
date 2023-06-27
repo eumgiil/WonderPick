@@ -28,6 +28,7 @@ import com.kh.wonderPick.board.boardCommon.model.vo.Re_Reply;
 import com.kh.wonderPick.board.boardCommon.model.vo.Reply;
 import com.kh.wonderPick.board.goods.model.service.GoodsService;
 import com.kh.wonderPick.board.goods.model.vo.Goods;
+import com.kh.wonderPick.board.goods.model.vo.GoodsOrder;
 import com.kh.wonderPick.board.review.model.vo.Review;
 import com.kh.wonderPick.common.template.Pagination;
 import com.google.gson.Gson;
@@ -49,10 +50,13 @@ public class GoodsController {
 		heartList = goodsService.selectHeartList();
 		*/
 		
+	
 		model.addAttribute("pi", pi);
 		model.addAttribute("heartList",goodsService.selectHeartList());
 		System.out.println(goodsService.selectHeartList());
 		model.addAttribute("list", goodsService.selectGoodsList(pi, selectOrder));
+		model.addAttribute("selectOrder", selectOrder);
+		System.out.println(goodsService.selectGoodsList(pi, selectOrder));
 		
 		return "board/goods/goodsListView";
 	}
@@ -80,6 +84,7 @@ public class GoodsController {
 			System.out.println(goodsService.selectBoardImage(boardNo));
 			mv.addObject("reviewList", goodsService.selectReviewList(boardNo));
 			mv.addObject("replyList", goodsService.selectReplyList(boardNo));
+			System.out.println( goodsService.selectReplyList(boardNo));
 			mv.addObject("heart", goodsService.selectHeart(boardNo));
 			System.out.println(goodsService.selectHeart(boardNo));
 			mv.setViewName("board/goods/goodsDetailView");
@@ -93,7 +98,7 @@ public class GoodsController {
 	}
 
 	@RequestMapping("search.go")
-	public void searchGoods(@RequestParam(value="cPage", defaultValue="1")int currentPage,
+	public ModelAndView searchGoods(@RequestParam(value="cPage", defaultValue="1")int currentPage,
 									ModelAndView mv,
 									String condition,
 									String keyword,
@@ -102,6 +107,7 @@ public class GoodsController {
 		
 		map.put("condition", condition);
 		map.put("keyword", keyword);
+		
 	    System.out.println("안녕 난 컨트롤러얌~히히");
 		PageInfo pi = Pagination.getPageInfo(goodsService.searchGoodsCount(map), currentPage,12, 10);
 	    System.out.println(pi);
@@ -110,7 +116,7 @@ public class GoodsController {
 		mv.setViewName("board/goods/goodsListView");
 
 		
-		// return mv;
+	return mv;
 	}
 	
 	@RequestMapping("enrollForm.go")
@@ -379,32 +385,52 @@ public class GoodsController {
 	}
 	*/
 	
-	/*
+	
 	@ResponseBody
 	@RequestMapping(value="updateHeart.go", produces="application/json; charset=UTF-8")
-	public String updateHeart(Heart h , HttpSession httpSession, Model model) {
+	public String updateHeart(int boardNo, int memberNo , Heart h, HttpSession httpSession,ModelAndView mv) {
 		
 		
-		int result = goodsService.insertHeart(h);
-		
-		if(result > 0 ) {
-			 model.addAttribute("result", result);
-			 
+		if(goodsService.selectHeart(boardNo) != null ) {
+			mv.addObject("result", goodsService.deleteHeart(boardNo));
+			mv.setViewName("board/goods/goodsDetailView");
+		}else {
+			mv.addObject("result", goodsService.insertHeart(h));
+			mv.setViewName("board/goods/goodsDetailView");
 		}
+		return new Gson().toJson(goodsService.selectHeart(boardNo));
 		
 	}
-	*/
+	
 	
 	// 댓글 삭제
 	@RequestMapping("deleteReply.go")
-	public String deleteReply(int replyNo, HttpSession session) {
-		if(goodsService.deleteReply(replyNo)>0) {
+	public String  deleteReply(int replyNo, int boardNo, HttpSession session, Model m) {
+		if(goodsService.deleteReply(replyNo) > 0) {
 			session.setAttribute("alertMsg", "댓글 삭제 완료");
-			return "redirect:detail.go";
+			return "redirect:detail.go?boardNo=" + boardNo;
 		}else {
 			session.setAttribute("errorMsg", "댓글 삭제 실패");
-			return "redirect:detail.go";
+			return "redirect:detail.go?boardNo=" + boardNo;
 		}
+	}
+
+	
+	// 주문
+	@RequestMapping("order.go")
+	public String orderGoods(GoodsOrder go, int boardNo, HttpSession session) {
+		
+		int result = goodsService.insertOrder(go);
+		
+		if(result > 0 ) {
+			session.setAttribute("alertMsg", "주문 완료");
+			return "redirect:list.go?cPage=1" ;
+		}else {
+			session.setAttribute("errorMsg", "주문 실패. 다시 시도해주십시오");
+			return "redirect:detail.go?boardNo=" + boardNo;
+		}
+		
+		
 	}
 	
 	

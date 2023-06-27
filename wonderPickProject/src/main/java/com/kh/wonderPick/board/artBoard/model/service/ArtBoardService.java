@@ -38,6 +38,8 @@ public interface ArtBoardService {
 	
 	int deleteBoard(int boardNo);
 	
+	BoardImage deleteImgPath(int imgNo);
+	
 	
 	
 	

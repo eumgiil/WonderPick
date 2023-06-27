@@ -28,7 +28,7 @@
         }
         .artist{
             display: inline-block;
-            width:300px;
+            width:400px;
             margin-right:300px;
             float : right;
             
@@ -212,6 +212,7 @@
                         event.preventDefault();
                         $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
                     });
+                    choice();
 
                 });
             </script>
@@ -372,15 +373,39 @@
 				</table>
 
             <br><br><br><br><br>
+            
 
         </div>
+        <script>
+         function updateHeart(){
+        	$.ajax({
+        		url : 'updateHeart.go',
+        		data : {
+        			boardNo : ${g.boardNo},
+        			memberNo :  ${loginMember.memberNo}
+        		},
+        		success : function(result){
+        			console.log(result);
+        			if(result > 0){
+        				//이미 db에 회원의 좋아요 기록이 있다면
+        				$('#heart').attr('src', 'resources/common/noheart.png');
+        			}else{
+        				// 없으면 하트 생성
+        				$('#heart').attr('src', 'resources/common/heart.png');
+        			};
+        		},
+        		error:function(){
+        			console.log('실패');
+        		}
+        	});
+        </script>
         <!-- 왼쪽 끝 -->	
         <script>
         $(function(){
             selectReplyList();
-          	//selectHeart();
-        	//updateHeart();
          });
+        
+       
         
         
         		function insertReply(){
@@ -418,43 +443,40 @@
         		
         	  
                 };
+                
+                
         	
                 function selectReplyList(){
-             	   console.log("실행은 됨")
              	   $.ajax({
              		   url : 'rlist.go',
              		   data : {
              			   boardNo: '${g.boardNo}'
              		   },
              		   success : function(replyList){
-             			   console.log(replyList);
-             			   console.log('loginMember.memberNo : ' + '${loginMember.memberNo}');
-             			   console.log(' replyList[i].memberNo : ' + '${ replyList[i].memberNo}');
-             			   console.log('asdasd');
+             			
              			   let value="";
-             			   for(let i of replyList){
-                            console.log(i.memberNo == '${loginMember.memberNo}');
+             			   for(let i in replyList){
     
-                            value  +='<input type="hidden" value="'+ i.boardNo + '">'
-                                    +'<table class="t_align_left" style="border: 1px solid black;">'
+                            value  +='<input type="hidden" value="'+ replyList[i].boardNo + '">'
+                                   +'<table class="t_align_left" style="border: 1px solid black;">'
                                         +'<tr>'
                                             +'<td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">'
-                                                +'<img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">'
+                                                +'<img class="width" src="'+ replyList[i].filePath +'">'
                                             +'</td>'
-                                            +'<td width="75%" style="padding-left:10px;">' + i.nickname + '</td>'
+                                            +'<td width="75%" style="padding-left:10px;">' + replyList[i].nickname + '</td>'
                                             +'<td width="10%" rowspan="2">';
     
-                            if(i.memberNo == '${loginMember.memberNo}'){
-                                value +=         '<a href="deleteReply.go?bno=${ bno }&replyNo=' + i.replyNo + '" style="background-color: white; border: none;">'
-                                                +'<img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>';
-                            }
-    
-                            value +=        '<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
+                            if(replyList[i].memberNo == '${loginMember.memberNo}'){
+                                value +=  '<a href="deleteReply.go?boardNo=' + replyList[i].boardNo + '&replyNo=' + replyList[i].replyNo + '" style="background-color: white; border: none;">'
+                                	  + '<input type="hidden" value="'+ replyList[i].replyNo + '">'
+                                      +   '<img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>';
+                            } 
+                                value +=  '<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
                                         +'</td>'
-                                    +'</tr>'
-                                    +'<tr>'
-                                        +'<td style="padding-left:10px;">' + i.content + '</td>'
-                                    +'</tr>'
+                                        +'</tr>'
+                                        +'<tr>'
+                                        +'<td style="padding-left:10px;">' + replyList[i].content + '</td>'
+                                        +'</tr>'
                                 +'</table>';
                         };
              			   $('#replyArea thead').html(value);
@@ -557,25 +579,41 @@
             
 
 	            <div class="right">
-		            <form action="order.go" method="post">
+		            <form action="order.go" method="post" enctype="multipart/form-data">
 		                <table class="goods_option" >
-		                <input type="hidden" value="${g.boardNo}"> 
+		                <input type="hidden" value="${g.boardNo}" name="boardNo"> 
+		                <input type="hidden" value="${loginMember.memberNo }" name="memberNo">
+		                <input type="hidden" value="${g.boardTitle}" name="orderTitle"> 
 		                    <tr>
 		                        <td width="50%">추가시안횟수</td>
 		                        <td class="t_align_right" style="float:right;" width="100%">
-		                            <input type="number" min="0" style="width: 100px; " id="addDraft" name="addDraft">회
+			                        <c:choose>
+			                        	<c:when test="${g.addDraft == 0 }">
+			                        	<input type="number" min="0" style="width: 100px;" id="addDraft" name="addDraft" onkeyup="choice();" placeholder="0" readonly value=0>회
+			                        	</c:when>
+			                        	<c:otherwise>
+			                        	<input type="number" min="0" style="width: 100px;" id="addDraft" name="addDraft" onkeyup="choice();">회
+			                        	</c:otherwise>
+			                        </c:choose>
 		                       </td>
 		                    </tr>
 		                    <tr>
 		                        <td>추가수정횟수</td>
 		                        <td class="t_align_right">
-		                            <input type="number" min="0" style="width: 100px;" id="addModify" name="addModify">회
+		                        	<c:choose>
+		                        	<c:when test="${g.addModify == 0 }">
+		                        	<input type="number" min="0" style="width: 100px;" id="addModify" name="addModify" onkeyup="choice();" placeholder="0" value=0 readonly>회
+		                        	</c:when>
+		                        	<c:otherwise>
+		                        	<input type="number" min="0" style="width: 100px;" id="addModify" name="addModify" onkeyup="choice();">회
+		                        	</c:otherwise>
+		                        	</c:choose>
 		                        </td>
 		                    </tr>
 		                    <tr>
 		                        <td>주문수량</td>
 		                        <td class="t_align_right">
-		                            <input type="number" min="1" style="width: 100px;" id="amount" id="amount" >개
+		                            <input type="number" min="1" style="width: 100px;" name="amount" id="amount" onkeyup="choice();">개
 		                        </td>
 		                    </tr>
 		                    <tr>
@@ -586,7 +624,7 @@
 		                    <tr>
 		                    	<td colspan="2">
 		                    	<div class="center">
-					                <button type="submit" class="btn btn-info" style="border: none; background-color:  black; color: rgb(255, 131, 153); width:100%; ">작가에게 주문요청</button>
+					                <button type="submit" onclick="orderGoods()" class="btn btn-info" style="border: none; background-color:  black; color: rgb(255, 131, 153); width:100%; ">작가에게 주문요청</button>
 					            </div>
 		                    	</td>
 		                    <tr>
@@ -601,12 +639,15 @@
             
             
             <script>
-            
-            
             function choice(){
-            	let addDraft = ${g.addDraft} * $('#addDraft').val();
+            	let addDraft = ${g.addDraft} * $('#addDraft').val(); 
             	let addModify = ${g.addModify} * $('#addModify').val();
-            	let amount = $('#amount').val();
+            	let amount; 
+           		if($('#amount').val().length == 0){
+           			amount = 1;
+            	}else{
+            		amount = $('#amount').val();
+            	}
             	let price = ${g.price};
             	
             	let number = parseInt( addDraft + addModify + (price * amount));

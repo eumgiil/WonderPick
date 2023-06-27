@@ -179,34 +179,7 @@
                 <h3>[ 문의 댓글 ]</h3>
 				<table id="replyArea" align="center">
                     <thead>
-                        <!-- <c:choose>
-                            <c:when test="${ empty replyList }">
-                                <h3>댓글 내역이 존재하지 않습니다.</h3>
-                                <br>
-                            </c:when>
-                            <c:otherwise>
-                                <c:if test="${not empty reReplyList }">
-                                    <input type="hidden" value="${re.replyNo }">
-                                    <c:forEach items="${reReplyList }" var="re">
-                                        <table class="reReply" border="1">
-                                            <tr>
-                                                <td width="15%" rowspan="3" style="padding:10px; border-right: 1px solid lightslategray;">판매자 프로필</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="70%" style="padding-left:10px;">${re.nickname }</td>
-                                                <td width="15%" rowspan="3">
-                                                    <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>
-                                                    <a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding-left:10px;">${re.content}</td>
-                                            </tr>
-                                        </table>
-                                    </c:forEach>
-                                </c:if>
-                            </c:otherwise>
-                        </c:choose> -->
+                        
                     </thead>
                     <tbody>
                         <br>
@@ -295,10 +268,10 @@
                             <form action="updateForm.at" method="get">
                                 <input type="hidden" name="boardNo" value="${ bno }">
                                 <button class="btn btn-danger">수정</button>
-
-                                <!-- <c:if test="${member.memberNo eq artBoard.board.boardNo}"> -->
-                                <!-- </c:if> -->
+                                
                             </form>
+                            <!-- <c:if test="${member.memberNo eq artBoard.board.boardNo}"> -->
+                            <!-- </c:if> -->
                         </td>
                     </tr>
                     <tr>
@@ -498,6 +471,7 @@
             /* 옵션 불러오기 */
             let optionTable = document.getElementById('optionTable');
             let optionList = JSON.parse('${ optionList }');
+            console.log("optionList : " + '${ optionList }');
             for(var eachOption of optionList){
                 let select = document.createElement('select');
                 select.style.textAlign = 'center';
