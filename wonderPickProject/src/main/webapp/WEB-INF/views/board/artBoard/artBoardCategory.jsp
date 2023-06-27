@@ -104,7 +104,7 @@
     </div>
     <!-- 전체 끝 -->
 
-    <script>
+    <!-- <script>
         let divs = document.querySelectorAll('#artBoardCategory div');
         for(let div of divs){
             div.addEventListener('click', function(event){
@@ -116,7 +116,7 @@
                 event.target.style.color = "red";
             })
         }
-    </script>
+    </script> -->
 
 
     

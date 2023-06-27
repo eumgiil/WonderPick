@@ -43,6 +43,8 @@ public interface ContestService {
 
 	ArrayList<Contest> selectEmoticon(int memberNo);
 
+	ArrayList<Contest> selectVote();
+
 
 	
 	// 페이징처리 

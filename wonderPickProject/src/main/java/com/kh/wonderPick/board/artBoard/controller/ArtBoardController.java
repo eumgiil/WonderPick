@@ -64,8 +64,6 @@ public class ArtBoardController {
 		  .addObject("searchArt", searchArt)
 		  .setViewName("board/artBoard/artListView");
 		
-//		System.out.println("pi : " + pi);
-//		System.out.println("list : " + artService.selectArtList(pi, searchArt));
 		return mv;
 	}
 	
@@ -76,12 +74,12 @@ public class ArtBoardController {
 	
 	@RequestMapping(value="insertBoard.at")
 	public String enrollArtBoard(Board board,
-							   ArtBoard artBoard,
-							   String[] options,
-							   MultipartFile[] upFile,
-							   HttpSession session,
-							   HttpServletRequest request,
-							   Model model) {
+							   	 ArtBoard artBoard,
+							     String[] options,
+							     MultipartFile[] upFile,
+							     HttpSession session,
+							     HttpServletRequest request,
+							     Model model) {
 		
 		// 로그인 나오면 지울 부
 		Member loginUser = new Member();
@@ -112,6 +110,8 @@ public class ArtBoardController {
 		
 		// 상세설명 영역
 		String boardContent = board.getBoardContent();
+		
+		
 		JsonArray total  = new JsonParser().parse(boardContent).getAsJsonArray();
 		for(int i = 0; i < total.size(); i++) {
 			if("img".equals(total.get(i).getAsJsonObject().get("type").getAsString())) {
@@ -131,13 +131,16 @@ public class ArtBoardController {
 		} else {
 			model.addAttribute("alertMsg", "업로드 실패");
 		}
+		
+		
+		
+		
 		return "redirect:artList.bo?category=CI";
 	}
 	
 	@RequestMapping(value="artDetail.bo")
 	public ModelAndView artDetail(ModelAndView mv, int bno, HttpSession session) {
 		
-		System.out.println(bno);
 		// 로그인 나오면 지울 부
 		Member loginUser = new Member();
 		loginUser.setMemberNo(1);
@@ -159,34 +162,14 @@ public class ArtBoardController {
 		ArtBoard artBoard = artService.selectArtBoard(maps);
 		ArrayList<Option> optionList = artService.selectOptionList(bno);
 		ArrayList<BoardImage> boardImage = artService.selectBoardImage(bno);
-		
-//		ArrayList<Review> reviewList = reviewService.selectBoardReviewList(bno);
-		
-		
-		
-		// 이 부분 따로 빼는거 상의해야함
-//		ArrayList<Reply1> replyList = replyService.selectReplyList(bno);
-		
 		mv.addObject("artBoard", artBoard)
 		  .addObject("optionList", new Gson().toJson(optionList))
 		  .addObject("boardImage", new Gson().toJson(boardImage))
-//		  .addObject("reviewList", reviewList)
 		  .addObject("bno",bno)
-//		  .addObject("replyList", replyList)
 		  .setViewName("board/artBoard/artDetailView");
 		return mv;
 	}
 	
-//	@RequestMapping("searchForm.at")
-//	public ModelAndView searchForm(@RequestParam(value="cPage", defaultValue="1") int currentPage, ModelAndView mv, SearchArt searchArt){
-//		System.out.println("search : " + searchArt.getSearch());
-//		System.out.println("searchArt : " + searchArt.getKeyword());
-//		System.out.println(artService.selectSearchListCount(searchArt));
-//		PageInfo pi = Pagination.getPageInfo(artService.selectSearchListCount(searchArt), currentPage, 12, 10);
-//		System.out.println(artService.selectSearchList(pi, searchArt).size());
-//		mv.addObject("pi", pi).addObject("list", artService.selectSearchList(pi, searchArt)).setViewName("board/artBoard/artListView");
-//		return mv;
-//	}
 
 	@RequestMapping("updateForm.at")
 	public ModelAndView updateArtBoard(ModelAndView mv, int boardNo, HttpSession session){
@@ -222,9 +205,10 @@ public class ArtBoardController {
 	}
 	
 	@RequestMapping("updateBoard.at")
-	public void updateBoard(Board board,
+	public String updateBoard(Board board,
 						    ArtBoard artBoard,
 						    String[] options,
+						    MultipartFile contentFile,
 						    MultipartFile[] upFile,
 						    HttpSession session,
 						    HttpServletRequest request,
@@ -288,8 +272,6 @@ public class ArtBoardController {
 		// 삭제할 boardImgNo가 들어있는 Array  => update로 바꿔야함
 		for(int i = 0; i < deleteImgsArray.size(); i++) {
 			// resources 폴더에서 삭제
-			System.out.println("삭제 전");
-			System.out.println("/" + deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString());
 			new File("/" + deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString()).delete();
 			// DB에서 삭제하기 위해 array에 담기
 			deleteBoardImgNo.add(deleteImgsArray.get(i).getAsJsonObject().get("boardImgNo").getAsInt());
@@ -306,6 +288,7 @@ public class ArtBoardController {
 		// insert boardImages
 		for(int i = 0; i < insertImgsArray.size(); i++) {
 			int insertInt = insertImgsArray.get(i).getAsJsonObject().get("insertUpFile[i]").getAsInt();
+			System.out.println("insertInt : " +insertInt);
 			boardImage = new BoardController().saveUpdate(upFile[insertInt], session, savePath, folderPath);
 			boardImage.setBoardNo(board.getBoardNo());
 			if(insertInt == 0) {
@@ -315,39 +298,65 @@ public class ArtBoardController {
 			}
 			insertBoardImages.add(boardImage);
 		}
+		System.out.println("insertBoardImages.toString() : " + insertBoardImages.toString());
 		
 		
 		// 상세설명 영역
 		// boardContent 불러오고 내용 싹 삭제 한 뒤 내용 그대로 다시 추가하면 됨
-		JsonArray total  = new JsonParser().parse(board.getBoardContent()).getAsJsonArray();
-		System.out.println("total.toString() : " + total.toString());
+		int mno = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		HashMap maps = new HashMap();
+		maps.put("mno", mno);
+		maps.put("bno", board.getBoardNo());
+		ArtBoard beforeArtBoard = artService.selectArtBoard(maps); 
+		// 기존 artBoard의 Content에 접근해서 img가 있는지 판단 후 resources폴더에서 삭제, DB에서 이미지 삭제하는 메소드의 매개변수 배열에 추가
+		JsonArray total  = new JsonParser().parse(beforeArtBoard.getBoard().getBoardContent()).getAsJsonArray();
 		for(int i = 0; i < total.size(); i++) {
 			if("img".equals(total.get(i).getAsJsonObject().get("type").getAsString())) {
-				JsonObject jobj = total.get(i).getAsJsonObject();
+				String src = total.get(i).getAsJsonObject().get("data").getAsString();
+				new File("/" + src).delete(); // resources 폴더에서 삭제
+				int imgNo = artService.selectBoardImgNo(src);
+				if(imgNo != 0) {
+					deleteBoardImgNo.add(imgNo);	// 기존 이미지 삭제 메소드 매개변수에 추가
+				}
 				
-				System.out.println("jobj : " + jobj);
-				System.out.println("files.get(files.size()-1).getModifyName() : " + files.get(files.size()-1).getModifyName());
-				
-				jobj.keySet().remove("data");
-				jobj.addProperty("data", files.get(files.size()-1).getModifyName());
-				files.get(files.size()-1).setFileLevel(3);
 			}
 		}
-		board.setBoardContent(total.toString());
-//		
-//		
+		
+		// 새로 입력된 boardContent 1. resources 폴더에서 저장 2. DB에 저장
+		String afterContent = board.getBoardContent();
+		JsonArray aftertotal  = new JsonParser().parse(afterContent).getAsJsonArray();
+		for(int i = 0; i < aftertotal.size(); i++) {
+			if("img".equals(aftertotal.get(i).getAsJsonObject().get("type").getAsString())) {
+				// resources폴더에 저장, modifyName 추가
+				
+				// img가 있어도 실제로 파일을 올리지 않았을 수 있음
+				if(contentFile.getSize() != 0) {
+					boardImage = new BoardController().saveUpdate(contentFile, session, savePath, folderPath);
+					boardImage.setFileLevel(3);
+					
+					JsonObject jobj = aftertotal.get(i).getAsJsonObject();
+					jobj.keySet().remove("data");
+					jobj.addProperty("data", boardImage.getModifyName());
+				}
+			}
+		}
+		board.setBoardContent(aftertotal.toString());
+		
 //		board.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
 		int result = artService.updateArtBoard(board, artBoard, deleteOptionNos, optionList, deleteBoardImgNo, updateBoardImages, insertBoardImages);
-//		if(result > 0) {
-//			model.addAttribute("alertMsg", "업로드 성공");
-//		} else {
-//			model.addAttribute("alertMsg", "업로드 실패");
-//		}
-//		return "redirect:artList.bo?category=CI";
+		if(result > 0) {
+			model.addAttribute("alertMsg", "업로드 성공");
+		} else {
+			model.addAttribute("alertMsg", "업로드 실패");
+		}
+		return "redirect:artList.bo?category=CI";
 	}
 	
 	@RequestMapping("deleteBoard.at")
-	public String deleteBoard(int boardNo) {
+	public String deleteBoard(Model model, int boardNo) {
+		if(artService.deleteBoard(boardNo) <= 0) {
+			model.addAttribute("alertMsg", "삭제 실패");
+		}
 		return "redirect:artList.bo";
 	}
 	
