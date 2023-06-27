@@ -69,6 +69,10 @@ public class ContestDao {
 		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectEmoticon", memberNo);
 	}
 
+	public ArrayList<Contest> selectVote(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("contestBoardMapper.selectVote");
+	}
+
 	
 	
 
