@@ -184,46 +184,48 @@
 				</thead>
 
 				<tbody>
-					<c:forEach var="list" items="${ roomList }">
-						<c:choose>
-							<c:when test="${list.membertNickName eq loginMember.nickName}">
-								<tr>
-									<td>
-										<div class="chatingOne">
-											<div class="profileIMG">
-												<img src="${list.artistFile}" alt="ㅎㅎ" class="profile"><!--  -->
+					<c:if test="${not empty roomList }">
+						<c:forEach var="list" items="${ roomList }">
+							<c:choose>
+								<c:when test="${list.membertNickName eq loginMember.nickName}">
+									<tr>
+										<td>
+											<div class="chatingOne">
+												<div class="profileIMG">
+													<img src="${list.artistFile}" alt="ㅎㅎ" class="profile"><!--  -->
+												</div>
+												<div class="chatingContent" align="left">
+													<h6 class="name_h6">${list.artistNickName}</h6>
+												</div>
+												<input type="hidden" name="roomAddress" value="${ list.roomName }">
+												<input type="hidden" name="roomNo" value="${ list.boardNo }">
+												<input type="hidden" name="artist" value="${ list.artistNo }">
 											</div>
-											<div class="chatingContent" align="left">
-												<h6 class="name_h6">${list.artistNickName}</h6>
+										</td>
+										<td><input type="checkbox" name="checkedcChat"></td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td>
+											<div class="chatingOne">
+												<div class="profileIMG"><!--  -->
+													<img src="${list.filePath}" alt="ㅎㅎ" class="profile">
+												</div>
+												<div class="chatingContent" align="left">
+													<h6 class="name_h6">${list.membertNickName}</h6>
+												</div>
+												<input type="hidden" name="roomAddress" value="${ list.roomName }">
+												<input type="hidden" name="roomNo" value="${ list.boardNo }">
+												<input type="hidden" name="artist" value="${ list.artistNo }">
 											</div>
-											<input type="hidden" name="roomAddress" value="${ list.roomName }">
-											<input type="hidden" name="roomNo" value="${ list.boardNo }">
-											<input type="hidden" name="artist" value="${ list.artistNo }">
-										</div>
-									</td>
-									<td><input type="checkbox" name="checkedcChat"></td>
-								</tr>
-							</c:when>
-							<c:otherwise>
-								<tr>
-									<td>
-										<div class="chatingOne">
-											<div class="profileIMG"><!--  -->
-												<img src="${list.filePath}" alt="ㅎㅎ" class="profile">
-											</div>
-											<div class="chatingContent" align="left">
-												<h6 class="name_h6">${list.membertNickName}</h6>
-											</div>
-											<input type="hidden" name="roomAddress" value="${ list.roomName }">
-											<input type="hidden" name="roomNo" value="${ list.boardNo }">
-											<input type="hidden" name="artist" value="${ list.artistNo }">
-										</div>
-									</td>
-									<td><input type="checkbox" name="checkedcChat"></td>
-								</tr>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
+										</td>
+										<td><input type="checkbox" name="checkedcChat"></td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</c:if>
 				</tbody>
 				<!-- <div id="buttons">
 					<button id="chocieBtn">선택하기</button>
@@ -510,12 +512,16 @@
 							/*$('input[name=memberCheck]').val(result.ac.memberCheck);
 							$('input[name=artistCheck]').val(result.ac.artistCheck);*/
 							
-							if(result.ac!=null){
+							if(result.priceAndTtile!=null){
 								var $img = $('#modalBody').find('img');
-								console.log($img)
 								$img.attr('src',result.priceAndTtile[0].filePath);
 								$img.next().text(result.priceAndTtile[0].orderContent);
-								$('#modalBody').find('p').text(result.priceAndTtile[0].totalPrice)
+								if(result.priceAndTtile[0].totalPrice!=0){
+									$('#modalBody').find('p').text(result.priceAndTtile[0].totalPrice)
+								}
+								else{
+									$('#modalBody').find('p').text(result.priceAndTtile[0].price)
+								}
 							}
 							
 						},
@@ -589,20 +595,19 @@
 								});
 								
 								console.log(request)
-								if (request != "" && addPrices != "") {
-									$.ajax({
-										url : 'insertReasonPrice.co',
-										data : {
-											boardNo : boardNo,
-											addPrices : addPrices,
-											request : request,
-											roomName : roomName,
-										},
-										success : function(result) {
-											console.log(result)
-										}
-									});
-								}
+								
+								$.ajax({
+									url : 'insertReasonPrice.co',
+									data : {
+										boardNo : boardNo,
+										addPrices : addPrices,
+										request : request,
+										roomName : roomName,
+									},
+									success : function(result) {
+										console.log(result)
+									}
+								});
 								
 							}
 							if(result=="Y"){

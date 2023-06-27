@@ -47,8 +47,7 @@ public class ChatingController {
 			@RequestParam(value="boardNo", defaultValue = "0")int boardNo, 
 			HttpSession session, 
 			ModelAndView mv,
-			@RequestParam(value="alreadyReject", defaultValue = "0")int alreadyReject,
-			@RequestParam(value="totalPrice", defaultValue = "0")int totalPrice
+			@RequestParam(value="alreadyReject", defaultValue = "0")int alreadyReject
 			) throws IOException {
 
 		//System.out.println(boardNo);
@@ -85,11 +84,12 @@ public class ChatingController {
 			System.out.println(c);
 
 			//존재하는 대화내용 보여주기
-			File file = new File("/Users/gi_ill/Project/WonderPick_workspace/wonderPickProject/bin/src/main/webapp/resources"
+			File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles"
 					+c.getMembertNickName()+c.getArtistNickName()+".txt");
 			if(!file.exists()){ // 파일이 존재하지 않으면
 				file.createNewFile(); // 신규생성
 				//C:/wonderPick-workspace/WonderPick/wonderPickProject/src/main/webapp/resources/chatingFiles/이걸로 바꿔요
+				//C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles
 			}
 
 			//채팅 리스트 조회
@@ -159,7 +159,15 @@ public class ChatingController {
 				}
 			}
 			ArrayList<AddPriceAndReason> apan = chatingService.selectCondition(c);
-			
+			System.out.println(
+					"c"+c+"\n"
+					+"orderList"+apan+"\n"
+					+"alreadyReject"+alreadyReject+"\n"
+					+"readYetMSG"+readYetMSG+"\n"
+					+"roomList"+roomList+"\n"
+					+"savedChating"+str+"\n"
+					+"boardNo"+boardNo+"\n"
+					);
 			//세션에 맴버 받아와야함
 			mv.addObject("c",c)
 			.addObject("orderList",apan)
@@ -187,7 +195,7 @@ public class ChatingController {
 	@ResponseBody
 	@RequestMapping(value="chatingSave.co",produces="application/json; charset=UTF-8")
 	public void saveChating(String myName, String yourName,String text) throws IOException  {
-		File file = new File("/Users/gi_ill/Project/WonderPick_workspace/wonderPickProject/bin/src/main/webapp/resources"+myName+yourName+".txt");
+		File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles"+myName+yourName+".txt");
 
 		// BufferedWriter 생성
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
@@ -255,7 +263,7 @@ public class ChatingController {
 
 		wsb.changeRoom(c.getRoomName(), c.getMembertNickName());
 
-		File file = new File("/Users/gi_ill/Project/WonderPick_workspace/wonderPickProject/bin/src/main/webapp/resources"+c.getMembertNickName()+c.getArtistNickName()+".txt");
+		File file = new File("C:/springReview-workspace/finalProject/src/main/webapp/resources/chatingFiles/"+c.getMembertNickName()+c.getArtistNickName()+".txt");
 		if(!file.exists()){ // 파일이 존재하지 않으면
 			file.createNewFile(); // 신규생성
 		}
@@ -301,7 +309,7 @@ public class ChatingController {
 
 		ArrayList<AddPriceAndReason> suggestList = chatingService.selectCondition(c);
 		JSONObject jObj = new JSONObject();
-		
+		System.out.println("suggestList : "+suggestList);
 		if(!suggestList.isEmpty()) {
 			jObj.put("priceAndTtile",suggestList);
 		}
@@ -315,30 +323,33 @@ public class ChatingController {
 	@RequestMapping(value="insertReasonPrice.co",produces="application/json; charset=UTF-8")
 	public int insertReasonPrice(AddPriceAndReason apar){
 
-
-		String [] priceArr = apar.getAddPrices().split(",");
-		String [] requestArr = apar.getRequest().split(",");
-
-		ArrayList<AddPriceAndReason> list = new ArrayList<AddPriceAndReason>();
-
-		for(int i = 0; i < priceArr.length; i++) {
-			AddPriceAndReason a = new AddPriceAndReason();
-			a.setRoomName(apar.getRoomName());
-			a.setBoardNo(apar.getBoardNo());
-			a.setAddPrices(priceArr[i]);
-			a.setRequest(requestArr[i]);
-			list.add(a);
-		}
-
-
 		Chating c = new Chating();
 		c.setBoardNo(apar.getBoardNo());
 		c.setRoomName(apar.getRoomName());
+		
 		if(chatingService.selectAcceptStatus(c)==null) {
 			chatingService.insertAcceptCondition(apar);
 		}
+		
+		if(!("".equals(apar.getAddPrices()) && "".equals(apar.getAddPrices()))) {
+			String [] priceArr = apar.getAddPrices().split(",");
+			String [] requestArr = apar.getRequest().split(",");
+			
+			ArrayList<AddPriceAndReason> list = new ArrayList<AddPriceAndReason>();
+			
+			for(int i = 0; i < priceArr.length; i++) {
+				AddPriceAndReason a = new AddPriceAndReason();
+				a.setRoomName(apar.getRoomName());
+				a.setBoardNo(apar.getBoardNo());
+				a.setAddPrices(priceArr[i]);
+				a.setRequest(requestArr[i]);
+				list.add(a);
+			}
+			
+			chatingService.insertReasonPrice(list);
+		}
 
-		return chatingService.insertReasonPrice(list);
+		return 0;
 
 	}
 
