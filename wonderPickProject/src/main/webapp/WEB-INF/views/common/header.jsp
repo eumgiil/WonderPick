@@ -60,7 +60,7 @@
                 <div class="search_area">
                     <form action="searchArtResult.ct" method="get" id="formtag">
                         <div id="search_main">
-                            <input type="text" placeholder="검색어를 입력해주세요" name="keyword" id="search_input2" onkeyup="searchAutoComplet();" required >
+                            <input type="text" placeholder="검색어를 입력해주세요" name="keyword" id="search_input2" onkeyup="searchAutoComplet();" required style="border:none;">
                             <button id="submit_btn" type="button"><span class="material-symbols-outlined"> search</span></button>
                         </div>
                         <div id="search_list_area">
