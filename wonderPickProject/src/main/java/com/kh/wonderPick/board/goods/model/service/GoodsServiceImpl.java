@@ -153,6 +153,16 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	
 	@Override
+	public int insertHeart(Heart h) {
+		return goodsDao.insertHeart(sqlSession, h);
+	}
+	
+	@Override 
+	 public int deleteHeart(int boardNo) {
+		return goodsDao.deleteHeart(sqlSession, boardNo);
+	}
+	
+	@Override
 	public int deleteReply(int replyNo) {
 		return goodsDao.deleteReply(sqlSession, replyNo);
 	}

@@ -421,6 +421,25 @@ select
     and board_no = #{boardNo}
     and h.member_no = #{memberNo}
   </select>
+  <delete id="deleteHeart"   parameterType="_int">
+  DELETE
+	FROM heart
+	WHERE 
+		 board_no = #{boardNo}
+	and     
+		 member_no = #{memberNo}
+  </delete>
+  <insert id="insertHeart" parameterType="heart">
+  insert 
+    into
+         heart
+  values
+	     (
+	     #{boardNo},
+	     #{memberNo}
+	     )
+  
+  </insert>
   
   
   <select id="searchGoodsCount" resultType="_int" parameterType="hashmap">

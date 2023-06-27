@@ -76,6 +76,11 @@ public interface GoodsService {
 	// 회원별 좋아요 글별 상세 조회
 	Heart selectHeart(int boardNo);
 	
+	// 좋아요 추가
+	int insertHeart(Heart h);
+	
+	// 좋아요 삭제
+	int deleteHeart(int boardNo);
 	
 	// 댓글 삭제
 	int deleteReply(int replyNo);

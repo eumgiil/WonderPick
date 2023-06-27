@@ -84,6 +84,7 @@ public class GoodsController {
 			System.out.println(goodsService.selectBoardImage(boardNo));
 			mv.addObject("reviewList", goodsService.selectReviewList(boardNo));
 			mv.addObject("replyList", goodsService.selectReplyList(boardNo));
+			System.out.println( goodsService.selectReplyList(boardNo));
 			mv.addObject("heart", goodsService.selectHeart(boardNo));
 			System.out.println(goodsService.selectHeart(boardNo));
 			mv.setViewName("board/goods/goodsDetailView");
@@ -384,21 +385,23 @@ public class GoodsController {
 	}
 	*/
 	
-	/*
+	
 	@ResponseBody
 	@RequestMapping(value="updateHeart.go", produces="application/json; charset=UTF-8")
-	public String updateHeart(Heart h , HttpSession httpSession, Model model) {
+	public String updateHeart(int boardNo, int memberNo , Heart h, HttpSession httpSession,ModelAndView mv) {
 		
 		
-		int result = goodsService.insertHeart(h);
-		
-		if(result > 0 ) {
-			 model.addAttribute("result", result);
-			 
+		if(goodsService.selectHeart(boardNo) != null ) {
+			mv.addObject("result", goodsService.deleteHeart(boardNo));
+			mv.setViewName("board/goods/goodsDetailView");
+		}else {
+			mv.addObject("result", goodsService.insertHeart(h));
+			mv.setViewName("board/goods/goodsDetailView");
 		}
+		return new Gson().toJson(goodsService.selectHeart(boardNo));
 		
 	}
-	*/
+	
 	
 	// 댓글 삭제
 	@RequestMapping("deleteReply.go")

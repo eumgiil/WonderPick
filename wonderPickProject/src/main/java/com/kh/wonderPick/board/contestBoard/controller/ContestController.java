@@ -186,12 +186,22 @@ public class ContestController {
 	}
 	
 	@RequestMapping("contestWinnerList.ct")
-	public String selectWinnerList(Model model) {
+	public ModelAndView selectWinnerList(ModelAndView mv, HttpSession session) {
 		
-		model.addAttribute("list",contestService.selectWinnerList());
+		mv.addObject("list",contestService.selectWinnerList());
+		mv.setViewName("board/contestBoard/contestWinnerList");
 		
-		return "board/contestBoard/contestWinnerList";
+		return mv;
+		
 	}
+	@ResponseBody
+	@RequestMapping(value="selectMainEmo.ct", produces="application/json; charset=UTF-8")
+	public String selectMainEmo() {
+		
+		return new Gson().toJson(contestService.selectWinnerList());
+		
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="selectVoteLike.ct", produces="application/json; charset=UTF-8")

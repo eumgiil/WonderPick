@@ -6,6 +6,63 @@
 <head>
 <meta charset="UTF-8">
 <title>Wonder pick</title>
+<style>
+#content_1{
+	margin-top:100px;
+
+}
+.footer{
+	width:100%;
+	height:300px;
+	background-color:rgb(255, 131, 153);
+	
+}
+.thismonth{
+	width:1200px;
+	height:450px;
+}
+.contest_table{
+ float:left;
+ margin-left:100px;
+ height:90%;
+ text-align:center;
+}
+.right{
+  float:right;
+  margin-right:100px;
+  margin-top: 150px;
+}
+#button1{
+    background-color:rgb(255, 131, 153); 
+    color:white;
+    border: none;
+    width: 300px;
+    height: 40px;
+    
+}
+#button2{
+    background-color:rgb(255, 131, 153); 
+    color:white;
+    border: none;
+    width: 200px;
+    height: 60px;
+    font-size: 30px;
+}
+.right > a:hover{
+    background-color: black;
+    color: rgb(255, 131, 153);
+}
+.content_2{
+    height: 600px;
+    background-color: antiquewhite;
+    
+}
+.title{
+    font-size:40px;
+    font-weight: bold;
+    color: rgb(255, 131, 153);
+}
+</style>
 
  <!-- swiper.js 라이브러리추가 -->
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
@@ -16,6 +73,8 @@
 <body>
 	<jsp:include page="header.jsp" />
 	
+	
+	<!-- content1 -->
 	<div id="content_1">
         <!-- Slider main container -->
         <div class="swiper">
@@ -40,11 +99,45 @@
             <div class="swiper-scrollbar"></div>
         </div>
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    
+    <br><br><br><br><br><br><br>
+    
+    <div class="content_2" align="center">
+    	<h1 class="title">이달의 이모티콘</h1>
+    	<div class="thismonth" >
+    	  <div class="left" onchange="selectemo()">
+    	  
+    	  </div>
+    	<div class="right">
+    	 <h3>나도 인기 이모티콘 작가가 되고 싶다면?</h3>
+         <br>
+         <a href="" class="btn btn-info" id="button2">도전하기</a>
+    	 </div>
+    	 </div>
+    	 <a href="" class="btn btn-info" id="button1">더 다양한 이모티콘 보러가기</a>
+    	 
+    </div>
+    
+    
+    
+    
+    
+    <br><br><br><br><br>
+    <!-- content3 -->
     <div id="content_3" align="center" >
-    	<h1 style="color:rgb(255, 131, 153)">WONDERPICK은?</h1>
+    	<h1 style="color:rgb(255, 131, 153); font-weight: bold;">WONDERPICK은?</h1>
     	<img src="resources/common/001.png" >
     </div>
+    
+    
+    <!-- footer -->
+    <div class="footer">
+    <p>
+    	<h6>기업정보 </h6>
+    </p>
+    </div>
+    
+    
 ​
     <script>
         // 슬라이더 동작 정의
@@ -63,7 +156,58 @@
                 nextEl: '.swiper-button-next'
             }
         }); 
-    </script>
+        </script>
+        
+        
+		<script>
+		$(function(){
+			selectemo();
+		})
+		
+		function selectemo(){
+        	 $.ajax({
+                 url : 'selectMainEmo.ct',
+                 success : function(list){
+                	 console.log(list);
+                     let value = "";
+                         
+                   value +='<table class="contest_table">'
+                         + '<tr>'
+                         + '<td colspan="3">'
+                            +' <div align="center" class="movePage" id="boardImage">'
+                              +  '<img src="' + list[0].filePath + '" >'
+                              + '</div>'
+                         + '</td>'
+                         + '</tr>'
+                         + '<tr>'
+                             + '<th class="table_title" colspan="2" align="center">'
+                             +  '<div class="table_title">'
+                             + '<a href="#" class="movePage" id="boardTitle" style="font-size:30px; color:rgb(255, 131, 153);">'
+                             +  '<input type="hidden" value="'+ list[0].boardNo +'">'
+                             +  list[0].boardTitle
+                             +' </a>'
+                             +'</div>'
+                             + '</th>'
+                         +'</tr>'
+                         + '<tr>'
+                             
+                             +'<td>'+ list[0].nickName +'</td>'
+                             +'</tr>'
+                         + '</table>';	 
+
+                    $('.left').html(value);
+                 },
+                 error : function(){
+                  console.log('실패');	
+                 }
+                 
+        });
+		};
+        
+		</script> 
+        
+       
+        
 	
 </body>
 </html>

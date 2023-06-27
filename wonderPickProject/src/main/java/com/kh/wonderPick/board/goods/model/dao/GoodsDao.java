@@ -135,14 +135,19 @@ public class GoodsDao {
 	}
 	
 	// 회원별 좋아요 상세 조회
-	public Heart selectHeart(SqlSessionTemplate sqlSession, int boardNo ) {
+	public Heart selectHeart(SqlSessionTemplate sqlSession, int boardNo) {
 		System.out.println("안녕 나는 하또 뎨요~~~~~");
 		return sqlSession.selectOne("goodsMapper.selectHeart", boardNo);
 	}
 	
-	// 좋아요 업데이트
-	public int updateHeart(SqlSessionTemplate sqlSession, Heart h) {
-		return sqlSession.update("goodsMapper.updateHeart", h);
+	// 좋아요 추가
+	public int insertHeart(SqlSessionTemplate sqlSession, Heart h) {
+		return sqlSession.insert("goodsMapper.insertHeart", h);
+	}
+	
+	// 좋아요 삭제
+	public int deleteHeart(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.delete("goodsMapper.deleteHeart", boardNo);
 	}
 	
 	// 댓글 삭제

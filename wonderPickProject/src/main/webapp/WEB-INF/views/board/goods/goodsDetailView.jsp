@@ -28,7 +28,7 @@
         }
         .artist{
             display: inline-block;
-            width:300px;
+            width:400px;
             margin-right:300px;
             float : right;
             
@@ -373,17 +373,11 @@
 				</table>
 
             <br><br><br><br><br>
+            
 
         </div>
-        <!-- 왼쪽 끝 -->	
         <script>
-        $(function(){
-            selectReplyList();
-          	//selectHeart();
-        	//updateHeart();
-         });
-        
-        function updateHeart(){
+         function updateHeart(){
         	$.ajax({
         		url : 'updateHeart.go',
         		data : {
@@ -404,6 +398,14 @@
         			console.log('실패');
         		}
         	});
+        </script>
+        <!-- 왼쪽 끝 -->	
+        <script>
+        $(function(){
+            selectReplyList();
+         });
+        
+       
         
         
         		function insertReply(){
@@ -451,34 +453,29 @@
              			   boardNo: '${g.boardNo}'
              		   },
              		   success : function(replyList){
-             			   console.log(replyList);
-             			   console.log('loginMember.memberNo : ' + '${loginMember.memberNo}');
-             			   console.log(' replyList[i].memberNo : ' + '${ replyList[i].memberNo}');
-             			   console.log('asdasd');
+             			
              			   let value="";
-             			   for(let i of replyList){
-                            console.log(i.memberNo == '${loginMember.memberNo}');
+             			   for(let i in replyList){
     
-                            value  +='<input type="hidden" value="'+ i.boardNo + '">'
-                                    +'<table class="t_align_left" style="border: 1px solid black;">'
+                            value  +='<input type="hidden" value="'+ replyList[i].boardNo + '">'
+                                   +'<table class="t_align_left" style="border: 1px solid black;">'
                                         +'<tr>'
                                             +'<td width="15%" rowspan="2" style="padding:10px; border-right: 1px solid lightslategray;">'
                                                 +'<img class="width" src="https://www.maykids.co.kr/web/product/big/202305/7b6b4fafdd1618db5d2560abfffa7ae2.gif">'
                                             +'</td>'
-                                            +'<td width="75%" style="padding-left:10px;">' + i.nickname + '</td>'
+                                            +'<td width="75%" style="padding-left:10px;">' + replyList[i].nickname + '</td>'
                                             +'<td width="10%" rowspan="2">';
     
                             if(i.memberNo == '${loginMember.memberNo}'){
-                                value +=         '<a href="deleteReply.go?bno=${ bno }&replyNo=' + i.replyNo + '" style="background-color: white; border: none;">'
-                                                +'<img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>';
-                            }
-    
-                            value +=        '<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
+                                value +=  '<a href="deleteReply.go?bno=${ bno }&replyNo=' + replyList[i].replyNo + '" style="background-color: white; border: none;">'
+                                      +   '<img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_delete_forever_48px-512.png" width="40"  alt=""></a>';
+                            } 
+                                value +=  '<a href="" style="background-color: white; border: none;"><img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_report_48px-512.png" width="40" alt=""></a>'
                                         +'</td>'
-                                    +'</tr>'
-                                    +'<tr>'
-                                        +'<td style="padding-left:10px;">' + i.content + '</td>'
-                                    +'</tr>'
+                                        +'</tr>'
+                                        +'<tr>'
+                                        +'<td style="padding-left:10px;">' + replyList[i].content + '</td>'
+                                        +'</tr>'
                                 +'</table>';
                         };
              			   $('#replyArea thead').html(value);
