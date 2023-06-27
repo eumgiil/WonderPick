@@ -216,14 +216,33 @@
             let titleimg = document.getElementById('titleimg');
             console.log(boardImages);
 
+            let contentImg1 = document.getElementById('contentImg1');
+            let contentImg2 = document.getElementById('contentImg2');
+            let contentImg3 = document.getElementById('contentImg3');
+            let input_contentImg1 = document.getElementById('input_contentImg1');
+            let input_contentImg2 = document.getElementById('input_contentImg2');
+            let input_contentImg3 = document.getElementById('input_contentImg3');
+
+
             for(var i = 0; i < boardImages.length; i++){
                 if(boardImages[i].fileLevel == 1){
                     titleimg.setAttribute('src', boardImages[i].modifyName);
                     document.getElementById('input_titleimg').value = boardImages[i].modifyName;
                 }
                 else if(boardImages[i].fileLevel == 2){
-                    document.getElementById('contentImg'+i).setAttribute('src', boardImages[i].modifyName);
-                    document.getElementById('input_contentImg'+ i).value = boardImages[i].modifyName;
+                    switch(i){
+                        case 1 : contentImg1.setAttribute('src', boardImages[i].modifyName);
+                                 input_contentImg1.value = boardImages[i].modifyName;
+                                 break;
+                        case 2 : contentImg2.setAttribute('src', boardImages[i].modifyName);
+                                 input_contentImg2.value = boardImages[i].modifyName;
+                                 break;
+                        case 3 : contentImg3.setAttribute('src', boardImages[i].modifyName);
+                                 input_contentImg3.value = boardImages[i].modifyName;
+                                 break;
+                    }
+                    // document.getElementById('contentImg'+i).setAttribute('src', boardImages[i].modifyName);
+                    // document.getElementById('input_contentImg'+ i).value = boardImages[i].modifyName;
                 }
             }
         }

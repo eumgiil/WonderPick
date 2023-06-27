@@ -64,8 +64,6 @@ public class ArtBoardController {
 		  .addObject("searchArt", searchArt)
 		  .setViewName("board/artBoard/artListView");
 		
-//		System.out.println("pi : " + pi);
-//		System.out.println("list : " + artService.selectArtList(pi, searchArt));
 		return mv;
 	}
 	
@@ -113,12 +111,10 @@ public class ArtBoardController {
 		// 상세설명 영역
 		String boardContent = board.getBoardContent();
 		
-		System.out.println("116행 boardContent : " + boardContent);
 		
 		JsonArray total  = new JsonParser().parse(boardContent).getAsJsonArray();
 		for(int i = 0; i < total.size(); i++) {
 			if("img".equals(total.get(i).getAsJsonObject().get("type").getAsString())) {
-				System.out.println("121행 json 중에 img가 자꾸 있대 말이 안되는데  : " + total.get(i).getAsJsonObject());
 				JsonObject jobj = total.get(i).getAsJsonObject();
 				jobj.keySet().remove("data");
 				jobj.addProperty("data", files.get(files.size()-1).getModifyName());
@@ -136,11 +132,6 @@ public class ArtBoardController {
 			model.addAttribute("alertMsg", "업로드 실패");
 		}
 		
-		for(int i = 0; i < upFile.length; i++) {
-			System.out.println(upFile[i].getOriginalFilename());
-		}
-		System.out.println(files);
-		System.out.println(board.getBoardContent());
 		
 		
 		
@@ -150,7 +141,6 @@ public class ArtBoardController {
 	@RequestMapping(value="artDetail.bo")
 	public ModelAndView artDetail(ModelAndView mv, int bno, HttpSession session) {
 		
-		System.out.println(bno);
 		// 로그인 나오면 지울 부
 		Member loginUser = new Member();
 		loginUser.setMemberNo(1);
@@ -172,34 +162,14 @@ public class ArtBoardController {
 		ArtBoard artBoard = artService.selectArtBoard(maps);
 		ArrayList<Option> optionList = artService.selectOptionList(bno);
 		ArrayList<BoardImage> boardImage = artService.selectBoardImage(bno);
-		
-//		ArrayList<Review> reviewList = reviewService.selectBoardReviewList(bno);
-		
-		
-		
-		// 이 부분 따로 빼는거 상의해야함
-//		ArrayList<Reply1> replyList = replyService.selectReplyList(bno);
-		
 		mv.addObject("artBoard", artBoard)
 		  .addObject("optionList", new Gson().toJson(optionList))
 		  .addObject("boardImage", new Gson().toJson(boardImage))
-//		  .addObject("reviewList", reviewList)
 		  .addObject("bno",bno)
-//		  .addObject("replyList", replyList)
 		  .setViewName("board/artBoard/artDetailView");
 		return mv;
 	}
 	
-//	@RequestMapping("searchForm.at")
-//	public ModelAndView searchForm(@RequestParam(value="cPage", defaultValue="1") int currentPage, ModelAndView mv, SearchArt searchArt){
-//		System.out.println("search : " + searchArt.getSearch());
-//		System.out.println("searchArt : " + searchArt.getKeyword());
-//		System.out.println(artService.selectSearchListCount(searchArt));
-//		PageInfo pi = Pagination.getPageInfo(artService.selectSearchListCount(searchArt), currentPage, 12, 10);
-//		System.out.println(artService.selectSearchList(pi, searchArt).size());
-//		mv.addObject("pi", pi).addObject("list", artService.selectSearchList(pi, searchArt)).setViewName("board/artBoard/artListView");
-//		return mv;
-//	}
 
 	@RequestMapping("updateForm.at")
 	public ModelAndView updateArtBoard(ModelAndView mv, int boardNo, HttpSession session){
@@ -246,10 +216,6 @@ public class ArtBoardController {
 						    String deleteImgs,
 						    String updateImgs,
 						    String insertImgs) {
-		
-		System.out.println(deleteImgs);
-		System.out.println(updateImgs);
-		System.out.println(insertImgs);
 		
 		
 		// 로그인 나오면 지울 부
@@ -306,8 +272,6 @@ public class ArtBoardController {
 		// 삭제할 boardImgNo가 들어있는 Array  => update로 바꿔야함
 		for(int i = 0; i < deleteImgsArray.size(); i++) {
 			// resources 폴더에서 삭제
-			System.out.println("삭제 전");
-			System.out.println("/" + deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString());
 			new File("/" + deleteImgsArray.get(i).getAsJsonObject().get("src").getAsString()).delete();
 			// DB에서 삭제하기 위해 array에 담기
 			deleteBoardImgNo.add(deleteImgsArray.get(i).getAsJsonObject().get("boardImgNo").getAsInt());
@@ -324,7 +288,7 @@ public class ArtBoardController {
 		// insert boardImages
 		for(int i = 0; i < insertImgsArray.size(); i++) {
 			int insertInt = insertImgsArray.get(i).getAsJsonObject().get("insertUpFile[i]").getAsInt();
-			System.out.println("insertInt : " + insertInt);
+			System.out.println("insertInt : " +insertInt);
 			boardImage = new BoardController().saveUpdate(upFile[insertInt], session, savePath, folderPath);
 			boardImage.setBoardNo(board.getBoardNo());
 			if(insertInt == 0) {
@@ -334,6 +298,7 @@ public class ArtBoardController {
 			}
 			insertBoardImages.add(boardImage);
 		}
+		System.out.println("insertBoardImages.toString() : " + insertBoardImages.toString());
 		
 		
 		// 상세설명 영역
@@ -343,13 +308,11 @@ public class ArtBoardController {
 		maps.put("mno", mno);
 		maps.put("bno", board.getBoardNo());
 		ArtBoard beforeArtBoard = artService.selectArtBoard(maps); 
-		System.out.println("beforeArtBoard : " + beforeArtBoard);
 		// 기존 artBoard의 Content에 접근해서 img가 있는지 판단 후 resources폴더에서 삭제, DB에서 이미지 삭제하는 메소드의 매개변수 배열에 추가
 		JsonArray total  = new JsonParser().parse(beforeArtBoard.getBoard().getBoardContent()).getAsJsonArray();
 		for(int i = 0; i < total.size(); i++) {
 			if("img".equals(total.get(i).getAsJsonObject().get("type").getAsString())) {
 				String src = total.get(i).getAsJsonObject().get("data").getAsString();
-				System.out.println("src : " + src);
 				new File("/" + src).delete(); // resources 폴더에서 삭제
 				int imgNo = artService.selectBoardImgNo(src);
 				if(imgNo != 0) {
@@ -361,7 +324,6 @@ public class ArtBoardController {
 		
 		// 새로 입력된 boardContent 1. resources 폴더에서 저장 2. DB에 저장
 		String afterContent = board.getBoardContent();
-		System.out.println("afterContent : " + afterContent);
 		JsonArray aftertotal  = new JsonParser().parse(afterContent).getAsJsonArray();
 		for(int i = 0; i < aftertotal.size(); i++) {
 			if("img".equals(aftertotal.get(i).getAsJsonObject().get("type").getAsString())) {
